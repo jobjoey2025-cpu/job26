@@ -3,7 +3,14 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') }
+      { path: '', component: () => import('pages/IndexPage.vue') },
+
+      { path: 'classC', component: () => import('components/classC.vue') },
+      { path: 'timeCurve', component: () => import('components/timeCurve.vue') },
+      { path: 'MyPage', component: () => import('pages/MyPage.vue'), name: 'MyPage' },
+
+
+
     ]
   },
 
