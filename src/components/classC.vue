@@ -19,11 +19,12 @@
         <!-- <q-icon name="style" size="56px" /> -->
         <!-- src="https://cdn.quasar.dev/img/mountains.jpg" -->
         <q-img
-          src="./statics/20250923002.png"
-          style="width: 150px; height: 150px; border-radius: 8px"
+          src="./statics/t-250shell2.png"
+          style="width: 510px; height: 150px; border-radius: 8px"
         />
         <div class="q-mt-md text-center">
-          電工的工作內容為：「設計、安裝、維修電氣設備與配線系統，確保安全與可靠運行。」
+          VTOL（垂直起降）飛行器的機構設計通常結合航空工程、機械結構與控制系統。
+          一般設計流程：  1 任務需求定義 2 Payload 計算 3 Flight time 計算 4 推進系統選擇 5 結構設計 6 CAD 建模 7 CFD / FEA 模擬 8 Prototype 9 Flight test
         </div>
       </q-carousel-slide>
 
@@ -31,39 +32,34 @@
         <!-- <q-icon name="live_tv" size="56px" /> -->
 
         <q-img
-          src="./statics/singleWire.png"
-          style="width: 150px; height: 150px; border-radius: 8px"
+          src="./statics/droneFish.png"
+          style="width: 288px; height: 150px; border-radius: 8px"
         />
         <div class="q-mt-md text-center">
-          「單線圖（Single Line Diagram, SLD）」最大特性就是
-          以簡單的一條線表示複雜的三相電路，藉此清晰呈現
-          電氣設備的組合與配電系統架構，但不會表達安裝細節。
+          VTOL UAV 的 Payload（酬載）設計是整個系統設計的核心之一，因為它會直接影響 重量、續航、重心、推力配置與機體尺寸。通常設計流程是 先定義 Payload → 再設計飛機。
         </div>
       </q-carousel-slide>
 
       <q-carousel-slide name="layers" class="column no-wrap flex-center">
         <!-- <q-icon name="layers" size="56px" /> -->
         <q-img
-          src="./statics/controlBOX.jpg"
-          style="width: 150px; height: 150px; border-radius: 8px"
+          src="./statics/rc10.jpg"
+          style="width: 450px; height: 150px; border-radius: 8px"
         />
 
         <div class="q-mt-md text-center">
-          更換老舊電線、插座、開關、斷路器。\\ 馬達、控制電路的維修與保養。\\
-          漏電檢測、絕緣測試、接地電阻測試。
+          RC（遙控模型）常見的泡殼（Blister）通常是用真空成型（Vacuum Forming）製作透明機殼，例如 RC 飛機座艙罩、車殼、或 UAV 外罩。模具設計與射出模不同，重點在 脫模角度、材料厚度、通氣孔與加熱收縮補償。
         </div>
       </q-carousel-slide>
 
       <q-carousel-slide name="map" class="column no-wrap flex-center">
         <!-- <q-icon name="terrain" size="56px" /> -->
         <q-img
-          src="./statics/1phaseMotor.png"
-          style="width: 150px; height: 150px; border-radius: 8px"
+          src="./statics/controlBOX2.jpg"
+          style="width: 450px; height: 150px; border-radius: 8px"
         />
         <div class="q-mt-md text-center">
-          室內配線：燈具、插座、開關、配電盤。\\ 定期檢查配電系統、安全開關、保護裝置。\\
-          故障排除（跳電、短路、電壓不穩、設備不啟動）。
-        </div>
+          電工的工作內容包括：設計、安裝與維修電氣設備及配線系統，確保電力系統安全且穩定運行。負責更換老舊電線、插座、開關與斷路器，並進行馬達及控制電路的維修與保養。同時執行漏電檢測、絕緣測試及接地電阻測試，以確保設備符合安全規範。依據單線圖進行電氣設備接線與配電系統的組裝與架構配置。        </div>
       </q-carousel-slide>
     </q-carousel>
   </div>
