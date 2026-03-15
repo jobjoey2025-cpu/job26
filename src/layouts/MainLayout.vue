@@ -54,46 +54,40 @@ import bannerFoot from "components/bannerFoot.vue";
 
 const linksList = [
   {
-    title: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
-    link: "https://quasar.dev",
+    title: "Home",
+    caption: "內部頁面",
+    icon: "home", // IndexPage MyPage
+    to: '/', // ✅ Vue Router 內部跳轉
   },
   {
-    title: "Github",
-    caption: "github.com/quasarframework",
-    icon: "code",
-    link: "https://github.com/quasarframework",
+    title: 'About me',
+    caption: '內部頁面',
+    icon: 'face', // MyPage
+    to: { name: 'MyPage' }  // ✅ Vue Router 內部跳轉
   },
   {
-    title: "Discord Chat Channel",
-    caption: "chat.quasar.dev",
-    icon: "chat",
-    link: "https://chat.quasar.dev",
+    title: "Services（履歷）",
+    caption: '內部頁面',
+    icon: "miscellaneous_services",
+    to: '/Services', // ✅ Vue Router 內部跳轉
   },
   {
-    title: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-    link: "https://forum.quasar.dev",
+    title: "Experience (專案)",
+    caption: '內部頁面',
+    icon: "rocket_launch",
+    to: '/Experience', // ✅ Vue Router 內部跳轉
   },
   {
-    title: "Twitter",
-    caption: "@quasarframework",
+    title: "Blog (部落格)",
+    caption: '內部頁面',
     icon: "rss_feed",
-    link: "https://twitter.quasar.dev",
+    to: '/BLG', // ✅ Vue Router 內部跳轉
   },
   {
-    title: "Facebook",
-    caption: "@QuasarFramework",
-    icon: "public",
-    link: "https://facebook.quasar.dev",
-  },
-  {
-    title: "Quasar Awesome",
-    caption: "Community Quasar projects",
+    title: "Connect me",
+    caption: '外部頁面 104',
     icon: "favorite",
-    link: "https://awesome.quasar.dev",
+    to: '/Experience', // ✅ Vue Router 內部跳轉
   },
 ];
 
