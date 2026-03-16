@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md q-gutter-sm">
-    <q-banner dense inline-actions class="text-white bg-primary">
+    <q-banner dense inline-actions class="text-white bg-dark">
       <template v-slot:avatar>
         <q-icon name="miscellaneous_services" color="white" />
       </template>

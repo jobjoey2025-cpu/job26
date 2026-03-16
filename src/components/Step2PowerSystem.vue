@@ -128,7 +128,7 @@
 
     <div class="q-pa-md row items-start q-gutter-md flex justify-center">
       <q-card class="col-12 col-sm-6 col-md-3" flat bordered>
-        <img src="/statics/RC10T Cliff Lett Edition Kit.jpg" />
+        <img src="./statics/RC10T Cliff Lett Edition Kit.jpg" />
 
         <q-list>
           <q-item
@@ -173,7 +173,7 @@
       <!-- ----------- -->
 
       <q-card class="col-12 col-sm-6 col-md-3" flat bordered>
-        <img src="/statics/RC10DS.jpg" />
+        <img src="./statics/RC10DS.jpg" />
 
         <q-list>
           <q-item
@@ -219,7 +219,7 @@
       <!-- ----------- -->
 
       <q-card class="col-12 col-sm-6 col-md-3" flat bordered>
-        <img src="/statics/RC10 Team Car Gold.jpg" />
+        <img src="./statics/RC10 Team Car Gold.jpg" />
 
         <q-list>
           <q-item
@@ -265,7 +265,7 @@
       <!-- ------------------- -->
 
       <q-card class="col-12 col-sm-6 col-md-3" flat bordered>
-        <img src="/statics/RC10 4WD KIT.jpg" />
+        <img src="./statics/RC10 4WD KIT.jpg" />
 
         <q-list>
           <q-item
@@ -311,7 +311,7 @@
       <!-- ------------------- -->
 
       <q-card class="col-12 col-sm-6 col-md-3" flat bordered>
-        <img src="/statics/Premium Model.jpg" />
+        <img src="./statics/Premium Model.jpg" />
 
         <q-list>
           <q-item
@@ -357,7 +357,7 @@
 
 
       <q-card class="col-12 col-sm-6 col-md-3" flat bordered>
-        <img src="/statics/tamiya_store.jpg" />
+        <img src="./statics/tamiya_store.jpg" />
 
         <q-list>
           <q-item

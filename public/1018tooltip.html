@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ▼▼▼▼ pop-up 需要 -->
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+    <!-- ▲▲▲▲ pop-up 需要 -->
+
+    <!-- 以下引用 handlebars & jQuery -->
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+    <script type='text/javascript'
+        src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js'></script>
+    <!-- 以上引用 handlebars & jQuery -->
+
+    <!-- 以下滑鼠划過map會亮, 要加 "class="map" (modify 必遇到 2hrs debug)-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/maphilight/1.4.0/jquery.maphilight.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.map').maphilight();
+        });
+    </script>
+    <!-- 以上滑鼠划過map會亮 -->
+
+
+    <link rel="stylesheet" href="1018tooltip_all.css">
+    <!-- <link href="/CSS/style.css" rel="stylesheet"> -->
+
+    <style>
+        .led {
+            position: absolute;
+            left: 55px;
+            top: 30px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: rgb(255, 136, 115);
+            box-shadow: inset 0px 1px 0px rgba(0, 0, 0, .1);
+            -webkit-animation: led .8s infinite;
+            -moz-animation: led .8s infinite;
+            -ms-animation: led .8s infinite;
+            -o-animation: led .8s infinite;
+            animation: led .8s infinite;
+        }
+
+        /* keyframes */
+        @-webkit-keyframes led {
+            from {
+                opacity: .2;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-moz-keyframes led {
+            from {
+                opacity: .2;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-ms-keyframes led {
+            from {
+                opacity: .2;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-o-keyframes led {
+            from {
+                opacity: .2;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes led {
+            from {
+                opacity: .2;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+
+    <!-- Bootstrap CSS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> -->
+
+    <title>先來一版 joey 好用的</title>
+</head>
+
+<body>
+
+    <!-- handlebars 模板 地圖的-->
+    <script id="s1Template" type="text/x-handlebars-template">
+            <div class="s1">
+                {{#each values}}
+                <area target="_blank" alt="CC" title="{{[1]}}" href="{{[4]}}" coords={{[6]}} shape="rect">
+                {{/each}}
+            </div>
+    </script>
+    <!-- <div style="margin-bottom:10px;float:left;"> -->
+    <!-- <div style="margin-bottom:400px;"> -->
+    <!-- <div style="margin: bottom 0px;"> -->
+    <!-- <div> -->
+
+    <!-- <div id="image-map" style="float:left"> -->
+    <div id="image-map">
+        <!-- <div id="image-map" class="d-flex"> -->
+        <!-- <img src="img\Jiufen2.png" alt="Our Locations" usemap="#image-map" class="map">-->
+        <!-- <img src="img\G1200light.png" alt="Our Locations" usemap="#image-map" class="map" width="400" height="360"> -->
+
+        <img src="img\G1200light.png" alt="Our Locations" usemap="#image-map" class="map" width="400" height="357">
+
+        <!-- height="300" -->
+        <!-- <div class="led"></div> -->
+        <map name="image-map">
+            <!-- <div class="pin pin-down" data-xpos="165" data-ypos="314"></div> -->
+            <div class="pin pin-down container" data-xpos="30" data-ypos="30">
+                <h5>萬用扣具</h5>
+                <ul>
+                    <!-- <li><strong>網美 打卡</strong></li> -->
+                    <a href="/heat_sink.html#buckle" target="_blank">扣具設計</a>
+                    <!-- <a href="/joeyLife2" target="_blank">扣具設計</a> -->
+                    <!-- <button id="show">show</button>
+                    <dialog id="infoModal">
+                        <p>這是 html 的 dialog!!</p>
+                    </dialog> -->
+
+                </ul>
+            </div>
+
+            <div class="pin pin-down" data-xpos="120" data-ypos="120">
+                <h5>造形系列</h5>
+                <ul>
+                    <a href="/heat_sink.html#idd" target="_blank">ID 設計</a>
+                    <!-- <li><strong>網美 打卡</strong></li> -->
+                </ul>
+            </div>
+
+            <div class="pin pin-down" data-xpos="200" data-ypos="40">
+                <h5>散熱管理</h5>
+                <ul>
+                    <a href="/heat_sink.html#heat_sink" target="_blank">溫度模擬</a>
+                    <!-- <li><strong>網美 打卡</strong></li> -->
+                </ul>
+            </div>
+
+            <div class="pin pin-down" data-xpos="250" data-ypos="200">
+                <h5>停止線 光形</h5>
+                <ul>
+                    <a href="/heat_sink.html#light" target="_blank">光形設計</a>
+                    <!-- style="font-size: 0.7em;" -->
+                    <!-- <li><strong>網美 打卡</strong></li> -->
+                </ul>
+            </div>
+
+            <div class="pin pin-down" data-xpos="50" data-ypos="250">
+                <h5>防水等級</h5>
+                <ul>
+                    <a href="/heat_sink.html#waterproof" target="_blank">防水設計</a>
+                    <!-- style="font-size: 0.7em;" -->
+                    <!-- <li><strong>網美 打卡</strong></li> -->
+                </ul>
+            </div>
+            <!-- 真實渲染的地方 -->
+            <!-- <div id="s1"></div> -->
+        </map>
+    </div>
+
+    <!-- </div> -->
+    <!-- <div><hr></div> -->
+
+    <!-- 3. ajax api & handlebars 載入模板 zone -->
+    <script>
+
+        $(function () {
+            $.get('https://sheets.googleapis.com/v4/spreadsheets/1EVEFyU56QLxzh4jzs4MPrRuXa3KAKkPFrZ80V6kKv9s/values/JiufenMap?alt=json&key=AIzaSyDQJnRmuvThGNBt3Z3SLRliA4crPBg6BX0', function (data_html) {    //這裡 api 接口要改 自己的 
+                console.log(data_html);
+                // 104timeLine22-09api (joeyWant22)[GDS]
+                console.log("GDS")
+                var source = $("#s1Template").html();// 載入模板 (3. 載入模板 "input")
+                var template = Handlebars.compile(source);
+                $("#s1").append(template(data_html));
+            });
+        });
+    </script>
+    <!-- 以下是 Modal js part-->
+
+
+    <!-- 以下是 pop-up pin js part-->
+    <script>
+        $(document).ready(function () {
+
+            // set the image-map width and height to match the img size
+            $('#image-map').css({
+                'width': $('#image-map img').width(),
+                'height': $('#image-map img').height()
+            })
+
+            //tooltip direction
+            var tooltipDirection;
+
+            for (i = 0; i < $(".pin").length; i++) {
+                // set tooltip direction type - up or down             
+                if ($(".pin").eq(i).hasClass('pin-down')) {
+                    tooltipDirection = 'tooltip-down';
+                } else {
+                    tooltipDirection = 'tooltip-up';
+                }
+
+                // append the tooltip
+                $("#image-map").append("<div style='left:" + $(".pin").eq(i).data('xpos') + "px;top:" + $(".pin").eq(i).data('ypos') + "px' class='" + tooltipDirection + "'>\
+                                        <div class='tooltip'>" + $(".pin").eq(i).html() + "</div>\
+                                </div>");
+            }
+
+            // show/hide the tooltip
+            $('.tooltip-up, .tooltip-down').mouseenter(function () {
+                $(this).children('.tooltip').fadeIn(100);
+            }).mouseleave(function () {
+                $(this).children('.tooltip').fadeOut(100);
+            })
+        });
+    </script>
+</body>
+
+</html>

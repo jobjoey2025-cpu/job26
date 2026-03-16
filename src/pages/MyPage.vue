@@ -13,7 +13,7 @@
   <!-- <timeCurve /> -->
   <!-- </div> -->
   <Configurator />
-
+  <bannerBike />
   <div>
     <p>* _____ Value : BOM sql \ SQL 處理複雜的老問題 \ 二次開發</p>
 
@@ -33,7 +33,10 @@
 
 import Configurator from "pages/Configurator.vue";
 
-import profileCard from "components/profileCard.vue";
-import timeCurve from "components/timeCurve.vue";
-import bannerWhoAmI from "components/bannerWhoAmI.vue";
+import bannerBike from "components/bannerBike.vue";
+
+
+// import profileCard from "components/profileCard.vue";
+// import timeCurve from "components/timeCurve.vue";
+// import bannerWhoAmI from "components/bannerWhoAmI.vue";
 </script>

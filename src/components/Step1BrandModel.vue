@@ -44,7 +44,7 @@
       <q-card class="my-card q-ma-md" bordered flat>
         <!-- 上方圖片 -->
         <q-img
-          src="/statics/yokomo_car.jpg"
+          src="./statics/yokomo_car.jpg"
           alt="Yokomo Speed Car"
           style="height: 200px; object-fit: cover"
         >
@@ -79,7 +79,7 @@
       <q-card class="my-card q-ma-md" bordered flat>
         <!-- 上方圖片 -->
         <q-img
-          src="/statics/m-chassis2.jpg"
+          src="./statics/m-chassis2.jpg"
           alt="Yokomo Speed Car"
           style="height: 200px; object-fit: cover"
         >
@@ -117,7 +117,7 @@
       <q-card class="my-card q-ma-md" bordered flat>
         <!-- 上方圖片 -->
         <q-img
-          src="/statics/initial_D.jpg"
+          src="./statics/initial_D.jpg"
           alt="Mini-Z"
           style="height: 200px; object-fit: cover"
         >

@@ -33,7 +33,7 @@
 
     <div class="q-pa-md row items-start q-gutter-md flex justify-center">
       <q-card class="col-12 col-sm-6 col-md-3" flat bordered>
-        <img src="/statics/motor.jpg" />
+        <img src="./statics/motor.jpg" />
 
         <q-list>
           <q-item
@@ -80,7 +80,7 @@
 
       <!-- ----------- -->
       <q-card class="col-12 col-sm-6 col-md-3" flat bordered>
-        <img src="/statics/CFD.png" />
+        <img src="./statics/CFD.png" />
 
         <q-list>
           <q-item
@@ -127,7 +127,7 @@
       <!-- ----------- -->
 
       <q-card class="col-12 col-sm-6 col-md-3" flat bordered>
-        <img src="/statics/RACE Software.png" />
+        <img src="./statics/RACE Software.png" />
 
         <q-list>
           <q-item
