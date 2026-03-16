@@ -23,6 +23,7 @@ const routes = [
       { path: 'bannerBLG', component: () => import('components/bannerBLG.vue'), name: 'bannerBLG' },
       { path: 'bannerBike', component: () => import('components/bannerBike.vue'), name: 'bannerBike' },
       { path: 'bannerDesign', component: () => import('components/bannerDesign.vue'), name: 'bannerDesign' },
+      { path: 'bannerERP', component: () => import('components/bannerERP.vue'), name: 'bannerERP' },
 
 
       { path: 'timeline_g12', component: () => import('components/timeline_g12.vue'), name: 'timeline_g12' },
@@ -31,6 +32,8 @@ const routes = [
       { path: 'imageTr', component: () => import('components/imageTr.vue'), name: 'imageTr' },
       { path: 'imgMap_iF', component: () => import('components/imgMap_iF.vue'), name: 'imgMap_iF' },
       { path: 'ExpansionG12', component: () => import('components/ExpansionG12.vue'), name: 'ExpansionG12' },
+      { path: 'ERP', component: () => import('components/ERP.vue'), name: 'ERP' },
+
 
 
     ]
