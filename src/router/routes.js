@@ -8,11 +8,12 @@ const routes = [
       { path: 'classC', component: () => import('components/classC.vue') },
       { path: 'timeCurve', component: () => import('components/timeCurve.vue') },
 
+
+
       { path: 'MyPage', component: () => import('pages/MyPage.vue'), name: 'MyPage' },
       { path: 'Services', component: () => import('pages/Services.vue'), name: 'Services' },
       { path: 'Experience', component: () => import('pages/Experience.vue'), name: 'Experience' },
       { path: 'BLG', component: () => import('pages/BLG.vue'), name: 'BLG' },
-
       { path: 'Configurator', component: () => import('pages/Configurator.vue') },
       { path: 'testNavi', name: 'testNavi',component: () => import('pages/testNavi.vue') },
       { path: 'test', name: 'test',component: () => import('pages/test.vue') },
@@ -24,6 +25,8 @@ const routes = [
       { path: 'bannerBike', component: () => import('components/bannerBike.vue'), name: 'bannerBike' },
       { path: 'bannerDesign', component: () => import('components/bannerDesign.vue'), name: 'bannerDesign' },
       { path: 'bannerERP', component: () => import('components/bannerERP.vue'), name: 'bannerERP' },
+      { path: 'bannerDroneBox', component: () => import('components/bannerDroneBox.vue'), name: 'bannerDroneBox' },
+
 
 
       { path: 'timeline_g12', component: () => import('components/timeline_g12.vue'), name: 'timeline_g12' },
@@ -33,6 +36,7 @@ const routes = [
       { path: 'imgMap_iF', component: () => import('components/imgMap_iF.vue'), name: 'imgMap_iF' },
       { path: 'ExpansionG12', component: () => import('components/ExpansionG12.vue'), name: 'ExpansionG12' },
       { path: 'ERP', component: () => import('components/ERP.vue'), name: 'ERP' },
+      { path: 'DroneBox', component: () => import('components/DroneBox.vue'), name: 'DroneBox' },
 
 
 

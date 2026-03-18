@@ -15,8 +15,9 @@
   <Configurator />
   <bannerBike />
   <bannerERP />
+  <bannerDroneBox />
   <div>
-    <p>* _____ Value : BOM sql \ SQL 處理複雜的老問題 \ 二次開發</p>
+    <p>xx * _____ Value : BOM sql \ SQL 處理複雜的老問題 \ 二次開發</p>
 
     <p>* _____ PAGE - my Experts : 美團飛行基地 - Career Goals - Book 法律範圍</p>
     <p>* _____ careers \ we offer \ job listings \ text template \ contact person \ apply</p>
@@ -35,6 +36,7 @@
 import Configurator from "pages/Configurator.vue";
 import bannerBike from "components/bannerBike.vue";
 import bannerERP from "components/bannerERP.vue";
+import bannerDroneBox from "components/bannerDroneBox.vue";
 
 
 // import profileCard from "components/profileCard.vue";
