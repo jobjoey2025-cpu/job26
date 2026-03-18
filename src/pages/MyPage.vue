@@ -12,14 +12,15 @@
   <!-- myPage 測試無效; 有效在 indexPage-->
   <!-- <timeCurve /> -->
   <!-- </div> -->
-  <Configurator />
   <bannerBike />
   <bannerERP />
   <bannerDroneBox />
+  <Configurator />
+
   <div>
     <p>xx * _____ Value : BOM sql \ SQL 處理複雜的老問題 \ 二次開發</p>
 
-    <p>* _____ PAGE - my Experts : 美團飛行基地 - Career Goals - Book 法律範圍</p>
+    <p>xx * _____ PAGE - my Experts : 美團飛行基地 - Career Goals - Book 法律範圍</p>
     <p>* _____ careers \ we offer \ job listings \ text template \ contact person \ apply</p>
     <p>xx * _____ history : 電動車配置模擬器</p>
     <!-- https://rccar2.netlify.app/#/Configurator -->
