@@ -4,11 +4,10 @@
   </q-page>
   <br><br></br>
   <bannerWhoAmI />
-  <timeCurve />
   <bannerService />
   <bannerExperience />
   <bannerBLG />
-
+  <timeCurve />
   <p>IndexPage</p>
 
 </template>
