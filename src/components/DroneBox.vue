@@ -86,13 +86,13 @@
 
           <q-list dense>
             <q-item
-              ><q-item-section>ATS 自動切換測試 (台電)</q-item-section></q-item
-            >
+              ><q-item-section>ATS 自動切換測試 (台電)</q-item-section></q-item>
             <q-item><q-item-section>發電機測試</q-item-section></q-item>
-            <q-item
-              ><q-item-section>停電 Timer 校正 / 復歸</q-item-section></q-item
-            >
+            <q-item><q-item-section>停電 Timer 校正 / 復歸</q-item-section></q-item>
             <!-- <q-item><q-item-section>影像紀錄（GoPro / 手機）</q-item-section></q-item> -->
+            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
+            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
+
           </q-list>
         </q-card-section>
       </q-card>
@@ -105,12 +105,12 @@
           <q-list dense>
             <q-item><q-item-section>AB 泵交換測試</q-item-section></q-item>
             <q-item><q-item-section>高低水位浮球測試</q-item-section></q-item>
-            <q-item
-              ><q-item-section>排水 / 積水 / 漏水檢查</q-item-section></q-item
-            >
-            <q-item><q-item-section>管路清潔與阻塞檢查</q-item-section></q-item>
+            <q-item><q-item-section>管路清潔與阻塞檢查 ;; 排水 / 積水 / 漏水檢查</q-item-section></q-item>
+            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
+            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
           </q-list>
         </q-card-section>
+
       </q-card>
     </div>
 
@@ -122,9 +122,10 @@
 
           <q-list dense>
             <q-item><q-item-section>電信系統檢查</q-item-section></q-item>
-            <q-item><q-item-section>紅外線警報器</q-item-section></q-item>
-            <q-item><q-item-section>監控調閱</q-item-section></q-item>
+            <q-item><q-item-section>紅外線警報器 / 監控調閱</q-item-section></q-item>
             <q-item><q-item-section>照明控制</q-item-section></q-item>
+            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
+            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
           </q-list>
         </q-card-section>
       </q-card>
@@ -137,6 +138,8 @@
             <q-item><q-item-section>瓦斯 / 地震監測</q-item-section></q-item>
             <q-item><q-item-section>火警消防系統</q-item-section></q-item>
             <q-item><q-item-section>受信總機測試</q-item-section></q-item>
+            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
+            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
           </q-list>
         </q-card-section>
       </q-card>
@@ -150,11 +153,11 @@
 
           <q-list dense>
             <q-item><q-item-section>抄表 / 巡場</q-item-section></q-item>
-            <q-item><q-item-section>設備清潔與潤滑</q-item-section></q-item>
-            <q-item><q-item-section>功能測試</q-item-section></q-item>
-            <q-item
-              ><q-item-section>年度保養 / 發電機大保養</q-item-section></q-item
-            >
+            <q-item><q-item-section>設備清潔與潤滑 / 功能測試</q-item-section></q-item>
+            <q-item><q-item-section>年度保養 / 發電機大保養</q-item-section></q-item>
+            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
+            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
+
           </q-list>
         </q-card-section>
       </q-card>
@@ -166,12 +169,10 @@
 
           <q-list dense>
             <q-item><q-item-section>任務提示 / 日報</q-item-section></q-item>
-            <q-item><q-item-section>保養紀錄表</q-item-section></q-item>
-            <q-item><q-item-section>維修建議回報</q-item-section></q-item>
-            <q-item><q-item-section>工單系統 / 佈告欄</q-item-section></q-item>
-            <q-item
-              ><q-item-section>LINE 通知 / 收尾檢查表</q-item-section></q-item
-            >
+            <q-item><q-item-section>保養紀錄表 / 維修建議回報</q-item-section></q-item>
+            <q-item><q-item-section>工單系統 / 佈告欄 / LINE 通知 / 收尾檢查表</q-item-section></q-item>
+            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
+            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
           </q-list>
         </q-card-section>
       </q-card>
