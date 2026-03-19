@@ -26,6 +26,7 @@ const routes = [
       { path: 'bannerDesign', component: () => import('components/bannerDesign.vue'), name: 'bannerDesign' },
       { path: 'bannerERP', component: () => import('components/bannerERP.vue'), name: 'bannerERP' },
       { path: 'bannerDroneBox', component: () => import('components/bannerDroneBox.vue'), name: 'bannerDroneBox' },
+      { path: 'bannerMotor', component: () => import('components/bannerMotor.vue'), name: 'bannerMotor' },
 
 
 
@@ -37,6 +38,7 @@ const routes = [
       { path: 'ExpansionG12', component: () => import('components/ExpansionG12.vue'), name: 'ExpansionG12' },
       { path: 'ERP', component: () => import('components/ERP.vue'), name: 'ERP' },
       { path: 'DroneBox', component: () => import('components/DroneBox.vue'), name: 'DroneBox' },
+      { path: 'Motor', component: () => import('components/Motor.vue'), name: 'Motor' },
 
 
 

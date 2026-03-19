@@ -19,9 +19,7 @@
             :src="item[2]"
             height="120px"
           >
-
           <!-- html 空心字 https://www.twblogs.net/a/5b8ca3312b7177188334303d -->
-
           <div
             class="absolute-bottom text-white text-subtitle2 q-pa-sm"
             style="text-shadow: 0 0 3px black"

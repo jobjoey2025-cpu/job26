@@ -4,7 +4,7 @@
       src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
     />
   </div> -->
-
+  <bannerMotor />
   <div>
     <h3>recent Projects</h3>
     <p>* _____├ VTOL Drone Prototype : DC10 \\ Flight Testing sema Show</p>
@@ -60,6 +60,9 @@
 </template>
 <script setup>
 // import { ref } from 'vue'
+
+import bannerMotor from "components/bannerMotor.vue";
+
 
 import profileCard from "components/profileCard.vue";
 import timeCurve from "components/timeCurve.vue";
