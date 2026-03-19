@@ -7,21 +7,24 @@
   <bannerMotor />
   <div>
     <h3>recent Projects</h3>
-    <p>* _____├ VTOL Drone Prototype : DC10 \\ Flight Testing sema Show</p>
-    <p>
+    <p>* _____├
       B7-賽車 開模 齒輪箱issue\\ DC10-新設計 MST+ae style 3DP 開模\\ RC10 -
       舊機種重開模\\ rally-懸吊套件
     </p>
+    <p>* _____├ VTOL Drone Prototype : DC10 \\ Flight Testing sema Show</p>
+
     <p>
       * _____├ UAV Airframe Design : 250 直升機 外殼 \\ 釣魚機 - payload 外殼
     </p>
 
+    <p>* _____└ Simulation Projects : PY Colab BLG (這有 BLG)</p>
+
     <p>
-      * _____├ Propulsion System : 電池 與 電裝 知識 + 丙級 (這我有寫過
-      只要整理)
+      xx * _____├ Propulsion System : 電池 與 電裝 知識 + 丙級 (這我有寫過
+      只要整理 motor)
     </p>
     <p>motor mounting\\ propeller sizing\\ thrust analysis\\</p>
-    <p>* _____└ Simulation Projects : PY Colab BLG (這有 BLG)</p>
+    <p></p>
   </div>
   <div>
     <h3>Project Summary Skills</h3>
@@ -50,19 +53,19 @@
     <p>* _____ 面試官最想知道：你設計了什麼? 你做了哪些零件? 你測試了什麼?</p>
     Project Page <br />
     ├ Overview 1️⃣ 整機照片 DC10 web<br />
-    ├ CAD Design 2️⃣ CAD airframe \ motor mount3️⃣ 爆炸圖 \ CAD爆炸圖怎麼展示 4️⃣內部電子配置<br />
+    ├ CAD Design 2️⃣ CAD airframe \ motor mount3️⃣ 爆炸圖 \ CAD爆炸圖怎麼展示
+    4️⃣內部電子配置<br />
     ├ Prototype : web 10 <br />
     ├ Testing 5️⃣ 飛行測試照片 \ YT DC10 video<br />
     └ Results6️⃣ 系統架構圖 GPT RCcar
   </div>
-  <br>
+  <br />
   $$$ 不可能全寫完 \ 先求完成度 就丟出去 and go JP
 </template>
 <script setup>
 // import { ref } from 'vue'
 
 import bannerMotor from "components/bannerMotor.vue";
-
 
 import profileCard from "components/profileCard.vue";
 import timeCurve from "components/timeCurve.vue";

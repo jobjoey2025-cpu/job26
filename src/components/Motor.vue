@@ -62,11 +62,7 @@
     <br />
     <hr />
     <br />
-    <!-- ------- -->
-    <div class="row q-col-gutter-md">
-      <!-- 無刷馬達 -->
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <q-card class="q-mb-md">
+    <q-card class="q-mb-md">
           <q-card-section>
             <div class="text-h6">無刷馬達應用概念</div>
 
@@ -82,7 +78,10 @@
             </q-banner>
           </q-card-section>
         </q-card>
-      </div>
+    <!-- ------- -->
+    <div class="row q-col-gutter-md">
+      <!-- 無刷馬達 -->
+
 
       <!-- RC 車參數 -->
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -104,7 +103,7 @@
         <!-- 功率 -->
         <q-card class="q-mb-md">
           <q-card-section>
-            <div class="text-h6">馬達功率</div>
+            <div class="text-h6">馬達功率相關</div>
 
             <ul>
               <li>功率 = 電壓 × 電流 × 效率</li>
@@ -157,13 +156,6 @@
           </q-card-section>
         </q-card>
       </div>
-    </div>
-    <br />
-    <hr />
-    <br />
-    <!-- 計算題 -->
-
-    <div class="row q-col-gutter-md">
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
         <q-card class="q-mb-md">
           <q-card-section>
@@ -208,7 +200,6 @@
         </q-card>
       </div>
     </div>
-
     <!-- ----------------- -->
     <br />
     <hr />
@@ -217,23 +208,118 @@
     <q-card class="q-mb-md">
       <q-card-section>
         <div class="text-h6">單相感應馬達</div>
-        <p>使用電容產生相位差，形成旋轉磁場， 使馬達能自行啟動並提升效率。</p>
+        <p>
+          單相感應馬達（Single-phase Induction Motor）
+          是最常見的家用馬達之一，幾乎所有插在 110V / 220V
+          的設備都可能用到它。使用電容產生相位差，形成旋轉磁場，
+          使馬達能自行啟動並提升效率。
+        </p>
       </q-card-section>
     </q-card>
 
     <!-- 配電 -->
     <q-card class="q-mb-md">
       <q-card-section>
-        <div class="text-h6">配電系統</div>
+        <div class="text-h6">配電箱 × 馬達應用</div>
 
-        <ul>
-          <li>主斷路器 → 分配迴路</li>
-          <li>照明 / 插座 / 動力</li>
-          <li>戶外設備：IP54 / IP65 防護</li>
-        </ul>
+        <p>
+          在實務上，例如無人機基地或工廠設備， 配電箱會先做電力分配，
+          再透過控制元件去控制馬達啟停與轉速， 像水泵、風扇或輸送設備，
+          都會依照感測器或邏輯自動運作。
+        </p>
       </q-card-section>
     </q-card>
 
+    <!-- ------------------- -->
+
+    <div class="q-pa-md row items-start q-gutter-md">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <q-card class="my-card" flat bordered style="height: 250px">
+          <q-card-section horizontal>
+            <q-card-section>
+              <!-- {{ lorem }} -->
+              🔹單線圖（單一線路圖）<br />用一條線與符號表示三相或單相配電系統的主要電力流向、配電設備與保護元件。<br /><br />
+              重點是「簡潔呈現主幹結構」：電源 → 主開關／斷路器 → 配電盤 →
+              分路保護 → 負載。
+            </q-card-section>
+
+            <q-img class="col-5" src="./statics/singleWire.png" />
+          </q-card-section>
+        </q-card>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <q-card class="my-card" flat bordered style="height: 250px">
+          <q-card-section horizontal>
+            <q-card-section>
+              🔹單線圖常見層級（由上到下）<br />
+              1.市電 / 變電所進線（含開關箱、戶外電表） 主開關 /<br />
+              2.主斷路器（MCCB）（含主接地）<br />
+              3.主母線 / 分配母線（Bus）<br />
+            </q-card-section>
+
+            <q-separator vertical />
+
+            <q-card-section>
+              4.分路斷路器（RCBO/MCB）與漏電保護（照明、插座、動力迴路）<br />
+              5.各迴路負載與接地符號<br />
+              6.保護與偵測元件（過電流、漏電、過熱、短路保護）<br />
+              7.附註：線徑、額定電流、備援供電（若有）<br />
+            </q-card-section>
+          </q-card-section>
+        </q-card>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <q-card class="my-card" flat bordered style="height: 250px">
+          <!-- <q-card-section horizontal class="items-center justify-between"> -->
+          <q-card-section horizontal>
+            <q-card-section>
+              <!-- {{ lorem }} -->
+              🔹單相感應電動機<br />中加電容，是為了
+              讓副繞組電流產生相位差，創造類似「兩相電源」的旋轉磁場，使電機能夠自行啟動，並在某些設計裡改善運行效率。
+            </q-card-section>
+
+            <q-img class="col-5 q-ml-auto" src="./statics/1MotorAmp.png" />
+          </q-card-section>
+        </q-card>
+      </div>
+
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <q-card class="my-card" flat bordered style="height: 250px">
+          <!-- <q-card-section horizontal class="items-center justify-between"> -->
+          <q-card-section horizontal>
+            <q-card-section>
+              <!-- {{ lorem }} -->
+              🔹「配電盤/配電箱/控制箱」<br />主要用來分配、控制和保護電能。
+              從電力公司進線 → 經主斷路器 →
+              分配到各個迴路（照明、插座、空調、動力）。<br />
+              戶外防水型: IP54 / IP65 等防塵防水等級，應用於施工現場或戶外設備。
+            </q-card-section>
+            <q-img class="col-5 q-ml-auto" src="./statics/controlBox.png" />
+          </q-card-section>
+        </q-card>
+      </div>
+    </div>
+    <!-- ------------------------ -->
+
+    <classCtimeLine />
+    <classCtree />
+
+    <div class="flex flex-center q-my-lg">
+      <a href="https://www.johnfon.com/WebCube/iWiringG3/" target="_blank">
+        <q-img
+          src="../components/statics/iWiringG3.png"
+          alt="Quasar Logo"
+          style="width: 330px; border-radius: 12px"
+        />
+      </a>
+    </div>
+
+    <h5 class="text-center q-my-md">
+      https://www.johnfon.com/WebCube/iWiringG3
+    </h5>
+    <h5 class="text-center q-my-md">線上接線模擬APP</h5>
     <!-- 技術脈絡 -->
     <q-card class="bg-black text-white">
       <q-card-section>
@@ -249,6 +335,8 @@
 </template>
 
 <script setup>
+import classCtree from 'components/classCtree.vue'
+import classCtimeLine from 'components/classCtimeLine.vue'
 const motors = [
   {
     title: "DC 馬達",

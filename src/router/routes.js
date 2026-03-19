@@ -40,6 +40,9 @@ const routes = [
       { path: 'DroneBox', component: () => import('components/DroneBox.vue'), name: 'DroneBox' },
       { path: 'Motor', component: () => import('components/Motor.vue'), name: 'Motor' },
 
+      { path: 'classCtree', component: () => import('components/classCtree.vue') },
+      { path: 'classCtimeLine', component: () => import('components/classCtimeLine.vue') },
+
 
 
     ]
