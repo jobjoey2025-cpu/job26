@@ -24,7 +24,7 @@
     </div>
 
     <q-timeline :layout="layout" :side="side" color="secondary">
-      <q-timeline-entry heading>規劃時序</q-timeline-entry>
+      <q-timeline-entry heading>電工規劃時序</q-timeline-entry>
 
       <q-timeline-entry title="閱讀單線圖" subtitle="5 mins" side="left" icon="article">
         <div>

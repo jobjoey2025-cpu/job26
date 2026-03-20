@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-md">
     <q-card class="q-pa-lg">
-      <div class="text-h6 text-primary q-mb-md">🚗 電動車配置模擬器</div>
+      <div class="text-h6 text-primary q-mb-md">🚗 電動車配置模擬器 (遙控車設定展示)</div>
 
       <!-- 導航按鈕放這裡（頂端） -->
       <!-- <div class="row items-center q-mb-md"> -->
