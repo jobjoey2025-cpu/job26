@@ -5,6 +5,8 @@
     />
   </div> -->
   <bannerMotor />
+  <bannerGearbox />
+
   <div>
     <h3>recent Projects</h3>
     <p>* _____├
@@ -66,6 +68,7 @@
 // import { ref } from 'vue'
 
 import bannerMotor from "components/bannerMotor.vue";
+import bannerGearbox from "components/bannerGearbox.vue";
 
 import profileCard from "components/profileCard.vue";
 import timeCurve from "components/timeCurve.vue";

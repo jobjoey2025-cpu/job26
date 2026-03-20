@@ -27,6 +27,7 @@ const routes = [
       { path: 'bannerERP', component: () => import('components/bannerERP.vue'), name: 'bannerERP' },
       { path: 'bannerDroneBox', component: () => import('components/bannerDroneBox.vue'), name: 'bannerDroneBox' },
       { path: 'bannerMotor', component: () => import('components/bannerMotor.vue'), name: 'bannerMotor' },
+      { path: 'bannerGearbox', component: () => import('components/bannerGearbox.vue'), name: 'bannerGearbox' },
 
 
 
@@ -39,9 +40,9 @@ const routes = [
       { path: 'ERP', component: () => import('components/ERP.vue'), name: 'ERP' },
       { path: 'DroneBox', component: () => import('components/DroneBox.vue'), name: 'DroneBox' },
       { path: 'Motor', component: () => import('components/Motor.vue'), name: 'Motor' },
-
       { path: 'classCtree', component: () => import('components/classCtree.vue') },
       { path: 'classCtimeLine', component: () => import('components/classCtimeLine.vue') },
+      { path: 'Gearbox', component: () => import('components/Gearbox.vue'), name: 'Gearbox' },
 
 
 
