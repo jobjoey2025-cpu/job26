@@ -15,8 +15,15 @@
             <!-- <div class="transbox" style="padding-top:40px"> -->
             <div class="transbox row items-center q-pa-md">
               <!-- <v-img cover src="@/assets/img/reflector3.png" width="170" height="170" ></v-img> -->
+              <!-- src="/src/assets/img/reflector3.png" -->
+
+              <!-- <q-img
+              src="/src/assets/img/reflector3.png"
+                style="width: 170px; height: 170px"
+                fit="cover"
+              /> -->
               <q-img
-                src="/src/assets/img/reflector3.png"
+              src="https://blogger.googleusercontent.com/img/a/AVvXsEgTevZ0kej_AgAbe3AQ9q73No27u58Aj7bbfIWsdnV94KeKGO0XKUSgUzwxLbxz1pSqYyU8YS9RTUys2G40NuvY3gH68QvQsjXD0jqvEAHnLHaYtqXM6cjG6DuJtwo5YV101CA951zYc8-0l1PxFM087nYei72W4AYJ4UOcyg1hmSMZEsQbHVV9qLgmkEA"
                 style="width: 170px; height: 170px"
                 fit="cover"
               />
@@ -72,7 +79,6 @@ div.background {
   /* border: 2px black; */
   /* background-size: 100% 100%; */
   background-size: cover;
-
 }
 
 div.transbox {
