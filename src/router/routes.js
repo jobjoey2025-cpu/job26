@@ -28,6 +28,9 @@ const routes = [
       { path: 'bannerDroneBox', component: () => import('components/bannerDroneBox.vue'), name: 'bannerDroneBox' },
       { path: 'bannerMotor', component: () => import('components/bannerMotor.vue'), name: 'bannerMotor' },
       { path: 'bannerGearbox', component: () => import('components/bannerGearbox.vue'), name: 'bannerGearbox' },
+      { path: 'bannerGearAnimate', component: () => import('components/bannerGearAnimate.vue'), name: 'bannerGearAnimate' },
+
+
 
 
 
@@ -43,6 +46,8 @@ const routes = [
       { path: 'classCtree', component: () => import('components/classCtree.vue') },
       { path: 'classCtimeLine', component: () => import('components/classCtimeLine.vue') },
       { path: 'Gearbox', component: () => import('components/Gearbox.vue'), name: 'Gearbox' },
+      { path: 'DC10', component: () => import('components/DC10.vue'), name: 'DC10' },
+      { path: 'GearAnimate', component: () => import('components/GearAnimate.vue'), name: 'GearAnimate' },
 
 
 

@@ -6,7 +6,8 @@
   </div> -->
   <bannerMotor />
   <bannerGearbox />
-
+  <bannerDC10 />
+  <!-- <bannerGearAnimate /> -->
   <div>
     <h3>recent Projects</h3>
     <p>* _____├
@@ -69,6 +70,9 @@
 
 import bannerMotor from "components/bannerMotor.vue";
 import bannerGearbox from "components/bannerGearbox.vue";
+import bannerDC10 from "components/bannerDC10.vue";
+// import bannerGearAnimate from "components/bannerGearAnimate.vue";
+
 
 import profileCard from "components/profileCard.vue";
 import timeCurve from "components/timeCurve.vue";
