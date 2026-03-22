@@ -46,8 +46,11 @@ const routes = [
       { path: 'classCtree', component: () => import('components/classCtree.vue') },
       { path: 'classCtimeLine', component: () => import('components/classCtimeLine.vue') },
       { path: 'Gearbox', component: () => import('components/Gearbox.vue'), name: 'Gearbox' },
-      { path: 'DC10', component: () => import('components/DC10.vue'), name: 'DC10' },
       { path: 'GearAnimate', component: () => import('components/GearAnimate.vue'), name: 'GearAnimate' },
+      // { path: 'Drift', component: () => import('components/Drift.vue'), name: 'Drift' },
+      { path: 'DC10', component: () => import('components/DC10.vue'), name: 'DC10' },
+
+
 
 
 
