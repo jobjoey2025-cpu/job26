@@ -38,30 +38,40 @@
 import { ref, onMounted } from "vue";
 
 const posts = ref([]);
+const loading = ref(true);
+const error = ref(null);
 
-// Blogger RSS
-const FEED_URL = "https://9stepapps.blogspot.com/feeds/posts/default?alt=json";
-
+// 從 Netlify function 拿資料（解 CORS）
 onMounted(async () => {
-  const res = await fetch(FEED_URL);
-  const data = await res.json();
+  try {
+    const res = await fetch("/.netlify/functions/blog");
+    const data = await res.json();
 
-  posts.value = data.feed.entry.map((e) => ({
-    title: e.title.$t,
-    link: e.link.find((l) => l.rel === "alternate").href,
-    description: e.summary?.$t || "",
-    pubDate: e.published.$t,
-  }));
+    posts.value = data.feed.entry.map((e) => ({
+      title: e.title.$t,
+      link: e.link.find((l) => l.rel === "alternate").href,
+      description: e.summary?.$t || "",
+      pubDate: e.published.$t,
+    }));
+  } catch (err) {
+    error.value = "Failed to load blog posts";
+    console.error(err);
+  } finally {
+    loading.value = false;
+  }
 });
 
+// 開啟文章
 const open = (url) => {
   window.open(url, "_blank");
 };
 
+// 去 HTML
 const stripHtml = (html) => {
   return html.replace(/<[^>]*>?/gm, "");
 };
 
+// 日期格式
 const formatDate = (date) => {
   return new Date(date).toLocaleDateString();
 };
