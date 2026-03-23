@@ -23,7 +23,12 @@
       >
         <q-card class="cursor-pointer card-hover" @click="open(post.link)">
           <!-- 🔥 封面圖片 -->
-          <q-img :src="post.image" ratio="16/9" fit="cover" />
+          <q-img :src="post.image" ratio="16/9" fit="cover">
+            <!-- 防破圖 -->
+            <template v-slot:error>
+              <div class="bg-grey-3 flex flex-center">No Image</div>
+            </template>
+          </q-img>
 
           <q-card-section>
             <div class="text-h6 ellipsis-2-lines">
@@ -59,7 +64,7 @@ const posts = ref([]);
 const loading = ref(true);
 const error = ref(null);
 
-// 🔥 主流程：從 Netlify function 抓資料
+// 🚀 主流程
 onMounted(async () => {
   try {
     const res = await fetch("/.netlify/functions/blog");
@@ -68,7 +73,7 @@ onMounted(async () => {
 
     const text = await res.text();
 
-    // 防止拿到 HTML（debug 超重要）
+    // 防止拿到 HTML（CORS / routing 錯）
     if (text.startsWith("<")) {
       throw new Error("Got HTML instead of JSON");
     }
@@ -80,20 +85,18 @@ onMounted(async () => {
         const content = e.content?.$t || "";
         const thumbnail = e.media$thumbnail?.url || "";
 
+        const rawImage = extractBestImage(content) || thumbnail;
+
         return {
           title: e.title.$t,
           link: e.link.find((l) => l.rel === "alternate").href,
           description: e.summary?.$t || "",
           pubDate: e.published.$t,
 
-          // 🔥 圖片優先順序
-          image:
-            extractFirstImage(content) ||
-            thumbnail.replace("s72-c", "s800") ||
-            "https://via.placeholder.com/400x250?text=No+Image",
+          image: fixBloggerImage(rawImage) || "https://picsum.photos/400/250",
         };
       })
-      // 🔥 最新在前
+      // 最新在前
       .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
   } catch (err) {
     error.value = "Failed to load blog posts";
@@ -103,10 +106,26 @@ onMounted(async () => {
   }
 });
 
-// 🔥 抓第一張圖片
-const extractFirstImage = (html) => {
-  const match = html.match(/<img[^>]+src="([^">]+)"/);
-  return match ? match[1] : null;
+// 🔥 抓最佳圖片（核心）
+const extractBestImage = (html) => {
+  if (!html) return null;
+
+  // 1️⃣ 抓 <a href="大圖">
+  const linkMatch = html.match(/<a[^>]+href="([^">]+\.(jpg|png|jpeg))"/i);
+  if (linkMatch) return linkMatch[1];
+
+  // 2️⃣ 抓 <img src="">
+  const imgMatch = html.match(/<img[^>]+src="([^">]+)"/i);
+  if (imgMatch) return imgMatch[1];
+
+  return null;
+};
+
+// 🔥 修正 Blogger 圖片尺寸
+const fixBloggerImage = (url) => {
+  if (!url) return null;
+
+  return url.replace(/=s\d+-c/, "=s1200").replace(/\/s\d+\//, "/s1200/");
 };
 
 // 開文章
@@ -126,7 +145,7 @@ const formatDate = (date) => {
 </script>
 
 <style scoped>
-/* 卡片 hover 動畫 */
+/* Hover 動畫 */
 .card-hover {
   transition: transform 0.3s, box-shadow 0.3s;
 }
