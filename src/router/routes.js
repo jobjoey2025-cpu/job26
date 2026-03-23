@@ -49,6 +49,8 @@ const routes = [
       { path: 'GearAnimate', component: () => import('components/GearAnimate.vue'), name: 'GearAnimate' },
       // { path: 'Drift', component: () => import('components/Drift.vue'), name: 'Drift' },
       { path: 'DC10', component: () => import('components/DC10.vue'), name: 'DC10' },
+      { path: 'ninestep', component: () => import('components/ninestep.vue'), name: 'ninestep' },
+
 
 
 
