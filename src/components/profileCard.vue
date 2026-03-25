@@ -6,15 +6,15 @@
     <!-- 內容 -->
 
     <div class="container">
-      <h4><b>Joey Yu</b></h4>
+      <h4 style="text-align: right"><b>Joey Yu</b></h4>
       <!-- <h4>Joey Yu</h4> -->
       <!-- <p>Class C Electrician</p> -->
       <h6 style="text-align: right">
-        Mechanical Engineer...........................
+        Mechanical Engineer
         <br />
-        Class C Electrician..............................
+        Class C Electrician
         <br>
-        Web Engineer......................................
+        Web Engineer........
       </h6>
 
       <!-- <p STYLE="FONT-SIZE: 18pt">
