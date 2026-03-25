@@ -8,7 +8,10 @@
   <bannerExperience />
   <bannerBLG />
   <timeCurve />
-  <p>IndexPage</p>
+  <p>END</p>
+
+  <q-btn flat color="white" label="Link test.vue" :to="{ name: 'test' }" />
+
 
 </template>
 

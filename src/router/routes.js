@@ -4,7 +4,6 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
-
       { path: 'classC', component: () => import('components/classC.vue') },
       { path: 'timeCurve', component: () => import('components/timeCurve.vue') },
 
@@ -31,9 +30,6 @@ const routes = [
       { path: 'bannerGearAnimate', component: () => import('components/bannerGearAnimate.vue'), name: 'bannerGearAnimate' },
 
 
-
-
-
       { path: 'timeline_g12', component: () => import('components/timeline_g12.vue'), name: 'timeline_g12' },
       { path: 'timeLine_lightSop', component: () => import('components/timeLine_lightSop.vue'), name: 'timeLine_lightSop' },
       { path: 'imageGridG12sop', component: () => import('components/imageGridG12sop.vue'), name: 'imageGridG12sop' },
@@ -50,10 +46,7 @@ const routes = [
       // { path: 'Drift', component: () => import('components/Drift.vue'), name: 'Drift' },
       { path: 'DC10', component: () => import('components/DC10.vue'), name: 'DC10' },
       { path: 'ninestep', component: () => import('components/ninestep.vue'), name: 'ninestep' },
-
-
-
-
+      { path: 'schoolCards', component: () => import('components/schoolCards.vue'), name: 'schoolCards' },
 
 
     ]

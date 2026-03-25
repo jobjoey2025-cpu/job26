@@ -10,11 +10,11 @@
   <!-- <bannerGearAnimate /> -->
   <div>
     <h3>recent Projects</h3>
-    <p>* _____├
+    <!-- <p>* _____├
       B7-賽車 開模 齒輪箱issue\\ DC10-新設計 MST+ae style 3DP 開模\\ RC10 -
       舊機種重開模\\ rally-懸吊套件
     </p>
-    <p>* _____├ VTOL Drone Prototype : DC10 \\ Flight Testing sema Show</p>
+    <p>* _____├ VTOL Drone Prototype : DC10 \\ Flight Testing sema Show</p> -->
 
     <p>
       * _____├ UAV Airframe Design : 250 直升機 外殼 \\ 釣魚機 - payload 外殼
@@ -22,12 +22,11 @@
 
     <p>* _____└ Simulation Projects : PY Colab BLG (這有 BLG)</p>
 
-    <p>
+    <!-- <p>
       xx * _____├ Propulsion System : 電池 與 電裝 知識 + 丙級 (這我有寫過
       只要整理 motor)
     </p>
-    <p>motor mounting\\ propeller sizing\\ thrust analysis\\</p>
-    <p></p>
+    <p>motor mounting\\ propeller sizing\\ thrust analysis\\</p> -->
   </div>
   <div>
     <h3>Project Summary Skills</h3>
@@ -48,7 +47,7 @@
 
   <div>
     <h3>Focus DC10 issue sheet</h3>
-    <p>腳踏車燈 就放 who am i</p>
+    <!-- <p>腳踏車燈 就放 who am i</p> -->
     <p>
       * _____ 航太面試官最愛看 6 種圖：1️⃣ 整機照片 2️⃣ CAD airframe 3️⃣ 爆炸圖 4️⃣
       內部電子配置 5️⃣ 飛行測試照片 6️⃣ 系統架構圖

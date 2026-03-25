@@ -6,8 +6,6 @@
       </template>
       connect to "Design (產品設計SOP))".
       <template v-slot:action>
-        <!-- <q-btn flat color="white" label="Link about me" /> -->
-        <!-- <q-btn flat color="white" label="Link 產品設計SOP" @click="$router.push({ name: 'bannerDesign' })" /> -->
         <q-btn flat color="white" label="Link 產品設計SOP" :to="{ name: 'timeLine_lightSop' }" />
 
       </template>

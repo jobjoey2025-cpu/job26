@@ -33,7 +33,7 @@
 
         <q-img
           src="./statics/droneFish.png"
-          style="width: 288px; height: 150px; border-radius: 8px"
+          style="width: 555px; height: 150px; border-radius: 8px"
         />
         <div class="q-mt-md text-center">
           VTOL UAV 的 Payload（酬載）設計是整個系統設計的核心之一，因為它會直接影響 重量、續航、重心、推力配置與機體尺寸。通常設計流程是 先定義 Payload → 再設計飛機。
