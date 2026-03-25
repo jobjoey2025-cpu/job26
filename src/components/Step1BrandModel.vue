@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="text-subtitle1 q-mb-sm">選擇品牌</div>
+    <p>要先選擇 "品牌" 才能 "選擇車型"</p>
     <q-select
       filled
       v-model="config.brand"
@@ -26,7 +27,7 @@
       :options="modelOptions"
       label="車型"
     />
-
+    <br />
     <!-- 車型參考圖 -->
     <div v-if="modelImage" class="q-mt-md flex flex-center">
       <q-img
@@ -40,114 +41,121 @@
     <hr />
     <h4 class="row justify-center">其他說明</h4>
 
-    <div class="row justify-center">
-      <q-card class="my-card q-ma-md" bordered flat>
-        <!-- 上方圖片 -->
-        <q-img
-          src="./statics/yokomo_car.jpg"
-          alt="Yokomo Speed Car"
-          style="height: 200px; object-fit: cover"
-        >
-          <div
-            class="absolute-bottom text-white text-subtitle1 bg-black bg-opacity-50 q-pa-sm"
+    <div class="row q-col-gutter-lg">
+      <!-- class="col-6 col-md-3" -->
+
+      <!-- <div class="row justify-center"> -->
+      <!-- style="height: 200px; object-fit: cover" -->
+
+      <div class="col-12 col-md-3">
+        <q-card class="my-card q-ma-md" bordered flat>
+          <!-- 上方圖片 -->
+          <q-img
+            src="./statics/yokomo_car.jpg"
+            alt="Yokomo Speed Car"
+            style="width: 300px; object-fit: cover"
           >
-            Yokomo Speed Car 系列
-          </div>
-        </q-img>
+            <div
+              class="absolute-bottom text-white text-subtitle1 bg-black bg-opacity-50 q-pa-sm"
+            >
+              Yokomo Speed Car 系列
+            </div>
+          </q-img>
 
-        <!-- 內容區 -->
-        <q-card-section>
-          <div class="text-h6">🏁 Team Yokomo</div>
-          <div class="text-caption text-grey">
-            高速度遙控賽車品牌，提供專業級比賽用車與升級零件。
-          </div>
-        </q-card-section>
+          <!-- 內容區 -->
+          <q-card-section>
+            <div class="text-h6">🏁 Team Yokomo</div>
+            <div class="text-caption text-grey">
+              高速度遙控賽車品牌，提供專業級比賽用車與升級零件。
+            </div>
+          </q-card-section>
 
-        <!-- 操作區 -->
-        <q-card-actions align="right">
-          <q-btn
-            color="primary"
-            label="前往官網"
-            icon="launch"
-            @click="openLink"
-          />
-        </q-card-actions>
-      </q-card>
-    </div>
-    <!-- ------- -->
-    <div class="row justify-center">
-      <q-card class="my-card q-ma-md" bordered flat>
-        <!-- 上方圖片 -->
-        <q-img
-          src="./statics/m-chassis2.jpg"
-          alt="Yokomo Speed Car"
-          style="height: 200px; object-fit: cover"
-        >
-          <div
-            class="absolute-bottom text-white text-subtitle1 bg-black bg-opacity-50 q-pa-sm"
+          <!-- 操作區 -->
+          <q-card-actions align="right">
+            <q-btn
+              color="primary"
+              label="前往官網"
+              icon="launch"
+              @click="openLink"
+            />
+          </q-card-actions>
+        </q-card>
+      </div>
+      <!-- ------- -->
+      <div class="col-12 col-md-3">
+        <q-card class="my-card q-ma-md" bordered flat>
+          <!-- 上方圖片 -->
+          <q-img
+            src="./statics/m-chassis2.jpg"
+            alt="Yokomo Speed Car"
+            style="width: 300px; object-fit: cover"
           >
-            M-Chassis Body Guide
-          </div>
-        </q-img>
+            <div
+              class="absolute-bottom text-white text-subtitle1 bg-black bg-opacity-50 q-pa-sm"
+            >
+              M-Chassis Body Guide
+            </div>
+          </q-img>
 
-        <!-- 內容區 -->
-        <q-card-section>
-          <div class="text-h6">TAMIYA</div>
-          <div class="text-caption text-grey">
-            就是可愛。...................................................................
-          </div>
-        </q-card-section>
+          <!-- 內容區 -->
+          <q-card-section>
+            <div class="text-h6">TAMIYA</div>
+            <div class="text-caption text-grey">
+              就是可愛。...................................................................
+            </div>
+          </q-card-section>
 
-        <!-- 操作區 -->
-        <q-card-actions align="right">
-          <q-btn
-            color="primary"
-            label="前往官網"
-            icon="launch"
-            type="a"
-            href="https://www.thercracer.com/2025/01/tamiya-m-chassis-body-compatibility.html"
-            target="_blank"
-          />
-        </q-card-actions>
-      </q-card>
-    </div>
+          <!-- 操作區 -->
+          <q-card-actions align="right">
+            <q-btn
+              color="primary"
+              label="前往官網"
+              icon="launch"
+              type="a"
+              href="https://www.thercracer.com/2025/01/tamiya-m-chassis-body-compatibility.html"
+              target="_blank"
+            />
+          </q-card-actions>
+        </q-card>
+      </div>
 
-    <!-- ------- -->
-    <div class="row justify-center">
-      <q-card class="my-card q-ma-md" bordered flat>
-        <!-- 上方圖片 -->
-        <q-img
-          src="./statics/initial_D.jpg"
-          alt="Mini-Z"
-          style="height: 200px; object-fit: cover"
-        >
-          <div
-            class="absolute-bottom text-white text-subtitle1 bg-black bg-opacity-50 q-pa-sm"
+      <!-- ------- -->
+      <div class="col-12 col-md-3">
+        <q-card class="my-card q-ma-md" bordered flat>
+          <!-- 上方圖片 -->
+          <q-img
+            src="./statics/initial_D.jpg"
+            alt="Mini-Z"
+            style="width: 300px; object-fit: cover"
           >
-            miniz_series
-          </div>
-        </q-img>
+            <div
+              class="absolute-bottom text-white text-subtitle1 bg-black bg-opacity-50 q-pa-sm"
+            >
+              miniz_series
+            </div>
+          </q-img>
 
-        <!-- 內容區 -->
-        <q-card-section>
-          <div class="text-h6">Kyosho</div>
-          <div class="text-caption text-grey">
-            1/28 方便蒐藏。但是要有賽道-用途（例如街跑、賽道、改裝）
-          </div>
-        </q-card-section>
+          <!-- 內容區 -->
+          <q-card-section>
+            <div class="text-h6">Kyosho</div>
+            <div class="text-caption text-grey">
+              1/28 方便蒐藏。但是要有賽道-用途（例如街跑、賽道、改裝）
+            </div>
+          </q-card-section>
 
-        <!-- 操作區 -->
-        <q-card-actions align="right">
-          <q-btn
-            color="primary"
-            label="前往官網"
-            icon="launch"
-            type="a"
-            href="https://www.thercracer.com/2025/01/tamiya-m-chassis-body-compatibility.html"
-            target="_blank"
-          />
-        </q-card-actions>
-      </q-card>
+          <!-- 操作區 -->
+          <q-card-actions align="right">
+            <q-btn
+              color="primary"
+              label="前往官網"
+              icon="launch"
+              type="a"
+              href="https://www.thercracer.com/2025/01/tamiya-m-chassis-body-compatibility.html"
+              target="_blank"
+            />
+          </q-card-actions>
+        </q-card>
+      </div>
     </div>
   </div>
 </template>

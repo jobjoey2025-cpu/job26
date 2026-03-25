@@ -20,7 +20,7 @@
         <!-- src="https://cdn.quasar.dev/img/mountains.jpg" -->
         <q-img
           src="./statics/t-250shell2.png"
-          style="width: 510px; height: 150px; border-radius: 8px"
+          style="width: 660px; height: 150px; border-radius: 8px"
         />
         <div class="q-mt-md text-center">
           VTOL（垂直起降）飛行器的機構設計通常結合航空工程、機械結構與控制系統。

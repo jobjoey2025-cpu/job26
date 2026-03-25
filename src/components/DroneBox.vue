@@ -90,8 +90,10 @@
             <q-item><q-item-section>發電機測試</q-item-section></q-item>
             <q-item><q-item-section>停電 Timer 校正 / 復歸</q-item-section></q-item>
             <!-- <q-item><q-item-section>影像紀錄（GoPro / 手機）</q-item-section></q-item> -->
-            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
-            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
+            <q-img src="./statics/generator.jpg" style="width: 100px; height: 100px" fit="cover"/>
+            <q-img src="./statics/generator2.jpg" style="width: 100px; height: 100px" fit="cover"/>
+            <q-img src="./statics/generator3.png" style="width: 100px; height: 100px" fit="cover"/>
+            <q-img src="./statics/clock.jpg" style="width: 100px; height: 100px" fit="cover"/>
 
           </q-list>
         </q-card-section>

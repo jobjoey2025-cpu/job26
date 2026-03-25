@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* html {
+            scroll-behavior: smooth;
+        }
+
+        .full-page {
+            height: 100vh;
+        } */
+
+        .container {
+            perspective: 1px;
+            transform-style: preserve-3d;
+            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            background-color: #f2f2f2;
+        }
+
+        .image {
+            display: flex;
+            flex: 1 0 auto;
+            justify-content: center;
+            position: relative;
+            height: 100vh;
+            transform: translateZ(-1px) scale(2);
+            z-index: -1;
+            /* background-image: url("https://source.unsplash.com/random"); */
+            background-image: url("/img/bike_light.jpg");
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+        }
+
+        .content {
+            display: block;
+            position: relative;
+            background-color: white;
+            z-index: 1;
+            padding: 12rem 4rem;
+            text-align: center;
+            color: white;
+            background-color: #222;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .text {
+            color: white;
+            text-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
+            position: absolute;
+            bottom: 2rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        /* --------------- */
+        h3 {
+            text-align: left
+        }
+
+        p {
+            text-align: left
+        }
+
+
+        /* ---------------- */
+        /* .container {
+            background-color: rgba(0, 0, 0, );
+            width: 300px;
+            height: 250px;
+            text-align: center;
+        } */
+    </style>
+    <!-- Bootstrap CSS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> -->
+
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 錨點測試 -->
+    <!-- <div class="fixed-top text-center w-100">
+        <a href="#home" class="btn btn-info">home</a>
+        <a href="#about" class="btn btn-info">about</a>
+        <a href="#shop" class="btn btn-info">shop</a>
+    </div>
+    <div class="full-page" id="home">Home</div>
+    <div class="full-page" id="about">About</div>
+    <div class="full-page" id="shop">Shop</div> -->
+
+    <!-- ------------- -->
+    <!-- <div class="full-page" id="home">
+        Home
+    </div>
+    <div class="container">
+        <div class="image">
+            <h1 class="text">Scroll Down</h1>
+        </div>
+        <div class="content">
+            <h2>Hello world</h2>
+        </div>
+    </div> -->
+    <!-- ------------- -->
+
+    <!-- ------------- -->
+    <div>
+        <div class="full-page" id="heat_sink">
+            <p style="visibility:hidden;">heat_sink</p>
+        </div>
+        <div class="container">
+            <div class="image">
+                <h1 class="text">車頭燈 散熱設計</h1>
+            </div>
+            <div class="content">
+                <!-- <h2>Hello world</h2> -->
+                <h3>"車頭燈的散熱設計是非常重要的，因為如果熱量無法及時散出，會對燈具的壽命和效能產生負面影響。以下是一些可以考慮的車頭燈散熱設計：</h3>
+                <p>散熱片：散熱片可以增加燈具表面積，增強散熱效果。可以在燈具的外殼上加上散熱片，以增強燈具散熱能力。
+                </p>
+                <p>散熱片：散熱片可以增加燈具表面積，增強散熱效果。可以在燈具的外殼上加上散熱片，以增強燈具散熱能力。
+                </p>
+                <p>散熱孔：在燈具的外殼上設計散熱孔，可以讓空氣流通，提高散熱效果。這種設計可以在燈具的頂部、底部或側面設計散熱孔。</p>
+                <p>散熱膏：在燈具和散熱片之間使用散熱膏可以提高散熱效果。這種散熱膏可以填充在燈具和散熱片之間，以增加熱傳導能力。</p>
+                <p>材料選擇：使用高導熱材料，如鋁合金，可以提高燈具的散熱能力，減少燈具的工作溫度，延長燈具的使用壽命。</p>
+                <p>在設計散熱系統時，需要考慮燈具的尺寸、功率和工作溫度等因素。必須確保散熱設計足夠有效，以確保燈具的性能和壽命。"</p>
+            </div>
+        </div>
+        <!-- ------------- -->
+
+        <!-- ------------- -->
+        <div class="full-page" id="light">
+            <p style="visibility:hidden;">light</p>
+        </div>
+        <div class="container">
+            <div class="image">
+                <h1 class="text">車頭燈 光型 停止線設計</h1>
+            </div>
+            <div class="content">
+                <h3>車頭燈的光型和停止線設計是關乎騎行安全的重要因素，以下是一些可以考慮的設計原則：</h3>
+
+                <p>光型：車頭燈的光型應該設計為寬而平坦的橢圓形，能夠提供寬廣的照明範圍，讓騎行者可以更好地看到前方的路面和障礙物。同時，在設計光型時需要考慮到不影響其他交通參與者的視線，避免造成盲點或干擾。
+                </p>
+                <p>停止線：車頭燈的停止線是指照射到路面上的光線，它應該設計為直線，並且應該與地面成垂直角度。停止線的位置應該設計在適當的高度，能夠提供良好的照明效果，讓騎行者在行駛時能夠清晰地看到路面上的標誌和障礙物，並且不會對其他交通參與者的視線造成干擾。
+                </p>
+                <p>光強度：車頭燈的光強度需要符合當地的法規要求，以確保行駛安全。此外，設計時也需要考慮到夜間行駛的環境，如燈光亮度要足夠強，以應對不同路況和天氣狀況。
+                </p>
+                <p>光色：車頭燈的光色應該符合當地的法規要求，一般使用的是白色或黃色。適當的光色能夠提高照明效果，增強視覺效果，從而提高騎行安全性。
+                </p>
+                <p>綜上所述，車頭燈的光型和停止線設計需要符合當地法規和騎行安全原則，以提供良好的照明效果和騎行安全。</p>
+
+            </div>
+        </div>
+        <!-- ------------- -->
+
+        <!-- ------------- -->
+        <div class="full-page" id="buckle">
+            <p style="visibility:hidden;">buckle</p>
+        </div>
+
+        <div class="container">
+            <div class="image">
+                <h1 class="text">自行車前燈 扣具設計</h1>
+            </div>
+            <div class="content">
+                <!-- <h2>自行車前燈 扣具設計</h2> -->
+                <h3>自行車前燈的扣具設計是非常重要的，因為它能夠確保前燈固定在自行車上的穩定性和安全性。以下是幾個可以考慮的扣具設計：
+                </h3>
+                <p>彈簧式：這種扣具設計是使用彈簧將前燈固定在自行車上，可以輕鬆地裝上和拆下前燈。
+                </p>
+                <p>螺旋式：這種扣具設計使用螺旋結構將前燈固定在自行車上，可以提供更穩定的固定效果，避免前燈在騎行中產生晃動。
+                </p>
+                <p>磁吸式：這種扣具設計使用磁力吸附將前燈固定在自行車上，可以輕鬆地裝上和拆下前燈。
+                </p>
+                <p>電池壽命：自行車前燈的電池壽命也是重要考量因素。要確保使用者可以在夜間騎車時長時間使用而不需要經常更換電池。</p>
+                <p>在扣具設計時，還需要考慮前燈的重量、大小和形狀等因素。此外，還要確保扣具的材料質量和強度，以確保前燈在騎行中不會鬆動或脫落。</p>
+            </div>
+        </div>
+
+
+        <!-- ------------- -->
+        <div class="full-page" id="idd">
+            <p style="visibility:hidden;">idd</p>
+        </div>
+
+        <div class="container">
+            <div class="image">
+                <h1 class="text">自行車前燈 造型設計</h1>
+            </div>
+            <!-- ------------- -->
+            <div class="content">
+                <!-- <h1 class="text">自行車前燈 造型設計</h1> -->
+                <!-- <h1>自行車前燈 造型設計</h1> -->
+                <h3>自行車前燈的造型設計可以從以下幾個方面入手：</h3>
+                <p>照明效果：自行車前燈的主要功能是照明，因此其照明效果必須是設計的首要考量。要確保照明範圍足夠廣闊、亮度適中、無過度眩光等問題。</p>
+                <p>外觀設計：外觀設計是自行車前燈另一個重要的考量因素。可以設計簡潔、現代化的外觀，也可以設計出獨特、有特色的造型，讓使用者在夜間騎車時不僅可以提高安全性，也可以增加其個人風格。</p>
+                <p>防水性能：自行車前燈必須具備防水性能，以確保其在潮濕的環境中正常運作，不會因水損壞。</p>
+                <p>電池壽命：自行車前燈的電池壽命也是重要考量因素。要確保使用者可以在夜間騎車時長時間使用而不需要經常更換電池。</p>
+                <p>方便性：自行車前燈的方便性也很重要。可以設計出易於安裝、拆卸和使用的前燈，讓使用者可以方便地使用和管理。</p>
+            </div>
+        </div>
+
+        <!-- ------------- -->
+        <div class="full-page" id="waterproof">
+            <p style="visibility:hidden;">waterproof</p>
+        </div>
+
+        <div class="container">
+            <div class="image">
+                <h1 class="text">自行車前燈 防水設計</h1>
+            </div>
+            <!-- ------------- -->
+            <div class="content">
+                <!-- <h1 class="text">自行車前燈 造型設計</h1> -->
+                <!-- <h1>自行車前燈 造型設計</h1> -->
+                <h3>要讓自行車前燈有良好的防水設計，可以從以下幾個方面入手：</h3>
+                <p>防水等級：確定前燈的防水等級。一般來說，IPX4等級可以防止從任何方向噴灑的水滴進入，而IPX7等級可以在1米的深度下長時間浸泡。選擇防水等級高的前燈可以確保它不會在雨天受損。</p>
+                <p>封口：確保前燈的各個開口處都有良好的封口。這可以防止水滴進入前燈內部。你可以檢查是否有任何縫隙或漏洞，並使用防水膠或封口膠進行修補。</p>
+                <p>材質：選擇防水材質。前燈通常使用塑料或金屬製成。如果你住在多雨的地區，選擇具有良好防水性能的塑料或金屬材質可以減少前燈受損的風險。</p>
+                <p>測試：在使用前燈之前，進行防水測試。可以使用水龍頭噴射水流測試前燈的防水性能。如果發現任何漏水的跡象，請及時進行修補。</p>
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>

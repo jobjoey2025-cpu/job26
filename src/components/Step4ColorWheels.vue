@@ -9,7 +9,7 @@
       <q-select
         v-model="config.wheels"
         label="輪圈尺寸"
-        :options="['17 吋', '18 吋', '19 吋', '20 吋']"
+        :options="['2 吋', '3 吋', '4 吋', '5 吋']"
       />
     </div>
 

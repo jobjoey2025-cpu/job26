@@ -3,18 +3,25 @@
     <div class="q-gutter-md">
       <q-select
         v-model="config.battery"
-        label="電池容量 (kWh)"
+        label="電池 串聯（Series）"
         :options="['1S', '2S', '3S', '4S']"
       />
+
+      <br />
+      <br />
+      <div>電池 放電倍率 (ex 35C)：{{ config.range }} C</div>
+      <p>
+        馬達電流需求 ≦ 電池最大放電能力 (馬達最大 60A 👉 電池至少： → 60 × 1.5 =
+        90A)
+      </p>
       <q-slider
         v-model="config.range"
-        :min="200"
-        :max="600"
+        :min="20"
+        :max="150"
         label
         label-always
         color="primary"
       />
-      <div>預估續航 (35C)：{{ config.range }} km</div>
     </div>
 
     <br /><br />

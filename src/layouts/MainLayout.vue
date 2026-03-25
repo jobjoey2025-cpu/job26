@@ -47,10 +47,9 @@
 <script setup>
 import { ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
-import classC from "components/classC.vue";
 
+import classC from "components/classC.vue"; // 輪播
 import bannerFoot from "components/bannerFoot.vue";
-
 
 const linksList = [
   {

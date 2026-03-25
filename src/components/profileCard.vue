@@ -4,15 +4,30 @@
     <div class="card-bg"></div>
 
     <!-- 內容 -->
-    <img src="../assets/img/joey.png" alt="Avatar" class="avatar" />
+
     <div class="container">
       <h4><b>Joey Yu</b></h4>
       <!-- <h4>Joey Yu</h4> -->
       <!-- <p>Class C Electrician</p> -->
-      <h6> → →   Class C Electrician</h6>
+      <h6 style="text-align: right">
+        Mechanical Engineer...........................
+        <br />
+        Class C Electrician..............................
+        <br>
+        Web Engineer......................................
+      </h6>
+
+      <!-- <p STYLE="FONT-SIZE: 18pt">
+        . Mechanical Engineer
+        <br />
+        Class C Electrician
+      </p> -->
+
       <!-- <h6 style = "float: left; right: 666px">Class C Electrician</h6> -->
       <!-- <div style="float: left; display: block; margin-top: 222px; visibility: hidden;"> -->
     </div>
+    <!-- 背景 -->
+    <img src="../assets/img/joey.png" alt="Avatar" class="avatar" />
   </div>
 
   <br />
@@ -20,8 +35,8 @@
 
 <script>
 export default {
-  name: 'ProfileCard',
-}
+  name: "ProfileCard",
+};
 </script>
 
 <style scoped>
@@ -38,7 +53,7 @@ export default {
 
 /* 背景圖 */
 .card-bg {
-  background-image: url('../assets/img/Mechanical.jpg'); /* 背景圖路徑 */
+  background-image: url("../assets/img/Mechanical.jpg"); /* 背景圖路徑 */
   background-size: cover;
   background-position: center;
   position: absolute;

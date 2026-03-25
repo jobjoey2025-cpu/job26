@@ -9,6 +9,15 @@
     target="_blank"
     icon="open_in_new"
   />
+
+  <q-btn
+    flat
+    color="primary"
+    label="網站地圖 octopus"
+    href="https://octopus.do/3abe0185a92c"
+    target="_blank"
+    icon="open_in_new"
+  />
 </template>
 
 <script setup>

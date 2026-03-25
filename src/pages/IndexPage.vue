@@ -8,8 +8,9 @@
   <bannerExperience />
   <bannerBLG />
   <timeCurve />
-  <p>END</p>
 
+
+  <p>END</p>
   <q-btn flat color="white" label="Link test.vue" :to="{ name: 'test' }" />
 
 

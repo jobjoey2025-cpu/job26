@@ -26,7 +26,7 @@
           <Step1BrandModel :config="config" />
         </q-step>
 
-        <q-step :name="2" title="車型">
+        <q-step :name="2" title="車種">
           <Step2PowerSystem :config="config" />
         </q-step>
 
