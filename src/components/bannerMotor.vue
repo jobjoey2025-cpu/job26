@@ -2,7 +2,7 @@
   <div class="q-pa-md q-gutter-sm">
     <q-banner dense inline-actions class="text-white bg-red">
       <template v-slot:avatar>
-        <q-icon name="miscellaneous_services" color="white" />
+        <q-icon name="wind_power" color="white" />
       </template>
       connect to "Motor".
       <template v-slot:action>

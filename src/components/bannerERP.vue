@@ -2,7 +2,8 @@
   <div class="q-pa-md q-gutter-sm">
     <q-banner dense inline-actions class="text-white bg-deep-orange-7">
       <template v-slot:avatar>
-        <q-icon name="miscellaneous_services" color="white" />
+        <q-icon name="join_left" color="white" />
+
       </template>
       connect to "ERP" (工程資料管理).
       <template v-slot:action>

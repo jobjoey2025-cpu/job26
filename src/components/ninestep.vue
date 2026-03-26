@@ -2,7 +2,7 @@
   <q-page class="q-pa-lg">
     <!-- Hero -->
     <div class="text-center q-mb-xl">
-      <div class="text-h3 text-bold">9StepApps Blog</div>
+      <div class="text-h3 text-bold">Blog</div>
       <div class="text-subtitle1">Engineering × AI × Design Articles</div>
     </div>
 

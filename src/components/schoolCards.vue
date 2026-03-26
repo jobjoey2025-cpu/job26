@@ -1,7 +1,8 @@
 <template>
   <q-page class="q-pa-lg">
     <!-- Title -->
-    <div class="text-h4 text-bold q-mb-lg">經歷與證書</div>
+    <!-- <div class="text-h4 text-bold q-mb-lg">經歷與證書</div> -->
+    <h3 style="text-align: center">經歷與證書</h3>
 
     <!-- Grid -->
     <div class="row q-col-gutter-lg">
@@ -70,6 +71,36 @@ const getImg = (name) => {
 
 // 資料
 const messages = ref([
+{
+    title: "迷你無人機研習營",
+    time: "",
+    text: `
+FPV 無人機 組裝 設定 與 飛行操作
+Betaflight PID 設定
+https://www.facebook.com/share/v/16bSxwa2Kp/
+    `,
+    img: "robot.jpg",
+  },
+  {
+    title: "team associated",
+    time: "",
+    text: `
+南崁
+機械工程師
+電動遙控車工程師
+    `,
+    img: "DC10_BOX.jpg",
+  },
+{
+    title: "丙級室內配線技術士",
+    time: "",
+    text: `
+富民機電技術訓練中心
+丙級室內配線技術士班
+    `,
+    img: "CertificateC.png",
+  },
+
   {
     title: "蘇澳國中",
     time: "",
@@ -163,14 +194,7 @@ ERP
     img: "bikeLight.jpg",
   },
 
-  {
-    title: "team associated",
-    time: "",
-    text: `
-南崁
-    `,
-    img: "DC10_BOX.jpg",
-  },
+
 
   {
     title: "統領百貨",
@@ -218,15 +242,6 @@ PHP + Laravel
 Git / SourceTree
     `,
     img: "網頁程式證書.jpg",
-  },
-  {
-    title: "丙級室內配線技術士",
-    time: "",
-    text: `
-富民機電技術訓練中心
-丙級室內配線技術士班
-    `,
-    img: "CertificateC.png",
   },
 
   {

@@ -12,7 +12,8 @@
 
     <!-- KPI Section -->
     <div class="row q-col-gutter-md q-mb-xl">
-      <div class="col-4">
+      <!-- <div class="col-4"> -->
+        <div class="col-12 col-md-6 col-lg-4">
         <q-card class="q-pa-md">
           <div class="text-h7">
             <li>協助設計師進行設計與開模規劃（DFM）</li>
@@ -22,7 +23,7 @@
           <div class="text-center">🎯 Role & Responsibility</div>
         </q-card>
       </div>
-      <div class="col-4">
+      <div class="col-12 col-md-6 col-lg-4">
         <q-card class="q-pa-md">
           <div class="text-h7">
             <li>DFM 與開模協調（回饋設計問題並推動修正）</li>
@@ -32,7 +33,7 @@
           <div class="text-center">⚙️ Engineering Contribution</div>
         </q-card>
       </div>
-      <div class="col-4">
+      <div class="col-12 col-md-6 col-lg-4">
         <q-card class="q-pa-md">
           <div class="text-h7">
             <li>成功將既有平台延伸為甩尾車型</li>

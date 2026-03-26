@@ -56,37 +56,38 @@ const linksList = [
     title: "Home",
     caption: "內部頁面",
     icon: "home", // IndexPage MyPage
-    to: '/', // ✅ Vue Router 內部跳轉
+    to: "/", // ✅ Vue Router 內部跳轉
   },
   {
-    title: 'About me',
-    caption: '內部頁面',
-    icon: 'face', // MyPage
-    to: { name: 'MyPage' }  // ✅ Vue Router 內部跳轉
+    title: "About me",
+    caption: "內部頁面",
+    icon: "face", // MyPage
+    to: { name: "MyPage" }, // ✅ Vue Router 內部跳轉
   },
   {
     title: "Services（履歷）",
-    caption: '內部頁面',
+    caption: "內部頁面",
     icon: "miscellaneous_services",
-    to: '/Services', // ✅ Vue Router 內部跳轉
+    to: "/Services", // ✅ Vue Router 內部跳轉
   },
   {
     title: "Experience (專案)",
-    caption: '內部頁面',
+    caption: "內部頁面",
     icon: "rocket_launch",
-    to: '/Experience', // ✅ Vue Router 內部跳轉
+    to: "/Experience", // ✅ Vue Router 內部跳轉
   },
   {
     title: "Blog (部落格)",
-    caption: '內部頁面',
+    caption: "內部頁面",
     icon: "rss_feed",
-    to: '/BLG', // ✅ Vue Router 內部跳轉
+    to: "/BLG", // ✅ Vue Router 內部跳轉
   },
   {
     title: "Connect me",
-    caption: '外部頁面 104',
+    caption: "外部頁面 104",
     icon: "favorite",
-    to: '/Experience', // ✅ Vue Router 內部跳轉
+    href: "https://www.104.com.tw/", // ✅ 外部連結
+    target: "_blank", // (建議) 開新分頁
   },
 ];
 

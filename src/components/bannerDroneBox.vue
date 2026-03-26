@@ -2,8 +2,9 @@
   <div class="q-pa-md q-gutter-sm">
     <q-banner dense inline-actions class="text-white bg-cyan-13">
       <template v-slot:avatar>
-        <q-icon name="miscellaneous_services" color="white" />
+        <q-icon name="connecting_airports" color="white" />
       </template>
+      <!-- flight_land -->
       connect to "DroneBox" (無人機地面站維護)
       <!-- joey 未來發展 想像 -->
       <template v-slot:action>

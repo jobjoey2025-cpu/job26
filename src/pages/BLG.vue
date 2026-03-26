@@ -13,7 +13,7 @@
   <!-- 2026.3.26 "components/ninestep.vue" link BLG json OK \ 但是要用 Netlify 雲端, 本地端 dev 比較複雜 -->
   <!-- PY CFD page : Simulation Projects : PY Colab BLG (這有 BLG) -->
   <p>
-    Betaflight app \ 上過課 FPV - YT link \ hover flight \ transition test \
+    <!-- Betaflight app \ 上過課 FPV - YT link \ hover flight \ transition test \ -->
   </p>
   <p>blender 2 sw page : 250 直升機 外殼 \\ 釣魚機 - payload 外殼</p>
   <p>

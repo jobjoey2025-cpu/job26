@@ -19,6 +19,12 @@
         </p>
         <q-img
           class="q-mx-md"
+          src="./statics/CAR電裝.png"
+          style="width: 200px; height: 100px"
+          fit="cover"
+        />
+        <q-img
+          class="q-mx-md"
           src="./statics/shopee-CZQOGGCn.png"
           style="width: 100px; height: 200px"
           fit="cover"
@@ -29,12 +35,12 @@
           style="width: 200px; height: 200px"
           fit="cover"
         />
-        <q-img
+        <!-- <q-img
           class="q-mx-md"
           src="./statics/bettery-D6dlTMAi.png"
           style="width: 130px; height: 200px"
           fit="cover"
-        />
+        /> -->
         <q-img
           class="q-mx-md"
           src="./statics/brushMotor-GrhOnz2-.png"

@@ -47,6 +47,7 @@ const routes = [
       { path: 'DC10', component: () => import('components/DC10.vue'), name: 'DC10' },
       { path: 'ninestep', component: () => import('components/ninestep.vue'), name: 'ninestep' },
       { path: 'schoolCards', component: () => import('components/schoolCards.vue'), name: 'schoolCards' },
+      { path: 'ansysTree', component: () => import('components/ansysTree.vue'), name: 'ansysTree' },
 
 
     ]
