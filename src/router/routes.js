@@ -28,6 +28,7 @@ const routes = [
       { path: 'bannerMotor', component: () => import('components/bannerMotor.vue'), name: 'bannerMotor' },
       { path: 'bannerGearbox', component: () => import('components/bannerGearbox.vue'), name: 'bannerGearbox' },
       { path: 'bannerGearAnimate', component: () => import('components/bannerGearAnimate.vue'), name: 'bannerGearAnimate' },
+      { path: 'bannerDC10', component: () => import('components/bannerDC10.vue'), name: 'bannerDC10' },
 
 
       { path: 'timeline_g12', component: () => import('components/timeline_g12.vue'), name: 'timeline_g12' },
