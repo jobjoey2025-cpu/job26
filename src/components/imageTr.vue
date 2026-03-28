@@ -49,7 +49,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .container {
-  background-color: rgba(0, 0, 0);
+  background-color: rgba(255, 255, 255);
   width: 400px;
   height: 400px;
   text-align: center;

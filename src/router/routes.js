@@ -49,6 +49,8 @@ const routes = [
       { path: 'ninestep', component: () => import('components/ninestep.vue'), name: 'ninestep' },
       { path: 'schoolCards', component: () => import('components/schoolCards.vue'), name: 'schoolCards' },
       { path: 'ansysTree', component: () => import('components/ansysTree.vue'), name: 'ansysTree' },
+      { path: 'imageMap', component: () => import('components/imageMap.vue'), name: 'imageMap' },
+
 
 
     ]
