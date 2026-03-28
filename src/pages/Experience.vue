@@ -4,11 +4,12 @@
       src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
     />
   </div> -->
-  <bannerMotor />
-  <bannerGearbox />
-  <bannerDC10 />
+
   <!-- <bannerGearAnimate /> -->
   <div>
+    <bannerMotor />
+    <bannerGearbox />
+    <bannerDC10 />
     <h3>recent Projects</h3>
     <!-- <p>* _____├
       B7-賽車 開模 齒輪箱issue\\ DC10-新設計 MST+ae style 3DP 開模\\ RC10 -
@@ -71,7 +72,6 @@ import bannerMotor from "components/bannerMotor.vue";
 import bannerGearbox from "components/bannerGearbox.vue";
 import bannerDC10 from "components/bannerDC10.vue";
 // import bannerGearAnimate from "components/bannerGearAnimate.vue";
-
 
 // import profileCard from "components/profileCard.vue";
 // import timeCurve from "components/timeCurve.vue";
