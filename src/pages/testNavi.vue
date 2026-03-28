@@ -24,7 +24,6 @@
 
     <q-separator spaced="lg" />
 
-    <bannerDesign />
     <!-- 產品設計 SOP -->
     <!-- <div class="q-my-xl">
       <timeLine_lightSop />
@@ -33,6 +32,10 @@
     <div class="q-my-xl">
       <imageGridG12sop />
     </div>
+
+    <h4 style="text-align: center;">產品設計 SOP</h4>
+    <bannerDesign />
+
 
     <q-separator spaced="lg" />
 

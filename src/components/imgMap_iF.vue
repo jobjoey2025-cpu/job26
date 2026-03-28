@@ -10,7 +10,10 @@
       <!-- <iframe src="/3Dcarousel.html" height="500" width="1000" frameborder="0" /> -->
       <!-- <v-iframe src="/1019.html" height="270" width="400" frameborder="0" allowfullscreen></v-iframe> -->
       <!-- <iframe src="/1019.html" align="right" height="270" width="400" frameborder="0" /> -->
-      <iframe src="/1018tooltip.html"  height="400" width="450" frameborder="0" />
+      <!-- <iframe src="/1018tooltip.html"  height="400" width="450" frameborder="0" /> -->
+
+      <iframe src="1018tooltip.html"  height="400" width="450" frameborder="0" />
+
 
     </v-responsive>
       <!-- </div> -->
@@ -24,7 +27,7 @@
 //  import { VIframe } from 'v-iframe';
 export default {
 
- 
+
   name: 'imgMap-iF',
 
   // components: {
