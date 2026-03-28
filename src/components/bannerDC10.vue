@@ -11,7 +11,7 @@
         <q-btn
           flat
           color="white"
-          label="Link Bike front lights"
+          label="Link Drift Car DC10"
           :to="{ name: 'DC10' }"
         />
       </template>

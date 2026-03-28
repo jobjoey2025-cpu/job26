@@ -13,7 +13,7 @@
     <!-- KPI Section -->
     <div class="row q-col-gutter-md q-mb-xl">
       <!-- <div class="col-4"> -->
-        <div class="col-12 col-md-6 col-lg-4">
+      <div class="col-12 col-md-6 col-lg-4">
         <q-card class="q-pa-md">
           <div class="text-h7">
             <li>協助設計師進行設計與開模規劃（DFM）</li>
@@ -21,6 +21,8 @@
             <li>主導 3D列印樣品組裝成整車與測試</li>
           </div>
           <div class="text-center">🎯 Role & Responsibility</div>
+
+          <div class="row q-gutter-sm q-mt-sm"></div>
         </q-card>
       </div>
       <div class="col-12 col-md-6 col-lg-4">
@@ -62,6 +64,13 @@
           <!-- 你設計了什麼?  -->
         </p>
       </q-card-section>
+      <q-img
+        v-for="img in bgImgs"
+        :key="img"
+        :src="img"
+        class="thumb"
+        @click="open(img)"
+      />
     </q-card>
 
     <!-- Engineering Process -->
@@ -129,16 +138,64 @@
         <q-chip color="primary" text-color="white">Prototype 驗證</q-chip>
       </q-card-section>
     </q-card>
+
+    <!-- 共用圖片放大 -->
+    <q-dialog v-model="show">
+      <q-card class="viewer">
+        <q-img :src="currentImg" fit="contain" class="full-img" />
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+// import { ref, onMounted } from "vue";
+
 // import Drift from "components/Drift.vue";
+
+import { ref } from "vue";
+
+/* ========================
+   🔥 共用圖片 viewer
+======================== */
+const show = ref(false);
+const currentImg = ref("");
+
+function open(img) {
+  currentImg.value = img;
+  show.value = true;
+}
+
+/* ========================
+   🔥 圖片資料（public/img）
+======================== */
+const bgImgs = ["/img/DC10gear.png", "/img/DC10gear mesh.png"];
+
+const t1Imgs = ["/img/B7gear-mode2.png"];
+
+const t2Imgs = ["/img/B7gear section.png"];
+
+const t3Imgs = ["/img/B7gear.png"];
 </script>
 
-<style>
+
+<style scoped>
 body {
   background: #f5f5f5;
+}
+.thumb {
+  width: 120px;
+  border-radius: 12px;
+  cursor: zoom-in;
+}
+
+.viewer {
+  width: 90vw;
+  height: 90vh;
+}
+
+.full-img {
+  width: 100%;
+  height: 100%;
 }
 </style>
