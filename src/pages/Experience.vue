@@ -3,7 +3,7 @@
     <div>
       <bannerMotor />
       <bannerGearbox />
-      <bannerDC10 />
+      <!-- <bannerDC10 /> -->
       <q-btn
         class="q-mt-xl"
         color="white"
@@ -21,5 +21,5 @@
 //
 import bannerMotor from "components/bannerMotor.vue";
 import bannerGearbox from "components/bannerGearbox.vue";
-import bannerDC10 from "components/bannerDC10.vue";
+// import bannerDC10 from "components/bannerDC10.vue";
 </script>
