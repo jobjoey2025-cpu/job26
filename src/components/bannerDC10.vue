@@ -6,11 +6,9 @@
       </template>
       connect to "RC CAR" (DC10).
       <template v-slot:action>
-        <q-btn flat color="white" label="Link RC CAR"" :to="{ name: 'DC10' }" />
-
+        <!-- <q-btn flat color="white" label="Link RC CAR"" :to="{ name: 'DC10' }" /> -->
       </template>
       <!-- <div>VTOL ==  https://github.com/jobjoey2021/VTOL</div> -->
-
     </q-banner>
   </div>
 </template>
