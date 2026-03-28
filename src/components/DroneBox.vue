@@ -43,11 +43,21 @@
         <!-- <q-card class="q-mb-md"> -->
         <!-- <q-card class="col-6 q-mx-md shadow-2"> -->
 
-        <q-img
+        <!-- <q-img
           src="./statics/dhl.jpg"
           style="width: 200px; height: 200px"
           fit="cover"
-        />
+        /> -->
+
+        <div class="row q-gutter-sm q-mt-sm">
+          <q-img
+            v-for="img in bgImgs"
+            :key="img"
+            :src="img"
+            class="thumb"
+            @click="open(img)"
+          />
+        </div>
       </q-card>
     </div>
     <br />
@@ -86,15 +96,44 @@
 
           <q-list dense>
             <q-item
-              ><q-item-section>ATS 自動切換測試 (台電)</q-item-section></q-item>
+              ><q-item-section>ATS 自動切換測試 (台電)</q-item-section></q-item
+            >
             <q-item><q-item-section>發電機測試</q-item-section></q-item>
-            <q-item><q-item-section>停電 Timer 校正 / 復歸</q-item-section></q-item>
+            <q-item
+              ><q-item-section>停電 Timer 校正 / 復歸</q-item-section></q-item
+            >
             <!-- <q-item><q-item-section>影像紀錄（GoPro / 手機）</q-item-section></q-item> -->
-            <q-img src="./statics/generator.jpg" style="width: 100px; height: 100px" fit="cover"/>
-            <q-img src="./statics/generator2.jpg" style="width: 100px; height: 100px" fit="cover"/>
-            <q-img src="./statics/generator3.png" style="width: 100px; height: 100px" fit="cover"/>
-            <q-img src="./statics/clock.jpg" style="width: 100px; height: 100px" fit="cover"/>
 
+            <div class="row q-gutter-sm q-mt-sm">
+              <q-img
+                v-for="img in ee_Imgs"
+                :key="img"
+                :src="img"
+                class="thumb"
+                @click="open(img)"
+              />
+            </div>
+
+            <!-- <q-img
+              src="./statics/generator.jpg"
+              style="width: 100px; height: 100px"
+              fit="cover"
+            />
+            <q-img
+              src="./statics/generator2.jpg"
+              style="width: 100px; height: 100px"
+              fit="cover"
+            />
+            <q-img
+              src="./statics/generator3.png"
+              style="width: 100px; height: 100px"
+              fit="cover"
+            />
+            <q-img
+              src="./statics/clock.jpg"
+              style="width: 100px; height: 100px"
+              fit="cover"
+            /> -->
           </q-list>
         </q-card-section>
       </q-card>
@@ -107,12 +146,22 @@
           <q-list dense>
             <q-item><q-item-section>AB 泵交換測試</q-item-section></q-item>
             <q-item><q-item-section>高低水位浮球測試</q-item-section></q-item>
-            <q-item><q-item-section>管路清潔與阻塞檢查 ;; 排水 / 積水 / 漏水檢查</q-item-section></q-item>
-            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
-            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
+            <q-item
+              ><q-item-section
+                >管路清潔與阻塞檢查 ;; 排水 / 積水 / 漏水檢查</q-item-section
+              ></q-item
+            >
+            <div class="row q-gutter-sm q-mt-sm">
+              <q-img
+                v-for="img in water_Imgs"
+                :key="img"
+                :src="img"
+                class="thumb"
+                @click="open(img)"
+              />
+            </div>
           </q-list>
         </q-card-section>
-
       </q-card>
     </div>
 
@@ -124,10 +173,19 @@
 
           <q-list dense>
             <q-item><q-item-section>電信系統檢查</q-item-section></q-item>
-            <q-item><q-item-section>紅外線警報器 / 監控調閱</q-item-section></q-item>
+            <q-item
+              ><q-item-section>紅外線警報器 / 監控調閱</q-item-section></q-item
+            >
             <q-item><q-item-section>照明控制</q-item-section></q-item>
-            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
-            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
+            <div class="row q-gutter-sm q-mt-sm">
+              <q-img
+                v-for="img in monitor_Imgs"
+                :key="img"
+                :src="img"
+                class="thumb"
+                @click="open(img)"
+              />
+            </div>
           </q-list>
         </q-card-section>
       </q-card>
@@ -140,8 +198,15 @@
             <q-item><q-item-section>瓦斯 / 地震監測</q-item-section></q-item>
             <q-item><q-item-section>火警消防系統</q-item-section></q-item>
             <q-item><q-item-section>受信總機測試</q-item-section></q-item>
-            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
-            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
+            <div class="row q-gutter-sm q-mt-sm">
+              <q-img
+                v-for="img in fire_Imgs"
+                :key="img"
+                :src="img"
+                class="thumb"
+                @click="open(img)"
+              />
+            </div>
           </q-list>
         </q-card-section>
       </q-card>
@@ -155,11 +220,23 @@
 
           <q-list dense>
             <q-item><q-item-section>抄表 / 巡場</q-item-section></q-item>
-            <q-item><q-item-section>設備清潔與潤滑 / 功能測試</q-item-section></q-item>
-            <q-item><q-item-section>年度保養 / 發電機大保養</q-item-section></q-item>
-            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
-            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
-
+            <q-item
+              ><q-item-section
+                >設備清潔與潤滑 / 功能測試</q-item-section
+              ></q-item
+            >
+            <q-item
+              ><q-item-section>年度保養 / 發電機大保養</q-item-section></q-item
+            >
+            <div class="row q-gutter-sm q-mt-sm">
+              <q-img
+                v-for="img in maintain_Imgs"
+                :key="img"
+                :src="img"
+                class="thumb"
+                @click="open(img)"
+              />
+            </div>
           </q-list>
         </q-card-section>
       </q-card>
@@ -171,10 +248,25 @@
 
           <q-list dense>
             <q-item><q-item-section>任務提示 / 日報</q-item-section></q-item>
-            <q-item><q-item-section>保養紀錄表 / 維修建議回報</q-item-section></q-item>
-            <q-item><q-item-section>工單系統 / 佈告欄 / LINE 通知 / 收尾檢查表</q-item-section></q-item>
-            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
-            <q-img src="./statics/dhl.jpg" style="width: 100px; height: 100px" fit="cover"/>
+            <q-item
+              ><q-item-section
+                >保養紀錄表 / 維修建議回報</q-item-section
+              ></q-item
+            >
+            <q-item
+              ><q-item-section
+                >工單系統 / 佈告欄 / LINE 通知 / 收尾檢查表</q-item-section
+              ></q-item
+            >
+            <div class="row q-gutter-sm q-mt-sm">
+              <q-img
+                v-for="img in doc_Imgs"
+                :key="img"
+                :src="img"
+                class="thumb"
+                @click="open(img)"
+              />
+            </div>
           </q-list>
         </q-card-section>
       </q-card>
@@ -190,11 +282,92 @@
         </div>
       </q-card-section>
     </q-card>
+
+    <!-- 共用圖片放大 -->
+    <q-dialog v-model="show">
+      <q-card class="viewer">
+        <q-img :src="currentImg" fit="contain" class="full-img" />
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
-<script>
+<!-- <script>
 export default {
   name: "DroneBaseDashboard",
 };
+</script> -->
+
+<script setup>
+import { ref } from "vue";
+
+/* ========================
+   🔥 共用圖片 viewer
+======================== */
+const show = ref(false);
+const currentImg = ref("");
+
+function open(img) {
+  currentImg.value = img;
+  show.value = true;
+}
+
+/* ========================
+   🔥 圖片資料（public/img）
+======================== */
+const bgImgs = ["/img/dhl.jpg"];
+
+const ee_Imgs = [
+  "/img/generator.jpg",
+  "/img/generator2.jpg",
+  "/img/generator3.png",
+  "/img/clock.jpg",
+];
+
+const water_Imgs = ["/img/water.jpg", "/img/water2.jpg", "/img/water3.png"];
+
+const monitor_Imgs = [
+  "/img/monitor.jpg",
+  "/img/monitor2.jpg",
+  "/img/monitor3.jpg",
+];
+
+const fire_Imgs = [
+  "/img/fire.png",
+  "/img/fire2.png",
+  "/img/fire3.png",
+  "/img/fire4.png",
+];
+
+const maintain_Imgs = [
+  "/img/maintain.jpg",
+  "/img/maintain2.png",
+  "/img/maintain3.jpg",
+  "/img/maintain4.jpg",
+];
+
+const doc_Imgs = [
+  "/img/generator2.jpg",
+  "/img/water2.jpg",
+  "/img/doc.jpg",
+];
+
 </script>
+
+<style scoped>
+.thumb {
+  width: 120px;
+  border-radius: 12px;
+  cursor: zoom-in;
+}
+
+.viewer {
+  width: 90vw;
+  height: 90vh;
+}
+
+.full-img {
+  width: 100%;
+  height: 100%;
+}
+</style>
