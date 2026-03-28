@@ -7,6 +7,7 @@
       connect to "RC CAR" (DC10).
       <template v-slot:action>
         <!-- <q-btn flat color="white" label="Link RC CAR"" :to="{ name: 'DC10' }" /> -->
+         <!-- 以上這格式 iPad weChat 瀏覽器 不能解釋 NG -->
         <q-btn
           flat
           color="white"
