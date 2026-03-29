@@ -8,7 +8,31 @@
         Communication
       </div>
     </div>
+    <!-- Project Section -->
+    <q-card class="q-mb-xl">
+      <q-card-section>
+        <div class="text-h6">Project Overview</div>
+        <p>
+          *Project Background
+          客戶希望在既有車系平台上，延伸開發「甩尾車型（Drift
+          Variant）」，以符合市場趨勢並建立產品差異化。
+          <br />
+          *車台設計師就市面上的機種優化增加功能並加入客戶品牌風格。
+          <br />
+          *我幫助彌合了概念設計與可製造產品之間的差距，確保漂移平台既具備功能性又可以投入生產。
+          <!-- 你設計了什麼?  -->
+        </p>
+      </q-card-section>
+      <!-- 1️⃣ 整機照片 DC10 web -->
 
+      <q-img
+        v-for="img in bgImgs"
+        :key="img"
+        :src="img"
+        class="thumb"
+        @click="open(img)"
+      />
+    </q-card>
     <!-- KPI Section -->
     <div class="row q-col-gutter-md q-mb-xl">
       <!-- <div class="col-4"> -->
@@ -48,31 +72,6 @@
     </div>
 
     <Drift />
-
-    <!-- Project Section -->
-    <q-card class="q-mb-xl">
-      <q-card-section>
-        <div class="text-h6">Project Overview</div>
-        <p>
-          Project Background 客戶希望在既有車系平台上，延伸開發「甩尾車型（Drift
-          Variant）」，以符合市場趨勢並建立產品差異化。
-          <br />
-          車台設計師就市面上的機種優化增加功能並加入客戶品牌風格。
-          <br />
-          我幫助彌合了概念設計與可製造產品之間的差距，確保漂移平台既具備功能性又可以投入生產。
-          <!-- 你設計了什麼?  -->
-        </p>
-      </q-card-section>
-      <!-- 1️⃣ 整機照片 DC10 web -->
-
-      <q-img
-        v-for="img in bgImgs"
-        :key="img"
-        :src="img"
-        class="thumb"
-        @click="open(img)"
-      />
-    </q-card>
 
     <!-- Engineering Process -->
     <q-card class="q-mb-xl">
@@ -143,7 +142,9 @@
           <!-- 👉 建議你畫圖（很加分）2D pdf-->
 
           <q-timeline-entry title="🚀 Prototype 驗證" subtitle="🎯 模具IQC驗證">
-            <li>Adjusted pin position and backlash</li>
+            <li>IQC 檢驗尺寸 配合件 硬度 顏色</li>
+            <li>客戶試模 IQC 檢驗尺寸 與 車手試車</li>
+            <li>Kit 組裝測試</li>
 
             <!-- 你測試了什麼? -->
             <q-img
@@ -158,8 +159,10 @@
           <!-- 5️⃣ 飛行測試照片 \ YT DC10 video -->
 
           <q-timeline-entry title="🔥 Result" subtitle="🎯 銷售反饋與社群">
-            <li>Smooth gear engagement achieved</li>
-
+            <li>參加 sema show</li>
+            <li>T2 修改事項</li>
+            <li>彩盒與組裝說明書</li>
+            <li>社群反應與對策</li>
             <q-img
               v-for="img in sell_Imgs"
               :key="img"
@@ -181,11 +184,12 @@
         <q-chip color="primary" text-color="white"
           >能把問題收斂到可製造設計</q-chip
         >
-        <q-chip color="primary" text-color="white">Tolerance Analysis</q-chip>
         <q-chip color="primary" text-color="white"
           >設計 → 製造轉換（DFM）</q-chip
         >
-        <q-chip color="primary" text-color="white">Prototype 驗證</q-chip>
+        <q-chip color="primary" text-color="white">Tolerance Analysis</q-chip>
+
+        <q-chip color="primary" text-color="white">Prototype 驗證與 IQC</q-chip>
       </q-card-section>
     </q-card>
 
@@ -219,7 +223,11 @@ function open(img) {
 /* ========================
    🔥 圖片資料（public/img）
 ======================== */
-const bgImgs = ["/img/dc10Chassis.jpg", "/img/dc10.jpg","/img/Team-Associated-DC10-RWD-Drift-Car-11.jpg",];
+const bgImgs = [
+  "/img/dc10Chassis.jpg",
+  "/img/dc10.jpg",
+  "/img/Team-Associated-DC10-RWD-Drift-Car-11.jpg",
+];
 
 const problem_Imgs = [
   "/img/motor-mount.png",
@@ -261,7 +269,6 @@ const sell_Imgs = [
   // "/img/20260329013.jpg",
 
   "/img/2026032921.jpg",
-
 ];
 </script>
 
@@ -270,7 +277,9 @@ body {
   background: #f5f5f5;
 }
 .thumb {
-  width: 120px;
+  /* width: 120px; */
+  width: 222px;
+  height: 99px;
   border-radius: 12px;
   cursor: zoom-in;
 }

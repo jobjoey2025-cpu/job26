@@ -139,13 +139,14 @@
         <q-chip color="primary" text-color="white" class="q-mr-sm"
           >Tolerance Analysis</q-chip
         >
-        <q-chip color="primary" text-color="white" class="q-mr-sm">DFM</q-chip>
         <q-chip color="primary" text-color="white" class="q-mr-sm"
           >Problem Solving</q-chip
         >
         <q-chip color="primary" text-color="white" class="q-mr-sm"
           >Cross-team Communication</q-chip
         >
+        <q-chip color="primary" text-color="white" class="q-mr-sm">DFM</q-chip>
+
       </q-card-section>
     </q-card>
 
@@ -223,7 +224,8 @@ class="thumb"
 
 <style scoped>
 .thumb {
-  width: 120px;
+  width: 220px;
+  height: 100px;
   border-radius: 12px;
   cursor: zoom-in;
 }

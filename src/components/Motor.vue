@@ -249,7 +249,7 @@
               分路保護 → 負載。
             </q-card-section>
 
-            <q-img class="col-5" src="./statics/singleWire.png" />
+            <q-img class="col-5" style="width: 100px; height: 200px" src="./statics/singleWire.png" />
           </q-card-section>
         </q-card>
       </div>
@@ -286,7 +286,7 @@
               讓副繞組電流產生相位差，創造類似「兩相電源」的旋轉磁場，使電機能夠自行啟動，並在某些設計裡改善運行效率。
             </q-card-section>
 
-            <q-img class="col-5 q-ml-auto" src="./statics/1MotorAmp.png" />
+            <q-img class="col-5 q-ml-auto" style="width: 100px; height: 200px" src="./statics/1MotorAmp.png" />
           </q-card-section>
         </q-card>
       </div>
@@ -302,7 +302,7 @@
               分配到各個迴路（照明、插座、空調、動力）。<br />
               戶外防水型: IP54 / IP65 等防塵防水等級，應用於施工現場或戶外設備。
             </q-card-section>
-            <q-img class="col-5 q-ml-auto" src="./statics/controlBox.png" />
+            <q-img class="col-5 q-ml-auto" style="width: 100px; height: 200px" src="./statics/controlBox.png" />
           </q-card-section>
         </q-card>
       </div>

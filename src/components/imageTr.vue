@@ -3,7 +3,8 @@
     <!-- <p>这段文本被放置在一个透明框中。</p> -->
     <div class="q-pa-lg">
       <!-- <h1>產品透視圖</h1> -->
-      <h4 class="text-center">產品透視圖</h4>
+      <h6 class="text-center">產品透視圖</h6>
+      <!-- <p class="text-center" style="font-variant-numeric: normal;">產品透視圖</p> -->
 
       <!-- <hr class="my-3" color="white" /> -->
 

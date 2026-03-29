@@ -39,7 +39,7 @@
     <h4 style="text-align: center">產品設計 SOP</h4>
     <bannerDesign />
 
-    <q-separator spaced="lg" />
+    <!-- <q-separator spaced="lg" /> -->
 
     <!-- 開發時間線 專案排程-->
     <div class="q-my-xl">
