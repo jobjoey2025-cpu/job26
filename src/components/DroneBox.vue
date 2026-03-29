@@ -1,4 +1,5 @@
 <template>
+  <!-- https://xrtechgroup.com/top-10-drone-in-a-box-solution/ -->
   <q-page class="q-pa-md bg-grey-1">
     <!-- 標題 -->
     <div class="text-h4 q-mb-md">無人機 與 地面站基地管理</div>
@@ -315,7 +316,15 @@ function open(img) {
 /* ========================
    🔥 圖片資料（public/img）
 ======================== */
-const bgImgs = ["/img/dhl.jpg"];
+const bgImgs = [
+  "/img/dhl.jpg",
+  "/img/20260329010.jpg",
+  "/img/20260329009.jpg",
+  "/img/20260329008.jpg",
+  "/img/20260329005.jpg",
+  "/img/The-design-of-the-drones-base-in-Tinkercad.png",
+  "/img/20260329011.jpg",
+];
 
 const ee_Imgs = [
   "/img/generator.jpg",
@@ -346,12 +355,7 @@ const maintain_Imgs = [
   "/img/maintain4.jpg",
 ];
 
-const doc_Imgs = [
-  "/img/generator2.jpg",
-  "/img/water2.jpg",
-  "/img/doc.jpg",
-];
-
+const doc_Imgs = ["/img/generator2.jpg", "/img/water2.jpg", "/img/doc.jpg"];
 </script>
 
 <style scoped>

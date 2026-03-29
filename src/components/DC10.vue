@@ -3,7 +3,6 @@
     <!-- Hero Section -->
     <div class="text-center q-mb-xl">
       <div class="text-h3 text-bold">Drift Car Engineering Portfolio</div>
-      <!-- 1️⃣ 整機照片 DC10 web -->
       <div class="text-subtitle1">
         Mechanical Design | Manufacturing Integration | Cross-functional
         Communication
@@ -64,6 +63,8 @@
           <!-- 你設計了什麼?  -->
         </p>
       </q-card-section>
+      <!-- 1️⃣ 整機照片 DC10 web -->
+
       <q-img
         v-for="img in bgImgs"
         :key="img"
@@ -79,7 +80,10 @@
         <div class="text-h6">Engineering Iteration</div>
 
         <q-timeline>
-          <q-timeline-entry title="Problem" subtitle="🎯 客戶回饋設計">
+          <q-timeline-entry
+            title="Problem (需求功能開發)"
+            subtitle="🎯 客戶回饋設計"
+          >
             <li>專業的遙控漂移車手，就車輛的設定和設計偏好提供回饋。</li>
             <li>前輪輪距</li>
             <li>主銷後傾角</li>
@@ -87,13 +91,31 @@
             <!-- 2️⃣ CAD airframe \ motor mount -->
             <!-- 你做了哪些零件? -->
             <!-- 6️⃣ 系統架構圖 GPT RCcar -->
+
+            <q-img
+              v-for="img in problem_Imgs"
+              :key="img"
+              :src="img"
+              class="thumb"
+              @click="open(img)"
+            />
           </q-timeline-entry>
           <!-- 1️⃣ 整機照片 -->
 
-          <q-timeline-entry title="⚙️系統架構（System Architecture）">
+          <q-timeline-entry
+            title="⚙️系統架構（System Architecture）"
+            subtitle="🎯 功能整合設計"
+          >
             <li>傳動系統（Gearbox / Spur / Pinion）</li>
             <li>懸吊系統（Suspension Geometry）</li>
             <li>轉向系統（Steering Ackermann） 車架（Chassis Flex）</li>
+            <q-img
+              v-for="img in sys_Imgs"
+              :key="img"
+              :src="img"
+              class="thumb"
+              @click="open(img)"
+            />
           </q-timeline-entry>
           <!-- 子系統拆解： -->
           <!-- 👉 建議你畫圖（很加分 -->
@@ -103,20 +125,48 @@
           <!-- 航太面試官最愛看 6 種圖： -->
           <!-- 2️⃣ CAD airframe 3️⃣ 爆炸圖 \ CAD爆炸圖怎麼展示  4️⃣ 內部電子配置 -->
 
-          <q-timeline-entry title="👉 開模協調與工程圖定義">
-            Tolerance stack-up & material expansion
+          <q-timeline-entry
+            title="👉 開模協調與工程圖定義"
+            subtitle="🎯 製程設計"
+          >
+            <li>Tolerance stack-up & material expansion</li>
+            <li>BOM report & 各零件對齊</li>
+            <li>開模時間排程</li>
+            <q-img
+              v-for="img in mode_Imgs"
+              :key="img"
+              :src="img"
+              class="thumb"
+              @click="open(img)"
+            />
           </q-timeline-entry>
           <!-- 👉 建議你畫圖（很加分）2D pdf-->
 
-          <q-timeline-entry title="🚀 Prototype 驗證">
-            Adjusted pin position and backlash
+          <q-timeline-entry title="🚀 Prototype 驗證" subtitle="🎯 模具IQC驗證">
+            <li>Adjusted pin position and backlash</li>
+
             <!-- 你測試了什麼? -->
+            <q-img
+              v-for="img in iqc_Imgs"
+              :key="img"
+              :src="img"
+              class="thumb"
+              @click="open(img)"
+            />
           </q-timeline-entry>
           <!-- 3DP pic \ transition test-->
           <!-- 5️⃣ 飛行測試照片 \ YT DC10 video -->
 
-          <q-timeline-entry title="Result">
-            Smooth gear engagement achieved
+          <q-timeline-entry title="🔥 Result" subtitle="🎯 銷售反饋與社群">
+            <li>Smooth gear engagement achieved</li>
+
+            <q-img
+              v-for="img in sell_Imgs"
+              :key="img"
+              :src="img"
+              class="thumb"
+              @click="open(img)"
+            />
           </q-timeline-entry>
         </q-timeline>
         <!-- 開模品 \ 行銷 link img YT \ sema Show sells -->
@@ -169,15 +219,51 @@ function open(img) {
 /* ========================
    🔥 圖片資料（public/img）
 ======================== */
-const bgImgs = ["/img/DC10gear.png", "/img/DC10gear mesh.png"];
+const bgImgs = ["/img/dc10Chassis.jpg", "/img/dc10.jpg","/img/Team-Associated-DC10-RWD-Drift-Car-11.jpg",];
 
-const t1Imgs = ["/img/B7gear-mode2.png"];
+const problem_Imgs = [
+  "/img/motor-mount.png",
+  "/img/spacer.png",
+  "/img/ackerman.png",
+];
 
-const t2Imgs = ["/img/B7gear section.png"];
+const sys_Imgs = [
+  "/img/mst.jpg",
+  "/img/dc10Tr.png",
+  "/img/shocks.png",
+  "/img/KPI.png",
+  "/img/gear-mesh.png",
+  "/img/tree.png",
+];
 
-const t3Imgs = ["/img/B7gear.png"];
+const mode_Imgs = [
+  "/img/mode.png",
+  "/img/report.png",
+  "/img/spring cup.png",
+  "/img/2d.png",
+];
+
+const iqc_Imgs = [
+  "/img/iqc.png",
+  "/img/iqc_report.png",
+  "/img/gear_mesh_dc10.png",
+  "/img/mode_ca.png",
+  "/img/mode懸吊.png",
+  "/img/懸吊.jpg",
+];
+
+const sell_Imgs = [
+  "/img/SEMA-Show-23.jpg",
+  "/img/20260329015.jpg",
+  "/img/Spur gear.png",
+  "/img/20260329014.jpg",
+  "/img/20260329016.jpg",
+  // "/img/20260329013.jpg",
+
+  "/img/2026032921.jpg",
+
+];
 </script>
-
 
 <style scoped>
 body {
