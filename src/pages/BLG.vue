@@ -20,6 +20,11 @@
     CAE: ANSYS \\ vibration isolation\\ weight optimization\\ Structural
     Analysis\\ CFD
   </p>
+  <p>Curve LCD</p>
+  <p>熱傳燈板</p>
+  <p>@ BLG add colab CFD</p>
+  <p>$$ Fortran 轉 python use GPT，then run in colab。
+    $$ Fortran 轉 python use GPT，then run in colab。</p>
 
 </template>
 <script setup>
