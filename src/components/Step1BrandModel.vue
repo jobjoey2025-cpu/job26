@@ -205,7 +205,7 @@ const brandImage = computed(() => {
     case "ae":
       return "https://apps.associatedelectrics.com/downloads/thumbs/AE_Heritage_Logo_SQ-bw-300.png";
     case "TAMIYA":
-      return "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/TAMIYA_Logo.svg/1244px-TAMIYA_Logo.svg.png";
+      return "/img/tamiya.png";
     case "Hyundai":
       return new URL("./statics/rc10.jpg", import.meta.url).href;
     case "Kyosho":
