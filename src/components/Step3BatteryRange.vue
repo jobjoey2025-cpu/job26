@@ -1,5 +1,6 @@
 <template>
   <q-step :name="3" title="電池與續航" icon="battery_charging_full">
+    <h5 style="text-align: center">以下選擇電池串聯數目 :</h5>
     <div class="q-gutter-md">
       <q-select
         v-model="config.battery"
@@ -9,207 +10,240 @@
 
       <br />
       <br />
+      <h5 style="text-align: center">以下選擇電池放電倍率 :</h5>
+
       <div>電池 放電倍率 (ex 35C)：{{ config.range }} C</div>
       <p>
         馬達電流需求 ≦ 電池最大放電能力 (馬達最大 60A 👉 電池至少： → 60 × 1.5 =
         90A)
       </p>
-      <q-slider
-        v-model="config.range"
-        :min="20"
-        :max="150"
-        label
-        label-always
-        color="primary"
-      />
+      <div class="q-pa-md bg-grey-5 text-white">
+        <!-- 左箭頭 -->
+        <!-- <q-btn icon="chevron_left" round flat @click="decrease" /> -->
+        <!-- label-always -->
+        <!-- label -->
+        <q-slider
+          v-model="config.range"
+          :min="20"
+          :max="150"
+          :inner-min="35"
+          :inner-max="140"
+          label
+          label-always
+          color="light-green"
+        />
+        <!-- 右箭頭 -->
+        <!-- <q-btn icon="chevron_right" round flat @click="increase" /> -->
+        <!-- 👉 label 不出現 = 99% 是初始值沒設好 -->
+      </div>
     </div>
 
     <br /><br />
     <hr />
-    <h6>Q : 後輪直徑78mm \ 齒輪比6 \ 轉速 (rpm)15000 求車子速度 ?</h6>
-    <div class="row justify-center">
-      <q-img
-        src="./statics/speed_counter.jpg"
-        spinner-color="white"
-        style="width: 66%; height: auto"
-      />
-    </div>
+    <div class="q-pa-md row q-col-gutter-md justify-center">
+      <!-- 卡片 1 -->
+      <q-card class="col-12 col-sm-6 col-md-6" flat bordered>
+        <q-img src="./statics/motor.jpg" />
 
-    <br /><br />
-    <hr />
+        <q-card-section>
+          <div class="text-h6">馬達與電池簡介</div>
+          <div class="text-caption text-grey">Have a drink.</div>
+        </q-card-section>
 
-    <div class="q-pa-md row items-start q-gutter-md flex justify-center">
-      <q-card class="col-12 col-sm-6 col-md-3" flat bordered>
-        <img src="./statics/motor.jpg" />
+        <q-separator />
 
-        <q-list>
-          <q-item
-            clickable
-            tag="a"
+        <q-card-section>
+          <div class="row items-center q-gutter-sm">
+            <q-icon name="home" color="primary" />
+            <span>Motor 基礎介紹</span>
+          </div>
+
+          <div class="row items-center q-gutter-sm q-mt-sm">
+            <q-icon name="settings" color="amber" />
+            <span class="text-caption">
+              RC10 改裝重點：無刷馬達＋高容量電變
+            </span>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            color="primary"
+            label="前往"
             href="https://electric104.netlify.app/#/RCmotor"
             target="_blank"
-          >
-            <q-item-section avatar>
-              <q-icon color="primary" name="home" />
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>馬達與電池簡介</q-item-label>
-              <q-item-label caption>Have a drink.</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item clickable>
-            <q-item-section avatar>
-              <q-icon color="red" name="blender" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>Motor</q-item-label>
-              <q-item-label caption>electric_rickshaw</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item clickable>
-            <q-item-section avatar>
-              <q-icon color="amber" name="settings" />
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>改裝</q-item-label>
-              <q-item-label caption
-                >RC10
-                的熱門改裝著重於現代化升級，包括：換裝無刷馬達和高容量電變，以提升速度和性能。
-              </q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
+          />
+        </q-card-actions>
       </q-card>
 
-      <!-- ----------- -->
-      <q-card class="col-12 col-sm-6 col-md-3" flat bordered>
-        <img src="./statics/CFD.png" />
+      <!-- 卡片 2 -->
+      <q-card class="col-12 col-sm-6 col-md-6" flat bordered>
+        <q-img src="./statics/CFD.png" />
 
-        <q-list>
-          <q-item
-            clickable
-            tag="a"
+        <q-card-section>
+          <div class="text-h6">CFD 流場</div>
+          <div class="text-caption text-grey">空氣動力分析</div>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section>
+          <div class="row items-center q-gutter-sm">
+            <q-icon name="air" color="red" />
+            <span>車體流場</span>
+          </div>
+
+          <div class="row items-center q-gutter-sm q-mt-sm">
+            <q-icon name="settings" color="amber" />
+            <span class="text-caption">
+              空力套件升級（Xtreme Aerodynamics）
+            </span>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            color="primary"
+            label="查看"
             href="https://joey20090710.blogspot.com/2025/02/cfd-in-colab-2d-car-silhouette.html"
             target="_blank"
-          >
-            <q-item-section avatar>
-              <q-icon color="primary" name="home" />
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>CFD 流場</q-item-label>
-              <q-item-label caption>Have a drink.</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item clickable>
-            <q-item-section avatar>
-              <q-icon color="red" name="air" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>Body</q-item-label>
-              <q-item-label caption>electric_rickshaw</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item clickable>
-            <q-item-section avatar>
-              <q-icon color="amber" name="settings" />
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>改裝</q-item-label>
-              <q-item-label caption
-                >Xtreme Aerodynamics 為知名義大利品牌，專注於
-                高性能車殼與空力套件。</q-item-label
-              >
-            </q-item-section>
-          </q-item>
-        </q-list>
+          />
+        </q-card-actions>
       </q-card>
-      <!-- ----------- -->
 
-      <q-card class="col-12 col-sm-6 col-md-3" flat bordered>
-        <img src="./statics/RACE Software.png" />
+      <!-- 卡片 3 -->
+      <q-card class="col-12 col-sm-6 col-md-6" flat bordered>
+        <q-img src="./statics/RACE Software.png" />
 
-        <q-list>
-          <q-item
-            clickable
-            tag="a"
+        <q-card-section>
+          <div class="text-h6">底盤 / 懸吊 / 定位</div>
+          <div class="text-caption text-grey">車輛結構核心</div>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section>
+          <div class="row items-center q-gutter-sm">
+            <q-icon name="car_repair" color="red" />
+            <span>零件商店</span>
+          </div>
+
+          <div class="row items-center q-gutter-sm q-mt-sm">
+            <q-icon name="settings" color="amber" />
+            <span class="text-caption">
+              底盤＋傳動＝性能核心，懸吊＝操控調整
+            </span>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            color="primary"
+            label="學習"
             href="https://race.software/academy/design-with-race-guide/"
             target="_blank"
-          >
-            <q-item-section avatar>
-              <q-icon color="primary" name="home" />
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>汽車底盤 \ 懸吊 \ 四輪定位</q-item-label>
-              <q-item-label caption>Have a drink.</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item
-            clickable
-            tag="a"
-            href="https://60years.associatedelectrics.com/parts/factoryteam/?Product+Status=Active"
-            target="_blank"
-          >
-            <q-item-section avatar>
-              <q-icon color="red" name="car_repair" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>Part Shop</q-item-label>
-              <q-item-label caption>electric_rickshaw</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item clickable>
-            <q-item-section avatar>
-              <q-icon color="amber" name="settings" />
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>改裝</q-item-label>
-              <q-item-label caption
-                >RC CAR
-                的底盤與傳動系統決定車輛的「骨架與心臟」，懸吊與四輪定位則微調「操控手感與性能」。</q-item-label
-              >
-            </q-item-section>
-          </q-item>
-        </q-list>
+          />
+        </q-card-actions>
       </q-card>
-      <!-- ----------- -->
-    </div>
 
-    <hr />
-    <h6>Q : 如何從手冊找到零件資料 ?</h6>
-    <h6 class="row justify-center">Team Associated</h6>
+      <q-card class="col-12 col-sm-6 col-md-6" flat bordered>
+        <!-- 標題 -->
+        <q-card-section>
+          <div class="text-h6 text-primary">
+            Q：後輪直徑 78mm / 齒輪比 6 / 轉速 15000 rpm 👉 求車速？
+          </div>
+        </q-card-section>
 
-    <div class="row justify-center">
-      <q-img
-        src="./statics/ae_part.jpg"
-        spinner-color="white"
-        style="width: 66%; height: auto"
-      />
-    </div>
-    <h6 class="row justify-center">Tamiya</h6>
+        <q-separator />
 
-    <div class="row justify-center">
-      <q-img
-        class="row justify-center"
-        src="./statics/tamiya_part.jpg"
-        spinner-color="white"
-        style="width: 66%; height: auto"
-      />
+        <!-- 圖片 -->
+        <q-card-section class="flex flex-center">
+          <q-img
+            src="./statics/speed_counter.jpg"
+            spinner-color="white"
+            style="width: 100%; max-width: 500px"
+          />
+        </q-card-section>
+
+        <q-separator />
+
+        <!-- 操作區（可選） -->
+        <q-card-actions align="right">
+          <q-btn flat color="primary" label="顯示解答" />
+        </q-card-actions>
+      </q-card>
+
+      <div class="row justify-center q-pa-md">
+        <q-card class="col-12 col-sm-10 col-md-8" flat bordered>
+          <!-- 標題 -->
+          <q-card-section>
+            <div class="text-h6 text-primary">Q：如何從手冊找到零件資料？</div>
+          </q-card-section>
+
+          <q-separator />
+
+          <!-- 內容 -->
+          <q-card-section>
+            <div class="row q-col-gutter-md">
+              <!-- Team Associated -->
+              <div class="col-12 col-md-6 text-center">
+                <div class="text-subtitle1 q-mb-sm">Team Associated</div>
+                <q-img
+                  src="./statics/ae_part.jpg"
+                  spinner-color="white"
+                  style="width: 100%; max-width: 350px"
+                />
+              </div>
+
+              <!-- Tamiya -->
+              <div class="col-12 col-md-6 text-center">
+                <div class="text-subtitle1 q-mb-sm">Tamiya</div>
+                <q-img
+                  src="./statics/tamiya_part.jpg"
+                  spinner-color="white"
+                  style="width: 100%; max-width: 350px"
+                />
+              </div>
+            </div>
+          </q-card-section>
+
+          <q-separator />
+
+          <!-- 說明（可選） -->
+          <q-card-section class="text-body2 text-grey-7">
+            透過手冊中的 exploded view（爆炸圖），可以快速對應零件編號與名稱，
+            是維修與改裝最重要的查詢方式。
+          </q-card-section>
+        </q-card>
+      </div>
     </div>
   </q-step>
 </template>
 
 <script setup>
-defineProps({ config: Object });
+// data () {
+//   return {
+//     config: {
+//       range: 60, // ✅ 在 inner 範圍內
+//     }
+//   }
+// };
+
+// defineProps({ config: Object });
+
+// const props = defineProps({
+//   config: Object
+// });
+
+const props = defineProps({
+  config: {
+    type: Object,
+    default: () => ({
+      range: 60, // ✅ 預設值
+    }),
+  },
+});
 </script>

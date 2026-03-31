@@ -61,8 +61,8 @@ const config = reactive({
   model: null,
   motor: null,
   drive: null,
-  battery: null,
-  range: null,
+  battery: '2S', // ✅ 預設值
+  range: 60,
   color: null,
   wheels: null,
 });
