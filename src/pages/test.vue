@@ -1,5 +1,5 @@
 <template>
-  <h3>Test Page</h3>
+  <h3>Test Page 3</h3>
 
   <q-btn
     flat
@@ -18,10 +18,16 @@
     target="_blank"
     icon="open_in_new"
   />
+
+  draggable
+  <draggable />
+  <!-- <bannerWhoAmI /> -->
 </template>
 
 <script setup>
 // import { ref } from 'vue'
+import draggable from "components/draggable.vue";
+
 import profileCard from "components/profileCard.vue";
 import timeCurve from "components/timeCurve.vue";
 import bannerWhoAmI from "components/bannerWhoAmI.vue";

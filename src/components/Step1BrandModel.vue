@@ -53,7 +53,7 @@
           <q-img
             src="./statics/yokomo_car.jpg"
             alt="Yokomo Speed Car"
-            style="width: 300px; object-fit: cover"
+            style="width: 300px; object-fit: cover; cursor: zoom-in"
           >
             <div
               class="absolute-bottom text-white text-subtitle1 bg-black bg-opacity-50 q-pa-sm"
@@ -80,6 +80,16 @@
             />
           </q-card-actions>
         </q-card>
+
+        <!-- 🔍 放大圖片 Dialog -->
+        <q-dialog v-model="showImg">
+          <q-card style="max-width: 90vw; max-height: 90vh">
+            <q-img
+              src="./statics/yokomo_car.jpg"
+              style="max-height: 80vh; object-fit: contain"
+            />
+          </q-card>
+        </q-dialog>
       </div>
       <!-- ------- -->
       <div class="col-12 col-md-3">
@@ -162,6 +172,8 @@
 
 <script setup>
 import { computed } from "vue";
+
+import { ref } from 'vue'
 
 const props = defineProps({
   config: Object,
@@ -253,6 +265,10 @@ const modelImage = computed(() => {
 // ------- ------- ------- -------
 function openLink() {
   window.open("https://teamyokomo.com/speed-car/", "_blank");
+
+
+
+  const showImg = ref(false);
 }
 </script>
 

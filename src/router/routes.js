@@ -51,6 +51,9 @@ const routes = [
       { path: 'ansysTree', component: () => import('components/ansysTree.vue'), name: 'ansysTree' },
       { path: 'imageMap', component: () => import('components/imageMap.vue'), name: 'imageMap' },
 
+      { path: 'draggable', component: () => import('components/draggable.vue'), name: 'draggable' },
+
+
 
 
     ]

@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="text-subtitle1 q-mb-sm">選擇品牌</div>
+    <p>要先選擇 "品牌" 才能 "選擇車型"</p>
     <q-select
       filled
       v-model="config.brand"
@@ -40,14 +41,13 @@
     <hr />
     <h4 class="row justify-center">其他說明</h4>
 
-    <!-- <div class="row q-col-gutter-lg"> -->
-    <!-- class="col-6 col-md-3" -->
+    <div class="row q-col-gutter-lg">
+      <!-- class="col-6 col-md-3" -->
 
-    <!-- <div class="row justify-center"> -->
+      <!-- <div class="row justify-center"> -->
       <!-- style="height: 200px; object-fit: cover" -->
-    <div class="row justify-center">
 
-      <!-- <div class="col-12 col-md-3"> -->
+      <div class="col-12 col-md-3">
         <q-card class="my-card q-ma-md" bordered flat>
           <!-- 上方圖片 -->
           <q-img
@@ -82,7 +82,7 @@
         </q-card>
       </div>
       <!-- ------- -->
-      <div class="row justify-center">
+      <div class="col-12 col-md-3">
         <q-card class="my-card q-ma-md" bordered flat>
           <!-- 上方圖片 -->
           <q-img
@@ -120,7 +120,7 @@
       </div>
 
       <!-- ------- -->
-      <div class="row justify-center">
+      <div class="col-12 col-md-3">
         <q-card class="my-card q-ma-md" bordered flat>
           <!-- 上方圖片 -->
           <q-img
@@ -157,7 +157,7 @@
         </q-card>
       </div>
     </div>
-  <!-- </div> -->
+  </div>
 </template>
 
 <script setup>
@@ -205,7 +205,7 @@ const brandImage = computed(() => {
     case "ae":
       return "https://apps.associatedelectrics.com/downloads/thumbs/AE_Heritage_Logo_SQ-bw-300.png";
     case "TAMIYA":
-      return "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/TAMIYA_Logo.svg/1244px-TAMIYA_Logo.svg.png";
+      return "/img/tamiya.png";
     case "Hyundai":
       return new URL("./statics/rc10.jpg", import.meta.url).href;
     case "Kyosho":
