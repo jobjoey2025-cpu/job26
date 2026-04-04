@@ -1,5 +1,19 @@
 <template>
-  <div class="q-pa-xl">
+  <h3 class="q-pl-xl" style="text-align: center">朋友少 招待的 Ideas</h3>
+  <div style="text-align: center">
+    <q-btn
+      color="grey-4"
+      text-color="purple"
+      glossy
+      unelevated
+      icon="format_image__right"
+      label="Draggable Sample"
+      href="https://sortablejs.github.io/vue.draggable.next/#/third-party"
+      target=”_blank”
+    />
+  </div>
+
+  <div class="q-pl-xl">
     <div class="row q-col-gutter-md">
       <!-- 左邊 -->
       <div class="col-6 col-md-6">
@@ -13,13 +27,14 @@
           @change="log"
         >
           <template #item="{ element, index }">
-            <q-card class="q-mb-sm q-pa-sm text-h5">
+            <q-card class="q-mb-sm q-pa-sm text-h6">
               {{ element.name }} {{ index }}
             </q-card>
           </template>
         </draggable>
       </div>
 
+      <!-- @change="log" -->
       <!-- 右邊 -->
       <div class="col-6 col-md-6">
         <div class="text-h6 q-mb-sm">Draggable 2</div>
@@ -62,6 +77,9 @@ import { ref } from "vue";
 import draggable from "vuedraggable";
 
 const list1 = ref([
+  { name: "--- BUY List --- ", id: 39 },
+  { name: "帳篷 行軍床 tent,", id: 41 },
+  { name: "@ 薄木板 B&Q: 44cm * 119mm,", id: 41 },
   { name: "--- 招待 ---", id: 1 },
   { name: "逛街吃飯,", id: 2 },
   { name: "百貨 / 新賣場,", id: 3 },
@@ -73,6 +91,7 @@ const list1 = ref([
   { name: "花錢的氣氛,", id: 9 },
   { name: "真空管（貴 & 少）,", id: 10 },
   { name: "手錶,", id: 11 },
+  { name: "**沒螢幕 運動 生活時間", id: 11 },
   { name: "--- 俱樂部 活動 --- ", id: 12 },
   { name: "RC Car,", id: 13 },
   { name: "釣蝦唱歌,", id: 14 },

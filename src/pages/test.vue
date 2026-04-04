@@ -1,5 +1,5 @@
 <template>
-  <h3>Test Page 3</h3>
+  <h3>Test Page</h3>
 
   <q-btn
     flat
