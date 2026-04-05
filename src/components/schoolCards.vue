@@ -182,7 +182,7 @@ https://www.facebook.com/share/v/16bSxwa2Kp/
 土城
 ERP
     `,
-    img: "clothesERP.png",
+    img: "ttri.jpg",
   },
 
   {

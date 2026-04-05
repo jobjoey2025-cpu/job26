@@ -47,13 +47,24 @@
       <!-- <div class="row justify-center"> -->
       <!-- style="height: 200px; object-fit: cover" -->
 
-      <div class="col-12 col-md-3">
+      <div class="col-12 col-md-2">
         <q-card class="my-card q-ma-md" bordered flat>
           <!-- 上方圖片 -->
-          <q-img
+          <!-- <q-img
             src="./statics/yokomo_car.jpg"
             alt="Yokomo Speed Car"
             style="width: 300px; object-fit: cover; cursor: zoom-in"
+          > -->
+          <!-- style="width: 350px; height: 200px" -->
+
+          <q-img
+            v-for="img in bgImgs"
+            :key="img"
+            :src="img"
+            class="thumb"
+            style="width: 100%"
+            @click="open(img)"
+            fit="cover"
           >
             <div
               class="absolute-bottom text-white text-subtitle1 bg-black bg-opacity-50 q-pa-sm"
@@ -167,13 +178,38 @@
         </q-card>
       </div>
     </div>
+
+    <!-- joey 共用圖片放大 -->
+    <q-dialog v-model="show">
+      <q-card class="viewer">
+        <q-img :src="currentImg" fit="contain" class="full-img" />
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script setup>
 import { computed } from "vue";
 
-import { ref } from 'vue'
+import { ref } from "vue";
+
+/* ========================
+   🔥 共用圖片 viewer
+======================== */
+const show = ref(false);
+const currentImg = ref("");
+
+function open(img) {
+  currentImg.value = img;
+  show.value = true;
+}
+
+/* ========================
+   🔥 圖片資料（public/img）
+======================== */
+const bgImgs = ["/img/yokomo_car-CM_W5Gox.jpg"];
+
+// -----------------
 
 const props = defineProps({
   config: Object,
@@ -266,17 +302,33 @@ const modelImage = computed(() => {
 function openLink() {
   window.open("https://teamyokomo.com/speed-car/", "_blank");
 
-
-
   const showImg = ref(false);
 }
 </script>
 
 <style scoped>
-.my-card {
-  max-width: 400px;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+body {
+  background: #f5f5f5;
+}
+.thumb {
+  /* width: 120px; */
+  width: 99px;
+  height: 10%;
+  border: 1px solid #f6c3c3; /* 粗細、樣式、顏色 */
+  box-sizing: border-box; /* 確保邊框計入 width，不跑版 */
+  border-radius: 12px;
+  margin: 4px;
+  cursor: zoom-in;
+}
+/* display: block; 避免圖片下方出現空白間隙 */
+
+.viewer {
+  width: 90vw;
+  height: 90vh;
+}
+
+.full-img {
+  width: 100%;
+  height: 100%;
 }
 </style>

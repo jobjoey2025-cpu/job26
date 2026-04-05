@@ -12,8 +12,23 @@
     <!-- <p>* _____ ├ Certifications : 證書	證照	專利 號碼</p> -->
     <!-- https://104cad23-02.netlify.app/ -->
     <!-- <p>* _____ Joey skill animate : 力導向</p> -->
+    <div>
+      <h3 style="text-align: center">LINK 104 & download PDF</h3>
+      <!-- <li><a href="https://www.104.com.tw/">104</a></li> -->
+    </div>
 
-    <h3 style="text-align: center">LINK 104 & download PDF</h3>
+    <div style="text-align: center">
+      <q-btn
+        color="grey-4"
+        text-color="purple"
+        glossy
+        unelevated
+        icon="link"
+        label="LINK 104 & download PDF"
+        href="https://www.104.com.tw/"
+        target="”_blank”"
+      />
+    </div>
   </div>
 
   <!-- <h3>Service Page</h3> -->

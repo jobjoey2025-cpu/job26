@@ -23,7 +23,7 @@
           style="width: 660px; height: 150px; border-radius: 8px"
         />
         <div class="q-mt-md text-center">
-          VTOL（垂直起降）飛行器的機構設計通常結合航空工程、機械結構與控制系統。
+          !! VTOL（垂直起降）飛行器的機構設計通常結合航空工程、機械結構與控制系統。
           一般設計流程：  1 任務需求定義 2 Payload 計算 3 Flight time 計算 4 推進系統選擇 5 結構設計 6 CAD 建模 7 CFD / FEA 模擬 8 Prototype 9 Flight test
         </div>
       </q-carousel-slide>
