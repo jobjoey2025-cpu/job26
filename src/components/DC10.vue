@@ -193,7 +193,7 @@
       </q-card-section>
     </q-card>
 
-    <!-- 共用圖片放大 -->
+    <!-- joey 共用圖片放大 -->
     <q-dialog v-model="show">
       <q-card class="viewer">
         <q-img :src="currentImg" fit="contain" class="full-img" />

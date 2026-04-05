@@ -9,7 +9,7 @@
     </div>
 
     <!-- 基本概念 -->
-    <q-card class="q-mb-md">
+    <q-card class="q-mb-xl">
       <q-card-section>
         <div class="text-h6">電能轉機械能</div>
         <p>
@@ -17,37 +17,18 @@
           廣泛應用於風扇、洗衣機、電動車與工業設備，
           是自動化與機械化的核心元件。
         </p>
-        <q-img
-          class="q-mx-md"
-          src="./statics/CAR電裝.png"
-          style="width: 200px; height: 100px"
-          fit="cover"
-        />
-        <q-img
-          class="q-mx-md"
-          src="./statics/shopee-CZQOGGCn.png"
-          style="width: 100px; height: 200px"
-          fit="cover"
-        />
-        <q-img
-          class="q-mx-md"
-          src="./statics/ESC-BVqpSlT6.png"
-          style="width: 200px; height: 200px"
-          fit="cover"
-        />
-        <!-- <q-img
-          class="q-mx-md"
-          src="./statics/bettery-D6dlTMAi.png"
-          style="width: 130px; height: 200px"
-          fit="cover"
-        /> -->
-        <q-img
-          class="q-mx-md"
-          src="./statics/brushMotor-GrhOnz2-.png"
-          style="width: 150px; height: 200px"
-          fit="cover"
-        />
       </q-card-section>
+      <!-- 1️⃣ 整機照片 DC10 web -->
+      <div style="text-align: center">
+        <q-img
+          v-for="img in bgImgs"
+          :key="img"
+          :src="img"
+          class="thumb"
+          @click="open(img)"
+          fit="cover"
+        />
+      </div>
     </q-card>
 
     <!-- 馬達種類 -->
@@ -69,25 +50,24 @@
     <hr />
     <br />
     <q-card class="q-mb-md">
-          <q-card-section>
-            <div class="text-h6">無刷馬達應用概念</div>
+      <q-card-section>
+        <div class="text-h6">無刷馬達應用概念</div>
 
-            <ul>
-              <li>KV 值：每 Volt 對應轉速（RPM）</li>
-              <li>轉速 = KV × 電壓</li>
-              <li>ESC 必須匹配電壓 / 電流 / 極數</li>
-              <li>實務需搭配電池與測試（避免燒毀）</li>
-            </ul>
+        <ul>
+          <li>KV 值：每 Volt 對應轉速（RPM）</li>
+          <li>轉速 = KV × 電壓</li>
+          <li>ESC 必須匹配電壓 / 電流 / 極數</li>
+          <li>實務需搭配電池與測試（避免燒毀）</li>
+        </ul>
 
-            <q-banner class="bg-grey-3 q-mt-sm">
-              範例：7.4V × 3300KV ≈ 24420 RPM
-            </q-banner>
-          </q-card-section>
-        </q-card>
+        <q-banner class="bg-grey-3 q-mt-sm">
+          範例：7.4V × 3300KV ≈ 24420 RPM
+        </q-banner>
+      </q-card-section>
+    </q-card>
     <!-- ------- -->
     <div class="row q-col-gutter-md">
       <!-- 無刷馬達 -->
-
 
       <!-- RC 車參數 -->
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -125,19 +105,23 @@
         <q-card class="q-mb-md">
           <q-card-section>
             <!-- <div class="text-h6">速度計算對照表</div> -->
+
             <q-img
-              class="q-mx-md"
-              src="./statics/hoursePower-BSHlZRZZ.png"
+              v-for="img in horseImgs"
+              :key="img"
+              :src="img"
+              class="thumb"
               style="width: 350px; height: 200px"
+              @click="open(img)"
               fit="cover"
+            />
+            <div
+              class="absolute-bottom text-white text-subtitle2 q-pa-sm"
+              style="text-shadow: 0 0 3px black; font-size: 33px"
             >
-              <div
-                class="absolute-bottom text-white text-subtitle2 q-pa-sm"
-                style="text-shadow: 0 0 3px black"
-              >
-                {{ "馬力計算" }}
-              </div>
-            </q-img>
+              {{ "馬力計算" }}
+            </div>
+            <!-- </q-img> -->
           </q-card-section>
         </q-card>
       </div>
@@ -145,20 +129,22 @@
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
         <q-card class="q-mb-md">
           <q-card-section>
-            <!-- <div class="text-h6">速度計算對照表</div> -->
             <q-img
-              class="q-mx-md"
-              src="./statics/TN 曲線.png"
+              v-for="img in horseRelationImgs"
+              :key="img"
+              :src="img"
+              class="thumb"
               style="width: 350px; height: 200px"
+              @click="open(img)"
               fit="cover"
+            />
+            <div
+              class="absolute-bottom text-white text-subtitle2 q-pa-sm"
+              style="text-shadow: 0 0 3px black; font-size: 33px"
             >
-              <div
-                class="absolute-bottom text-white text-subtitle2 q-pa-sm"
-                style="text-shadow: 0 0 3px black"
-              >
-                {{ "馬力關係圖" }}
-              </div>
-            </q-img>
+              {{ "馬力關係圖" }}
+            </div>
+            <!-- </q-img> -->
           </q-card-section>
         </q-card>
       </div>
@@ -188,20 +174,22 @@
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
         <q-card class="q-mb-md">
           <q-card-section>
-            <!-- <div class="text-h6">速度計算對照表</div> -->
             <q-img
-              class="q-mx-md"
-              src="./statics/gear-speed-BcVXBs7g.png"
+              v-for="img in gearImgs"
+              :key="img"
+              :src="img"
+              class="thumb"
               style="width: 250px; height: 200px"
+              @click="open(img)"
               fit="cover"
+            />
+
+            <div
+              class="absolute-bottom text-white text-subtitle2 q-pa-sm"
+              style="text-shadow: 0 0 3px black; font-size: 33px"
             >
-              <div
-                class="absolute-bottom text-white text-subtitle2 q-pa-sm"
-                style="text-shadow: 0 0 3px black"
-              >
-                {{ "遙控模型車 齒輪比 車速 轉換表" }}
-              </div>
-            </q-img>
+              {{ "齒輪比 車速 轉換表" }}
+            </div>
           </q-card-section>
         </q-card>
       </div>
@@ -244,12 +232,22 @@
           <q-card-section horizontal>
             <q-card-section>
               <!-- {{ lorem }} -->
-              🔹單線圖（單一線路圖）<br />用一條線與符號表示三相或單相配電系統的主要電力流向、配電設備與保護元件。<br /><br />
+              🔹單線圖（單一線路圖 Single-line diagram）<br />用一條線與符號表示三相或單相配電系統的主要電力流向、配電設備與保護元件。<br /><br />
               重點是「簡潔呈現主幹結構」：電源 → 主開關／斷路器 → 配電盤 →
               分路保護 → 負載。
             </q-card-section>
 
-            <q-img class="col-5" style="width: 100px; height: 200px" src="./statics/singleWire.png" />
+            <q-img
+              v-for="img in singleLineDiagramImgs"
+              :key="img"
+              :src="img"
+              class="thumb"
+              style="width: 200px; height: 200px"
+              @click="open(img)"
+              fit="cover"
+            />
+
+
           </q-card-section>
         </q-card>
       </div>
@@ -259,7 +257,7 @@
           <q-card-section horizontal>
             <q-card-section>
               🔹單線圖常見層級（由上到下）<br />
-              1.市電 / 變電所進線（含開關箱、戶外電表） 主開關 /<br />
+              1.市電 / 變電所進線（含開關箱、戶外電表） 主開關 <br />
               2.主斷路器（MCCB）（含主接地）<br />
               3.主母線 / 分配母線（Bus）<br />
             </q-card-section>
@@ -286,7 +284,24 @@
               讓副繞組電流產生相位差，創造類似「兩相電源」的旋轉磁場，使電機能夠自行啟動，並在某些設計裡改善運行效率。
             </q-card-section>
 
-            <q-img class="col-5 q-ml-auto" style="width: 100px; height: 200px" src="./statics/1MotorAmp.png" />
+            <!-- <q-img
+              class="col-5 q-ml-auto"
+              style="width: 100px; height: 200px"
+              src="./statics/1MotorAmp.png"
+            /> -->
+
+
+            <q-img
+              v-for="img in onemotorImgs"
+              :key="img"
+              :src="img"
+              class="thumb"
+              style="width: 300px; height: 200px"
+              @click="open(img)"
+              fit="cover"
+            />
+
+
           </q-card-section>
         </q-card>
       </div>
@@ -302,7 +317,25 @@
               分配到各個迴路（照明、插座、空調、動力）。<br />
               戶外防水型: IP54 / IP65 等防塵防水等級，應用於施工現場或戶外設備。
             </q-card-section>
-            <q-img class="col-5 q-ml-auto" style="width: 100px; height: 200px" src="./statics/controlBox.png" />
+
+
+            <!-- <q-img
+              class="col-5 q-ml-auto"
+              style="width: 100px; height: 200px"
+              src="./statics/controlBox.png"
+            /> -->
+
+            <q-img
+              v-for="img in controlboxImgs"
+              :key="img"
+              :src="img"
+              class="thumb"
+              style="width: 250px; height: 200px"
+              @click="open(img)"
+              fit="cover"
+            />
+
+
           </q-card-section>
         </q-card>
       </div>
@@ -337,12 +370,53 @@
         </p>
       </q-card-section>
     </q-card>
+    <!-- joey 共用圖片放大 -->
+    <q-dialog v-model="show">
+      <q-card class="viewer">
+        <q-img :src="currentImg" fit="contain" class="full-img" />
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script setup>
-import classCtree from 'components/classCtree.vue'
-import classCtimeLine from 'components/classCtimeLine.vue'
+import classCtree from "components/classCtree.vue";
+import classCtimeLine from "components/classCtimeLine.vue";
+
+import { ref } from "vue";
+
+/* ========================
+   🔥 共用圖片 viewer
+======================== */
+const show = ref(false);
+const currentImg = ref("");
+
+function open(img) {
+  currentImg.value = img;
+  show.value = true;
+}
+
+/* ========================
+   🔥 圖片資料（public/img）
+======================== */
+const bgImgs = [
+  "/img/shopee-CZQOGGCn.png",
+  "/img/brushMotor-GrhOnz2-.png",
+  "/img/ESC-BVqpSlT6.png",
+  "/img/CAR電裝.png",
+];
+// hoursePower-BSHlZRZZ.png
+const horseImgs = ["/img/hoursePower-BSHlZRZZ-BSHlZRZZ.png"];
+const horseRelationImgs = ["/img/TN 曲線.png"];
+const gearImgs = ["/img/gear-speed-BcVXBs7g-BcVXBs7g.png"];
+const singleLineDiagramImgs = ["/img/singleWire-GlzRfPLN.png"];
+
+const onemotorImgs = ["/img/1MotorAmp-Dh2xu9BK.png"];
+
+const controlboxImgs = ["/img/controlBox-BsHczrZh.png"];
+
+
+
 const motors = [
   {
     title: "DC 馬達",
@@ -370,3 +444,30 @@ const motors = [
   },
 ];
 </script>
+
+<style scoped>
+body {
+  background: #f5f5f5;
+}
+.thumb {
+  /* width: 120px; */
+  width: 99px;
+  height: 10%;
+  border: 1px solid #f6c3c3; /* 粗細、樣式、顏色 */
+  box-sizing: border-box; /* 確保邊框計入 width，不跑版 */
+  border-radius: 12px;
+  margin :4px;
+  cursor: zoom-in;
+}
+/* display: block; 避免圖片下方出現空白間隙 */
+
+.viewer {
+  width: 90vw;
+  height: 90vh;
+}
+
+.full-img {
+  width: 100%;
+  height: 100%;
+}
+</style>

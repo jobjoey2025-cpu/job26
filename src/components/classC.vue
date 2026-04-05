@@ -56,7 +56,7 @@
         <!-- <q-icon name="terrain" size="56px" /> -->
         <q-img
           src="./statics/controlBOX2.jpg"
-          style="width: 450px; height: 150px; border-radius: 8px"
+          style="width: 620px; height: 150px; border-radius: 8px"
         />
         <div class="q-mt-md text-center">
           電工的工作內容包括：設計、安裝與維修電氣設備及配線系統，確保電力系統安全且穩定運行。負責更換老舊電線、插座、開關與斷路器，並進行馬達及控制電路的維修與保養。同時執行漏電檢測、絕緣測試及接地電阻測試，以確保設備符合安全規範。依據單線圖進行電氣設備接線與配電系統的組裝與架構配置。        </div>
