@@ -58,11 +58,34 @@ const linksList = [
     icon: "home", // IndexPage MyPage
     to: "/", // ✅ Vue Router 內部跳轉
   },
+
   {
     title: "About me",
     caption: "內部頁面",
     icon: "face", // MyPage
     to: { name: "MyPage" }, // ✅ Vue Router 內部跳轉
+
+    // 👇 新增子連結
+    children: [
+      {
+        title: "Bike Front Lights",
+        caption: "產品設計到開發完成",
+        icon: "directions_bike",
+        to: "/testNavi",
+      },
+      {
+        title: "ERP",
+        caption: "工程資料管理",
+        icon: "join_left",
+        to: "/ERP",
+      },
+      {
+        title: "DroneBox",
+        caption: "無人機地面站維護",
+        icon: "connecting_airports",
+        to: "/DroneBox",
+      },
+    ],
   },
   {
     title: "Services（履歷）",
@@ -75,6 +98,28 @@ const linksList = [
     caption: "內部頁面",
     icon: "rocket_launch",
     to: "/Experience", // ✅ Vue Router 內部跳轉
+
+    // 👇 新增子連結
+    children: [
+      {
+        title: "Motor",
+        caption: "機電馬達工程",
+        icon: "wind_power",
+        to: "/Motor",
+      },
+      {
+        title: "Gearbox",
+        caption: "Gearbox 修模履歷",
+        icon: "miscellaneous_services",
+        to: "/Gearbox",
+      },
+      {
+        title: "RC CAR",
+        caption: "1/10 甩尾遙控車開發",
+        icon: "toys",
+        to: "/DC10",
+      },
+    ],
   },
   {
     title: "Blog (部落格)",

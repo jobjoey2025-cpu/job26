@@ -13,17 +13,73 @@
     <div class="row q-col-gutter-md">
       <!-- 功能介紹 -->
       <q-card class="col-6 q-mx-md shadow-2">
+        <!-- 標題 -->
+        <q-card-section>
+          <div class="text-h6 text-weight-bold" style="text-align: center;">Drone 任務閉環系統</div>
+          <div class="text-subtitle2 text-grey" style="text-align: center;">
+            任務 → 飛行 → 數據 → 維修 → 優化
+          </div>
+        </q-card-section>
+        <p style="text-align: center;"> 任務 → Input <br>飛行 → Process <br> 數據 → Feedback <br>維修 → Correction <br>優化 →
+          Learning </p>
+
+        <q-separator />
+
+        <!-- 流程 -->
+        <q-card-section>
+          <div class="row items-center justify-between flow-wrap">
+            <!-- 任務 -->
+            <div class="col-auto text-center">
+              <q-icon name="assignment" size="40px" color="primary" />
+              <div class="q-mt-sm">任務</div>
+            </div>
+
+            <q-icon name="arrow_forward" />
+
+            <!-- 飛行 -->
+            <div class="col-auto text-center">
+              <q-icon name="flight" size="40px" color="primary" />
+              <div class="q-mt-sm">飛行</div>
+            </div>
+
+            <q-icon name="arrow_forward" />
+
+            <!-- 數據 -->
+            <div class="col-auto text-center">
+              <q-icon name="analytics" size="40px" color="primary" />
+              <div class="q-mt-sm">回傳數據</div>
+            </div>
+
+            <q-icon name="arrow_forward" />
+
+            <!-- 維修 -->
+            <div class="col-auto text-center">
+              <q-icon name="build" size="40px" color="primary" />
+              <div class="q-mt-sm">維修判斷</div>
+            </div>
+
+            <q-icon name="arrow_forward" />
+
+            <!-- 優化 -->
+            <div class="col-auto text-center">
+              <q-icon name="trending_up" size="40px" color="primary" />
+              <div class="q-mt-sm">任務優化</div>
+            </div>
+          </div>
+        </q-card-section>
         <!-- <q-card class="q-mb-md shadow-2"> -->
         <q-card-section>
-          <div class="text-h6 q-mb-sm">系統功能</div>
+          <q-separator />
+          <br>
+          <div class="text-h6 q-mb-sm" style="text-align: center;">系統功能</div>
 
-          <q-list dense>
+          <q-list dense style="text-align: center;">
             <q-item>
-              <q-item-section>自動化基地保養</q-item-section>
+              <q-item-section>基地自動化保養</q-item-section>
             </q-item>
 
             <q-item>
-              <q-item-section>無人機維修管理</q-item-section>
+              <q-item-section>無人機維修紀錄管理</q-item-section>
             </q-item>
 
             <q-item>
@@ -31,7 +87,7 @@
             </q-item>
 
             <q-item>
-              <q-item-section>Pix4Dcapture / Litchi 任務整合</q-item-section>
+              <q-item-section>Pix4Dcapture / Litchi 任務整合 OS</q-item-section>
             </q-item>
 
             <q-item>
@@ -223,11 +279,11 @@
             <q-item><q-item-section>抄表 / 巡場</q-item-section></q-item>
             <q-item
               ><q-item-section
-                >設備清潔與潤滑 / 功能測試</q-item-section
+                >設備清潔與潤滑 / 功能測試 / 放樣</q-item-section
               ></q-item
             >
             <q-item
-              ><q-item-section>年度保養 / 發電機大保養</q-item-section></q-item
+              ><q-item-section>年度保養 / 發電機測試</q-item-section></q-item
             >
             <div class="row q-gutter-sm q-mt-sm">
               <q-img
@@ -373,5 +429,10 @@ const doc_Imgs = ["/img/generator2.jpg", "/img/water2.jpg", "/img/doc.jpg"];
 .full-img {
   width: 100%;
   height: 100%;
+}
+
+.flow-wrap {
+  flex-wrap: wrap;
+  gap: 12px;
 }
 </style>

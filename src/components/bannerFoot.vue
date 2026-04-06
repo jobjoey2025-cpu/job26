@@ -4,11 +4,12 @@
       <template v-slot:avatar>
         <q-icon name="signal_wifi_off" color="white" />
       </template>
-      You have lost connection to the internet. This app is offline.
+      <!-- You have lost connection to the internet. This app is offline. -->
+      This app is offline.
       <template v-slot:action>
         <q-btn flat color="white" label="Link 104" />
       </template>
-      <div>VTOL ==  https://github.com/jobjoey2021/VTOL</div>
+      <!-- <div>VTOL ==  https://github.com/jobjoey2021/VTOL</div> -->
 
     </q-banner>
   </div>
