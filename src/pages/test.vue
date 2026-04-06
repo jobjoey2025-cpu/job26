@@ -21,14 +21,15 @@
 
   draggable
   <draggable />
+  <Qtable />
   <!-- <bannerWhoAmI /> -->
 </template>
 
 <script setup>
 // import { ref } from 'vue'
 import draggable from "components/draggable.vue";
+import Qtable from "components/Qtable.vue";
 
-import profileCard from "components/profileCard.vue";
 import timeCurve from "components/timeCurve.vue";
 import bannerWhoAmI from "components/bannerWhoAmI.vue";
 </script>

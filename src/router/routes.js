@@ -52,6 +52,8 @@ const routes = [
       { path: 'imageMap', component: () => import('components/imageMap.vue'), name: 'imageMap' },
 
       { path: 'draggable', component: () => import('components/draggable.vue'), name: 'draggable' },
+      { path: 'Qtable', component: () => import('components/Qtable.vue'), name: 'Qtable' },
+
 
 
 
