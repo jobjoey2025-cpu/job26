@@ -30,18 +30,12 @@
                 <li>
                   <div>
                     <q-img
-                      src="./statics/img.jpg"
-                      style="width: 100px; height: 80px"
-                      fit="cover"
-                    />
-                    <q-img
-                      src="./statics/pdf.jpg"
-                      style="width: 100px; height: 80px"
-                      fit="cover"
-                    />
-                    <q-img
-                      src="./statics/3D.png"
-                      style="width: 100px; height: 80px"
+                      v-for="img in cadImgs"
+                      :key="img"
+                      :src="img"
+                      class="thumb"
+                      style="width: 28%"
+                      @click="open(img)"
                       fit="cover"
                     />
                   </div>
@@ -65,9 +59,17 @@
                 <li>手動維護資料</li>
                 <li>
                   <div>
-                    <q-img
+                    <!-- <q-img
                       src="./statics/excel.jpg"
                       style="width: 100px; height: 80px"
+                      fit="cover"
+                    /> -->
+                    <q-img
+                      v-for="img in sheetImgs"
+                      :key="img"
+                      :src="img"
+                      class="thumb"
+                      @click="open(img)"
                       fit="cover"
                     />
                   </div>
@@ -92,19 +94,14 @@
                 <li>報表輸出（含照片）</li>
                 <li>
                   <div>
+                    <!-- accessImgs access form.jpg access report.jpg access sql.jpg -->
                     <q-img
-                      src="./statics/access form.jpg"
-                      style="width: 100px; height: 80px"
-                      fit="cover"
-                    />
-                    <q-img
-                      src="./statics/access report.jpg"
-                      style="width: 100px; height: 80px"
-                      fit="cover"
-                    />
-                    <q-img
-                      src="./statics/access sql.jpg"
-                      style="width: 100px; height: 80px"
+                      v-for="img in accessImgs"
+                      :key="img"
+                      :src="img"
+                      class="thumb"
+                      style="width: 25%"
+                      @click="open(img)"
                       fit="cover"
                     />
                   </div>
@@ -128,9 +125,18 @@
                 <li>模型樹狀結構解析</li>
                 <li>
                   <div>
-                    <q-img
+                    <!-- <q-img
                       src="./statics/sw tree.png"
                       style="width: 100px; height: 80px"
+                      fit="cover"
+                    /> -->
+                    <q-img
+                      v-for="img in apiImgs"
+                      :key="img"
+                      :src="img"
+                      class="thumb"
+
+                      @click="open(img)"
                       fit="cover"
                     />
                   </div>
@@ -150,9 +156,19 @@
                 <li>資料同步與流程整合</li>
                 <li>
                   <div>
-                    <q-img
+                    <!-- <q-img
                       src="./statics/eep form.jpg"
                       style="width: 100px; height: 80px"
+                      fit="cover"
+                    /> -->
+                    <!-- style="width: 11%" -->
+                    <q-img
+                      v-for="img in erpImgs"
+                      :key="img"
+                      :src="img"
+                      class="thumb"
+
+                      @click="open(img)"
                       fit="cover"
                     />
                   </div>
@@ -195,33 +211,90 @@
       </div>
     </section>
 
-    <!-- ERP 對應 -->
-    <!-- <section class="q-pa-xl text-center">
-      <h4>ERP 對應價值</h4> -->
-
-      <!-- <p style="max-width: 700px; margin: auto">
+    <h4 class="text-center">ERP 對應價值</h4>
+    <section class="bg-green text-white text-center q-pa-md">
+      <p>
         流程將工程資料從單純檔案管理，
         逐步進化為具備結構化資料、查詢能力與自動化產出的系統， 最終整合至 ERP
         與製造流程，提升資料一致性與生產效率。
-      </p> -->
-    <!-- </section> -->
-
-    <!-- FOOTER -->
-    <!-- <section class="bg-dark text-white text-center q-pa-md">
-      <p>Engineering Data → ERP Integration</p>
-    </section> -->
-        <!-- FOOTER -->
-        <h4 class="text-center">ERP 對應價值</h4>
-    <section class="bg-green text-white text-center q-pa-md">
-      <p>流程將工程資料從單純檔案管理，
-        逐步進化為具備結構化資料、查詢能力與自動化產出的系統， 最終整合至 ERP
-        與製造流程，提升資料一致性與生產效率。</p>
+      </p>
     </section>
+    <!-- joey 共用圖片放大 -->
+    <q-dialog v-model="show">
+      <q-card class="viewer">
+        <q-img :src="currentImg" fit="contain" class="full-img" />
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
   name: "erpFlowPage",
+  setup() {
+    const show = ref(false);
+    const currentImg = ref("");
+
+    function open(img) {
+      currentImg.value = img;
+      show.value = true;
+    }
+
+    const cadImgs = ["/img/pdf.jpg", "/img/img.jpg", "/img/3D.png"];
+
+    const sheetImgs = ["/img/excel.jpg"];
+
+    const accessImgs = [
+      "/img/access_form.jpg",
+      "/img/access_report.jpg",
+      "/img/access_sql.jpg",
+    ];
+
+    const apiImgs = ["/img/sw tree.png"];
+
+    const erpImgs = ["/img/eep form.jpg"];
+
+    // access_report.jpg access_sql.jpg
+
+    return {
+      show,
+      currentImg,
+      open,
+      cadImgs,
+      sheetImgs,
+      accessImgs,
+      apiImgs,
+      erpImgs,
+    };
+  },
 };
 </script>
+
+<style scoped>
+body {
+  background: #f5f5f5;
+}
+.thumb {
+  /* width: 120px; */
+  width: 222px;
+  /* height: 55%; */
+  border: 1px solid #f6c3c3; /* 粗細、樣式、顏色 */
+  box-sizing: border-box; /* 確保邊框計入 width，不跑版 */
+  border-radius: 12px;
+  margin: 4px;
+  cursor: zoom-in;
+}
+/* display: block; 避免圖片下方出現空白間隙 */
+
+.viewer {
+  width: 90vw;
+  height: 90vh;
+}
+
+.full-img {
+  width: 100%;
+  height: 100%;
+}
+</style>

@@ -42,6 +42,8 @@
         <div>操控: {{ result.handling }} \\ </div>
       </div>
     </div>
+    <br>
+    <div style="text-align: center;"><img src="/img/circle.jpg" alt="race" style="width: 80%; border-radius: 10px;"></img></div>
 
   </q-step>
 </template>

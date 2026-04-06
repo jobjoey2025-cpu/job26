@@ -47,16 +47,9 @@
       <!-- <div class="row justify-center"> -->
       <!-- style="height: 200px; object-fit: cover" -->
 
-      <div class="col-12 col-md-2">
+      <div class="col-12 col-md-3">
         <q-card class="my-card q-ma-md" bordered flat>
           <!-- 上方圖片 -->
-          <!-- <q-img
-            src="./statics/yokomo_car.jpg"
-            alt="Yokomo Speed Car"
-            style="width: 300px; object-fit: cover; cursor: zoom-in"
-          > -->
-          <!-- style="width: 350px; height: 200px" -->
-
           <q-img
             v-for="img in bgImgs"
             :key="img"
@@ -91,25 +84,19 @@
             />
           </q-card-actions>
         </q-card>
-
-        <!-- 🔍 放大圖片 Dialog -->
-        <q-dialog v-model="showImg">
-          <q-card style="max-width: 90vw; max-height: 90vh">
-            <q-img
-              src="./statics/yokomo_car.jpg"
-              style="max-height: 80vh; object-fit: contain"
-            />
-          </q-card>
-        </q-dialog>
       </div>
       <!-- ------- -->
       <div class="col-12 col-md-3">
         <q-card class="my-card q-ma-md" bordered flat>
           <!-- 上方圖片 -->
           <q-img
-            src="./statics/m-chassis2.jpg"
-            alt="Yokomo Speed Car"
-            style="width: 300px; object-fit: cover"
+            v-for="img in mchassisImgs"
+            :key="img"
+            :src="img"
+            class="thumb"
+            style="width: 100%"
+            @click="open(img)"
+            fit="cover"
           >
             <div
               class="absolute-bottom text-white text-subtitle1 bg-black bg-opacity-50 q-pa-sm"
@@ -145,9 +132,13 @@
         <q-card class="my-card q-ma-md" bordered flat>
           <!-- 上方圖片 -->
           <q-img
-            src="./statics/initial_D.jpg"
-            alt="Mini-Z"
-            style="width: 300px; object-fit: cover"
+            v-for="img in KyoshoImgs"
+            :key="img"
+            :src="img"
+            class="thumb"
+            style="width: 100%"
+            @click="open(img)"
+            fit="cover"
           >
             <div
               class="absolute-bottom text-white text-subtitle1 bg-black bg-opacity-50 q-pa-sm"
@@ -208,6 +199,10 @@ function open(img) {
    🔥 圖片資料（public/img）
 ======================== */
 const bgImgs = ["/img/yokomo_car-CM_W5Gox.jpg"];
+
+const mchassisImgs = ["/img/m-chassis2.jpg"];
+
+const KyoshoImgs = ["/img/initial_D.jpg"];
 
 // -----------------
 

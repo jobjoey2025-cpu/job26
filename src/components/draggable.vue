@@ -9,7 +9,7 @@
       icon="format_image__right"
       label="Draggable Sample"
       href="https://sortablejs.github.io/vue.draggable.next/#/third-party"
-      target=”_blank”
+      target="”_blank”"
     />
   </div>
 
@@ -125,6 +125,7 @@ const list1 = ref([
 ]);
 
 const list2 = ref([
+  { name: "--- 健康 爬山 重訓 ---", id: 1 },
   { name: "--- 招待 ---", id: 1 },
   { name: "--- show 嗜好 --- ", id: 2 },
   { name: "--- 俱樂部 活動 --- ", id: 3 },
