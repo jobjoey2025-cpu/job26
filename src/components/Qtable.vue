@@ -1,5 +1,5 @@
 <template>
-  <h6 style="text-align: center">0406 要連 GDS ? 先觀察</h6>
+  <h6 style="text-align: center">用drage 排優先 then 用 chrome text search table link BLG \\ 0406 要連 GDS ? 先觀察</h6>
 
   <div class="q-pa-md">
     <q-table
@@ -77,16 +77,16 @@ const columns = [
 
 const rows = [
   {
-    name: "Frozen Yogurt",
+    name: "Google",
     calories: 159,
     fat: 6.0,
     hyperlink: "https://www.google.com",
   },
   {
-    name: "Ice cream sandwich",
+    name: "追流行來放鬆",
     calories: 237,
     fat: 9.0,
-    hyperlink: "https://www.google2.com",
+    hyperlink: "https://joey20090710.blogspot.com/2026/04/tokyo-ape.html",
   },
 ];
 
