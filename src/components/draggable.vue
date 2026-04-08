@@ -81,6 +81,7 @@ const list1 = ref([
   { name: "帳篷 行軍床 tent,", id: 41 },
   { name: "@ 薄木板 B&Q: 44cm * 119mm,", id: 41 },
   { name: "--- 招待 ---", id: 1 },
+  { name: "加 爬山 重訓,", id: 2 },
   { name: "逛街吃飯,", id: 2 },
   { name: "百貨 / 新賣場,", id: 3 },
   { name: "夜市 2300 後,", id: 4 },
