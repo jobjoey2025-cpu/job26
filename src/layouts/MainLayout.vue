@@ -74,6 +74,12 @@ const linksList = [
         to: "/testNavi",
       },
       {
+        title: "產品設計SOP",
+        caption: "從企劃規格到模擬性能",
+        icon: "flashlight_on",
+        to: "/timeLine_lightSop",
+      },
+      {
         title: "ERP",
         caption: "工程資料管理",
         icon: "join_left",
