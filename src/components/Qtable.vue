@@ -88,6 +88,12 @@ const rows = [
     fat: 9.0,
     hyperlink: "https://joey20090710.blogspot.com/2026/04/tokyo-ape.html",
   },
+  {
+    name: "*沒螢幕時間",
+    calories: 237,
+    fat: 9.0,
+    hyperlink: "https://docs.google.com/spreadsheets/d/1MpGxS3X4QMiQtAptCs1BWkiB8HvHeaXgdgbIgrfrmLk/edit?gid=498659891#gid=498659891",
+  },
 ];
 
 export default {
