@@ -53,6 +53,7 @@ const routes = [
 
       { path: 'draggable', component: () => import('components/draggable.vue'), name: 'draggable' },
       { path: 'Qtable', component: () => import('components/Qtable.vue'), name: 'Qtable' },
+      { path: 'sysTree', component: () => import('components/sysTree.vue'), name: 'sysTree' },
 
 
 
