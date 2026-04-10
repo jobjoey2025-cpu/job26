@@ -377,6 +377,7 @@
       </q-card>
     </q-dialog>
   </q-page>
+  <p>Motor</p>
 </template>
 
 <script setup>

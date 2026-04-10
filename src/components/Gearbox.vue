@@ -158,6 +158,7 @@
     </q-dialog>
   </q-page>
   <GearAnimate />
+  <p>Gearbox</p>
 </template>
 
 <script setup>

@@ -10,7 +10,7 @@
   <timeCurve />
 
 
-  <p>END</p>
+  <p>IndexPage</p>
   <q-btn flat color="white" label="Link test.vue" :to="{ name: 'test' }" />
 
 

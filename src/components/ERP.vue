@@ -226,6 +226,7 @@
       </q-card>
     </q-dialog>
   </q-page>
+  <p>ERP</p>
 </template>
 
 <script>

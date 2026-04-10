@@ -200,6 +200,7 @@
       </q-card>
     </q-dialog>
   </q-page>
+  <p>DC10</p>
 </template>
 
 <script setup>

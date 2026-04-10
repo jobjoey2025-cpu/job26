@@ -49,6 +49,7 @@
     <q-separator spaced="xl" />
     <imageMap />
   </q-page>
+  <p>testNavi</p>
 </template>
 
 <script setup>

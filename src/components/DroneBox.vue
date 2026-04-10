@@ -347,6 +347,7 @@
       </q-card>
     </q-dialog>
   </q-page>
+  <p>DroneBox</p>
 </template>
 
 <!-- <script>

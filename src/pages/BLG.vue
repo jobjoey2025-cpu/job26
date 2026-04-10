@@ -15,16 +15,16 @@
   <p>
     <!-- Betaflight app \ 上過課 FPV - YT link \ hover flight \ transition test \ -->
   </p>
-  <p>blender 2 sw page : 250 直升機 外殼 \\ 釣魚機 - payload 外殼</p>
-  <p>
+  <!-- <p>blender 2 sw page : 250 直升機 外殼 \\ 釣魚機 - payload 外殼</p> -->
+  <!-- <p>
     CAE: ANSYS \\ vibration isolation\\ weight optimization\\ Structural
     Analysis\\ CFD
-  </p>
-  <p>Curve LCD</p>
-  <p>熱傳燈板</p>
-  <p>@ BLG add colab CFD</p>
-  <p>$$ Fortran 轉 python use GPT，then run in colab。
-    $$ Fortran 轉 python use GPT，then run in colab。</p>
+  </p> -->
+
+  <!-- <p>熱傳燈板</p> -->
+  <!-- <p>@ BLG add colab CFD</p> -->
+  <p>$$ Fortran 轉 python use GPT，then run in colab。</p>
+  <p>BLG</p>
 
 </template>
 <script setup>
