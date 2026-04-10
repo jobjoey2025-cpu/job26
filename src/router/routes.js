@@ -55,6 +55,9 @@ const routes = [
       { path: 'Qtable', component: () => import('components/Qtable.vue'), name: 'Qtable' },
       { path: 'sysTree', component: () => import('components/sysTree.vue'), name: 'sysTree' },
 
+      { path: 'ScrollTrigger', component: () => import('components/ScrollTrigger.vue'), name: 'ScrollTrigger' },
+
+
 
 
 

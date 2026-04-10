@@ -19,6 +19,7 @@
     icon="open_in_new"
   />
 
+  <ScrollTrigger />
   <sysTree />
   <draggable />
   <Qtable />
@@ -30,6 +31,8 @@
 import draggable from "components/draggable.vue";
 import Qtable from "components/Qtable.vue";
 import sysTree from "components/sysTree.vue";
+import ScrollTrigger from "components/ScrollTrigger.vue";
+
 
 
 import timeCurve from "components/timeCurve.vue";
