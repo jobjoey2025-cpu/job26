@@ -93,6 +93,13 @@ const simple = [
             id: "storageUSA",
             label: "收納30年",
             link: "https://joey20090710.blogspot.com/2026/04/storage-30years.html",
+            children: [
+              {
+                id: "one by one",
+                label: "倉庫整理 one by one",
+                link: "https://docs.google.com/spreadsheets/d/18E0ECyxrmXaRl0pNfpc72cxBZ8EHHRpXmHcEQe09jT0/edit?gid=498659891#gid=498659891",
+              },
+            ],
           },
           {
             id: "ez QC",
@@ -155,8 +162,6 @@ const simple = [
             id: "fashion",
             label: "精神部門  聲光 流行 Fashion relex",
             // link: "https://www.google.com/",
-
-
           },
         ],
       },
@@ -164,7 +169,7 @@ const simple = [
         id: "outsourcing",
         label: "尚書省 行政院 外包",
         children: [
-        {
+          {
             id: "TTS skill sets",
             label: "TTS skill sets",
             link: "https://trello.com/b/qOwlJo86/tts-skill-sets",
@@ -213,6 +218,7 @@ const expanded = ref([
   "judge",
   // "1",
   "publish",
+  "storageUSA",
   // ❌ 不放 "1" → 就不會展開 joey
 ]);
 const tickStrategy = ref("strict");
