@@ -96,7 +96,12 @@ const simple = [
             children: [
               {
                 id: "one by one",
-                label: "倉庫整理 one by one",
+                label: "@ 倉庫整理 one by one",
+                link: "https://docs.google.com/spreadsheets/d/18E0ECyxrmXaRl0pNfpc72cxBZ8EHHRpXmHcEQe09jT0/edit?gid=498659891#gid=498659891",
+              },
+              {
+                id: "Notion pic speed",
+                label: "@ Notion 只少紀錄 pic",
                 link: "https://docs.google.com/spreadsheets/d/18E0ECyxrmXaRl0pNfpc72cxBZ8EHHRpXmHcEQe09jT0/edit?gid=498659891#gid=498659891",
               },
             ],
@@ -126,7 +131,7 @@ const simple = [
             children: [
               {
                 id: "Peeple",
-                label: "👨‍👩‍👧‍👦 Peeple",
+                label: "@ 👨‍👩‍👧‍👦 Peeple",
                 link: "https://quasar-peeple.netlify.app/#/googleForm",
               },
               {
@@ -219,6 +224,7 @@ const expanded = ref([
   // "1",
   "publish",
   "storageUSA",
+  "cia"
   // ❌ 不放 "1" → 就不會展開 joey
 ]);
 const tickStrategy = ref("strict");
