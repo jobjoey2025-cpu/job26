@@ -44,7 +44,21 @@
           </p>
         </q-tab-panel>
         <q-tab-panel name="3Fissue">
-          <p>做不好 反錢 ?? sop 滾動調整 \ 不是我的問題 但是搞到我了 \</p>
+          <p>
+            做不好 反錢 ?? sop 滾動調整 \ 不是我的問題 但是搞到我了 \ 集中資訊
+            截圖 Notion
+          </p>
+        </q-tab-panel>
+        <q-tab-panel name="podcast">
+          <p>
+            情報猿 \\ 日本大特搜 \\ 蔣勳 \\ 瓦基 \ 下一本讀甚麼 \\ 股癌 \\ 每日雙語新聞 \\
+          </p>
+        </q-tab-panel>
+        <q-tab-panel name="104 Quasar">
+          <p>
+            check 104quasar next step \\ 專案頁 : \\ betaFlight Books\\ CFD ??\\
+            CAD 疊圖 ?\\ $$ Fortran 轉 python use GPT，then run in colab。\\
+          </p>
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -85,9 +99,10 @@ const simple = [
         children: [
           {
             id: "104 Quasar",
-            label: "🔥 104 Quasar",
-            link: "https://104vtol.netlify.app/#/",
+            label: "🔥 104 Quasar (GDS)",
+            link: "https://docs.google.com/spreadsheets/d/13FjdQ1Fw4ln1BwmHOEqH14ZDRq1okHsBVAt7pNXXmb4/edit?gid=1608668419#gid=1608668419",
             // icon: "restaurant_menu",
+            // https://104vtol.netlify.app/#/
           },
           {
             id: "storageUSA",
@@ -96,13 +111,13 @@ const simple = [
             children: [
               {
                 id: "one by one",
-                label: "@ 倉庫整理 one by one",
+                label: "@ ✅ 倉庫整理 Tasks 2 one by one",
                 link: "https://docs.google.com/spreadsheets/d/18E0ECyxrmXaRl0pNfpc72cxBZ8EHHRpXmHcEQe09jT0/edit?gid=498659891#gid=498659891",
               },
               {
                 id: "Notion pic speed",
-                label: "@ Notion 只少紀錄 pic",
-                link: "https://docs.google.com/spreadsheets/d/18E0ECyxrmXaRl0pNfpc72cxBZ8EHHRpXmHcEQe09jT0/edit?gid=498659891#gid=498659891",
+                label: "@ 📸 Notion 至少結果紀錄 pic \ job21",
+                link: "https://www.notion.so/Top5-25-08-263020032b298089ab04f81869627adb?source=copy_link",
               },
             ],
           },
@@ -141,8 +156,8 @@ const simple = [
               },
               {
                 id: "3Fissue",
-                label: "3F 鐵皮屋問題",
-                link: "NA",
+                label: "3F 鐵皮屋問題 GDS",
+                link: "https://docs.google.com/spreadsheets/d/1BOO44OJj1Hm3KDkXzEsFpO9kr_CyXjsrmsfIqMcI6Oc/edit?gid=498659891#gid=498659891",
               },
             ],
           },
@@ -165,8 +180,17 @@ const simple = [
           },
           {
             id: "fashion",
-            label: "精神部門  聲光 流行 Fashion relex",
-            // link: "https://www.google.com/",
+            label: "精神部門  聲光 流行 Fashion relex 情報猿",
+            link: "https://docs.google.com/spreadsheets/d/1MpGxS3X4QMiQtAptCs1BWkiB8HvHeaXgdgbIgrfrmLk/edit?gid=498659891#gid=498659891",
+
+            children: [
+              {
+                id: "podcast",
+                label: "🎯 Podcast",
+                link: "https://docs.google.com/spreadsheets/d/1MpGxS3X4QMiQtAptCs1BWkiB8HvHeaXgdgbIgrfrmLk/edit?gid=1288694375#gid=1288694375",
+
+              },
+            ],
           },
         ],
       },
@@ -224,7 +248,7 @@ const expanded = ref([
   // "1",
   "publish",
   "storageUSA",
-  "cia"
+  "cia",
   // ❌ 不放 "1" → 就不會展開 joey
 ]);
 const tickStrategy = ref("strict");
