@@ -51,7 +51,8 @@
         </q-tab-panel>
         <q-tab-panel name="podcast">
           <p>
-            情報猿 \\ 日本大特搜 \\ 蔣勳 \\ 瓦基 \ 下一本讀甚麼 \\ 股癌 \\ 每日雙語新聞 \\
+            情報猿 \\ 日本大特搜 \\ 蔣勳 \\ 瓦基 \ 下一本讀甚麼 \\ 股癌 \\
+            每日雙語新聞 \\
           </p>
         </q-tab-panel>
         <q-tab-panel name="104 Quasar">
@@ -123,9 +124,9 @@ const simple = [
           },
           {
             id: "ez QC",
-            label: "簡單品保",
-            link: "https://104vtol.netlify.app/#/",
-            icon: "",
+            label: "簡單具體品保 List GDS",
+            link: "https://docs.google.com/spreadsheets/d/1FvQO1HPH-iGJJ-Uab9dgoIyhrGMzzwrgS1IP8Yh0VEE/edit?gid=498659891#gid=498659891",
+            // icon: "",
             children: [
               {
                 id: "government",
@@ -148,6 +149,14 @@ const simple = [
                 id: "Peeple",
                 label: "@ 👨‍👩‍👧‍👦 Peeple",
                 link: "https://quasar-peeple.netlify.app/#/googleForm",
+                children: [
+                  {
+                    id: "peeple GPT",
+                    label: "Peeple GDT分析GDS",
+                    link: "https://docs.google.com/spreadsheets/d/1X1y6eUohTduzYnqjfDzYqsp1qHvxP3GmSwfer_vpD5Q/edit?gid=498659891#gid=498659891",
+
+                  },
+                ],
               },
               {
                 id: "key",
@@ -188,7 +197,6 @@ const simple = [
                 id: "podcast",
                 label: "🎯 Podcast",
                 link: "https://docs.google.com/spreadsheets/d/1MpGxS3X4QMiQtAptCs1BWkiB8HvHeaXgdgbIgrfrmLk/edit?gid=1288694375#gid=1288694375",
-
               },
             ],
           },
