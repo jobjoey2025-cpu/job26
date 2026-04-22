@@ -56,6 +56,7 @@ const routes = [
       { path: 'sysTree', component: () => import('components/sysTree.vue'), name: 'sysTree' },
 
       { path: 'ScrollTrigger', component: () => import('components/ScrollTrigger.vue'), name: 'ScrollTrigger' },
+      { path: 'outsourcingSOP', component: () => import('components/outsourcingSOP.vue'), name: 'outsourcingSOP' },
 
 
 

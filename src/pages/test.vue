@@ -1,6 +1,15 @@
 <template>
   <h3>Test Page</h3>
 
+
+  <q-btn
+  flat
+  color="primary"
+  label="outsourcingSOP 外包評估互動"
+  to="/outsourcingSOP"
+  icon="open_in_new"
+/>
+
   <q-btn
     flat
     color="primary"
