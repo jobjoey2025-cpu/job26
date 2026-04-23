@@ -57,6 +57,7 @@ const routes = [
 
       { path: 'ScrollTrigger', component: () => import('components/ScrollTrigger.vue'), name: 'ScrollTrigger' },
       { path: 'outsourcingSOP', component: () => import('components/outsourcingSOP.vue'), name: 'outsourcingSOP' },
+      { path: 'outsourceDefined', component: () => import('components/outsourceDefined.vue'), name: 'outsourceDefined' },
 
 
 

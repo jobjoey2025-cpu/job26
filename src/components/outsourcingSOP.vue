@@ -2,6 +2,14 @@
   <q-page padding>
     <div class="text-h5 q-mb-md">外包用人評估系統</div>
 
+    <q-btn
+      flat
+      color="primary"
+      label="outsourceDefined 定義麻煩"
+      to="/outsourceDefined"
+      icon="open_in_new"
+    />
+
     <!-- Step 1: 基本判斷 -->
     <q-card class="q-mb-md">
       <q-card-section>
@@ -47,44 +55,43 @@
 </template>
 
 <script setup>
-import { computed, reactive } from 'vue'
+import { computed, reactive } from "vue";
 
 const signals = reactive({
   negative: false,
   unreliable: false,
   messy: false,
   trouble: false,
-  shortTerm: false
-})
+  shortTerm: false,
+});
 
 const value = reactive({
   skill: false,
   responsibility: false,
-  longTerm: false
-})
+  longTerm: false,
+});
 
 const result = computed(() => {
-  const riskCount = Object.values(signals).filter(v => v).length
-  const valueCount = Object.values(value).filter(v => v).length
+  const riskCount = Object.values(signals).filter((v) => v).length;
+  const valueCount = Object.values(value).filter((v) => v).length;
 
-  if (riskCount >= 3) return '🔴 高風險：避免合作'
-  if (valueCount >= 2 && riskCount <= 1) return '🟢 可合作'
-  return '🟡 僅限低風險使用'
-})
+  if (riskCount >= 3) return "🔴 高風險：避免合作";
+  if (valueCount >= 2 && riskCount <= 1) return "🟢 可合作";
+  return "🟡 僅限低風險使用";
+});
 
 const scripts = [
-  '最近還在忙工地嗎？',
-  '現在案子是自己接還是固定業主？',
-  '最近比較卡在人還是材料？',
-  '有時候會不會臨時缺人？',
-  '我最近有在看一些小工程可以幫忙',
-  '像採購或小段施工也可以支援',
-  '不用一次做大，可以先試一小段',
-  '如果你那邊忙不過來可以丟一點出來',
-  '我這邊彈性很大，可以配合',
-  '你排好時間再跟我說，我再配合'
-]
+  "最近還在忙工地嗎？",
+  "現在案子是自己接還是固定業主？",
+  "最近比較卡在人還是材料？",
+  "有時候會不會臨時缺人？",
+  "我最近有在看一些小工程可以幫忙",
+  "像採購或小段施工也可以支援",
+  "不用一次做大，可以先試一小段",
+  "如果你那邊忙不過來可以丟一點出來",
+  "我這邊彈性很大，可以配合",
+  "你排好時間再跟我說，我再配合",
+];
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
