@@ -160,6 +160,10 @@
         <div class="text-bold q-mt-sm">👉 核心：看他會不會讓事情變糟</div>
       </q-card-section>
     </q-card>
+
+<hr>
+
+
   </q-page>
 </template>
 

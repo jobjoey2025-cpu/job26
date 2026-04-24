@@ -59,6 +59,7 @@ const routes = [
       { path: 'outsourcingSOP', component: () => import('components/outsourcingSOP.vue'), name: 'outsourcingSOP' },
       { path: 'outsourceDefined', component: () => import('components/outsourceDefined.vue'), name: 'outsourceDefined' },
       { path: 'outsourceSimulation', component: () => import('components/outsourceSimulation.vue'), name: 'outsourceSimulation' },
+      { path: 'outsourceAlign', component: () => import('components/outsourceAlign.vue'), name: 'outsourceAlign' },
 
 
     ]

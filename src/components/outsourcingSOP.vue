@@ -5,7 +5,15 @@
     <q-btn
       flat
       color="primary"
-      label="outsourceDefined 定義麻煩"
+      label="1 outsourceAlign 階級對齊"
+      to="/outsourceAlign"
+      icon="open_in_new"
+    />
+
+    <q-btn
+      flat
+      color="primary"
+      label="2 outsourceDefined 定義麻煩"
       to="/outsourceDefined"
       icon="open_in_new"
     />
@@ -13,11 +21,19 @@
     <q-btn
       flat
       color="primary"
-      label="outsourceSimulation 小徵兆大模擬"
+      label="3 outsourceSimulation 小徵兆大模擬"
       to="/outsourceSimulation"
       icon="open_in_new"
     />
 
+
+    <q-btn
+      flat
+      color="primary"
+      label="4 outsourceSimulation 溝通執行腳本"
+      to="/outsourceSimulation"
+      icon="open_in_new"
+    />
     <!-- Step 1: 基本判斷 -->
     <q-card class="q-mb-md">
       <q-card-section>
