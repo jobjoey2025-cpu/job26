@@ -60,7 +60,8 @@ const routes = [
       { path: 'outsourceDefined', component: () => import('components/outsourceDefined.vue'), name: 'outsourceDefined' },
       { path: 'outsourceSimulation', component: () => import('components/outsourceSimulation.vue'), name: 'outsourceSimulation' },
       { path: 'outsourceAlign', component: () => import('components/outsourceAlign.vue'), name: 'outsourceAlign' },
-
+      { path: 'outsourceComunication', component: () => import('components/outsourceComunication.vue'), name: 'outsourceComunication' },
+      { path: 'outsourceScript', component: () => import('components/outsourceScript.vue'), name: 'outsourceScript' },
 
     ]
   },
