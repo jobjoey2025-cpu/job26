@@ -10,6 +10,14 @@
       icon="open_in_new"
     />
 
+    <q-btn
+      flat
+      color="primary"
+      label="outsourceSimulation 小徵兆大模擬"
+      to="/outsourceSimulation"
+      icon="open_in_new"
+    />
+
     <!-- Step 1: 基本判斷 -->
     <q-card class="q-mb-md">
       <q-card-section>

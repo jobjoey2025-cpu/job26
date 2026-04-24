@@ -124,7 +124,7 @@ const simple = [
           },
           {
             id: "ez QC",
-            label: "簡單具體品保 List GDS",
+            label: "🛡️📋⚙️✅簡單具體品保 List GDS",
             link: "https://docs.google.com/spreadsheets/d/1FvQO1HPH-iGJJ-Uab9dgoIyhrGMzzwrgS1IP8Yh0VEE/edit?gid=498659891#gid=498659891",
             // icon: "",
             children: [
