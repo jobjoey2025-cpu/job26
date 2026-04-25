@@ -63,6 +63,12 @@ const routes = [
       { path: 'outsourceComunication', component: () => import('components/outsourceComunication.vue'), name: 'outsourceComunication' },
       { path: 'outsourceScript', component: () => import('components/outsourceScript.vue'), name: 'outsourceScript' },
 
+      { path: 'lock', component: () => import('components/lock.vue'), name: 'lock' },
+      { path: '2Finference', component: () => import('components/2Finference.vue'), name: '2Finference' },
+      { path: 'notion', component: () => import('components/notion.vue'), name: 'notion' },
+
+
+
     ]
   },
 

@@ -2,13 +2,13 @@
   <h3>Test Page</h3>
 
 
-  <q-btn
-  flat
-  color="primary"
-  label="outsourcingSOP 外包評估互動"
-  to="/outsourcingSOP"
-  icon="open_in_new"
-/>
+  <!-- <q-btn
+    flat
+    color="primary"
+    label="outsourcingSOP 外包評估互動"
+    to="/outsourcingSOP"
+    icon="open_in_new"
+  /> -->
 
   <q-btn
     flat
@@ -29,9 +29,10 @@
   />
 
   <ScrollTrigger />
+  <lock />
   <sysTree />
   <draggable />
-  <Qtable />
+  <!-- <Qtable /> -->
   <!-- <bannerWhoAmI /> -->
 </template>
 
@@ -41,8 +42,7 @@ import draggable from "components/draggable.vue";
 import Qtable from "components/Qtable.vue";
 import sysTree from "components/sysTree.vue";
 import ScrollTrigger from "components/ScrollTrigger.vue";
-
-
+import lock from "components/lock.vue";
 
 import timeCurve from "components/timeCurve.vue";
 import bannerWhoAmI from "components/bannerWhoAmI.vue";

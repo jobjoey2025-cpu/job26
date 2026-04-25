@@ -1,7 +1,15 @@
 <template>
   <q-page padding>
-    <div class="text-h5 q-mb-md">外包用人評估系統</div>
 
+    <q-btn flat color="primary" label="密碼鎖" to="/lock" icon="open_in_new" />
+    <q-btn flat color="primary" label="卡片Table" to="/Qtable" icon="open_in_new" />
+    <q-btn flat color="primary" label="2F 老屋翻新" to="/2Finference" icon="open_in_new" />
+    <q-btn flat color="primary" label="Notion" to="/notion" icon="open_in_new" />
+
+
+
+    <hr />
+    <div class="text-h5 q-mb-md">外包用人評估系統</div>
     <q-btn
       flat
       color="primary"
@@ -142,7 +150,7 @@ const scripts = [
   "對方不接球就停（停在第6句，不要硬推）",
 
   "你的進化路線：現在是觀察世界",
-  "下一步：控制節點（人 / 任務 / 流動）"
+  "下一步：控制節點（人 / 任務 / 流動）",
 ];
 </script>
 
