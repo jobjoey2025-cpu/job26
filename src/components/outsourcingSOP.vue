@@ -5,6 +5,7 @@
     <q-btn flat color="primary" label="卡片Table" to="/Qtable" icon="open_in_new" />
     <q-btn flat color="primary" label="2F 老屋翻新" to="/2Finference" icon="open_in_new" />
     <q-btn flat color="primary" label="Notion" to="/notion" icon="open_in_new" />
+    <q-btn flat color="primary" label="interview" to="/interview" icon="open_in_new" />
 
 
 
