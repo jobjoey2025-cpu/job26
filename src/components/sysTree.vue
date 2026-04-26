@@ -115,8 +115,18 @@ const simple = [
                 label: "Tree + VSC == 雲端 Netlify",
               },
               {
-                id: "3",
-                label: "GDS \ Gkeep \ Notion \ Trello",
+                id: "Trello",
+                label: "news GDS Gkeep Notion Trello",
+                children: [
+                  {
+                    id: "3",
+                    label: "其實 都是靠 機率，訊息密度高 品質好時，問題就容易解。",
+                  },
+                  {
+                    id: "3",
+                    label: "10年技術滾動更新 2000-www 2008-app 2020-LLM",
+                  },
+                ],
               },
             ],
           },
