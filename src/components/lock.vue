@@ -1,4 +1,5 @@
 <template>
+  <p style="text-align: center">lock</p>
   <q-page class="flex flex-center column bg-dark text-white">
     <div class="text-h5 q-mb-lg">SYSTEM ACCESS DIAL</div>
 

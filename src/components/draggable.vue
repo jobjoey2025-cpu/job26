@@ -1,5 +1,6 @@
 <template>
-  <h3 class="q-pl-xl" style="text-align: center">朋友少 招待的 Ideas</h3>
+  <p style="text-align: center">draggable</p>
+  <h3 class="q-pl-xl" style="text-align: center">朋友少 優招待的 Ideas</h3>
   <div style="text-align: center">
     <q-btn
       color="grey-4"

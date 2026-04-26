@@ -1,12 +1,14 @@
 <template>
   <div class="q-pa-md row q-col-gutter-sm">
     <div class="col-12 col-sm-12">
-      <h6 class="text-center">
-        tree input 沒有 Table 快, 但是比較好閱讀 <br />
-        為什麼 不用 mindMap → cuz mobile 不順(VSC 變化比較多) <br />
-        不值得的 就不花時間加入 sysTree (cuz 新融入 Tree UI 也要花2hrs時間)<br />
-        2screen -- VSC(好寫) + Quasar(好看) \ need 4hrs 連續時間
-      </h6>
+      <p class="text-center">sysTree</p>
+      <p>
+        * (閱讀品質)q-mb-md Tree input 沒有 Table 快, 但是比較好閱讀 <br />
+        * 為什麼 不用 mindMap → cuz mobile 不順 (VSC 變化比較多) <br />
+        * (use 資料結構 "捨棄")-- 不值得的 就不花時間加入 sysTree (cuz 新融入
+        Tree UI 也要花2hrs時間)<br />
+        * (2screen)-- VSC(好寫) + Quasar(好看) \ need 4hrs 連續時間
+      </p>
     </div>
     <!-- 左邊 Tree -->
     <div class="col-12 col-sm-6">
@@ -91,6 +93,33 @@ const simple = [
               },
             ],
           },
+          {
+            id: "structure",
+            label: "資料結構 工具 (評估 priority)",
+            children: [
+              {
+                id: "3",
+                label: "隨手寫 超過一頁，就是overload (估)",
+              },
+              {
+                id: "3",
+                label: "GDS - main品牌choose (評估 priority)",
+              },
+
+              {
+                id: "3",
+                label: "Screen Shoot + Moment NAS",
+              },
+              {
+                id: "3",
+                label: "Tree + VSC == 雲端 Netlify",
+              },
+              {
+                id: "3",
+                label: "GDS \ Gkeep \ Notion \ Trello",
+              },
+            ],
+          },
         ],
       },
       {
@@ -124,7 +153,7 @@ const simple = [
           },
           {
             id: "ez QC",
-            label: "🛡️📋⚙️✅簡單具體品保 List GDS",
+            label: "🛡️📋⚙️✅簡單具體品保 健康指數 List GDS",
             link: "https://docs.google.com/spreadsheets/d/1FvQO1HPH-iGJJ-Uab9dgoIyhrGMzzwrgS1IP8Yh0VEE/edit?gid=498659891#gid=498659891",
             // icon: "",
             children: [
@@ -154,7 +183,6 @@ const simple = [
                     id: "peeple GPT",
                     label: "Peeple GDT分析GDS",
                     link: "https://docs.google.com/spreadsheets/d/1X1y6eUohTduzYnqjfDzYqsp1qHvxP3GmSwfer_vpD5Q/edit?gid=498659891#gid=498659891",
-
                   },
                 ],
               },
@@ -257,7 +285,8 @@ const expanded = ref([
   "publish",
   "storageUSA",
   "cia",
-  // ❌ 不放 "1" → 就不會展開 joey
+  "structure",
+  // ❌ 不放 "1" → 就不會展開 @joey
 ]);
 const tickStrategy = ref("strict");
 
