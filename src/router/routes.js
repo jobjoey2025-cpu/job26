@@ -67,8 +67,7 @@ const routes = [
       { path: '2Finference', component: () => import('components/2Finference.vue'), name: '2Finference' },
       { path: 'notion', component: () => import('components/notion.vue'), name: 'notion' },
       { path: 'interview', component: () => import('components/interview.vue'), name: 'interview' },
-
-
+      { path: '104priority', component: () => import('components/104priority.vue'), name: '104priority' },
 
     ]
   },

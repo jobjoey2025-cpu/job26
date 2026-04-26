@@ -36,6 +36,13 @@ const notionList = [
     image: "https://upload.wikimedia.org/wikipedia/commons/2/25/5566_and_Daily_Air_B-55507_20050820.jpg",
   },
   {
+    id: 3,
+    title: "空間箱 檢查",
+    desc: "step by step 儘量不要重複",
+    url: "https://www.notion.so/34e020032b2980d68a09f2320ca5fac6?source=copy_link",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Series-N700a-Mt.Fuji.jpg/960px-Series-N700a-Mt.Fuji.jpg",
+  },
+  {
     id: 2,
     title: "整理 Tasks one by one",
     desc: "one by one FIXED (GDS)",
@@ -64,6 +71,7 @@ const notionList = [
     url: "https://www.notion.so/DIY-2d3020032b2980939c48efbfc7116622?source=copy_link",
     image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Arabic_Dial_SEIKO5_3.jpg/1920px-Arabic_Dial_SEIKO5_3.jpg",
   },
+
   ];
 
 const open = (url) => {

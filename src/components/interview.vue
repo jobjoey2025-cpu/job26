@@ -3,6 +3,8 @@
     <!-- 標題 -->
     <div class="text-h5 q-mb-md">職涯策略與面試判斷系統</div>
 
+    <q-btn flat color="primary" label="104priority" to="/104priority" icon="open_in_new" />
+
     <!-- 工作本質 -->
     <q-card class="q-mb-md">
       <q-card-section>
