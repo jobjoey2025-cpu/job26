@@ -3,6 +3,14 @@
     <q-btn
       flat
       color="primary"
+      label="ai 常用的目前功能"
+      to="/aiFn"
+      icon="open_in_new"
+    />
+
+    <q-btn
+      flat
+      color="primary"
       label="3F tin "
       href="https://docs.google.com/spreadsheets/d/1BOO44OJj1Hm3KDkXzEsFpO9kr_CyXjsrmsfIqMcI6Oc/edit?gid=777997665#gid=777997665
 "

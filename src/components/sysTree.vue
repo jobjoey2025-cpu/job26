@@ -63,6 +63,12 @@
             CAD 疊圖 ?\\ $$ Fortran 轉 python use GPT，then run in colab。\\
           </p>
         </q-tab-panel>
+        <q-tab-panel name="fullTimeJob">
+          <p>
+            * 打工時 可能只用 GDS \ Gkeep \ 隨手寫 \ Notion \\ VSC+Q only view \ 放假 Not 2200 以後<br>
+            * 最後只有 G SKDL-日曆 (隨手寫) 可以 limit 活動 \
+          </p>
+        </q-tab-panel>
       </q-tab-panels>
     </div>
   </div>
@@ -102,10 +108,13 @@ const simple = [
                 label: "隨手寫 超過一頁，就是overload (估)",
               },
               {
+                id: "fullTimeJob",
+                label: "打工時 可能只用 GDS \ Gkeep \ 隨手寫 \ Notion \ Quasar",
+              },
+              {
                 id: "3",
                 label: "GDS - main品牌choose (評估 priority)",
               },
-
               {
                 id: "3",
                 label: "Screen Shoot + Moment NAS",
@@ -215,7 +224,7 @@ const simple = [
               {
                 id: "3Fissue",
                 label: "3F 鐵皮屋問題 GDS",
-                // link: "/lock",
+                // link: "lock",
                 // link: "/outsourcingSOP",
                 link: "https://104vtol.netlify.app/#/outsourcingSOP",
               },
