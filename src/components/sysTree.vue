@@ -120,7 +120,8 @@ const simple = [
                 children: [
                   {
                     id: "3",
-                    label: "其實 都是靠 機率，訊息密度高 品質好時，問題就容易解。",
+                    label:
+                      "其實 都是靠 機率，訊息密度高 品質好時，問題就容易解。",
                   },
                   {
                     id: "3",
@@ -159,6 +160,11 @@ const simple = [
                 label: "@ 📸 Notion 至少結果紀錄 pic \ job21",
                 link: "https://www.notion.so/Top5-25-08-263020032b298089ab04f81869627adb?source=copy_link",
               },
+              {
+                id: "auto alarm",
+                label: "📡📻🎙️ auto alarm",
+                link: "https://www.notion.so/26c020032b2980d7955fe6e82d8839c1?source=copy_link",
+              },
             ],
           },
           {
@@ -176,6 +182,11 @@ const simple = [
                 id: "biz network",
                 label: "biz 關係 通訊錄 - job21",
                 link: "https://docs.google.com/spreadsheets/d/1EzmKCAbNmE5hW3eHsr2sKJAFDMcuJJbN4dEv3vWekEk/edit?gid=1682307598#gid=1682307598",
+              },
+              {
+                id: "invoice",
+                label: "所有載具「綁在一起」Notion",
+                link: "https://www.notion.so/4hrs-up-34f020032b2980a69185e1dc60449e63?source=copy_link",
               },
             ],
           },
@@ -204,7 +215,9 @@ const simple = [
               {
                 id: "3Fissue",
                 label: "3F 鐵皮屋問題 GDS",
-                link: "https://docs.google.com/spreadsheets/d/1BOO44OJj1Hm3KDkXzEsFpO9kr_CyXjsrmsfIqMcI6Oc/edit?gid=498659891#gid=498659891",
+                // link: "/lock",
+                // link: "/outsourcingSOP",
+                link: "https://104vtol.netlify.app/#/outsourcingSOP",
               },
             ],
           },
