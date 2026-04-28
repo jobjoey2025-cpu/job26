@@ -112,6 +112,12 @@ const simple = [
                 label: "打工時 可能只用 GDS \ Gkeep \ 隨手寫 \ Notion \ Quasar",
               },
               {
+                id: "aiFn",
+                label: "✨ GPT 現在能做的",
+                link: "https://104vtol.netlify.app/#/aiFn",
+
+              },
+              {
                 id: "3",
                 label: "GDS - main品牌choose (評估 priority)",
               },

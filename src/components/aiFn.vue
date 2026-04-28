@@ -158,11 +158,11 @@ const coreConcept = [
 ];
 
 const learning = [
-  "配色設計（googleFigma）",
-  "自動化 coding 過快 (強化學習 \ 軟體規格書 IQC)  → joey 基礎不穩",
   "購物車 prompt 腳本 - 蒐集",
-  "多語言來源（EN / JP / CN）",
+  "自動化 coding 過快 (強化學習 \ 軟體規格書 IQC)  → joey 基礎不穩",
   "* 語言轉換成本高（EN → 中 → 台式理解）以陸為先 \ 沒有再 English",
+  "配色設計（googleFigma）",
+  // "多語言來源（EN / JP / CN）",
   "觀察市場與有錢人的行為 \ 在做甚麼 \ 不能做甚麼 & 我有甚麼不同 ",
 ];
 </script>
