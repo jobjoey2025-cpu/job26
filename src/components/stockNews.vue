@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <h4>STOCK NEWS</h4>
+    <h4>STOCK NEWS 新聞</h4>
     <!-- 工具列 -->
     <div class="row items-center q-mb-md">
       <q-btn label="更新新聞" color="primary" @click="fetchNews" />
