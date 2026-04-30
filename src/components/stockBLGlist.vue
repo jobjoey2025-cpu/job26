@@ -72,6 +72,9 @@ const error = ref(null);
 onMounted(async () => {
   try {
     const res = await fetch("/.netlify/functions/blog_stock");
+    // 這裡要改 這個路徑的 js 檔 /.netlify/functions/blog_stock.js
+    // 這一段連結 "https://stockjoey.blogspot.com/feeds/posts/default?alt=json"
+    // 這樣就應該可以看得懂了
 
     if (!res.ok) throw new Error("API failed");
 

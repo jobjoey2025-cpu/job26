@@ -12,9 +12,10 @@
       row-key="symbol"
     />
 
-    <div class="row items-center q-mb-md">
+    <!-- <div class="row items-center q-mb-md">
       <q-btn label="更新新聞" color="primary" @click="fetchNews" />
-    </div>
+    </div> -->
+
     <stockBLGlist />
   </q-page>
 
