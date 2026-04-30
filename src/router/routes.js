@@ -69,8 +69,11 @@ const routes = [
       { path: 'interview', component: () => import('components/interview.vue'), name: 'interview' },
       { path: '104priority', component: () => import('components/104priority.vue'), name: '104priority' },
       { path: 'aiFn', component: () => import('components/aiFn.vue'), name: 'aiFn' },
-      { path: 'stock', component: () => import('components/stock.vue'), name: 'stock' },
 
+      
+      { path: 'stock', component: () => import('components/stock.vue'), name: 'stock' },
+      { path: 'stockNews', component: () => import('components/stockNews.vue'), name: 'stockNews' },
+      { path: 'stockBLGlist', component: () => import('components/stockBLGlist.vue'), name: 'stockBLGlist' },
 
     ]
   },

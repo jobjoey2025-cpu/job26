@@ -11,10 +11,20 @@
       :columns="columns"
       row-key="symbol"
     />
+
+    <div class="row items-center q-mb-md">
+      <q-btn label="更新新聞" color="primary" @click="fetchNews" />
+    </div>
+    <stockBLGlist />
   </q-page>
+
 </template>
 
 <script setup>
+// import stockNews from "components/stockNews.vue";
+import stockBLGlist from "components/stockBLGlist.vue";
+
+
 import { ref, onBeforeUnmount } from "vue";
 import axios from "axios";
 
@@ -22,6 +32,7 @@ const stocks = ref([]);
 let timer = null;
 
 const symbols = ["2330.TW", "2317.TW", "2454.TW"];
+// has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 
 const columns = [
   { name: "symbol", label: "代號", field: "symbol" },
@@ -57,7 +68,7 @@ const toggleAuto = () => {
     timer = null;
   } else {
     fetchStocks();
-    timer = setInterval(fetchStocks, 5000);
+    timer = setInterval(fetchStocks, 500000);
   }
 };
 
