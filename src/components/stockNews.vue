@@ -95,4 +95,9 @@ const open = (url) => {
 
 // 初始化
 onMounted(fetchNews);
+
+const res = await fetch("/.netlify/functions/news");
+const text = await res.text();
+
+console.log(text);
 </script>

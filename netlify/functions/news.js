@@ -1,16 +1,23 @@
-// /netlify/functions/news.js
-import Parser from 'rss-parser'
-
 export async function handler() {
-  const parser = new Parser()
+  try {
+    const parser = new Parser()
 
-  const feed = await parser.parseURL(
-    'https://news.google.com/rss/search?q=台股'
-  )
+    const feed = await parser.parseURL(
+      'https://news.google.com/rss/search?q=台股&hl=zh-TW&gl=TW&ceid=TW:zh-Hant'
+    )
 
-  const items = feed.items.slice(0, 3)
-  return {
-    statusCode: 200,
-    body: JSON.stringify(feed.items)
+    console.log('items:', feed.items.length)
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(feed.items)
+    }
+  } catch (err) {
+    console.error(err)
+
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: err.message })
+    }
   }
 }
