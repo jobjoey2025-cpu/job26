@@ -8,6 +8,7 @@ export async function handler() {
     'https://news.google.com/rss/search?q=台股'
   )
 
+  const items = feed.items.slice(0, 3)
   return {
     statusCode: 200,
     body: JSON.stringify(feed.items)
