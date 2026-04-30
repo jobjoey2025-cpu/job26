@@ -1,5 +1,14 @@
 <template>
   <q-page padding>
+
+    <q-btn
+      flat
+      color="primary"
+      label="stock ai channel"
+      to="/stock"
+      icon="open_in_new"
+    />
+
     <q-btn
       flat
       color="primary"
