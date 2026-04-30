@@ -40,7 +40,7 @@ const columns = [
 const fetchStocks = async () => {
   loading.value = true
 
-  const res = await fetch('/.netlify/functions/stocks')
+  const res = await fetch('/.netlify/functions/stock')
   const data = await res.json()
 
   stocks.value = data
