@@ -38,16 +38,15 @@ const columns = [
 
 // 呼叫 Netlify function
 const fetchStocks = async () => {
-  loading.value = true;
-  try {
-    const res = await fetch("/.netlify/functions/stocks");
-    const data = await res.json();
-    stocks.value = data;
-  } catch (err) {
-    console.error(err);
-  }
-  loading.value = false;
-};
+  loading.value = true
+
+  const res = await fetch('/.netlify/functions/stocks')
+  const data = await res.json()
+
+  stocks.value = data
+
+  loading.value = false
+}
 
 onMounted(fetchStocks);
 </script>
