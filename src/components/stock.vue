@@ -1,32 +1,15 @@
 <template>
   <q-page padding>
-    <div class="row items-center q-mb-md">
-      <q-btn label="一鍵更新" color="primary" @click="fetchStocks" />
-      <q-btn label="自動更新" flat @click="toggleAuto" class="q-ml-sm" />
-    </div>
-
-    <q-table
-      title="台股看板"
-      :rows="stocks"
-      :columns="columns"
-      row-key="symbol"
-    />
-
-    <!-- <div class="row items-center q-mb-md">
-      <q-btn label="更新新聞" color="primary" @click="fetchNews" />
-    </div> -->
+    <h3 class="text-center">台股看板</h3>
     <stockValue />
     <stockBLGlist />
   </q-page>
-
 </template>
 
 <script setup>
 // import stockNews from "components/stockNews.vue";
 import stockBLGlist from "components/stockBLGlist.vue";
 import stockValue from "components/stockValue.vue";
-
-
 
 import { ref, onBeforeUnmount } from "vue";
 import axios from "axios";
