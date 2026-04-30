@@ -15,7 +15,7 @@
     <!-- <div class="row items-center q-mb-md">
       <q-btn label="更新新聞" color="primary" @click="fetchNews" />
     </div> -->
-
+    <stockValue />
     <stockBLGlist />
   </q-page>
 
@@ -24,6 +24,8 @@
 <script setup>
 // import stockNews from "components/stockNews.vue";
 import stockBLGlist from "components/stockBLGlist.vue";
+import stockValue from "components/stockValue.vue";
+
 
 
 import { ref, onBeforeUnmount } from "vue";

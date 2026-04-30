@@ -72,8 +72,8 @@ const routes = [
 
 
       { path: 'stock', component: () => import('components/stock.vue'), name: 'stock' },
-      // { path: 'stockNews', component: () => import('components/stockNews.vue'), name: 'stockNews' },
       { path: 'stockBLGlist', component: () => import('components/stockBLGlist.vue'), name: 'stockBLGlist' },
+      { path: 'stockValue', component: () => import('components/stockValue.vue'), name: 'stockValue' },
 
     ]
   },
