@@ -12,6 +12,14 @@
     <q-btn
       flat
       color="primary"
+      label="sixDiff"
+      to="/sixDiff"
+      icon="open_in_new"
+    />
+
+    <q-btn
+      flat
+      color="primary"
       label="ai 常用的目前功能"
       to="/aiFn"
       icon="open_in_new"

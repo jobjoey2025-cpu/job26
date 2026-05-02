@@ -12,3 +12,5 @@ http://localhost:8888
 netlify dev --port 8889
 
 npm list rss-parser \\ 降版本 - steady
+
+style="text-align: center;"
