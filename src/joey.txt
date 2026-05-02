@@ -5,3 +5,10 @@ quasar dev
 xx quasar build
 git test
 
+xx npm install -g netlify-cli
+netlify dev
+
+http://localhost:8888
+netlify dev --port 8889
+
+npm list rss-parser \\ 降版本 - steady

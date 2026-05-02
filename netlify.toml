@@ -1,12 +1,11 @@
-	[build]		
-	command = "quasar build"		
-	publish = "dist/spa"		
-	[[redirects]]		
-	from = "/*"		
-	to = "/index.html"		
-	status = 200
+[build]
+  command = "quasar build"
+  publish = "dist/spa"
 
-	[[headers]]
-  		for = "/*"
-  		[headers.values]
-  		Content-Security-Policy = "script-src 'self' 'unsafe-eval' 'unsafe-inline'"	
+[dev]
+  command = "quasar dev"
+  port = 8888
+  targetPort = 9000
+
+[functions]
+  directory = "netlify/functions"
