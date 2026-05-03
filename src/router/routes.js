@@ -78,7 +78,8 @@ const routes = [
 
       { path: 'sixDiff', component: () => import('components/sixDiff.vue'), name: 'sixDiff' },
       { path: 'sixDiffExsample', component: () => import('components/sixDiffExsample.vue'), name: 'sixDiffExsample' },
-
+      { path: 'sixDiffCheck', component: () => import('components/sixDiffCheck.vue'), name: 'sixDiffCheck' },
+      { path: 'sixDiffMCP', component: () => import('components/sixDiffMCP.vue'), name: 'sixDiffMCP' },
 
 
     ]

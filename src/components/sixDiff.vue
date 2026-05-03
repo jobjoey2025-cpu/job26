@@ -70,12 +70,17 @@
   </q-table>
 
   <sixDiffExsample />
+  <sixDiffCheck />
+  <sixDiffMCP />
 
 </template>
 
 <script setup>
 
 import sixDiffExsample from "components/sixDiffExsample.vue";
+import sixDiffCheck from "components/sixDiffCheck.vue";
+import sixDiffMCP from "components/sixDiffMCP.vue";
+
 
 const deletedList = ["刻意練習", "努力"];
 // columns
