@@ -72,6 +72,11 @@
   <sixDiffExsample />
   <sixDiffCheck />
   <sixDiffMCP />
+  <sixDiffPrj />
+  <sixDiffPrj24hrs />
+  <sixDiffPrjSuggest />
+
+
 
 </template>
 
@@ -80,6 +85,10 @@
 import sixDiffExsample from "components/sixDiffExsample.vue";
 import sixDiffCheck from "components/sixDiffCheck.vue";
 import sixDiffMCP from "components/sixDiffMCP.vue";
+import sixDiffPrj from "components/sixDiffPrj.vue";
+import sixDiffPrj24hrs from "components/sixDiffPrj24hrs.vue";
+import sixDiffPrjSuggest from "components/sixDiffPrjSuggest.vue";
+
 
 
 const deletedList = ["刻意練習", "努力"];

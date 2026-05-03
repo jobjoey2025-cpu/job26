@@ -80,6 +80,9 @@ const routes = [
       { path: 'sixDiffExsample', component: () => import('components/sixDiffExsample.vue'), name: 'sixDiffExsample' },
       { path: 'sixDiffCheck', component: () => import('components/sixDiffCheck.vue'), name: 'sixDiffCheck' },
       { path: 'sixDiffMCP', component: () => import('components/sixDiffMCP.vue'), name: 'sixDiffMCP' },
+      { path: 'sixDiffPrj', component: () => import('components/sixDiffPrj.vue'), name: 'sixDiffPrj' },
+      { path: 'sixDiffPrj24hrs', component: () => import('components/sixDiffPrj24hrs.vue'), name: 'sixDiffPrj24hrs' },
+      { path: 'sixDiffPrjSuggest', component: () => import('components/sixDiffPrjSuggest.vue'), name: 'sixDiffPrjSuggest' },
 
 
     ]
