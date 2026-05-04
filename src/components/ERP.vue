@@ -135,7 +135,6 @@
                       :key="img"
                       :src="img"
                       class="thumb"
-
                       @click="open(img)"
                       fit="cover"
                     />
@@ -167,7 +166,6 @@
                       :key="img"
                       :src="img"
                       class="thumb"
-
                       @click="open(img)"
                       fit="cover"
                     />
@@ -187,25 +185,42 @@
       <div class="row q-col-gutter-md">
         <q-card class="col-12 col-md-4">
           <q-card-section>
-            <h6>資料集中化</h6>
-            <p>由分散檔案轉為資料庫統一管理</p>
-            <p>工程 + IT + ERP 跨領域 整合</p>
+            <li><b>資料集中化</b></li>
+            <p>
+              由分散檔案轉為資料庫統一管理<br />
+              分散檔案（Excel / CAD / 手動）➡️ 統一進入資料庫（DB）
+            </p>
+            <p>
+              👉 目的：<br />
+              避免版本混亂<br />
+              工程 + IT + ERP 跨領域 整合<br />
+              單一資料來源（Single Source of Truth）
+            </p>
           </q-card-section>
         </q-card>
 
         <q-card class="col-12 col-md-4">
           <q-card-section>
-            <h6>自動化 (一鍵啟動)</h6>
-            <p>透過 API 自動產出 BOM 與結構資料</p>
-            <p>表格（BOM） Tree（結構） Flow（流程）</p>
+            <li><b>自動化（升級）</b></li>
+            <p>
+              透過 API 一鍵啟動（One-click）自動產出 BOM 與結構資料<br />
+              👉 包含：表格（BOM） Tree（結構） Flow（流程）<br />
+              API 層 接 CAD（SolidWorks） 提供前端 / ERP 使用<br />
+              DB 層 SQL（結構化資料） BOM / Tree / Flow <br />
+              ERP 層 訂單 生產排程 成本管理
+            </p>
           </q-card-section>
         </q-card>
 
         <q-card class="col-12 col-md-4">
           <q-card-section>
-            <h6>系統整合</h6>
-            <p>最終整合至 ERP 與生產流程</p>
-            <p>API（可接 SolidWorks） DB（可接 SQL） ERP（可延伸）</p>
+            <li><b>跨系統整合</b></li>
+            <p>
+              最終整合至 ERP 與生產流程<br />
+              👉 核心能力：系統之間「可對話」不再人工轉資料<br />
+              API（可接 SolidWorks） DB（可接 SQL） ERP（可延伸）<br />
+              資料一致性 ↑; 人工錯誤 ↓; 生產效率 ↑; 決策速度 ↑
+            </p>
           </q-card-section>
         </q-card>
       </div>
@@ -217,6 +232,7 @@
         流程將工程資料從單純檔案管理，
         逐步進化為具備結構化資料、查詢能力與自動化產出的系統， 最終整合至 ERP
         與製造流程，提升資料一致性與生產效率。
+        讓工程資料能被系統理解、運算、並直接驅動生產
       </p>
     </section>
     <!-- joey 共用圖片放大 -->
