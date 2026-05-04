@@ -83,6 +83,8 @@ const routes = [
       { path: 'sixDiffPrj', component: () => import('components/sixDiffPrj.vue'), name: 'sixDiffPrj' },
       { path: 'sixDiffPrj24hrs', component: () => import('components/sixDiffPrj24hrs.vue'), name: 'sixDiffPrj24hrs' },
       { path: 'sixDiffPrjSuggest', component: () => import('components/sixDiffPrjSuggest.vue'), name: 'sixDiffPrjSuggest' },
+      { path: 'CFDtimeline', component: () => import('components/CFDtimeline.vue'), name: 'CFDtimeline' },
+      { path: 'CFD', component: () => import('components/CFD.vue'), name: 'CFD' },
 
 
     ]

@@ -71,9 +71,10 @@
           </p>
         </q-tab-panel>
         <q-tab-panel name="Loop">
-          <p>
-            套軟 win 改版他就難用了 install 都難 (每年都改版)
-          </p>
+          <p>套軟 win 改版他就難用了 install 都難 (每年都改版)</p>
+        </q-tab-panel>
+        <q-tab-panel name="CFD">
+          <p>phiFolw excel剪影網格 gmsh(2d) Lure 玩具 steam</p>
         </q-tab-panel>
       </q-tab-panels>
     </div>

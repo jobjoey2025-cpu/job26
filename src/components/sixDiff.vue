@@ -75,7 +75,7 @@
   <sixDiffPrj />
   <sixDiffPrj24hrs />
   <sixDiffPrjSuggest />
-
+  <CFDtimeline />
 </template>
 
 <script setup>
@@ -86,6 +86,7 @@ import sixDiffMCP from "components/sixDiffMCP.vue";
 import sixDiffPrj from "components/sixDiffPrj.vue";
 import sixDiffPrj24hrs from "components/sixDiffPrj24hrs.vue";
 import sixDiffPrjSuggest from "components/sixDiffPrjSuggest.vue";
+import CFDtimeline from "components/CFDtimeline.vue";
 
 
 

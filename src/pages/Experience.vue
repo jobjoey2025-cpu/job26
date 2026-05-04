@@ -4,7 +4,8 @@
       <bannerMotor />
       <bannerGearbox />
       <bannerDC10 />
-
+      <CFDtimeline />
+      <CFD />
       <!-- B7-賽車 開模 齒輪箱issue\\ DC10-新設計 MST+ae style 3DP 開模\\ -->
 
       <!-- Propulsion System : 電池 與 電裝 知識 + 丙級 (這我有寫過只要整理 motor) -->
@@ -34,7 +35,7 @@
       </p> -->
 
       <p>betaFlight Books</p>
-      <p>CFD ??</p>
+      <!-- <p>CFD ??</p> -->
       <!-- <p>
         ** Flight Systems -- ArduPilot\\ flight telemetry\\ autopilot tuning \\
         xx 控制系統：xx-ArduPilot betaFlight Books
@@ -72,4 +73,7 @@
 import bannerMotor from "components/bannerMotor.vue";
 import bannerGearbox from "components/bannerGearbox.vue";
 import bannerDC10 from "components/bannerDC10.vue";
+
+import CFDtimeline from "components/CFDtimeline.vue";
+import CFD from "components/CFD.vue";
 </script>
