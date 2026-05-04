@@ -2,7 +2,16 @@
   <q-page class="q-pa-md">
     <!-- --------- -->
     <div class="q-pa-md">
-      <q-carousel arrows animated v-model="slide" height="300px" navigation infinite navigation-position="top" control-color="orange">
+      <q-carousel
+        arrows
+        animated
+        v-model="slide"
+        height="300px"
+        navigation
+        infinite
+        navigation-position="top"
+        control-color="orange"
+      >
         <q-carousel-slide
           name="first"
           img-src="https://blogger.googleusercontent.com/img/a/AVvXsEjg-7-6ej16ZJE0ah-ztfUZpSKK7bUeWnYotrpmoeBUvspAuSq0BfIVDa32dKYxYln3fag8AdEK5EmPEN-B0H01ZMKbEVBwC5VHefkOsXz08uRz2XK7qzi_YMW-DJUjc71toeRxSUpGcb_DhanOjwTuL1QAicOEL7KI_6LiBJpM_JR6zMIoHHgexKKEgxwG"
@@ -123,6 +132,52 @@
         </div>
       </q-timeline-entry>
     </q-timeline>
+
+    <!-- 程式碼 -->
+    <q-card class="q-mb-md">
+      <q-card-section>
+        <div class="text-h6 q-mb-sm">💻 Code</div>
+
+        <q-scroll-area style="height: 400px">
+          <pre class="code-block">
+# =========================
+# ✈ NACA0012 Grid Simulation
+# =========================
+from phi.flow import *
+
+NX_AIR, NY_AIR = 200, 100
+DOMAIN_AIR = dict(x=NX_AIR, y=NY_AIR, bounds=Box(x=4, y=2))
+
+# 1. Define Airfoil Geometry
+airfoil_geom = Box(x=(0.5, 1.5), y=(0.95, 1.05))
+airfoil_obstacle = Obstacle(airfoil_geom, velocity=[0, 0])
+
+# 2. Initialize Velocity
+v_airfoil = StaggeredGrid((1.0, 0.0), extrapolation.BOUNDARY, **DOMAIN_AIR)
+
+# 3. Simulation Loop
+DT_AIR = 0.02
+
+for i in range(50):
+    v_airfoil = advect.semi_lagrangian(v_airfoil, v_airfoil, dt=DT_AIR)
+    v_airfoil = diffuse.explicit(v_airfoil, 0.001, dt=DT_AIR)
+    v_airfoil, _ = fluid.make_incompressible(
+        v_airfoil,
+        [airfoil_obstacle],
+        Solve('CG', rel_tol=1e-4, abs_tol=1e-4, max_iterations=500)
+    )
+
+# 4. Visualization
+vel_mag = math.sqrt(
+    v_airfoil.at_centers().vector[0]**2 +
+    v_airfoil.at_centers().vector[1]**2
+)
+plot(vel_mag, title="Velocity Magnitude")
+print("✅ Simulation finished successfully.")
+          </pre>
+        </q-scroll-area>
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
 
