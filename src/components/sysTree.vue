@@ -65,7 +65,8 @@
         </q-tab-panel>
         <q-tab-panel name="fullTimeJob">
           <p>
-            * 打工時 可能只用 GDS \ Gkeep \ 隨手寫 \ Notion \\ VSC+Q only view \ 放假 Not 2200 以後<br>
+            * 打工時 可能只用 GDS \ Gkeep \ 隨手寫 \ Notion \\ VSC+Q only view \
+            放假 Not 2200 以後<br />
             * 最後只有 G SKDL-日曆 (隨手寫) 可以 limit 活動 \
           </p>
         </q-tab-panel>
@@ -115,7 +116,6 @@ const simple = [
                 id: "aiFn",
                 label: "✨ GPT 現在能做的",
                 link: "https://104vtol.netlify.app/#/aiFn",
-
               },
               {
                 id: "3",
@@ -255,14 +255,67 @@ const simple = [
           },
           {
             id: "fashion",
-            label: "精神部門  聲光 流行 Fashion relex 情報猿",
-            link: "https://docs.google.com/spreadsheets/d/1MpGxS3X4QMiQtAptCs1BWkiB8HvHeaXgdgbIgrfrmLk/edit?gid=498659891#gid=498659891",
-
+            label: "精神部門  聲光 流行 ",
+            link: "",
             children: [
               {
                 id: "podcast",
-                label: "🎯 Podcast",
+                label: "🎯 Podcast Fashion relex 情報猿",
                 link: "https://docs.google.com/spreadsheets/d/1MpGxS3X4QMiQtAptCs1BWkiB8HvHeaXgdgbIgrfrmLk/edit?gid=1288694375#gid=1288694375",
+                children: [
+                  {
+                    id: "3",
+                    label: "🎯 3範本",
+                  },
+                ],
+              },
+              {
+                id: "Loop",
+                label: "Loop 模擬 (open source 才能長久)",
+                // 套軟 win 改版他就難用了 install 都難
+                link: "",
+                children: [
+                  {
+                    id: "excel",
+                    label: "試算表 反覆運算",
+                    // color filter 積分 ; excel 熱傳導 ; 機構運動 ; 機器學習 ; 蒙地卡羅 ;
+                  },
+                  {
+                    id: "CFD",
+                    label: "Colab phiFolw 回憶練習 Lure ",
+                    // phiFolw excel剪影網格 gmsh(2d) Lure 玩具 steam
+                  },
+                  {
+                    id: "Optical",
+                    label: "Colab Optical 光學不熟 玩具steam",
+                    // 光學不熟 : 有幾何 波動 錶盤Flush Setting ...
+                  },
+                  {
+                    id: "FBstock",
+                    label: "Colab FBstock + 推薦 Biz評分",
+                    // LLM ; GPT 財報推薦 ; GPT 新聞推薦(奇門遁甲) ; lure 也可以推薦...
+                  },
+                  {
+                    id: "NetFn",
+                    label: "Netlify Fn推薦 閱讀品質",
+                    // 提高 閱讀品質 ...
+                  },
+                  {
+                    id: "blender",
+                    label: "blender CAD 二次開發 2 3D printer",
+                    // 有一些外掛 車殼 玩具 渲染 (就是準度[定量] vs 看特徵[定性])
+                  },
+                  {
+                    id: "blender",
+                    label: "blender CAD 二次開發",
+                    // 有一些外掛 車殼 玩具 渲染 (就是準度[定量] vs 看特徵[定性])
+                  },
+                  {
+                    id: "electric",
+                    label: "blender CAD 二次開發",
+                    // 有一些外掛 車殼 玩具 渲染 (就是準度[定量] vs 看特徵[定性])
+                  },
+                ],
               },
             ],
           },
@@ -319,6 +372,8 @@ const ticked = ref([]);
 const expanded = ref([
   "ggb",
   "judge",
+  "Loop",
+  "fashion",
   // "1",
   "publish",
   "storageUSA",

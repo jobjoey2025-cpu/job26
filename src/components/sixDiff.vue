@@ -76,8 +76,6 @@
   <sixDiffPrj24hrs />
   <sixDiffPrjSuggest />
 
-
-
 </template>
 
 <script setup>
