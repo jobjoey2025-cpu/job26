@@ -276,9 +276,9 @@ const simple = [
                 link: "",
                 children: [
                   {
-                    id: "excel",
-                    label: "試算表 反覆運算",
-                    // color filter 積分 ; excel 熱傳導 ; 機構運動 ; 機器學習 ; 蒙地卡羅 ;
+                    id: "NetFn",
+                    label: "Netlify Fn推薦 閱讀品質",
+                    // 提高 閱讀品質 ...
                   },
                   {
                     id: "CFD",
@@ -286,19 +286,15 @@ const simple = [
                     // phiFolw excel剪影網格 gmsh(2d) Lure 玩具 steam
                   },
                   {
-                    id: "Optical",
-                    label: "Colab Optical 光學不熟 玩具steam",
-                    // 光學不熟 : 有幾何 波動 錶盤Flush Setting ...
-                  },
-                  {
                     id: "FBstock",
                     label: "Colab FBstock + 推薦 Biz評分",
-                    // LLM ; GPT 財報推薦 ; GPT 新聞推薦(奇門遁甲) ; lure 也可以推薦...
+                    // LLM ; GPT 財報推薦 ; GPT 新聞推薦(奇門遁甲) ; lure 也可以推薦 ...
+                    // STP K-mean
                   },
                   {
-                    id: "NetFn",
-                    label: "Netlify Fn推薦 閱讀品質",
-                    // 提高 閱讀品質 ...
+                    id: "excel",
+                    label: "試算表 反覆運算",
+                    // color filter 積分 ; excel 熱傳導 ; 機構運動 ; 機器學習 ; 蒙地卡羅 ;
                   },
                   {
                     id: "blender",
@@ -306,13 +302,18 @@ const simple = [
                     // 有一些外掛 車殼 玩具 渲染 (就是準度[定量] vs 看特徵[定性])
                   },
                   {
-                    id: "blender",
-                    label: "blender CAD 二次開發",
-                    // 有一些外掛 車殼 玩具 渲染 (就是準度[定量] vs 看特徵[定性])
+                    id: "Optical",
+                    label: "Colab Optical 光學不熟 玩具steam",
+                    // 光學不熟 : 有幾何 波動 錶盤Flush Setting ...
+                  },
+                  {
+                    id: "NFT",
+                    label: "NFT Solidity ERC-1155 批次鑄造",
+                    // 批次鑄造 mint 白嫖
                   },
                   {
                     id: "electric",
-                    label: "blender CAD 二次開發",
+                    label: "electric 電工 Arduino",
                     // 有一些外掛 車殼 玩具 渲染 (就是準度[定量] vs 看特徵[定性])
                   },
                 ],
