@@ -2,6 +2,12 @@
 cd VTOL
 quasar dev
 
+cd VTOL
+netlify dev
+
+
+
+
 xx quasar build
 git test
 

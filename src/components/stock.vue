@@ -2,7 +2,7 @@
   <q-page padding>
     <h3 class="text-center">台股看板</h3>
     <stockValue />
-    <stockNews />
+    <!-- <stockNews /> -->
     <stockBLGlist />
   </q-page>
 </template>
