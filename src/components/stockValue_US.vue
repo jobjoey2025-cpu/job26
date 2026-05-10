@@ -1,9 +1,7 @@
 <template>
-  <q-page padding>
+  <q-page padding class="dashboard-page">
     <!-- Header -->
     <div class="row items-center justify-between q-mb-md">
-      <div class="text-h5">📊 美股看板</div>
-
       <div class="row items-center q-gutter-sm">
         <div class="text-grey-7 text-caption">
           最後更新：
@@ -35,10 +33,10 @@
       grid
       hide-header
       flat
-      :rows-per-page-options="[20]"
+      :rows-per-page-options="[4]"
     >
       <template v-slot:item="props">
-        <div class="q-pa-xs col-xs-4 col-sm-3 col-md-2 col-lg-1">
+        <div class="q-pa-xs col-xs-3 col-sm-3 col-md-2 col-lg-1">
           <q-card flat bordered class="stock-card">
             <!-- 股票代號 -->
             <!-- <q-card-section class="text-center bg-grey-2">
@@ -46,9 +44,9 @@
                 {{ props.row.symbol }}
               </div> -->
 
-              <div class="text-subtitle2 text-grey-7" style="text-align: center;">
-                {{ props.row.name }}
-              </div>
+            <div class="text-subtitle2 text-grey-7" style="text-align: center">
+              {{ props.row.name }}
+            </div>
             <!-- </q-card-section> -->
 
             <q-separator />
@@ -66,9 +64,9 @@
 
             <!-- 更新時間 -->
             <!-- <q-card-section class="text-center"> -->
-              <!-- <div class="text-caption text-grey">Updated</div> -->
+            <!-- <div class="text-caption text-grey">Updated</div> -->
 
-              <!-- <div class="text-body2">
+            <!-- <div class="text-body2">
                 {{ formatTime(props.row.time) }}
               </div> -->
             <!-- </q-card-section> -->
@@ -156,5 +154,10 @@ onMounted(() => {
 .stock-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* 覆蓋 q-page 高度（最常用） */
+.dashboard-page {
+  min-height: auto !important;
 }
 </style>

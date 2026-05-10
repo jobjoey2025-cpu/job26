@@ -76,6 +76,10 @@ const routes = [
       { path: 'stockValue', component: () => import('components/stockValue.vue'), name: 'stockValue' },
       { path: 'stockNews', component: () => import('components/stockNews.vue'), name: 'stockNews' },
       { path: 'stockValue_US', component: () => import('components/stockValue_US.vue'), name: 'stockValue_US' },
+      { path: 'stockValue_exchange.vue', component: () => import('components/stockValue_exchange.vue'), name: 'stockValue_exchange.vue' },
+
+
+
 
       { path: 'sixDiff', component: () => import('components/sixDiff.vue'), name: 'sixDiff' },
       { path: 'sixDiffExsample', component: () => import('components/sixDiffExsample.vue'), name: 'sixDiffExsample' },

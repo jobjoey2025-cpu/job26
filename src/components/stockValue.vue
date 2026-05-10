@@ -1,5 +1,5 @@
-<template>
-  <q-page padding>
+<template >
+  <q-page padding class="dashboard-page">
     <!-- 操作區 -->
     <div class="row items-center q-mb-md">
       <q-btn
@@ -21,11 +21,11 @@
       hide-header
       flat
       class="stock-grid"
-      :rows-per-page-options="[20]"
+      :rows-per-page-options="[8]"
     >
       <!-- Masonry Like Grid -->
       <template v-slot:item="props">
-        <div class="q-pa-xs col-xs-4 col-sm-3 col-md-2 col-lg-1">
+        <div class="q-pa-xs col-xs-3 col-sm-2 col-md-2 col-lg-1">
           <q-card flat bordered class="stock-card">
             <!-- Header -->
             <q-card-section class="bg-grey-1">
@@ -209,5 +209,10 @@ onMounted(() => {
 
 .text-green {
   color: #2e7d32;
+}
+
+/* 覆蓋 q-page 高度（最常用） */
+.dashboard-page {
+  min-height: auto !important;
 }
 </style>

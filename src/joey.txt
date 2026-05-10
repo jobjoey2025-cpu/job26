@@ -6,7 +6,8 @@ cd VTOL
 netlify dev
 
 
-
+style="text-align: center;"
+OK -- http://localhost:8888/.netlify/functions/stock_US
 
 xx quasar build
 git test
@@ -15,12 +16,7 @@ xx npm install -g netlify-cli
 netlify dev
 
 http://localhost:8888
-netlify dev --port 8889
+xx netlify dev --port 8889
 
 npm list rss-parser \\ 降版本 - steady
 
-style="text-align: center;"
-
-https://your-site.netlify.app/.netlify/functions/quote?symbol=AAPL
-
-OK -- http://localhost:8888/.netlify/functions/stock_US
