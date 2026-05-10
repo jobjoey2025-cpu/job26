@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-sm ">
     <!-- Title -->
-    <div class="text-h5 text-weight-bold q-mb-sm">📊 股票 Dashboard</div>
+    <!-- <div class="text-h5 text-weight-bold q-mb-sm">📊 股票 Dashboard</div> -->
 
 
     <!-- <stockValue /> <stockValue_exchange /> -->

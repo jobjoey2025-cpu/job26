@@ -1,4 +1,4 @@
-<template >
+<template>
   <q-page padding class="dashboard-page">
     <!-- 操作區 -->
     <div class="row items-center q-mb-md">
@@ -11,8 +11,9 @@
     </div>
 
     <!-- 表格 -->
+    <!-- title="📊 台股看板" -->
     <q-table
-      title="📊 台股看板"
+
       :rows="stocks"
       :columns="columns"
       row-key="symbol"
