@@ -75,6 +75,7 @@ const routes = [
       { path: 'stockBLGlist', component: () => import('components/stockBLGlist.vue'), name: 'stockBLGlist' },
       { path: 'stockValue', component: () => import('components/stockValue.vue'), name: 'stockValue' },
       { path: 'stockNews', component: () => import('components/stockNews.vue'), name: 'stockNews' },
+      { path: 'stockValue_US', component: () => import('components/stockValue_US.vue'), name: 'stockValue_US' },
 
       { path: 'sixDiff', component: () => import('components/sixDiff.vue'), name: 'sixDiff' },
       { path: 'sixDiffExsample', component: () => import('components/sixDiffExsample.vue'), name: 'sixDiffExsample' },
@@ -85,6 +86,8 @@ const routes = [
       { path: 'sixDiffPrjSuggest', component: () => import('components/sixDiffPrjSuggest.vue'), name: 'sixDiffPrjSuggest' },
       { path: 'CFDtimeline', component: () => import('components/CFDtimeline.vue'), name: 'CFDtimeline' },
       { path: 'CFD', component: () => import('components/CFD.vue'), name: 'CFD' },
+
+
 
 
     ]
