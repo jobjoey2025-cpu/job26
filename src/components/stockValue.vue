@@ -17,44 +17,103 @@
       :columns="columns"
       row-key="symbol"
       :loading="loading"
+      grid
+      hide-header
       flat
-      bordered
-      wrap-cells
+      class="stock-grid"
+      :rows-per-page-options="[20]"
     >
-      <!-- 漲跌 -->
-      <template v-slot:body-cell-change="props">
-        <q-td :props="props">
-          <span :class="getColor(props.row.change)">
-            {{ formatNumber(props.row.change) }}
-          </span>
-        </q-td>
-      </template>
+      <!-- Masonry Like Grid -->
+      <template v-slot:item="props">
+        <div class="q-pa-xs col-xs-4 col-sm-3 col-md-2 col-lg-1">
+          <q-card flat bordered class="stock-card">
+            <!-- Header -->
+            <q-card-section class="bg-grey-1">
+              <div class="row items-center justify-between">
+                <div>
+                  <div class="text-weight-bold">
+                    {{ props.row.symbol }}{{ props.row.name }}
+                  </div>
 
-      <!-- 漲幅 -->
-      <template v-slot:body-cell-percent="props">
-        <q-td :props="props">
-          <span :class="getColor(props.row.percent)">
-            {{ formatNumber(props.row.percent) }}%
-          </span>
-        </q-td>
-      </template>
+                  <div
+                    class="text-subtitle2 text-grey-7"
+                    style="text-align: center"
+                  ></div>
+                </div>
 
-      <!-- 價格 -->
-      <template v-slot:body-cell-price="props">
-        <q-td :props="props">
-          <span class="text-weight-medium">
-            {{ formatNumber(props.row.price) }}
-          </span>
-        </q-td>
-      </template>
+                <!-- 漲跌 icon -->
+                <!-- <q-icon
+              :name="
+                props.row.change > 0
+                  ? 'trending_up'
+                  : props.row.change < 0
+                  ? 'trending_down'
+                  : 'trending_flat'
+              "
+              size="32px"
+              :class="getColor(props.row.change)"
+            /> -->
+              </div>
+            </q-card-section>
 
-      <!-- 時間 -->
-      <template v-slot:body-cell-time="props">
-        <q-td :props="props">
-          <span class="text-grey-7 text-caption">
+            <q-separator />
+
+            <!-- Price -->
+            <q-card-section class="text-center">
+              <!-- <div class="text-caption text-grey">
+            Current Price
+          </div> -->
+
+              <div class="text-h6 text-weight-bold q-mt-sm">
+                {{ formatNumber(props.row.price) }}
+              </div>
+            </q-card-section>
+
+            <q-separator />
+
+            <!-- Change -->
+            <!-- <q-card-section>
+          <div class="row justify-between items-center q-mb-sm">
+            <div class="text-grey-7">
+              漲跌
+            </div>
+
+            <div
+              class="text-weight-bold"
+              :class="getColor(props.row.change)"
+            >
+              {{ formatNumber(props.row.change) }}
+            </div>
+          </div>
+
+          <div class="row justify-between items-center">
+            <div class="text-grey-7">
+              漲幅
+            </div>
+
+            <div
+              class="text-weight-bold"
+              :class="getColor(props.row.percent)"
+            >
+              {{ formatNumber(props.row.percent) }}%
+            </div>
+          </div>
+        </q-card-section> -->
+
+            <q-separator />
+
+            <!-- Time -->
+            <!-- <q-card-section class="text-center">
+          <div class="text-caption text-grey">
+            Updated
+          </div>
+
+          <div class="text-body2 text-grey-8">
             {{ formatTime(props.row.time) }}
-          </span>
-        </q-td>
+          </div>
+        </q-card-section> -->
+          </q-card>
+        </div>
       </template>
     </q-table>
   </q-page>
@@ -127,9 +186,27 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.stock-grid {
+  margin-top: 12px;
+}
+
+.stock-card {
+  border-radius: 18px;
+  overflow: hidden;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stock-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
 .text-red {
   color: #d32f2f;
 }
+
 .text-green {
   color: #2e7d32;
 }

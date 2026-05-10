@@ -1,15 +1,10 @@
 <template>
   <q-page padding>
-
     <!-- Header -->
     <div class="row items-center justify-between q-mb-md">
-
-      <div class="text-h5">
-        📊 美股看板
-      </div>
+      <div class="text-h5">📊 美股看板</div>
 
       <div class="row items-center q-gutter-sm">
-
         <div class="text-grey-7 text-caption">
           最後更新：
           {{ lastUpdate }}
@@ -26,99 +21,61 @@
     </div>
 
     <!-- Error -->
-    <q-banner
-      v-if="errorMsg"
-      class="bg-red-1 text-red q-mb-md"
-      rounded
-    >
+    <q-banner v-if="errorMsg" class="bg-red-1 text-red q-mb-md" rounded>
       {{ errorMsg }}
     </q-banner>
 
     <!-- Table -->
     <q-table
-      title="NASDAQ / 美股"
+      title="📈 美股看板"
       :rows="stocks"
       :columns="columns"
       row-key="symbol"
       :loading="loading"
+      grid
+      hide-header
       flat
-      bordered
-      separator="cell"
-      wrap-cells
-      dense
+      :rows-per-page-options="[20]"
     >
+      <template v-slot:item="props">
+        <div class="q-pa-xs col-xs-4 col-sm-3 col-md-2 col-lg-1">
+          <q-card flat bordered class="stock-card">
+            <!-- 股票代號 -->
+            <!-- <q-card-section class="text-center bg-grey-2">
+              <div class="text-h6 text-weight-bold">
+                {{ props.row.symbol }}
+              </div> -->
 
-      <!-- Symbol -->
-      <template v-slot:body-cell-symbol="props">
-        <q-td :props="props">
-          <div class="text-weight-bold">
-            {{ props.row.symbol }}
-          </div>
-        </q-td>
+              <div class="text-subtitle2 text-grey-7" style="text-align: center;">
+                {{ props.row.name }}
+              </div>
+            <!-- </q-card-section> -->
+
+            <q-separator />
+
+            <!-- 股價 -->
+            <q-card-section class="text-center">
+              <!-- <div class="text-caption text-grey">PRICE</div> -->
+
+              <div class="text-h6 text-weight-bold text-primary">
+                $ {{ formatNumber(props.row.price) }}
+              </div>
+            </q-card-section>
+
+            <q-separator />
+
+            <!-- 更新時間 -->
+            <!-- <q-card-section class="text-center"> -->
+              <!-- <div class="text-caption text-grey">Updated</div> -->
+
+              <!-- <div class="text-body2">
+                {{ formatTime(props.row.time) }}
+              </div> -->
+            <!-- </q-card-section> -->
+          </q-card>
+        </div>
       </template>
-
-      <!-- Price -->
-      <template v-slot:body-cell-price="props">
-        <q-td :props="props">
-          <div class="text-weight-medium text-body1">
-            {{ formatNumber(props.row.price) }}
-          </div>
-        </q-td>
-      </template>
-
-      <!-- Change -->
-      <!-- <template v-slot:body-cell-change="props">
-        <q-td :props="props">
-
-          <div
-            class="row items-center no-wrap"
-            :class="getColor(props.row.change)"
-          >
-            <q-icon
-              :name="props.row.change >= 0 ? 'arrow_drop_up' : 'arrow_drop_down'"
-              size="20px"
-            />
-
-            {{ formatNumber(props.row.change) }}
-          </div>
-
-        </q-td>
-      </template> -->
-
-      <!-- Percent -->
-      <!-- <template v-slot:body-cell-percent="props">
-        <q-td :props="props">
-
-          <q-badge
-            :color="getBadgeColor(props.row.percent)"
-            outline
-          >
-            {{ formatNumber(props.row.percent) }}%
-          </q-badge>
-
-        </q-td>
-      </template> -->
-
-      <!-- Volume -->
-      <template v-slot:body-cell-volume="props">
-        <q-td :props="props">
-          {{ formatVolume(props.row.volume) }}
-        </q-td>
-      </template>
-
-      <!-- Time -->
-      <template v-slot:body-cell-time="props">
-        <q-td :props="props">
-
-          <div class="text-caption text-grey-7">
-            {{ formatTime(props.row.time) }}
-          </div>
-
-        </q-td>
-      </template>
-
     </q-table>
-
   </q-page>
 </template>
 
@@ -191,11 +148,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.text-positive {
-  color: #d32f2f;
+.stock-card {
+  border-radius: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.text-negative {
-  color: #2e7d32;
+.stock-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
 </style>
