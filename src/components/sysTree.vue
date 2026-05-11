@@ -218,13 +218,18 @@ const simple = [
             children: [
               {
                 id: "Peeple",
-                label: "@ 👨‍👩‍👧‍👦 Peeple",
+                label: "@ 👨‍👩‍👧‍👦 Peeple Quasar",
                 link: "https://quasar-peeple.netlify.app/#/googleForm",
                 children: [
                   {
                     id: "peeple GPT",
                     label: "Peeple GDT分析GDS",
                     link: "https://docs.google.com/spreadsheets/d/1X1y6eUohTduzYnqjfDzYqsp1qHvxP3GmSwfer_vpD5Q/edit?gid=498659891#gid=498659891",
+                  },
+                  {
+                    id: "peeple Notion",
+                    label: "Peeple Notion",
+                    link: "https://www.notion.so/list-327020032b2980bf9456c23e32011b9f?source=copy_link",
                   },
                 ],
               },
@@ -233,12 +238,31 @@ const simple = [
                 label: "鑰 G1",
                 link: "NA",
               },
+
               {
-                id: "3Fissue",
-                label: "3F 鐵皮屋問題 GDS",
-                // link: "lock",
-                // link: "/outsourcingSOP",
-                link: "https://104vtol.netlify.app/#/outsourcingSOP",
+                id: "2F",
+                label: "2F 拆裝潢優先", // @joey
+                children: [
+                  {
+                    id: "3day need",
+                    label: "3天生活 必須 Notion",
+                    link: "https://www.notion.so/pic-3day-13b020032b2981a0856bf4c7be9e226e?source=copy_link",
+                  },
+                  {
+                    id: "3Fissue",
+                    label: "3F 鐵皮屋問題 outsource Quasar",
+                    // link: "lock",
+                    // link: "/outsourcingSOP",
+                    link: "https://104vtol.netlify.app/#/outsourcingSOP",
+                  },
+                  {
+                    id: "Tasks",
+                    label: "2F拆裝潢 List GDS",
+                    // link: "lock",
+                    // link: "/outsourcingSOP",
+                    link: "https://docs.google.com/spreadsheets/d/1EzmKCAbNmE5hW3eHsr2sKJAFDMcuJJbN4dEv3vWekEk/edit?gid=326160773#gid=326160773",
+                  },
+                ],
               },
             ],
           },
@@ -379,13 +403,14 @@ const ticked = ref([]);
 const expanded = ref([
   "ggb",
   "judge",
-  "Loop",
+  // "Loop",
   "fashion",
   // "1",
   "publish",
   "storageUSA",
   "cia",
   "structure",
+  "2F",
   // ❌ 不放 "1" → 就不會展開 @joey
 ]);
 const tickStrategy = ref("strict");
@@ -416,7 +441,3 @@ const openLink = (key) => {
   }
 };
 </script>
-
-
-
-
