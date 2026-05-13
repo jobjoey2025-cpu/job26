@@ -6,9 +6,11 @@
 
     <!-- <stockValue /> <stockValue_exchange /> -->
 
+    <stockFB/>
 
     <!-- Grid Layout -->
-    <div class="row q-col-gutter-sm" style="max-height: 555px;">
+    <div class="row q-col-gutter-sm" >
+
       <!-- 台股 -->
       <div class="col-12 col-lg-6">
         <stockValue/>
@@ -34,6 +36,7 @@
 
 <script setup>
 // import stockNews from "components/stockNews.vue";
+import stockFB from "components/stockFB.vue";
 
 import stockValue from "components/stockValue.vue";
 import stockValue_US from "components/stockValue_US.vue";
