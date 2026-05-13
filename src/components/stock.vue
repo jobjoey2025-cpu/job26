@@ -7,6 +7,8 @@
     <!-- <stockValue /> <stockValue_exchange /> -->
 
     <stockFB/>
+    <stockRailway/>
+
 
     <!-- Grid Layout -->
     <div class="row q-col-gutter-sm" >
@@ -43,6 +45,8 @@ import stockValue_US from "components/stockValue_US.vue";
 import stockValue_exchange from "components/stockValue_exchange.vue";
 
 import stockBLGlist from "components/stockBLGlist.vue";
+import stockRailway from "components/stockRailway.vue";
+
 </script>
 
 <style>

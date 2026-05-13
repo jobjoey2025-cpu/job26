@@ -78,6 +78,7 @@ const routes = [
       { path: 'stockValue_US', component: () => import('components/stockValue_US.vue'), name: 'stockValue_US' },
       { path: 'stockValue_exchange.vue', component: () => import('components/stockValue_exchange.vue'), name: 'stockValue_exchange.vue' },
       { path: 'stockFB.vue', component: () => import('components/stockFB.vue'), name: 'stockFB.vue' },
+      { path: 'stockRailway.vue', component: () => import('components/stockRailway.vue'), name: 'stockRailway.vue' },
 
 
 
