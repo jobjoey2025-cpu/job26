@@ -9,8 +9,17 @@ ngrok URL 每次重啟都會變
 
 👉 Quasar 只能「呼叫已經啟動的 Colab API」 -->
 
-
 <template>
+  <q-btn
+    flat
+    color="primary"
+    label="railway 運轉監控 (30 days or $4.99|Upgrade to keep your services online.)"
+    href=" https://railway.com/dashboard
+"
+    target="_blank"
+    icon="open_in_new"
+  />
+
   <q-btn
     flat
     color="primary"
