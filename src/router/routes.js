@@ -81,8 +81,6 @@ const routes = [
       { path: 'stockRailway.vue', component: () => import('components/stockRailway.vue'), name: 'stockRailway.vue' },
 
 
-
-
       { path: 'sixDiff', component: () => import('components/sixDiff.vue'), name: 'sixDiff' },
       { path: 'sixDiffExsample', component: () => import('components/sixDiffExsample.vue'), name: 'sixDiffExsample' },
       { path: 'sixDiffCheck', component: () => import('components/sixDiffCheck.vue'), name: 'sixDiffCheck' },
@@ -92,6 +90,11 @@ const routes = [
       { path: 'sixDiffPrjSuggest', component: () => import('components/sixDiffPrjSuggest.vue'), name: 'sixDiffPrjSuggest' },
       { path: 'CFDtimeline', component: () => import('components/CFDtimeline.vue'), name: 'CFDtimeline' },
       { path: 'CFD', component: () => import('components/CFD.vue'), name: 'CFD' },
+
+      { path: 'fastAPI', component: () => import('components/fastAPI.vue'), name: 'fastAPI' },
+      { path: 'sunTzu', component: () => import('components/sunTzu.vue'), name: 'sunTzu' },
+
+
 
 
 

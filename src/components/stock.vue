@@ -1,21 +1,18 @@
 <template>
-  <q-page class="q-pa-sm ">
+  <q-page class="q-pa-sm">
     <!-- Title -->
     <!-- <div class="text-h5 text-weight-bold q-mb-sm">📊 股票 Dashboard</div> -->
 
-
     <!-- <stockValue /> <stockValue_exchange /> -->
 
-    <stockFB/>
-    <stockRailway/>
-
+    <stockFB />
+    <stockRailway />
 
     <!-- Grid Layout -->
-    <div class="row q-col-gutter-sm" >
-
+    <div class="row q-col-gutter-sm">
       <!-- 台股 -->
       <div class="col-12 col-lg-6">
-        <stockValue/>
+        <stockValue />
       </div>
 
       <!-- 美股 -->
@@ -33,6 +30,9 @@
         <stockBLGlist />
       </div>
     </div>
+
+    <hr>
+    <fastAPI />
   </q-page>
 </template>
 
@@ -47,6 +47,7 @@ import stockValue_exchange from "components/stockValue_exchange.vue";
 import stockBLGlist from "components/stockBLGlist.vue";
 import stockRailway from "components/stockRailway.vue";
 
+import fastAPI from "components/fastAPI.vue";
 </script>
 
 <style>

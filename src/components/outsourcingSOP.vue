@@ -12,6 +12,14 @@
     <q-btn
       flat
       color="primary"
+      label="sunTzu 孫武 人事"
+      to="/sunTzu"
+      icon="open_in_new"
+    />
+
+    <q-btn
+      flat
+      color="primary"
       label="sixDiff"
       to="/sixDiff"
       icon="open_in_new"
