@@ -20,6 +20,9 @@
     <div class="text-h4 text-weight-bold q-mb-md">
       <span style="color: red">選人 :</span> 智・信・仁・勇・嚴
     </div>
+    <a href="https://www.facebook.com/watch/?ref=saved&v=969627835789323"
+      >古代武将识字的并不多，根本读不懂这种兵书。 那它到底是写给谁的?
+    </a>
 
     <div class="row q-col-gutter-md q-mb-xl">
       <!-- 智 -->
@@ -64,7 +67,7 @@
             </div>
 
             <div class="q-mt-md">
-              言出必行、信守承諾，取信於上級並獲得下屬的信任。
+              言出必行、信守承諾，取信於上級並獲得下屬的信任。他下面的人有沒有偷偷打折扣 ?
             </div>
 
             <q-separator class="q-my-md" />
@@ -108,7 +111,7 @@
               <div class="text-h5 text-weight-bold">勇（勇敢）</div>
             </div>
 
-            <div class="q-mt-md">果斷堅定、勇於負責，面對危機敢於承擔。</div>
+            <div class="q-mt-md">果斷堅定、勇於負責，面對危機敢於承擔。 \\ 敢不敢拍板 \ 該出手時不出手</div>
 
             <q-separator class="q-my-md" />
 
@@ -133,7 +136,7 @@
             <q-separator class="q-my-md" />
 
             <div class="text-body1">
-              「嚴」只是工具， 前面四項才是判斷核心。
+              「嚴」只是工具， 前面四項才是判斷核心。有沒有底線 \ 那些事絕不退壤 ?
             </div>
 
             <div class="text-caption text-grey-7 q-mt-sm">
@@ -162,6 +165,10 @@
           「知道自己的弱點，就已經贏一半。」
         </q-banner>
       </q-card-section>
+      <div class="col-4">
+        Ratio: 16/9
+        <q-img src="./statics/自己最弱在哪.png" :ratio="16 / 9" style=" border-radius: 8px"/>
+      </div>
     </q-card>
 
     <hr />
@@ -221,9 +228,11 @@
 
         <div class="col-4">
           <!-- Ratio: 16/9 -->
+
           <q-img src="./statics/七計（決策漏斗）.png" :ratio="18
            / 9"  style=" border-radius: 8px"/>
         </div>
+
         <!-- <q-img
           src="./statics/七計（決策漏斗）.png"
           style="width: 660px; height: 150px; border-radius: 8px"
@@ -251,6 +260,9 @@
           </q-item>
         </q-list>
       </q-card-section>
+      <div class="col-4">
+        <q-img src="./statics/賞罰.png" :ratio="16 / 9" style=" border-radius: 8px"/>
+      </div>
     </q-card>
 
     <!-- 廟算 -->

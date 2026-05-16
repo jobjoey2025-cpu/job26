@@ -1,75 +1,14 @@
 <template>
   <q-page padding>
-
     <q-btn
+      v-for="btn in btnList"
+      :key="btn.label"
       flat
       color="primary"
-      label="stock ai channel"
-      to="/stock"
-      icon="open_in_new"
-    />
-
-    <q-btn
-      flat
-      color="primary"
-      label="sunTzu 孫武 人事"
-      to="/sunTzu"
-      icon="open_in_new"
-    />
-
-    <q-btn
-      flat
-      color="primary"
-      label="sixDiff"
-      to="/sixDiff"
-      icon="open_in_new"
-    />
-
-    <q-btn
-      flat
-      color="primary"
-      label="ai 常用的目前功能"
-      to="/aiFn"
-      icon="open_in_new"
-    />
-
-    <q-btn
-      flat
-      color="primary"
-      label="3F tin "
-      href="https://docs.google.com/spreadsheets/d/1BOO44OJj1Hm3KDkXzEsFpO9kr_CyXjsrmsfIqMcI6Oc/edit?gid=777997665#gid=777997665
-"
-      target="_blank"
-      icon="open_in_new"
-    />
-    <!-- https://docs.google.com/spreadsheets/d/1BOO44OJj1Hm3KDkXzEsFpO9kr_CyXjsrmsfIqMcI6Oc/edit?gid=777997665#gid=777997665 -->
-    <q-btn flat color="primary" label="密碼鎖" to="/lock" icon="open_in_new" />
-    <q-btn
-      flat
-      color="primary"
-      label="卡片Table"
-      to="/Qtable"
-      icon="open_in_new"
-    />
-    <q-btn
-      flat
-      color="primary"
-      label="2F 老屋翻新"
-      to="/2Finference"
-      icon="open_in_new"
-    />
-    <q-btn
-      flat
-      color="primary"
-      label="Notion"
-      to="/notion"
-      icon="open_in_new"
-    />
-    <q-btn
-      flat
-      color="primary"
-      label="interview"
-      to="/interview"
+      :label="btn.label"
+      :to="btn.to"
+      :href="btn.href"
+      :target="btn.target"
       icon="open_in_new"
     />
 
@@ -82,46 +21,29 @@
       建築工程 很麻煩 \ 最好買做好的 \ cuz 連電視 風城改造 都 delay 2年 買地$50w
       利息$20w 預計賣$140w - 只能花$69w 內才不虧本.
     </p>
+
     <div class="text-h5 q-mb-md">外包用人評估系統</div>
-    <q-btn
-      flat
-      color="primary"
-      label="1 outsourceAlign 階級對齊"
-      to="/outsourceAlign"
-      icon="open_in_new"
-    />
+    <div v-for="group in btnGroups" :key="group.group" class="q-mb-lg">
+      <div class="text-h6 q-mb-sm">
+        {{ group.group }}
+      </div>
 
-    <q-btn
-      flat
-      color="primary"
-      label="2 outsourceDefined 定義麻煩"
-      to="/outsourceDefined"
-      icon="open_in_new"
-    />
+      <div class="row q-gutter-sm">
+        <q-btn
+          class="selectable-btn"
+          v-for="btn in group.items"
+          :key="btn.label"
+          flat
+          color="primary"
+          :label="btn.label"
+          :to="btn.to"
+          :href="btn.href"
+          :target="btn.target"
+          icon="open_in_new"
+        />
+      </div>
+    </div>
 
-    <q-btn
-      flat
-      color="primary"
-      label="3 outsourceSimulation 小徵兆大模擬"
-      to="/outsourceSimulation"
-      icon="open_in_new"
-    />
-
-    <q-btn
-      flat
-      color="primary"
-      label="4 outsourceSimulation 溝通執行"
-      to="/outsourceComunication"
-      icon="open_in_new"
-    />
-
-    <q-btn
-      flat
-      color="primary"
-      label="5 outsourceScript 執行腳本"
-      to="/outsourceScript"
-      icon="open_in_new"
-    />
     <!-- Step 1: 基本判斷 -->
     <q-card class="q-mb-md">
       <q-card-section>
@@ -168,6 +90,120 @@
 
 <script setup>
 import { computed, reactive } from "vue";
+const btnGroups = [
+  {
+    group: "AI / 工具",
+    items: [
+      {
+        label: "stock ai channel",
+        to: "/stock",
+      },
+      {
+        label: "ai 常用的目前功能",
+        to: "/aiFn",
+      },
+      {
+        label: "Notion",
+        to: "/notion",
+      },
+      {
+        label: "密碼鎖",
+        to: "/lock",
+      },
+      {
+        label: "卡片Table",
+        to: "/Qtable",
+      },
+
+    ],
+  },
+
+  {
+    group: "孫武 / 思維",
+    items: [
+      {
+        label: "sunTzu 孫武 人事",
+        to: "/sunTzu",
+      },
+      {
+        label: "sixDiff",
+        to: "/sixDiff",
+      },
+      {
+        label: "interview",
+        to: "/interview",
+      },
+    ],
+  },
+
+  {
+    group: "Outsource 外包系統 joey",
+    items: [
+      {
+        label: "1 outsourceAlign 階級對齊",
+        to: "/outsourceAlign",
+      },
+      {
+        label: "2 outsourceDefined 定義麻煩",
+        to: "/outsourceDefined",
+      },
+      {
+        label: "3 outsourceSimulation 小徵兆大模擬",
+        to: "/outsourceSimulation",
+      },
+      {
+        label: "4 outsourceSimulation 溝通執行",
+        to: "/outsourceComunication",
+      },
+      {
+        label: "5 outsourceScript 執行腳本",
+        to: "/outsourceScript",
+      },
+    ],
+  },
+
+  {
+    group: "空間 / 工程",
+    items: [
+      {
+        label: "2F 老屋翻新",
+        to: "/2Finference",
+      },
+      {
+        label: "3F tin",
+        href: "https://docs.google.com/spreadsheets/d/1BOO44OJj1Hm3KDkXzEsFpO9kr_CyXjsrmsfIqMcI6Oc/edit?gid=777997665#gid=777997665",
+        target: "_blank",
+      },
+    ],
+  },
+
+  {
+    group: "其他",
+    items: [
+      {
+        label: "密碼鎖",
+        to: "/lock",
+      },
+
+    ],
+  },
+];
+
+const btnList = [
+  {
+    label: "stock ai channel",
+    to: "/stock",
+  },
+  {
+    label: "3F tin",
+    href: "https://docs.google.com/spreadsheets/d/1BOO44OJj1Hm3KDkXzEsFpO9kr_CyXjsrmsfIqMcI6Oc/edit?gid=777997665#gid=777997665",
+    target: "_blank",
+  },
+  {
+    label: "2F 老屋翻新",
+    to: "/2Finference",
+  },
+];
 
 const signals = reactive({
   negative: false,
@@ -233,4 +269,9 @@ const scripts = [
 ];
 </script>
 
-<style scoped></style>
+<style scoped>
+.selectable-btn,
+.selectable-btn * {
+  user-select: text !important;
+}
+</style>
