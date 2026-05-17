@@ -54,10 +54,12 @@
       </q-card-section>
     </q-card>
 
+    <hr />
+    <hr />
     <!-- Tree UI -->
     <q-expansion-item
       icon="account_tree"
-      label="🌳 Tree UI / 系統化"
+      label="🌳 Tree UI / 系統化（DIY）"
       expand-separator
       class="q-mb-md"
     >
@@ -103,23 +105,41 @@
         </q-banner>
       </q-card-section>
     </q-card>
-
+    <hr />
+    <hr />
     <!-- 學習與風險 -->
     <q-card>
       <q-card-section>
-        <div class="text-h6">⚠️ 新學習與風險</div>
+        <div class="text-h6">⚠️ 新學習與風險 PRJ</div>
 
+        購物車 prompt 腳本 - 蒐集(應該有很好的範例 or   <b><span style="color: red;">Book 很好的範例 (一眼就知道) </span></b> [強化學習 \ 軟體規格書 IQC])
         <q-list dense>
           <q-item v-for="item in learning" :key="item">
             <q-item-section>{{ item }}</q-item-section>
           </q-item>
         </q-list>
       </q-card-section>
+      <hr>
+      <p>有能見度, mvp 看有甚麼阻礙, 順便學一下 Codex loop $600/m</p>
+      <a href="https://www.bnext.com.tw/article/90870/claude-skills-guidebook"
+        >Claude Skills零基礎入門教學</a
+      >
+      <div style="visibility: hidden">a</div>
+      <aiLoopLevel />
     </q-card>
   </q-page>
+  <FCampLife />
+  <FCampLife_add />
 </template>
 
 <script setup>
+// import 2F_CampLife from './2F_CampLife.vue';
+// import draggable from "vuedraggable";
+// import { ref } from "vue";
+import FCampLife from "components/FCampLife.vue";
+import FCampLife_add from "components/FCampLife_add.vue";
+import aiLoopLevel from "components/aiLoopLevel.vue";
+
 const gptStruct = [
   "prompt : 整理以下筆記",
   "做主題大綱（不用自己想, 把類似的筆記放在一起）",
@@ -140,6 +160,7 @@ const gptApi = [
   "PDF 財報分析",
   "批次 PDF 閱讀 + 推薦 排名（RAG）",
   "資料分析（例如 FB stock）",
+  "https://104vtol.netlify.app/#/stock",
 ];
 
 const treeUI = [
@@ -158,10 +179,10 @@ const coreConcept = [
 ];
 
 const learning = [
-  "購物車 prompt 腳本 - 蒐集",
-  "自動化 coding 過快 (強化學習 \ 軟體規格書 IQC)  → joey 基礎不穩",
+  // "購物車 prompt 腳本 - 蒐集(應該有很好的範例 or  Book [強化學習 \ 軟體規格書 IQC])",
+  // "自動化 coding 過快 (強化學習 \ 軟體規格書 IQC)  → joey 基礎不穩",
   "* 語言轉換成本高（EN → 中 → 台式理解）以陸為先 \ 沒有再 English",
-  "配色設計（googleFigma）",
+  "配色設計（googleFigma）→ joey 基礎不穩",
   // "多語言來源（EN / JP / CN）",
   "觀察市場與有錢人的行為 \ 在做甚麼 \ 不能做甚麼 & 我有甚麼不同 ",
 ];

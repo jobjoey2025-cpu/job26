@@ -93,6 +93,10 @@ const routes = [
 
       { path: 'fastAPI', component: () => import('components/fastAPI.vue'), name: 'fastAPI' },
       { path: 'sunTzu', component: () => import('components/sunTzu.vue'), name: 'sunTzu' },
+      { path: 'FCampLife', component: () => import('components/FCampLife.vue'), name: 'FCampLife' },
+      { path: 'FCampLife_add', component: () => import('components/FCampLife_add.vue'), name: 'FCampLife_add' },
+      { path: 'aiLoopLevel', component: () => import('components/aiLoopLevel.vue'), name: 'aiLoopLevel' },
+
 
 
 
