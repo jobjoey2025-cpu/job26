@@ -5,7 +5,14 @@
       <div class="text-h3 text-weight-bold">prj : 2F Camp Life</div>
 
       <div class="text-subtitle1 q-mt-sm text-grey-7">
-        生活方便，比賺錢重要。
+        *生活方便，比賺錢重要。<br />
+        *目前先用 Notion Eagle 先模擬 \ 全碼 還是有難度(可外包) \ 核心理念
+        不可外包 (0~1 沒人信你) <br />
+        *可以印出來 分解成小模擬 \ 要能 收斂成果 digital save \ Loss
+        是可接受的<br />
+        <hr>
+        *先用 SQLite 讓 Codex 跑看看<br>
+        *準備Skill \ 準備 good Books
       </div>
 
       <div class="row q-col-gutter-sm q-mt-md">
@@ -245,7 +252,9 @@
         <q-card-section>
           <div class="text-h5 text-weight-bold">4. 生活演進時間軸</div>
 
-          <div class="text-grey-7 q-mt-sm">不是社群動態，而是生活演進。<b>must 自動時間 標籤</b></div>
+          <div class="text-grey-7 q-mt-sm">
+            不是社群動態，而是生活演進。<b>must 自動時間 標籤</b>
+          </div>
 
           <q-timeline color="brown" class="q-mt-lg">
             <q-timeline-entry title="2F 清空完成" subtitle="2026 / 05">
@@ -295,7 +304,7 @@
               </q-card>
             </div>
           </div>
-          <p>UI 風格建議 : 無印;	北歐露營;	暖灰色; Snow Peak; 淺木色</p>
+          <p>UI 風格建議 : 無印; 北歐露營; 暖灰色; Snow Peak; 淺木色</p>
         </q-card-section>
       </q-card>
     </section>
@@ -324,7 +333,12 @@
                     <q-icon name="storage" />
                   </q-item-section>
 
-                  <q-item-section> Supabase </q-item-section>
+                  <q-item-section>
+                    * Supabase 25 美元的方案<br />* 複雜查詢、關係資料首選
+                    Supabase；極速開發、強大生態（如 Analytics）首選
+                    Firebase。<br />
+                    * or SQLite 本機
+                  </q-item-section>
                 </q-item>
 
                 <q-item>
@@ -372,9 +386,6 @@
 </template>
 
 <script setup>
-
-
-
 const scores = [
   {
     label: "好收納",

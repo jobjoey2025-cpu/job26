@@ -12,6 +12,17 @@
       href="https://sortablejs.github.io/vue.draggable.next/#/third-party"
       target="”_blank”"
     />
+  _
+    <q-btn
+      color="grey-4"
+      text-color="purple"
+      glossy
+      unelevated
+      icon="format_image__right"
+      label="Notion"
+      href="https://www.notion.so/list-327020032b2980bf9456c23e32011b9f?source=copy_link"
+      target="”_blank”"
+    />
   </div>
 
   <div class="q-pl-xl">
