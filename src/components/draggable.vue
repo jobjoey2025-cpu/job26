@@ -1,6 +1,8 @@
 <template>
   <p style="text-align: center">draggable</p>
   <h3 class="q-pl-xl" style="text-align: center">朋友少 優招待的 Ideas</h3>
+
+  <!-- ----- -->
   <div style="text-align: center">
     <q-btn
       color="grey-4"
@@ -12,7 +14,7 @@
       href="https://sortablejs.github.io/vue.draggable.next/#/third-party"
       target="”_blank”"
     />
-  _
+    _
     <q-btn
       color="grey-4"
       text-color="purple"
@@ -24,63 +26,71 @@
       target="”_blank”"
     />
   </div>
+  <br />
 
-  <div class="q-pl-xl">
-    <div class="row q-col-gutter-md">
-      <!-- 左邊 -->
-      <div class="col-6 col-md-6">
-        <div class="text-h6 q-mb-sm">Draggable 1</div>
+  <!-- ------ -->
+  <div class="row q-col-gutter-md items-stretch">
+    <!-- 左邊 -->
+    <div class="col-12 col-sm-6">
+      <div class="text-h6 q-mb-sm">Draggable 1</div>
 
-        <draggable
-          v-model="list1"
-          group="people"
-          item-key="id"
-          class="bg-grey-2 q-pa-sm rounded-borders"
-          @change="log"
-        >
-          <template #item="{ element, index }">
-            <q-card class="q-mb-sm q-pa-sm text-h6">
-              {{ element.name }} {{ index }}
-            </q-card>
-          </template>
-        </draggable>
-      </div>
+      <draggable
+        v-model="list1"
+        group="people"
+        item-key="id"
+        class="drag-area bg-grey-2 q-pa-sm rounded-borders"
+        @change="log"
+      >
+        <template #item="{ element, index }">
+          <q-card class="q-mb-sm q-pa-sm text-h6">
+            {{ element.name }} {{ index }}
+          </q-card>
+        </template>
+      </draggable>
+    </div>
 
+    <!-- 右邊 -->
+    <div class="col-12 col-sm-6">
+      <div class="text-h6 q-mb-sm">Draggable 2</div>
+
+      <draggable
+        v-model="list2"
+        group="people"
+        item-key="id"
+        class="drag-area bg-grey-2 q-pa-sm rounded-borders"
+        @change="log"
+      >
+        <template #item="{ element, index }">
+          <q-card class="q-mb-sm q-pa-sm">
+            {{ element.name }} {{ index }}
+          </q-card>
+        </template>
+      </draggable>
+    </div>
+  </div>
+
+  <!-- --------- -->
+  <div class="row q-col-gutter-md items-stretch">
+
+  <!-- <div class="q-pl-xl"> -->
+    <!-- <div class="row q-col-gutter-sm"> -->
       <!-- @change="log" -->
-      <!-- 右邊 -->
-      <div class="col-6 col-md-6">
-        <div class="text-h6 q-mb-sm">Draggable 2</div>
-
-        <draggable
-          v-model="list2"
-          group="people"
-          item-key="id"
-          class="bg-grey-2 q-pa-sm rounded-borders"
-          @change="log"
-        >
-          <template #item="{ element, index }">
-            <q-card class="q-mb-sm q-pa-sm">
-              {{ element.name }} {{ index }}
-            </q-card>
-          </template>
-        </draggable>
-      </div>
 
       <!-- Debug 區 -->
-      <div class="col-6 col-md-6">
+      <div class="col-6 col-sm-6">
         <q-card class="q-pa-sm">
           <div class="text-subtitle2">List 1</div>
           <pre>{{ list1 }}</pre>
         </q-card>
       </div>
 
-      <div class="col-6 col-md-6">
+      <div class="col-6 col-sm-6">
         <q-card class="q-pa-sm">
           <div class="text-subtitle2">List 2</div>
           <pre>{{ list2 }}</pre>
         </q-card>
       </div>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -152,3 +162,10 @@ const log = (evt) => {
   console.log(evt);
 };
 </script>
+
+<style scoped>
+.drag-area {
+  min-height: 400px;
+  height: 100%;
+}
+</style>
