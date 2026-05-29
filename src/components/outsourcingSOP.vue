@@ -165,17 +165,21 @@ const btnGroups = [
     group: "空間 / 工程",
     items: [
       {
+        label: "suao3day",
+        to: "/suao3day",
+        target: "_blank",
+      },
+      {
+        label: "2F Camp Life",
+        to: "/FCampLife",
+      },
+      {
         label: "2F 老屋翻新",
         to: "/2Finference",
       },
       {
         label: "3F tin",
         href: "https://docs.google.com/spreadsheets/d/1BOO44OJj1Hm3KDkXzEsFpO9kr_CyXjsrmsfIqMcI6Oc/edit?gid=777997665#gid=777997665",
-        target: "_blank",
-      },
-      {
-        label: "suao3day",
-        to: "/suao3day",
         target: "_blank",
       },
     ],

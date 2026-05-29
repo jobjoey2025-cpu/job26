@@ -2,7 +2,7 @@
   <q-page padding class="bg-grey-2">
     <div class="q-mx-auto" style="max-width: 900px">
       <!-- Title -->
-      <div class="text-h4 text-bold q-mb-lg">搬遷 / 出發 Checklist</div>
+      <div class="text-h4 text-bold q-mb-lg">SuAo 3Day 搬遷 / 出發 Checklist</div>
 
       <!-- 出發前 -->
       <q-card class="q-mb-md">

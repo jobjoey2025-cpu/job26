@@ -1,79 +1,79 @@
 <template>
-  <p style="text-align: center">draggable</p>
-  <h3 class="q-pl-xl" style="text-align: center">朋友少 優招待的 Ideas</h3>
+  <div class="q-pl-sm">
+    <p style="text-align: center">draggable</p>
+    <h3 class="q-pl-xl" style="text-align: center">朋友少 優招待的 Ideas</h3>
 
-  <!-- ----- -->
-  <div style="text-align: center">
-    <q-btn
-      color="grey-4"
-      text-color="purple"
-      glossy
-      unelevated
-      icon="format_image__right"
-      label="Draggable Sample"
-      href="https://sortablejs.github.io/vue.draggable.next/#/third-party"
-      target="”_blank”"
-    />
-    _
-    <q-btn
-      color="grey-4"
-      text-color="purple"
-      glossy
-      unelevated
-      icon="format_image__right"
-      label="Notion"
-      href="https://www.notion.so/list-327020032b2980bf9456c23e32011b9f?source=copy_link"
-      target="”_blank”"
-    />
-  </div>
-  <br />
+    <!-- ----- -->
+    <div style="text-align: center">
+      <q-btn
+        color="grey-4"
+        text-color="purple"
+        glossy
+        unelevated
+        icon="format_image__right"
+        label="Draggable Sample"
+        href="https://sortablejs.github.io/vue.draggable.next/#/third-party"
+        target="”_blank”"
+      />
+      _
+      <q-btn
+        color="grey-4"
+        text-color="purple"
+        glossy
+        unelevated
+        icon="format_image__right"
+        label="Notion"
+        href="https://www.notion.so/list-327020032b2980bf9456c23e32011b9f?source=copy_link"
+        target="”_blank”"
+      />
+    </div>
+    <br />
 
-  <!-- ------ -->
-  <div class="row q-col-gutter-md items-stretch">
-    <!-- 左邊 -->
-    <div class="col-12 col-sm-6">
-      <div class="text-h6 q-mb-sm">Draggable 1</div>
+    <!-- ------ -->
+    <div class="row q-col-gutter-md items-stretch">
+      <!-- 左邊 -->
+      <div class="col-12 col-sm-6">
+        <div class="text-h6 q-mb-sm">Draggable 1</div>
 
-      <draggable
-        v-model="list1"
-        group="people"
-        item-key="id"
-        class="drag-area bg-grey-2 q-pa-sm rounded-borders"
-        @change="log"
-      >
-        <template #item="{ element, index }">
-          <q-card class="q-mb-sm q-pa-sm text-h6">
-            {{ element.name }} {{ index }}
-          </q-card>
-        </template>
-      </draggable>
+        <draggable
+          v-model="list1"
+          group="people"
+          item-key="id"
+          class="drag-area bg-grey-2 q-pa-sm rounded-borders"
+          @change="log"
+        >
+          <template #item="{ element, index }">
+            <q-card class="q-mb-sm q-pa-sm text-h6">
+              {{ element.name }} {{ index }}
+            </q-card>
+          </template>
+        </draggable>
+      </div>
+
+      <!-- 右邊 -->
+      <div class="col-12 col-sm-6">
+        <div class="text-h6 q-mb-sm">Draggable 2</div>
+
+        <draggable
+          v-model="list2"
+          group="people"
+          item-key="id"
+          class="drag-area bg-grey-2 q-pa-sm rounded-borders"
+          @change="log"
+        >
+          <template #item="{ element, index }">
+            <q-card class="q-mb-sm q-pa-sm">
+              {{ element.name }} {{ index }}
+            </q-card>
+          </template>
+        </draggable>
+      </div>
     </div>
 
-    <!-- 右邊 -->
-    <div class="col-12 col-sm-6">
-      <div class="text-h6 q-mb-sm">Draggable 2</div>
-
-      <draggable
-        v-model="list2"
-        group="people"
-        item-key="id"
-        class="drag-area bg-grey-2 q-pa-sm rounded-borders"
-        @change="log"
-      >
-        <template #item="{ element, index }">
-          <q-card class="q-mb-sm q-pa-sm">
-            {{ element.name }} {{ index }}
-          </q-card>
-        </template>
-      </draggable>
-    </div>
-  </div>
-
-  <!-- --------- -->
-  <div class="row q-col-gutter-md items-stretch">
-
-  <!-- <div class="q-pl-xl"> -->
-    <!-- <div class="row q-col-gutter-sm"> -->
+    <!-- --------- -->
+    <div class="row q-col-gutter-md items-stretch">
+      <!-- <div class="q-pl-xl"> -->
+      <!-- <div class="row q-col-gutter-sm"> -->
       <!-- @change="log" -->
 
       <!-- Debug 區 -->
@@ -90,7 +90,8 @@
           <pre>{{ list2 }}</pre>
         </q-card>
       </div>
-    <!-- </div> -->
+      <!-- </div> -->
+    </div>
   </div>
 </template>
 
