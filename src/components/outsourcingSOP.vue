@@ -114,7 +114,6 @@ const btnGroups = [
         label: "卡片Table",
         to: "/Qtable",
       },
-
     ],
   },
 
@@ -174,6 +173,11 @@ const btnGroups = [
         href: "https://docs.google.com/spreadsheets/d/1BOO44OJj1Hm3KDkXzEsFpO9kr_CyXjsrmsfIqMcI6Oc/edit?gid=777997665#gid=777997665",
         target: "_blank",
       },
+      {
+        label: "suao3day",
+        to: "/suao3day",
+        target: "_blank",
+      },
     ],
   },
 
@@ -184,7 +188,6 @@ const btnGroups = [
         label: "密碼鎖",
         to: "/lock",
       },
-
     ],
   },
 ];

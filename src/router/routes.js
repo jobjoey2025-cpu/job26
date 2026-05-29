@@ -97,6 +97,7 @@ const routes = [
       { path: 'FCampLife_add', component: () => import('components/FCampLife_add.vue'), name: 'FCampLife_add' },
       { path: 'aiLoopLevel', component: () => import('components/aiLoopLevel.vue'), name: 'aiLoopLevel' },
 
+      { path: 'suao3day', component: () => import('components/suao3day.vue'), name: 'suao3day' },
 
 
 
