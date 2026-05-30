@@ -98,6 +98,7 @@ const routes = [
       { path: 'aiLoopLevel', component: () => import('components/aiLoopLevel.vue'), name: 'aiLoopLevel' },
 
       { path: 'suao3day', component: () => import('components/suao3day.vue'), name: 'suao3day' },
+      { path: 'English', component: () => import('components/English.vue'), name: 'English' },
 
 
 

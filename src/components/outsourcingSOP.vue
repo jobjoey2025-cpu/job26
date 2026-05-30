@@ -192,6 +192,10 @@ const btnGroups = [
         label: "密碼鎖",
         to: "/lock",
       },
+      {
+        label: "Eng. Repeat",
+        to: "/English",
+      },
     ],
   },
 ];
