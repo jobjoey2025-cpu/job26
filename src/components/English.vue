@@ -244,31 +244,32 @@
       bordered
     />
     <h4>未來發展</h4>
-    <p>方便後續再加入「推薦頻道連結」、「Apple Event 清單」、「Stocks/Fashion Watch List」等內容。</p>
+    <p>
+      方便後續再加入「推薦頻道連結」、「Apple Event 清單」、「Stocks/Fashion
+      Watch List」等內容。
+    </p>
     <p>ai 答案不完美 \ 但總能激發我 一點新意</p>
     <q-btn
-        color="grey-4"
-        text-color="purple"
-        glossy
-        unelevated
-        icon="format_image__right"
-        label="Trello 英翻中"
-        href="https://trello.com/b/ATj0GjyW/英翻中sys24-05"
-        target="”_blank”"
-      />
-      --
-      <q-btn
-        color="grey-4"
-        text-color="purple"
-        glossy
-        unelevated
-        icon="format_image__right"
-        label="RC Plane 玩的項目？"
-        href="https://www.notion.so/RC-Plane-370020032b2980fe8805f7b2c7caa62d?source=copy_link"
-        target="”_blank”"
-      />
-
-
+      color="grey-4"
+      text-color="purple"
+      glossy
+      unelevated
+      icon="format_image__right"
+      label="Trello 英翻中"
+      href="https://trello.com/b/ATj0GjyW/英翻中sys24-05"
+      target="”_blank”"
+    />
+    --
+    <q-btn
+      color="grey-4"
+      text-color="purple"
+      glossy
+      unelevated
+      icon="format_image__right"
+      label="RC Plane 玩的項目？"
+      href="https://www.notion.so/RC-Plane-370020032b2980fe8805f7b2c7caa62d?source=copy_link"
+      target="”_blank”"
+    />
   </q-page>
 </template>
 <script setup>
