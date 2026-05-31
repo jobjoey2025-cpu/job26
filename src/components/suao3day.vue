@@ -135,7 +135,7 @@
       <!-- 防蚊 -->
       <q-card class="q-mb-md">
         <q-card-section>
-          <div class="text-h6">防蚊 / 居住設備</div>
+          <div class="text-h6">防蚊 / 居住設備 (躺平設定)</div>
         </q-card-section>
 
         <q-list bordered>
