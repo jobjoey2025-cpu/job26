@@ -111,7 +111,7 @@
       <!-- 6/3 -->
       <q-card class="q-mb-md">
         <q-card-section>
-          <div class="text-h6">6/3 提前準備</div>
+          <div class="text-h6">院子停車後 1st Action</div>
         </q-card-section>
 
         <q-list bordered>
@@ -296,9 +296,9 @@ const routeItems = ref([
 ]);
 
 const prepareItems = ref([
-  { label: "先搬東西到大廳", done: false },
-  { label: "Ready 平躺床", done: false },
-  { label: "回去先鋪床", done: false },
+  { label: "先搬東西到大廳 \ 可以短暫休息 喝水", done: false },
+  { label: "Ready 平躺床 \ 回去先鋪床", done: false },
+  { label: "防蚊用品 & 冷氣 電扇", done: false },
 ]);
 
 const livingItems = ref([
@@ -306,8 +306,8 @@ const livingItems = ref([
   { label: "電蚊拍", done: false },
   { label: "蚊香", done: false },
   { label: "冷氣確認", done: false },
-  { label: "遙控器電池", done: false },
-  { label: "帳篷", done: false },
+  { label: "冷氣 遙控器電池", done: false },
+  { label: "搭帳篷 - 應該不用收了", done: false },
 ]);
 
 const serviceItems = ref([

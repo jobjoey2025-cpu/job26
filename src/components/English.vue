@@ -1,15 +1,36 @@
 <template>
   <q-page padding>
     <div class="q-pa-md">
-      <div class="text-h4 q-mb-md">英文學習：資訊擷取系統</div>
+      <div class="text-h4 q-mb-md">英文保持：資訊重申 備案系統</div>
+      <!-- Repeat Channel -->
+      <q-card flat bordered class="q-mb-md">
+        <q-card-section>
+          <div class="text-h6">English Repeat Channel</div>
+          <q-chip color="green" text-color="white"> Luxury Brand </q-chip>
+          <q-chip color="primary" text-color="white"> Stocks 分析 </q-chip>
+          <q-chip color="secondary" text-color="white"> Fashion 預測 </q-chip>
+          <q-chip color="orange" text-color="white"> Apple Event </q-chip>
+          <q-chip color="red" text-color="white"> Watch TEST </q-chip>
+          <q-chip color="teal" text-color="white"> 有趣評論家 </q-chip>
+          <q-chip color="primary" text-color="white"> 小改DIY實做 </q-chip>
+          <q-chip color="primary" text-color="white"> 球賽Festival </q-chip>
 
+          <p class="q-mt-md">重複接觸相同主題， 比一直換教材有效。Stocks \ 3DP \ </p>
+          <!-- <p>奢侈大牌 \ 預測評論 \ 模擬報告 \ DIY實做 awwward Typesetting style\ animal Discovery \ 漫畫 movies \ Food Forbes</p> -->
+          <!-- https://www.webpage.idv.tw/study/03/10/all01.htm -->
+          <Marquee>網頁跑馬燈 : 奢侈大牌LV BTS \ 預測評論 \ 模擬報告 \ Rap 500字 \ SaaS Eng 合約介面熟悉 \ DIY實做 awwward Typesetting ColorPlan\ animal Discovery \ 漫畫 movies \ Food Forbes \ 憑什麼有人要跟我一起做 ? 我為什麼要選他 ?</Marquee>
+        </q-card-section>
+      </q-card>
       <q-banner rounded class="bg-blue-1 text-black q-mb-md">
         <b>核心觀念：</b><br />
         英翻中是重要生存技能，重點是速度與廣度。<br />
         英文不是考試科目，而是資訊擷取系統。<br />
         重點是找到適合自己的資訊管道。每個階段 能力不同
       </q-banner>
-
+      <p>
+        YT 現在翻譯都不是很好，何況 VR realtime。不過低成本 錄音Tr文字 then
+        summary 可以測試 \ 統領2026效果差
+      </p>
       <!-- 核心觀念 -->
       <q-card flat bordered class="q-mb-md">
         <q-card-section>
@@ -158,27 +179,6 @@
               TD6 單打等級的順暢度
             </q-timeline-entry>
           </q-timeline>
-        </q-card-section>
-      </q-card>
-
-      <!-- Repeat Channel -->
-      <q-card flat bordered class="q-mb-md">
-        <q-card-section>
-          <div class="text-h6">English Repeat Channel</div>
-
-          <q-chip color="primary" text-color="white"> Stocks 分析 </q-chip>
-
-          <q-chip color="secondary" text-color="white"> Fashion 預測 </q-chip>
-
-          <q-chip color="orange" text-color="white"> Apple Event </q-chip>
-
-          <q-chip color="green" text-color="white"> Luxury Brand </q-chip>
-
-          <q-chip color="red" text-color="white"> Watch TEST </q-chip>
-
-          <q-chip color="teal" text-color="white"> 有趣評論家 </q-chip>
-
-          <p class="q-mt-md">重複接觸相同主題， 比一直換教材有效。</p>
         </q-card-section>
       </q-card>
 
