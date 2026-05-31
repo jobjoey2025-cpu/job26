@@ -73,7 +73,7 @@
       <q-card class="my-card" flat bordered>
         <!-- <q-img src="https://cdn.quasar.dev/img/parallax2.jpg" /> -->
         <!-- <q-img src="./statics/rc10.jpg" /> -->
-        <q-img src="./statics/Front.png" />
+        <q-img src="./statics/front.png" />
 
         <q-card-section>
           <div class="text-overline text-orange-9">Overline</div>
