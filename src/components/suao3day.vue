@@ -2,7 +2,14 @@
   <q-page padding class="bg-grey-2">
     <div class="q-mx-auto" style="max-width: 900px">
       <!-- Title -->
-      <div class="text-h4 text-bold q-mb-lg">SuAo 3Day 搬遷 / 出發 Checklist</div>
+      <div class="text-h4 text-bold q-mb-lg">
+        SuAo 3Day 搬遷 / 出發 Checklist
+      </div>
+      <p>* 應該就是這樣 \ 先能拆裝潢 再說</p>
+      <p>* 6/5 Leave - computex (ai 補差見識距) \ 早早就出發</p>
+
+      <p>車子 裝備補滿 -- 這個 GPT 想不到 但可以排版 check list</p>
+      <p>補買 : 再買 5箱 花錢買保險</p>
 
       <!-- 出發前 -->
       <q-card class="q-mb-md">
@@ -64,51 +71,9 @@
         </q-card-section>
       </q-card>
 
-      <!-- 安全確認 -->
-      <q-card class="q-mb-md">
-        <q-card-section>
-          <div class="text-h6">撤退前安全確認（拍照安心）</div>
-        </q-card-section>
-
-        <q-separator />
-
-        <q-card-section>
-          <div class="row q-col-gutter-md">
-            <div
-              class="col-12 col-md-6"
-              v-for="section in safetySections"
-              :key="section.title"
-            >
-              <q-card bordered flat>
-                <q-card-section class="bg-grey-3">
-                  <div class="text-subtitle1 text-bold">
-                    {{ section.title }}
-                  </div>
-                </q-card-section>
-
-                <q-list>
-                  <q-item
-                    v-for="item in section.items"
-                    :key="item.label"
-                    tag="label"
-                    v-ripple
-                  >
-                    <q-item-section avatar>
-                      <q-checkbox v-model="item.done" />
-                    </q-item-section>
-
-                    <q-item-section>
-                      {{ item.label }}
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-card>
-            </div>
-          </div>
-        </q-card-section>
-      </q-card>
-
-      <!-- 6/3 -->
+      <hr />
+      <hr />
+      <br />
       <q-card class="q-mb-md">
         <q-card-section>
           <div class="text-h6">院子停車後 1st Action</div>
@@ -156,6 +121,57 @@
         </q-list>
       </q-card>
 
+      <hr />
+      <hr />
+      <br />
+      <!-- 安全確認 -->
+      <q-card class="q-mb-md">
+        <q-card-section>
+          <div class="text-h6">撤退前安全確認（拍照安心）</div>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section>
+          <div class="row q-col-gutter-md">
+            <div
+              class="col-12 col-md-6"
+              v-for="section in safetySections"
+              :key="section.title"
+            >
+              <q-card bordered flat>
+                <q-card-section class="bg-grey-3">
+                  <div class="text-subtitle1 text-bold">
+                    {{ section.title }}
+                  </div>
+                </q-card-section>
+
+                <q-list>
+                  <q-item
+                    v-for="item in section.items"
+                    :key="item.label"
+                    tag="label"
+                    v-ripple
+                  >
+                    <q-item-section avatar>
+                      <q-checkbox v-model="item.done" />
+                    </q-item-section>
+
+                    <q-item-section>
+                      {{ item.label }}
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-card>
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+
+      <hr />
+      <hr />
+      <br />
+      <!-- 6/3 -->
       <!-- 服務區 -->
       <q-card class="q-mb-md">
         <q-card-section>
@@ -314,6 +330,8 @@ const serviceItems = ref([
   { label: "吹冷氣", done: false },
   { label: "吃飯", done: false },
   { label: "洗澡", done: false },
+  { label: "NB 插電 TD6", done: false },
+  { label: "游泳池 泡水 花錢增加體力", done: false },
 ]);
 
 const supplyItems = ref([
@@ -325,10 +343,15 @@ const supplyItems = ref([
 ]);
 
 const packingItems = ref([
-  { label: "裝箱", done: false },
-  { label: "拍箱子照片", done: false },
-  { label: "標號 db", done: false },
-  { label: "約拆裝璜時間 - 外包 sop", done: false },
+  { label: "裝箱 inference 2F 一天的生活", done: false },
+  { label: "eating on time \ 喜互惠 \ 憨蝦 吃飯", done: false },
+  { label: "累了就躺平", done: false },
+  { label: "BK 服務區 1800 \ & 2100 洗澡 \ ", done: false },
+  { label: "拍箱子照片 - 有空的話", done: false },
+  { label: "標號 db - 有空的話", done: false },
+  { label: "*** Target all 裝箱 test", done: false },
+  { label: "** 可能 1730 要黑垃圾袋", done: false },
+  { label: "* 約拆裝璜時間 - 外包 sop", done: false },
 ]);
 
 const safetySections = ref([
