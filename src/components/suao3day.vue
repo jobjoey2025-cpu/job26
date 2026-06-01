@@ -6,7 +6,7 @@
         SuAo 3Day 搬遷 / 出發 Checklist
       </div>
       <p>* 應該就是這樣 \ 先能拆裝潢 再說</p>
-      <p>* 6/5 Leave - computex (ai 補差見識距) \ 早早就出發</p>
+      <p>* 6/5 Leave - computex (ai 補見識差距) \ 早早就出發</p>
 
       <p>車子 裝備補滿 -- 這個 GPT 想不到 但可以排版 check list</p>
       <p>補買 : 再買 5箱 花錢買保險</p>
