@@ -1,82 +1,66 @@
 <template>
-  <q-page padding>
-
+  <q-page padding class="dashboard-page">
     <!-- Header -->
     <div class="row items-center justify-between q-mb-md">
-
-      <div class="text-h5 text-weight-bold">
-        💱 匯率看板
-      </div>
+      <div class="text-h5 text-weight-bold">💱 匯率 Dashboard</div>
 
       <div class="row items-center q-gutter-sm">
-
         <div class="text-grey-7 text-caption">
           最後更新：
-          {{ lastUpdate }}
+          {{ formatTime(lastUpdate) }}
         </div>
 
         <q-btn
           label="更新匯率"
           color="primary"
           icon="refresh"
-          @click="fetchRate"
+          @click="fetchRates"
           :loading="loading"
         />
       </div>
     </div>
 
     <!-- Error -->
-    <q-banner
-      v-if="errorMsg"
-      class="bg-red-1 text-red q-mb-md"
-      rounded
-    >
+    <q-banner v-if="errorMsg" class="bg-red-1 text-red q-mb-md" rounded>
       {{ errorMsg }}
     </q-banner>
 
     <!-- Masonry Like Grid -->
     <div class="row q-col-gutter-md">
-
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-
-        <q-card
-          flat
-          bordered
-          class="rate-card"
-        >
-
-          <!-- Pair -->
+      <div
+        v-for="item in rates"
+        :key="item.pair"
+        class="col-3 col-sm-3 col-md-2 col-lg-2"
+      >
+        <q-card flat bordered class="rate-card">
+          <!-- Header -->
           <q-card-section class="bg-grey-1 text-center">
-
-            <div class="text-subtitle1 text-grey-7">
+            <!-- <div class="text-caption text-grey">
               Currency Pair
-            </div>
+            </div> -->
 
             <div class="text-h5 text-weight-bold">
-              {{ rateData.pair }}
+              {{ item.pair }}
             </div>
-
           </q-card-section>
 
           <q-separator />
 
           <!-- Rate -->
           <q-card-section class="text-center">
-
-            <div class="text-caption text-grey">
+            <!-- <div class="text-caption text-grey">
               Exchange Rate
-            </div>
+            </div> -->
 
-            <div class="text-h2 text-primary text-weight-bold q-mt-sm">
-              {{ formatNumber(rateData.rate) }}
+            <div class="text-h6 text-primary text-weight-bold q-mt-sm">
+              {{ formatNumber(item.rate) }}
             </div>
-
           </q-card-section>
 
           <q-separator />
 
           <!-- Footer -->
-          <q-card-section class="text-center">
+          <!-- <q-card-section class="text-center">
 
             <div class="text-caption text-grey">
               Updated
@@ -86,14 +70,10 @@
               {{ formatTime(lastUpdate) }}
             </div>
 
-          </q-card-section>
-
+          </q-card-section> -->
         </q-card>
-
       </div>
-
     </div>
-
   </q-page>
 </template>
 
@@ -102,16 +82,15 @@ import { ref, onMounted } from "vue";
 
 const loading = ref(false);
 const errorMsg = ref("");
+
 const lastUpdate = ref("");
 
-const rateData = ref({
-  pair: "",
-  rate: 0,
-});
+const rates = ref([]);
 
 // 數字格式
 const formatNumber = (val) => {
   if (val === null || val === undefined) return "-";
+
   return Number(val).toFixed(2);
 };
 
@@ -129,27 +108,23 @@ const formatTime = (val) => {
 };
 
 // API 呼叫
-const fetchRate = async () => {
-
+const fetchRates = async () => {
   loading.value = true;
+
   errorMsg.value = "";
 
   try {
-
     const res = await fetch("/.netlify/functions/stock_exchange");
 
     const data = await res.json();
 
-    rateData.value = data;
+    rates.value = data;
 
     lastUpdate.value = new Date();
-
   } catch (err) {
-
     console.error(err);
 
     errorMsg.value = "匯率更新失敗";
-
   }
 
   loading.value = false;
@@ -157,11 +132,9 @@ const fetchRate = async () => {
 
 // 初始化
 onMounted(() => {
+  fetchRates();
 
-  fetchRate();
-
-  setInterval(fetchRate, 30000);
-
+  setInterval(fetchRates, 30000);
 });
 </script>
 
@@ -169,14 +142,16 @@ onMounted(() => {
 .rate-card {
   border-radius: 18px;
 
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .rate-card:hover {
   transform: translateY(-4px);
 
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+/* 覆蓋 q-page 高度（最常用） */
+.dashboard-page {
+  min-height: auto !important;
 }
 </style>

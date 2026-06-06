@@ -2,12 +2,11 @@
   <q-page padding class="dashboard-page">
     <!-- Header -->
     <div class="row items-center justify-between q-mb-md">
-      <div class="text-h5 text-weight-bold">💱 匯率 Dashboard</div>
+      <div class="text-h6 text-weight-bold">💱 匯率 Dashboard</div>
 
       <div class="row items-center q-gutter-sm">
         <div class="text-grey-7 text-caption">
-          最後更新：
-          {{ formatTime(lastUpdate) }}
+          最後更新：{{ formatTime(lastUpdate) }}
         </div>
 
         <q-btn
@@ -25,54 +24,23 @@
       {{ errorMsg }}
     </q-banner>
 
-    <!-- Masonry Like Grid -->
-    <div class="row q-col-gutter-md">
-      <div
-        v-for="item in rates"
-        :key="item.pair"
-        class="col-3 col-sm-3 col-md-2 col-lg-2"
-      >
-        <q-card flat bordered class="rate-card">
-          <!-- Header -->
-          <q-card-section class="bg-grey-1 text-center">
-            <!-- <div class="text-caption text-grey">
-              Currency Pair
-            </div> -->
+    <!-- 純文字列表 -->
+    <!-- <div class="rate-list">
+      <div v-for="item in rates" :key="item.pair" class="rate-row">
+        <span class="pair">
+          {{ item.pair }}
+        </span>
 
-            <div class="text-h5 text-weight-bold">
-              {{ item.pair }}
-            </div>
-          </q-card-section>
-
-          <q-separator />
-
-          <!-- Rate -->
-          <q-card-section class="text-center">
-            <!-- <div class="text-caption text-grey">
-              Exchange Rate
-            </div> -->
-
-            <div class="text-h6 text-primary text-weight-bold q-mt-sm">
-              {{ formatNumber(item.rate) }}
-            </div>
-          </q-card-section>
-
-          <q-separator />
-
-          <!-- Footer -->
-          <!-- <q-card-section class="text-center">
-
-            <div class="text-caption text-grey">
-              Updated
-            </div>
-
-            <div class="text-body2">
-              {{ formatTime(lastUpdate) }}
-            </div>
-
-          </q-card-section> -->
-        </q-card>
+        <span class="rate">
+          {{ formatNumber(item.rate) }}
+        </span>
       </div>
+    </div> -->
+    <div class="rate-board">
+      <span v-for="item in rates" :key="item.pair" class="rate-item">
+        {{ item.pair }}
+        {{ formatNumber(item.rate) }}
+      </span>
     </div>
   </q-page>
 </template>
@@ -139,19 +107,16 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.rate-card {
-  border-radius: 18px;
+.rate-board {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
 
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: Consolas, Monaco, monospace;
 }
 
-.rate-card:hover {
-  transform: translateY(-4px);
-
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-}
-/* 覆蓋 q-page 高度（最常用） */
-.dashboard-page {
-  min-height: auto !important;
+.rate-item {
+  white-space: nowrap;
+  font-size: 16px;
 }
 </style>

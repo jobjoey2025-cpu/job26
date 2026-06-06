@@ -99,6 +99,8 @@ const routes = [
 
       { path: 'suao3day', component: () => import('components/suao3day.vue'), name: 'suao3day' },
       { path: 'English', component: () => import('components/English.vue'), name: 'English' },
+      { path: 'stockPureText', component: () => import('components/stockPureText.vue'), name: 'stockPureText' },
+
 
 
 

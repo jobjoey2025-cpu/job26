@@ -2,11 +2,11 @@
   <q-page padding class="dashboard-page">
     <!-- Header -->
     <div class="row items-center justify-between q-mb-md">
+
+      <div class="text-h6 text-weight-bold">💱 美股 Dashboard</div>
+
       <div class="row items-center q-gutter-sm">
-        <div class="text-grey-7 text-caption">
-          最後更新：
-          {{ lastUpdate }}
-        </div>
+        <div class="text-grey-7 text-caption">最後更新：{{ lastUpdate }}</div>
 
         <q-btn
           label="更新股價"
@@ -23,57 +23,22 @@
       {{ errorMsg }}
     </q-banner>
 
-    <!-- Table -->
-    <q-table
-      title="📈 美股看板"
-      :rows="stocks"
-      :columns="columns"
-      row-key="symbol"
-      :loading="loading"
-      grid
-      hide-header
-      flat
-      :rows-per-page-options="[4]"
-    >
-      <template v-slot:item="props">
-        <div class="q-pa-xs col-xs-3 col-sm-3 col-md-2 col-lg-1">
-          <q-card flat bordered class="stock-card">
-            <!-- 股票代號 -->
-            <!-- <q-card-section class="text-center bg-grey-2">
-              <div class="text-h6 text-weight-bold">
-                {{ props.row.symbol }}
-              </div> -->
+    <!-- 純文字股票列表 -->
+    <!-- <div class="stock-list">
+      <div v-for="stock in stocks" :key="stock.symbol" class="stock-row">
+        <span class="stock-name">
+          {{ stock.name }}
+        </span>
 
-            <div class="text-subtitle2 text-grey-7" style="text-align: center">
-              {{ props.row.name }}
-            </div>
-            <!-- </q-card-section> -->
-
-            <q-separator />
-
-            <!-- 股價 -->
-            <q-card-section class="text-center">
-              <!-- <div class="text-caption text-grey">PRICE</div> -->
-
-              <div class="text-h6 text-weight-bold text-primary">
-                $ {{ formatNumber(props.row.price) }}
-              </div>
-            </q-card-section>
-
-            <q-separator />
-
-            <!-- 更新時間 -->
-            <!-- <q-card-section class="text-center"> -->
-            <!-- <div class="text-caption text-grey">Updated</div> -->
-
-            <!-- <div class="text-body2">
-                {{ formatTime(props.row.time) }}
-              </div> -->
-            <!-- </q-card-section> -->
-          </q-card>
-        </div>
-      </template>
-    </q-table>
+        <span class="stock-price"> $ {{ formatNumber(stock.price) }} </span>
+      </div>
+    </div> -->
+    <div class="ticker-board">
+      <span v-for="stock in stocks" :key="stock.symbol" class="ticker-item">
+        {{ stock.symbol }}
+        ${{ formatNumber(stock.price) }}
+      </span>
+    </div>
   </q-page>
 </template>
 
@@ -146,14 +111,17 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.stock-card {
-  border-radius: 16px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+.ticker-board {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+
+  font-family: Consolas, Monaco, monospace;
 }
 
-.stock-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+.ticker-item {
+  white-space: nowrap;
+  font-weight: 600;
 }
 
 /* 覆蓋 q-page 高度（最常用） */

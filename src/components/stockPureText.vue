@@ -1,67 +1,67 @@
 <template>
-  <q-page padding>
-    <!-- 操作區 -->
-    <div class="row items-center q-mb-md">
+  <q-page padding class="dashboard-page">
+    <!-- <div class="row items-center q-mb-md">
       <q-btn
         label="更新股價"
         color="primary"
         @click="fetchStocks"
         :loading="loading"
       />
+    </div> -->
+    <!-- Header -->
+    <div class="row items-center justify-between q-mb-md">
+      <div class="text-h6 text-weight-bold">💱 台股 Dashboard</div>
+
+      <div class="row items-center q-gutter-sm">
+        <div class="text-grey-7 text-caption">
+          最後更新：{{ formatTime(lastUpdate) }}
+        </div>
+
+        <q-btn
+          label="更新匯率"
+          color="primary"
+          icon="refresh"
+          @click="fetchStocks"
+          :loading="loading"
+        />
+      </div>
     </div>
 
-    <!-- 表格 -->
-    <q-table
-      title="📊 台股看板"
-      :rows="stocks"
-      :columns="columns"
-      row-key="symbol"
-      :loading="loading"
-      flat
-      bordered
-      wrap-cells
-    >
-      <!-- 漲跌 -->
-      <template v-slot:body-cell-change="props">
-        <q-td :props="props">
-          <span :class="getColor(props.row.change)">
-            {{ formatNumber(props.row.change) }}
-          </span>
-        </q-td>
-      </template>
 
-      <!-- 漲幅 -->
-      <template v-slot:body-cell-percent="props">
-        <q-td :props="props">
-          <span :class="getColor(props.row.percent)">
-            {{ formatNumber(props.row.percent) }}%
-          </span>
-        </q-td>
-      </template>
+    <div class="row q-col-gutter-md">
+      <div
+        v-for="(group, index) in groupedStocks"
+        :key="index"
+        class="col-6 col-sm-4 col-md-3 col-lg-3"
+      >
+        <q-card flat bordered>
+          <q-card-section>
+            <div v-for="stock in group" :key="stock.symbol" class="stock-row">
+              <span> {{ stock.symbol }} {{ stock.name }} </span>
 
-      <!-- 價格 -->
-      <template v-slot:body-cell-price="props">
-        <q-td :props="props">
-          <span class="text-weight-medium">
-            {{ formatNumber(props.row.price) }}
-          </span>
-        </q-td>
-      </template>
-
-      <!-- 時間 -->
-      <template v-slot:body-cell-time="props">
-        <q-td :props="props">
-          <span class="text-grey-7 text-caption">
-            {{ formatTime(props.row.time) }}
-          </span>
-        </q-td>
-      </template>
-    </q-table>
+              <span class="text-weight-bold">
+                {{ formatNumber(stock.price) }}
+              </span>
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
+    </div>
   </q-page>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { computed } from "vue";
+const groupedStocks = computed(() => {
+  const result = [];
+
+  for (let i = 0; i < stocks.value.length; i += 5) {
+    result.push(stocks.value.slice(i, i + 5));
+  }
+
+  return result;
+});
 
 const stocks = ref([]);
 const loading = ref(false);
@@ -127,10 +127,22 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.text-red {
-  color: #d32f2f;
+.stock-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 6px 0;
+
+  border-bottom: 1px solid #eee;
 }
-.text-green {
-  color: #2e7d32;
+
+.stock-row:last-child {
+  border-bottom: none;
+}
+
+/* 覆蓋 q-page 高度（最常用） */
+.dashboard-page {
+  min-height: auto !important;
 }
 </style>

@@ -13,7 +13,6 @@
     <!-- 表格 -->
     <!-- title="📊 台股看板" -->
     <q-table
-
       :rows="stocks"
       :columns="columns"
       row-key="symbol"
@@ -41,19 +40,6 @@
                     style="text-align: center"
                   ></div>
                 </div>
-
-                <!-- 漲跌 icon -->
-                <!-- <q-icon
-              :name="
-                props.row.change > 0
-                  ? 'trending_up'
-                  : props.row.change < 0
-                  ? 'trending_down'
-                  : 'trending_flat'
-              "
-              size="32px"
-              :class="getColor(props.row.change)"
-            /> -->
               </div>
             </q-card-section>
 
@@ -61,58 +47,12 @@
 
             <!-- Price -->
             <q-card-section class="text-center">
-              <!-- <div class="text-caption text-grey">
-            Current Price
-          </div> -->
-
               <div class="text-h6 text-weight-bold q-mt-sm">
                 {{ formatNumber(props.row.price) }}
               </div>
             </q-card-section>
 
             <q-separator />
-
-            <!-- Change -->
-            <!-- <q-card-section>
-          <div class="row justify-between items-center q-mb-sm">
-            <div class="text-grey-7">
-              漲跌
-            </div>
-
-            <div
-              class="text-weight-bold"
-              :class="getColor(props.row.change)"
-            >
-              {{ formatNumber(props.row.change) }}
-            </div>
-          </div>
-
-          <div class="row justify-between items-center">
-            <div class="text-grey-7">
-              漲幅
-            </div>
-
-            <div
-              class="text-weight-bold"
-              :class="getColor(props.row.percent)"
-            >
-              {{ formatNumber(props.row.percent) }}%
-            </div>
-          </div>
-        </q-card-section> -->
-
-            <q-separator />
-
-            <!-- Time -->
-            <!-- <q-card-section class="text-center">
-          <div class="text-caption text-grey">
-            Updated
-          </div>
-
-          <div class="text-body2 text-grey-8">
-            {{ formatTime(props.row.time) }}
-          </div>
-        </q-card-section> -->
           </q-card>
         </div>
       </template>
