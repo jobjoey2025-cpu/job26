@@ -6,6 +6,9 @@ exports.handler = async () => {
     { pair: "BTC", symbol: "BTC-USD" },
     { pair: "CNY", symbol: "CNYTWD=X" },
     { pair: "EUR", symbol: "EURTWD=X" },
+    { pair: "Gold", symbol: "GC=F" },
+    { pair: "Silver", symbol: "SI=F" },
+    { pair: "Oil", symbol: "CL=F" },
 
   ];
 
