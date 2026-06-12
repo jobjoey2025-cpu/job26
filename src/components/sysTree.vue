@@ -155,6 +155,62 @@ const simple = [
         ],
       },
       {
+        id: "IT structure",
+        label: "資料結構 Dev",
+        children: [
+          {
+            id: "openClaw",
+            label: "* openClaw GDS job2021",
+            link: "https://docs.google.com/spreadsheets/d/1JzZwl_XkO0VK0KzxEHbkP9sm_3vLbd-hvPCTR6UbiQQ/edit?gid=498659891#gid=498659891",
+          },
+          {
+            id: "QDraggableTree",
+            label: "QDraggableTree 範例 \ 先拖弋 再 copy 顯示碼 in VSC 替換",
+            link: "https://quasar-draggable-tree.netlify.app/examples",
+          },
+          {
+            id: "3",
+            label: "隨手寫 超過一頁，就是overload (估)",
+          },
+          {
+            id: "fullTimeJob",
+            label: "打工時 可能只用 GDS \ Gkeep \ 隨手寫 \ Notion \ Quasar",
+          },
+          {
+            id: "aiFn",
+            label: "✨ GPT 現在能做的",
+            link: "https://104vtol.netlify.app/#/aiFn",
+          },
+          {
+            id: "3",
+            label: "GDS - main品牌choose (評估 priority)",
+          },
+          {
+            id: "3",
+            label: "Screen Shoot + Moment NAS",
+          },
+          {
+            id: "3",
+            label: "Tree + VSC == 雲端 Netlify",
+          },
+          {
+            id: "Trello",
+            label: "news GDS Gkeep Notion Trello",
+            children: [
+              {
+                id: "3",
+                label: "其實 都是靠 機率，訊息密度高 品質好時，問題就容易解。",
+              },
+              {
+                id: "3",
+                label: "10年技術滾動更新 2000-www 2008-app 2020-LLM",
+              },
+            ],
+          },
+        ],
+      },
+
+      {
         id: "judge",
         label: "軍機處 司法檢察 income judge",
         link: "https://104vtol.netlify.app/#/",
@@ -400,9 +456,11 @@ const simple = [
 
 const selected = ref(null);
 const ticked = ref([]);
+// @@@
 const expanded = ref([
   "ggb",
   "judge",
+  "IT structure",
   // "Loop",
   "fashion",
   // "1",
