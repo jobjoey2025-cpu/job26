@@ -101,10 +101,8 @@ const routes = [
       { path: 'English', component: () => import('components/English.vue'), name: 'English' },
       { path: 'stockPureText', component: () => import('components/stockPureText.vue'), name: 'stockPureText' },
 
-
-
-
-
+      { path: '2F_aiDesign', component: () => import('components/2F_aiDesign.vue'), name: '2F_aiDesign' },
+      { path: '2F_aiToolComparisonDB', component: () => import('components/2F_aiToolComparisonDB.vue'), name: '2F_aiToolComparisonDB' },
 
 
     ]
