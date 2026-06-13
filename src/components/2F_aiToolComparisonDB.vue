@@ -59,10 +59,23 @@
       bordered
       dense
     >
+      <!-- <q-tooltip> I am groot! </q-tooltip> -->
+      <template v-slot:body-cell-name="props">
+        <q-td :props="props">
+          <span class="cursor-pointer">
+            {{ props.row.name }}
+
+            <q-tooltip class="bg-purple text-body1" :offset="[10, 10]">
+              {{ props.row.tooltip }}
+            </q-tooltip>
+          </span>
+        </q-td>
+      </template>
+
       <!-- rating -->
       <template v-slot:body-cell-rating="props">
         <q-td :props="props">
-          <q-rating v-model="props.row.rating" max="5" size="16px" readonly />
+          <q-rating v-model="props.row.rating" max="5" size="26px" readonly />
         </q-td>
       </template>
 
@@ -76,6 +89,7 @@
             {{ props.row.local ? "Local" : "Cloud" }}
           </q-chip>
         </q-td>
+        <!-- <q-tooltip> I am groot! </q-tooltip> -->
       </template>
     </q-table>
   </q-page>
@@ -128,6 +142,7 @@ const columns = [
   { name: "rating", label: "能力", field: "rating", sortable: true },
   { name: "local", label: "部署", field: "local", sortable: true },
   { name: "useCase", label: "用途", field: "useCase" },
+  // { name: "tooltips", label: "提示", field: "tooltips" },
 ];
 
 /* -------------------------
@@ -141,6 +156,7 @@ const rows = [
     rating: 5,
     local: false,
     useCase: "文字/圖片生成 + 風格遷移",
+    tooltip: "New",
   },
   {
     name: "GPT Image",
@@ -149,14 +165,16 @@ const rows = [
     rating: 4,
     local: false,
     useCase: "概念設計 / 剪影 / 空間發想",
+    tooltip: "need Token",
   },
   {
-    name: "Stable Diffusion (ComfyUI)",
+    name: "Stable Diffusion",
     category: "Image Generation",
     domain: "Architecture",
     rating: 5,
     local: true,
     useCase: "批次生成 / LoRA / 高控制",
+    tooltip: "(ComfyUI) 使用龍蝦批次",
   },
   {
     name: "Revit BIM",
@@ -165,14 +183,16 @@ const rows = [
     rating: 5,
     local: true,
     useCase: "建模 / 施工圖 / 造價",
+    tooltip: "不好安裝 & 新版有 ai",
   },
   {
-    name: "建築學長 Tool DB",
+    name: "建築學長 ",
     category: "Workflow",
     domain: "Architecture",
     rating: 3,
     local: false,
     useCase: "工具導航 / 資源整理",
+    tooltip: "Tool DB (支付寶充值 AC help)",
   },
 ];
 
