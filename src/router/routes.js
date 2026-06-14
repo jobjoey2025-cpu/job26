@@ -103,6 +103,7 @@ const routes = [
 
       { path: '2F_aiDesign', component: () => import('components/2F_aiDesign.vue'), name: '2F_aiDesign' },
       { path: '2F_aiToolComparisonDB', component: () => import('components/2F_aiToolComparisonDB.vue'), name: '2F_aiToolComparisonDB' },
+      { path: '2F_layoutInference', component: () => import('components/2F_layoutInference.vue'), name: '2F_layoutInference' },
 
 
     ]

@@ -156,7 +156,7 @@ const rows = [
     rating: 5,
     local: false,
     useCase: "文字/圖片生成 + 風格遷移",
-    tooltip: "New",
+    tooltip: "Nano Banana Pro 是基於 Gemini 3 Pro 的新一代文字與圖像生成模型",
   },
   {
     name: "GPT Image",
@@ -183,7 +183,7 @@ const rows = [
     rating: 5,
     local: true,
     useCase: "建模 / 施工圖 / 造價",
-    tooltip: "不好安裝 & 新版有 ai",
+    tooltip: "不好安裝 & 新版有 ai \\ BIM revit - 價格估算 變化速度 & 設計變更 (專案太大 need cowork so 隨經濟預算變化 是常有的)",
   },
   {
     name: "建築學長 ",
@@ -193,6 +193,15 @@ const rows = [
     local: false,
     useCase: "工具導航 / 資源整理",
     tooltip: "Tool DB (支付寶充值 AC help)",
+  },
+  {
+    name: "blender 3D",
+    category: "Workflow",
+    domain: "Architecture",
+    rating: 3,
+    local: false,
+    useCase: "工具導航 / 外掛 plugin",
+    tooltip: "剪影法 角色設計 簡化與聚焦",
   },
 ];
 

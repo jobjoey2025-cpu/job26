@@ -29,7 +29,7 @@
         <q-btn
           flat
           color="primary"
-          label="ai 工具"
+          label="ai 工具 list"
           to="/2F_aiToolComparisonDB"
           target="_blank"
           icon="open_in_new"
@@ -69,7 +69,14 @@ Case DB
       </q-card-section>
 
       <q-separator />
-
+      <q-btn
+          flat
+          color="primary"
+          label="推論 組合邏輯 OK? "
+          to="/2F_layoutInference"
+          target="_blank"
+          icon="open_in_new"
+        />
       <q-card-section>
         <div class="text-h6 q-mb-sm">圖紙資料庫（Project DB）</div>
 
@@ -90,10 +97,13 @@ Project DB
         <div class="text-h6 q-mb-sm">構思圖集</div>
 
         <ul>
-          <li>空間配置</li>
-          <li>材質搭配</li>
-          <li>色彩搭配</li>
-          <li>家具配置</li>
+          <!-- <li>空間配置</li> -->
+          <!-- <li>材質搭配</li> -->
+          <!-- <li>色彩搭配</li> -->
+          <!-- <li>家具配置</li> -->
+           <li>概念初稿</li>
+           <li>手繪線搞 轉 效果圖</li>
+           <li>室內意象圖</li>
         </ul>
 
         <div class="text-h6 q-mt-lg q-mb-sm">AI 概念生成</div>
