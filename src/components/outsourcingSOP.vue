@@ -114,6 +114,10 @@ const btnGroups = [
         label: "卡片Table",
         to: "/Qtable",
       },
+      {
+        label: "2F 資料夾 龍蝦",
+        to: "/2F_aiDesign",
+      },
     ],
   },
 

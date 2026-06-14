@@ -11,7 +11,7 @@
     <!-- Logic Engine -->
     <q-card flat bordered class="q-mb-md">
       <q-card-section>
-        <div class="text-h5">🧠 邏輯組合推論（Logic Composition）</div>
+        <div class="text-h5">🧠 推論 組合邏輯 - 不能衝突（Logic Composition）</div>
 
         <pre>
 空間需求
@@ -23,21 +23,79 @@
 配置生成
     ↓
 效果圖
+    ↓
+AB TEST (0 1 choose)
         </pre>
       </q-card-section>
 
       <q-separator />
 
       <q-card-section>
-        <q-chip>住宅</q-chip>
+        <q-chip>* 住宅</q-chip>
         <q-chip>商空</q-chip>
         <q-chip>飯店</q-chip>
-        <q-chip>預算</q-chip>
-        <q-chip>建築外觀</q-chip>
-        <q-chip>文化偏好</q-chip>
+        <q-chip>* 預算</q-chip>
+        <q-chip>建築外觀 \ 庭園造景</q-chip>
+        <q-chip>* 文化偏好</q-chip>
       </q-card-section>
     </q-card>
+<!-- Exterior Interior -->
+<q-card flat bordered class="q-mb-md">
+      <q-card-section>
+        <div class="text-h5">🏠 Exterior → Interior Alignment</div>
+        <p>室內設計風格 統一 建築外觀</p>
+      </q-card-section>
 
+      <q-separator />
+
+      <q-list separator>
+        <q-item>
+          <q-item-section> 清水模 </q-item-section>
+
+          <q-item-section side> 極簡風 </q-item-section>
+        </q-item>
+
+        <q-item>
+          <q-item-section> 日式木構 </q-item-section>
+
+          <q-item-section side> 侘寂風 </q-item-section>
+        </q-item>
+
+        <q-item>
+          <q-item-section> 玻璃帷幕 </q-item-section>
+
+          <q-item-section side> 科技風 </q-item-section>
+        </q-item>
+      </q-list>
+    </q-card>
+
+    <!-- Banana -->
+    <q-expansion-item
+      icon="auto_fix_high"
+      label="Nano Banana 智能改圖"
+      default-opened
+      class="q-mb-md"
+    >
+    <p>banana 智能改圖 銜接建築風格</p>
+      <q-list bordered separator>
+        <q-item>
+          <q-item-section> 改成侘寂風 </q-item-section>
+        </q-item>
+
+        <q-item>
+          <q-item-section> 增加植栽 </q-item-section>
+        </q-item>
+
+        <q-item>
+          <q-item-section> 改暖光 </q-item-section>
+        </q-item>
+
+        <q-item>
+          <q-item-section> 換木地板 </q-item-section>
+        </q-item>
+      </q-list>
+    </q-expansion-item>
+    
     <!-- Furniture AI -->
     <q-expansion-item
       icon="chair"
@@ -105,60 +163,7 @@
       </q-card-section>
     </q-card>
 
-    <!-- Exterior Interior -->
-    <q-card flat bordered class="q-mb-md">
-      <q-card-section>
-        <div class="text-h5">🏠 Exterior → Interior Alignment</div>
-      </q-card-section>
 
-      <q-separator />
-
-      <q-list separator>
-        <q-item>
-          <q-item-section> 清水模 </q-item-section>
-
-          <q-item-section side> 極簡風 </q-item-section>
-        </q-item>
-
-        <q-item>
-          <q-item-section> 日式木構 </q-item-section>
-
-          <q-item-section side> 侘寂風 </q-item-section>
-        </q-item>
-
-        <q-item>
-          <q-item-section> 玻璃帷幕 </q-item-section>
-
-          <q-item-section side> 科技風 </q-item-section>
-        </q-item>
-      </q-list>
-    </q-card>
-
-    <!-- Banana -->
-    <q-expansion-item
-      icon="auto_fix_high"
-      label="Nano Banana 智能改圖"
-      default-opened
-      class="q-mb-md"
-    >
-      <q-list bordered separator>
-        <q-item>
-          <q-item-section> 改成侘寂風 </q-item-section>
-        </q-item>
-
-        <q-item>
-          <q-item-section> 增加植栽 </q-item-section>
-        </q-item>
-
-        <q-item>
-          <q-item-section> 改暖光 </q-item-section>
-        </q-item>
-
-        <q-item>
-          <q-item-section> 換木地板 </q-item-section>
-        </q-item>
-      </q-list>
-    </q-expansion-item>
 
     <!-- Style DB -->
     <q-card flat bordered class="q-mb-md">
