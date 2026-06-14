@@ -108,6 +108,8 @@ const routes = [
       { path: '2F_aiGallery', component: () => import('components/2F_aiGallery.vue'), name: '2F_aiGallery' },
 
       { path: '2F_aiAnalysis', component: () => import('components/2F_aiAnalysis.vue'), name: '2F_aiAnalysis' },
+      { path: 'F_aiAnalysis_Radar', component: () => import('components/F_aiAnalysis_Radar.vue'), name: 'F_aiAnalysis_Radar' },
+
 
     ]
   },
