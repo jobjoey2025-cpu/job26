@@ -84,7 +84,7 @@
           to="/2F_gemini"
           target="_blank"
           icon="open_in_new"
-        />
+        /> 在圖面 分析 生成 部分 好像 Gemini win GPT
         <br>
         <q-separator />
         <q-list dense>
