@@ -68,6 +68,24 @@
         />
         <p>🎨 Concept 概念發想 |📊 Analysis 分析圖 | 🖼 Render 效果圖 | 🧠 AI Edit AI 修改 | 🏗 BIM BIM / 建模 </p>
         <br />
+        <q-btn
+          flat
+          color="primary"
+          label="GPT"
+          to="/2F_aiAnalysis"
+          target="_blank"
+          icon="open_in_new"
+        />
+      vs
+      <q-btn
+          flat
+          color="primary"
+          label="Gemini"
+          to="/2F_gemini"
+          target="_blank"
+          icon="open_in_new"
+        />
+        <br>
         <q-separator />
         <q-list dense>
           <q-item>
