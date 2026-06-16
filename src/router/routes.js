@@ -111,6 +111,9 @@ const routes = [
       { path: 'F_aiAnalysis_Radar', component: () => import('components/F_aiAnalysis_Radar.vue'), name: 'F_aiAnalysis_Radar' },
       { path: '2F_Gemini', component: () => import('components/2F_Gemini.vue'), name: '2F_Gemini' },
 
+      { path: 'suao_oneDay', component: () => import('components/suao_oneDay.vue'), name: 'suao_oneDay' },
+
+
 
     ]
   },

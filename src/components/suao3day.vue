@@ -65,11 +65,18 @@
       <!-- 6/5 -->
       <q-card class="q-mb-md">
         <q-card-section>
-          <div class="text-h6">6/5 Leave</div>
-
+          <div class="text-h6">6/5 Leave 週五早 or 週六早 可以路過台北</div>
           <div class="text-grey">非假日、上課時撤退</div>
         </q-card-section>
       </q-card>
+      <q-btn
+        flat
+        color="primary"
+        label="蘇澳 生活一天大概的 SOP"
+        to="/suao_oneDay"
+        target="_blank"
+        icon="open_in_new"
+      />
 
       <hr />
       <hr />
