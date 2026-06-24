@@ -1,5 +1,5 @@
 exports.handler = async () => {
-  const symbols = ["DKILY","CARR","MU","BABA","NFLX","GGR","TM","GOOGL","NVDA","F","HMC","MCD","KO","LXRX","AAPL", ];
+  const symbols = ["GOOGL","NFLX","BABA","TM","DKILY","CARR","MU","GGR","NVDA","F","HMC","MCD","KO","LXRX","AAPL", ];
 
   const prices = {};
 

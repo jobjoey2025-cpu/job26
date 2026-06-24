@@ -22,9 +22,9 @@
     <!-- Grid Layout -->
     <div class="row q-col-gutter-sm">
       <!-- 台股 -->
-      <div class="col-12 col-lg-6">
+      <!-- <div class="col-12 col-lg-6">
         <stockValue />
-      </div>
+      </div> -->
 
       <!-- 新聞 / Blog -->
       <div class="col-12 col-md-8">

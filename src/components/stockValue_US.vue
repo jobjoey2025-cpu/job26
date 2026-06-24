@@ -2,12 +2,13 @@
   <q-page padding class="dashboard-page">
     <!-- Header -->
     <div class="row items-center justify-between q-mb-md">
-
       <div class="text-h6 text-weight-bold">💱 美股 Dashboard</div>
 
       <div class="row items-center q-gutter-sm">
         <div class="text-grey-7 text-caption">最後更新：{{ lastUpdate }}</div>
-
+        <p>TM 155 \  *BABA 145 \ *NFLX 94 \ *GOOGL 370 \
+          NVDA 88 \  MCD 275 \ KO 70 \ HMC 24.8 \ *GGR 9.3 \ F 10.5 \ CARR 68 \
+        </p>
         <q-btn
           label="更新股價"
           color="primary"

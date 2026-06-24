@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="row items-center justify-between q-mb-md">
       <div class="text-h6 text-weight-bold">💱 匯率 Dashboard</div>
-
+      <p>ETH 2,930 \ BTC 60,000</p>
       <div class="row items-center q-gutter-sm">
         <div class="text-grey-7 text-caption">
           最後更新：{{ formatTime(lastUpdate) }}
