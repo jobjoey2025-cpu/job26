@@ -4,9 +4,10 @@
       title="帳號管理"
       :rows="accounts"
       :columns="columns"
-      row-key="email"
+      row-key="id"
       flat
       bordered
+      :pagination="{ rowsPerPage: 0 }"
     >
       <!-- Email -->
       <template v-slot:body-cell-email="props">
@@ -21,14 +22,14 @@
           <q-expansion-item icon="apps" label="Services" dense expand-separator>
             <div v-if="props.row.services?.length">
               <q-list dense>
-                <q-item v-for="(s, index) in props.row.services" :key="index">
+                <q-item v-for="s in props.row.services" :key="s.id">
                   <q-item-section>
                     <!-- service name -->
                     <q-item-label>
-                      {{ s.name || s.service }}
+                      {{ s.serviceName || s.name || s.service || "Unnamed" }}
                     </q-item-label>
 
-                    <!-- accountId -->
+                    <!-- optional account info -->
                     <q-item-label caption v-if="s.accountId">
                       Account ID: {{ s.accountId }}
                     </q-item-label>
@@ -52,25 +53,35 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-
 import { db } from "src/boot/firebase";
 import { ref as dbRef, onValue } from "firebase/database";
 
 const accounts = ref([]);
 
 /**
- * 🔥 讀取 Firebase Realtime Database
- * 同時把 services (object) 轉成 array
+ * Firebase Realtime Database Listener
  */
 onMounted(() => {
   const accountsRef = dbRef(db, "accounts");
 
   onValue(accountsRef, (snapshot) => {
-    const data = snapshot.val() || {};
+    const data = snapshot.val();
 
-    accounts.value = Object.values(data).map((account) => ({
-      ...account,
-      services: account.services ? Object.values(account.services) : [],
+    if (!data) {
+      accounts.value = [];
+      return;
+    }
+
+    accounts.value = Object.entries(data).map(([id, account]) => ({
+      id,
+      email: account.email,
+
+      services: account.services
+        ? Object.entries(account.services).map(([sid, service]) => ({
+            id: sid,
+            ...service,
+          }))
+        : [],
     }));
   });
 });
