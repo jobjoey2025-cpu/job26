@@ -1,3 +1,4 @@
+
 boot: [
-  'echarts'
+  'echarts','firebase'
 ]

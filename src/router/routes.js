@@ -114,6 +114,8 @@ const routes = [
       { path: 'suao_oneDay', component: () => import('components/suao_oneDay.vue'), name: 'suao_oneDay' },
 
 
+      { path: 'id_manager', component: () => import('components/id_manager.vue'), name: 'id_manager' },
+      { path: 'id_manager_CRUD', component: () => import('components/id_manager_CRUD.vue'), name: 'id_manager_CRUD' },
 
     ]
   },
