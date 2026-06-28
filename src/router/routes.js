@@ -117,6 +117,11 @@ const routes = [
       { path: 'id_manager', component: () => import('components/id_manager.vue'), name: 'id_manager' },
       { path: 'id_manager_CRUD', component: () => import('components/id_manager_CRUD.vue'), name: 'id_manager_CRUD' },
 
+      { path: '3F_structure', component: () => import('components/3F_structure.vue'), name: '3F_structure' },
+      { path: '3F_color', component: () => import('components/3F_color.vue'), name: '3F_color' },
+
+
+
     ]
   },
 
