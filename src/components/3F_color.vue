@@ -1,12 +1,5 @@
 <template>
   <q-page class="q-pa-md flex flex-center">
-    <!-- <div
-      class="container"
-      :style="{
-        gridTemplateColumns: `repeat(${cols}, ${CELL}px)`,
-        gridTemplateRows: `repeat(${rows}, ${CELL}px)`,
-      }"
-    > -->
     <div
       class="container"
       :style="{
@@ -26,13 +19,14 @@
         </div>
 
         <!-- <q-tooltip>
-          <div>Area : {{ block.area }}</div>
+          <div>{{ block.id }}</div>
           <div>{{ block.color }}</div>
+          <div v-if="block.url">🔗 {{ block.url }}</div>
         </q-tooltip> -->
         <q-tooltip>
           <div>{{ block.id }}</div>
           <div>{{ block.color }}</div>
-          <div v-if="block.url">🔗 {{ block.url }}</div>
+          <div>{{ block.text }}</div>
         </q-tooltip>
       </div>
     </div>
@@ -41,11 +35,14 @@
 
 <script setup>
 import { ref } from "vue";
+import { useQuasar } from "quasar";
+
+const $q = useQuasar();
 
 /**
  * ===== INPUT GRID (Excel) =====
  */
-const grid = [
+ const grid = [
   [
     "#B2F0F2",
     "#B2F0F2",
@@ -305,13 +302,22 @@ const regionNames = [
   "PrivateZone",
 ];
 
-const colorLinks = {
-  "#B2F0F2": "https://www.google.com/?hl=zh_TW",
-  "#5DDBC4": "https://example.com/wood-top",
-  "#45E2F1": "https://example.com/cabinet-a",
-  "#7277DB": "https://example.com/cabinet-b",
-  "#64E1EC": "https://example.com/cabinet-c",
-  "#3DDFD9": "https://example.com/cabinet-d",
+// const colorLinks = {
+//   "#B2F0F2": "https://www.google.com/?hl=zh_TW",
+//   "#5DDBC4": "https://example.com/wood-top",
+//   "#45E2F1": "https://example.com/cabinet-a",
+//   "#7277DB": "https://example.com/cabinet-b",
+//   "#64E1EC": "https://example.com/cabinet-c",
+//   "#3DDFD9": "https://example.com/cabinet-d",
+
+// };
+const colorTexts = {
+  "#B2F0F2": "門口櫃上",
+  "#5DDBC4": "木櫃上",
+  "#45E2F1": "冰箱",
+  "#7277DB": "餐桌",
+  "#64E1EC": "沙發",
+  "#3DDFD9": "電視櫃",
 
   "#79D9D9": "https://example.com/door-middle",
   "#4DF1E2": "https://example.com/storage",
@@ -327,8 +333,14 @@ const colorLinks = {
   "#00004D": "https://example.com/dark-zone",
   "#91A5C7": "https://example.com/steel-zone",
   "#BAC58F": "https://example.com/olive-zone",
-  "#62580A": "https://example.com/brown-zone",
+  "#62580A": "iPad TEST",
 };
+// Google Form
+const FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSf6ZvAV_156eeHf-pbHUumVYDTUno7OGDFZAmm8rkqW-y8prg/formResponse";
+
+// Google Form 簡答題 entry
+const ENTRY_ID = "entry.1483699422";
 
 let nameIndex = 0;
 
@@ -344,7 +356,8 @@ function floodFill(sr, sc) {
     // id: `region_${blocks.length+1}`,
     id: regionNames[nameIndex++] || `Region_${nameIndex}`,
     color,
-    url: colorLinks[color] || null, // ⭐ 加這行
+    // url: colorLinks[color] || null, // ⭐ 加這行
+    text: colorTexts[color] || "",
     cells: [],
     minR: sr,
     maxR: sr,
@@ -409,15 +422,7 @@ const active = ref(null);
  * ===== STYLE =====
  */
 // function blockStyle(b) {
-//   return {
-//     backgroundColor: b.color,
-//     gridRow: `${b.startRow} / ${b.endRow}`,
-//     gridColumn: `${b.startCol} / ${b.endCol}`,
-//     border: "1px solid rgba(0,0,0,0.2)",
-//     color: "#333",
-//     fontSize: "12px",
-//   };
-// }
+
 function blockStyle(b) {
   return {
     backgroundColor: b.color,
@@ -431,10 +436,55 @@ function blockStyle(b) {
     boxSizing: "border-box",
   };
 }
-function openLink(block) {
-  if (!block.url) return;
+// function openLink(block) {
+//   if (!block.url) return;
 
-  window.open(block.url, "_blank");
+//   window.open(block.url, "_blank");
+// }
+
+async function openLink(block) {
+  // 立即顯示通知 👉 先顯示（最重要）
+  $q.notify({
+    type: "info",
+    message: `已點擊：${block.text}`,
+    position: "top",
+    timeout: 1000,
+    icon: "touch_app",
+  });
+
+  if (!block.text) return;
+
+  const formData = new FormData();
+
+  formData.append(ENTRY_ID, block.text);
+
+  try {
+    await fetch(FORM_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body: formData,
+    });
+
+    $q.notify({
+      type: "positive",
+      message: `已點擊按鈕：${block.text}`,
+      position: "top",
+      color: "primary",
+      timeout: 1500,
+      icon: "check_circle",
+    });
+  } catch (err) {
+    console.error(err);
+
+    $q.notify({
+      type: "negative",
+      message: "送出失敗",
+
+      position: "top",
+      timeout: 2000,
+      icon: "error",
+    });
+  }
 }
 </script>
 

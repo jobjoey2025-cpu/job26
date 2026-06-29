@@ -119,6 +119,7 @@ const routes = [
 
       { path: '3F_structure', component: () => import('components/3F_structure.vue'), name: '3F_structure' },
       { path: '3F_color', component: () => import('components/3F_color.vue'), name: '3F_color' },
+      { path: '3F_color_googleForm', component: () => import('components/3F_color_googleForm.vue'), name: '3F_color_googleForm' },
 
 
 
