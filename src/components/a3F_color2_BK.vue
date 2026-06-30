@@ -43,230 +43,110 @@ const $q = useQuasar();
  * ===== INPUT GRID (Excel) =====
  */
  const grid = [
+  // Row 16 (C16:Q16)
   [
-    "#B2F0F2",
-    "#B2F0F2",
-    "#5DDBC4",
-    "#5DDBC4",
-    "#5DDBC4",
-    "#45E2F1",
-    "#45E2F1",
-    "#7277DB",
-    "#7277DB",
-    "#7277DB",
-    "#64E1EC",
-    "#64E1EC",
-    "#3DDFD9",
-    "#3DDFD9",
+    "#FFFFFF", "#D9EADD", "#F3F3DA", "#FFFFFF", "#ECE4A4",
+    "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF",
+    "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF"
   ],
+
+  // Row 17
   [
-    "#B2F0F2",
-    "#B2F0F2",
-    "#5DDBC4",
-    "#5DDBC4",
-    "#5DDBC4",
-    "#45E2F1",
-    "#45E2F1",
-    "#7277DB",
-    "#7277DB",
-    "#7277DB",
-    "#64E1EC",
-    "#64E1EC",
-    "#3DDFD9",
-    "#3DDFD9",
+    "#FFFFFF", "#D9EADD", "#F3F3DA", "#FFFFFF", "#ECE4A4",
+    "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF",
+    "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF"
   ],
+
+  // Row 18
   [
-    "#B2F0F2",
-    "#B2F0F2",
-    "#5DDBC4",
-    "#5DDBC4",
-    "#5DDBC4",
-    "#45E2F1",
-    "#45E2F1",
-    "#7277DB",
-    "#7277DB",
-    "#7277DB",
-    "#64E1EC",
-    "#64E1EC",
-    "#3DDFD9",
-    "#3DDFD9",
+    "#FFFFFF", "#D9EADD", "#F3F3DA", "#FFFFFF", "#ECE4A4",
+    "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF",
+    "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF"
   ],
+
+  // Row 19
   [
-    "#79D9D9",
-    "#79D9D9",
-    "#5DDBC4",
-    "#5DDBC4",
-    "#5DDBC4",
-    "#4DF1E2",
-    "#4DF1E2",
-    "#66B7B7",
-    "#66B7B7",
-    "#66B7B7",
-    "#CCCADA",
-    "#CCCADA",
-    "#FCD7B4",
-    "#FCD7B4",
+    "#B4D0BC", "#FFFFFF", "#FFFFFF", "#E8D577", "#DAB24C",
+    "#DAB24C", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF",
+    "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF"
   ],
+
+  // Row 20
   [
-    "#79D9D9",
-    "#79D9D9",
-    "#64C297",
-    "#64C297",
-    "#64C297",
-    "#4DF1E2",
-    "#4DF1E2",
-    "#66B7B7",
-    "#66B7B7",
-    "#66B7B7",
-    "#CCCADA",
-    "#CCCADA",
-    "#FCD7B4",
-    "#FCD7B4",
+    "#B4D0BC", "#FFFFFF", "#FFFFFF", "#E8D577", "#DAB24C",
+    "#DAB24C", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF",
+    "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF"
   ],
+
+  // Row 21
   [
-    "#79D9D9",
-    "#79D9D9",
-    "#64C297",
-    "#64C297",
-    "#64C297",
-    "#4DF1E2",
-    "#4DF1E2",
-    "#9A9694",
-    "#9A9694",
-    "#9A9694",
-    "#CCCADA",
-    "#CCCADA",
-    "#FCD7B4",
-    "#FCD7B4",
+    "#B4D0BC", "#FFFFFF", "#FFFFFF", "#E8D577", "#DAB24C",
+    "#DAB24C", "#DEF5EB", "#DBB672", "#DBB672", "#FFFFFF",
+    "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF"
   ],
+
+  // Row 22
   [
-    "#79D9D9",
-    "#79D9D9",
-    "#64C297",
-    "#64C297",
-    "#64C297",
-    "#4DF1E2",
-    "#4DF1E2",
-    "#9A9694",
-    "#9A9694",
-    "#9A9694",
-    "#CCCADA",
-    "#CCCADA",
-    "#FCD7B4",
-    "#FCD7B4",
+    "#FFFFFF", "#8FC13A", "#DCC4D2", "#DCC4D2", "#C7A791",
+    "#C7A791", "#BCEA98", "#B7B7A6", "#B7B7A6", "#F1EE9C",
+    "#FFFFFF", "#FFFFFF", "#C4D09D", "#FFFFFF", "#BFC0BF"
   ],
+
+  // Row 23
   [
-    "#79D9D9",
-    "#79D9D9",
-    "#64C297",
-    "#64C297",
-    "#64C297",
-    "#4DF1E2",
-    "#4DF1E2",
-    "#9A9694",
-    "#9A9694",
-    "#9A9694",
-    "#CCCADA",
-    "#CCCADA",
-    "#FCD7B4",
-    "#FCD7B4",
+    "#FFFFFF", "#8FC13A", "#DCC4D2", "#DCC4D2", "#C7A791",
+    "#C7A791", "#BCEA98", "#B7B7A6", "#B7B7A6", "#F1EE9C",
+    "#FFFFFF", "#FFFFFF", "#C4D09D", "#FFFFFF", "#BFC0BF"
   ],
+
+  // Row 24
   [
-    "#A6A6A6",
-    "#A6A6A6",
-    "#64C297",
-    "#64C297",
-    "#64C297",
-    "#4DF1E2",
-    "#4DF1E2",
-    "#9A9694",
-    "#9A9694",
-    "#9A9694",
-    "#91A5C7",
-    "#91A5C7",
-    "#BAC58F",
-    "#BAC58F",
+    "#FFFFFF", "#8FC13A", "#DCC4D2", "#DCC4D2", "#C7A791",
+    "#C7A791", "#BCEA98", "#B7B7A6", "#B7B7A6", "#F1EE9C",
+    "#F1E195", "#F1E195", "#C4D09D", "#FFFFFF", "#BFC0BF"
   ],
+
+  // Row 25
   [
-    "#A6A6A6",
-    "#A6A6A6",
-    "#64C297",
-    "#64C297",
-    "#64C297",
-    "#4DF1E2",
-    "#4DF1E2",
-    "#9A9694",
-    "#9A9694",
-    "#9A9694",
-    "#91A5C7",
-    "#91A5C7",
-    "#BAC58F",
-    "#BAC58F",
+    "#0A6BE2", "#FFFFFF", "#808080", "#808080", "#F1E195",
+    "#F1E195", "#9BD884", "#949BBA", "#949BBA", "#E4D278",
+    "#E2B88D", "#E2B88D", "#97BEA4", "#F2F2F2", "#F2F2F2"
   ],
+
+  // Row 26
   [
-    "#A6A6A6",
-    "#A6A6A6",
-    "#548494",
-    "#548494",
-    "#548494",
-    "#4DF1E2",
-    "#4DF1E2",
-    "#A4D89B",
-    "#A4D89B",
-    "#A4D89B",
-    "#91A5C7",
-    "#91A5C7",
-    "#BAC58F",
-    "#BAC58F",
+    "#0A6BE2", "#FFFFFF", "#808080", "#808080", "#F1E195",
+    "#F1E195", "#9BD884", "#949BBA", "#949BBA", "#E4D278",
+    "#E2B88D", "#E2B88D", "#97BEA4", "#F2F2F2", "#F2F2F2"
   ],
+
+  // Row 27
   [
-    "#A6A6A6",
-    "#A6A6A6",
-    "#548494",
-    "#548494",
-    "#548494",
-    "#9395D5",
-    "#9395D5",
-    "#A4D89B",
-    "#A4D89B",
-    "#A4D89B",
-    "#91A5C7",
-    "#91A5C7",
-    "#BAC58F",
-    "#BAC58F",
+    "#0A6BE2", "#FFFFFF", "#808080", "#808080", "#F1E195",
+    "#F1E195", "#9BD884", "#949BBA", "#949BBA", "#E4D278",
+    "#E2B88D", "#E2B88D", "#97BEA4", "#F2F2F2", "#F2F2F2"
   ],
+
+  // Row 28
   [
-    "#A6A6A6",
-    "#A6A6A6",
-    "#EEE2E1",
-    "#EEE2E1",
-    "#EEE2E1",
-    "#45E2F1",
-    "#45E2F1",
-    "#A4D89B",
-    "#A4D89B",
-    "#A4D89B",
-    "#91A5C7",
-    "#91A5C7",
-    "#62580A",
-    "#62580A",
+    "#FFFFFF", "#F2F2F2", "#808080", "#808080", "#F1EE9C",
+    "#F1EE9C", "#DBB672", "#DEF5EB", "#DEF5EB", "#D7B555",
+    "#ECE4A4", "#ECE4A4", "#D9EADD", "#D9DABD", "#D9DABD"
   ],
+
+  // Row 29
   [
-    "#A6A6A6",
-    "#A6A6A6",
-    "#EEE2E1",
-    "#EEE2E1",
-    "#EEE2E1",
-    "#45E2F1",
-    "#45E2F1",
-    "#00004D",
-    "#00004D",
-    "#00004D",
-    "#91A5C7",
-    "#91A5C7",
-    "#62580A",
-    "#62580A",
+    "#FFFFFF", "#F2F2F2", "#808080", "#808080", "#F1EE9C",
+    "#F1EE9C", "#DBB672", "#DEF5EB", "#DEF5EB", "#D7B555",
+    "#ECE4A4", "#ECE4A4", "#D9EADD", "#D9DABD", "#D9DABD"
   ],
+
+  // Row 30
+  [
+    "#FFFFFF", "#F2F2F2", "#808080", "#808080", "#F1EE9C",
+    "#F1EE9C", "#DBB672", "#DEF5EB", "#DEF5EB", "#D7B555",
+    "#ECE4A4", "#ECE4A4", "#D9EADD", "#D9DABD", "#D9DABD"
+  ]
 ];
 
 const rows = grid.length;
