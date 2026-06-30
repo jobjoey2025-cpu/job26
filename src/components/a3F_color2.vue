@@ -219,7 +219,7 @@ async function submitGoogleForm(r, c) {
 
 /* cell */
 .cell {
-  width: 80px;
+  width: 75px;
   height: 30px;
 
   display: flex;
