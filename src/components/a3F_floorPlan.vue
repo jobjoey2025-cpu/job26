@@ -15,6 +15,7 @@
 
     <a3F_color class="q-mb-xs" />
     <a3F_color2 />
+    <a3F_structure />
     <!-- </div> -->
   </q-page>
 </template>
@@ -24,6 +25,8 @@
 // import draggable from "components/draggable.vue";
 import a3F_color from "components/a3F_color.vue";
 import a3F_color2 from "components/a3F_color2.vue";
+import a3F_structure from "components/a3F_structure.vue";
+
 </script>
 
 <style scoped>

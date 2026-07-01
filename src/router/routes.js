@@ -118,13 +118,13 @@ const routes = [
       { path: 'id_manager_CRUD', component: () => import('components/id_manager_CRUD.vue'), name: 'id_manager_CRUD' },
 
 
-      
-      { path: '3F_structure', component: () => import('components/3F_structure.vue'), name: '3F_structure' },
+
       { path: '3F_color_googleForm', component: () => import('components/3F_color_googleForm.vue'), name: '3F_color_googleForm' },
 
       { path: 'a3F_color', component: () => import('components/a3F_color.vue'), name: 'a3F_color' },
       { path: 'a3F_color2', component: () => import('components/a3F_color2.vue'), name: 'a3F_color2' },
       { path: 'a3F_floorPlan', component: () => import('components/a3F_floorPlan.vue'), name: 'a3F_floorPlan' },
+      { path: 'a3F_structure', component: () => import('components/a3F_structure.vue'), name: 'a3F_structure' },
 
 
     ]
