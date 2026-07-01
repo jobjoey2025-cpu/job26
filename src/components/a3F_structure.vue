@@ -6,6 +6,7 @@
       配合圖面 ID Link Notion 用快照紀錄 (cuz 時間不多) <b>></b> *然後就能 mobile Think CICD &
       <b>></b> *切割下次的小對齊 Task (Fn Prj Task List)
     </p>
+    <p>注意 : 對齊 Excel區塊 & 立面圖 need 2hrs up \ 轉換有時很難想</p>
     <div class="row q-col-gutter-md">
       <div class="col-12 col-sm-6 col-md-4">
         <q-btn

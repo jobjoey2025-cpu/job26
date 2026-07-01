@@ -125,6 +125,7 @@ const routes = [
       { path: 'a3F_color2', component: () => import('components/a3F_color2.vue'), name: 'a3F_color2' },
       { path: 'a3F_floorPlan', component: () => import('components/a3F_floorPlan.vue'), name: 'a3F_floorPlan' },
       { path: 'a3F_structure', component: () => import('components/a3F_structure.vue'), name: 'a3F_structure' },
+      { path: 'a3F_color_desk', component: () => import('components/a3F_color_desk.vue'), name: 'a3F_color_desk' },
 
 
     ]
