@@ -1,0 +1,257 @@
+<template>
+
+  <q-page class="row">
+
+      <!-- Left -->
+
+      <div class="col-3">
+
+          <q-card flat bordered class="fit">
+
+              <q-toolbar>
+
+                  <q-toolbar-title>
+
+                      Projects
+
+                  </q-toolbar-title>
+
+                  <q-btn
+                      flat
+                      round
+                      icon="add"
+                      @click="addProject"
+                  />
+
+              </q-toolbar>
+
+              <q-list>
+
+                  <q-item
+                      clickable
+                      v-for="item in projects"
+                      :key="item.key"
+                      @click="select(item)"
+                      :active="current?.key==item.key"
+                  >
+
+                      <q-item-section>
+
+                          {{ item.Overview.Name }}
+
+                      </q-item-section>
+
+                  </q-item>
+
+              </q-list>
+
+          </q-card>
+
+      </div>
+
+      <!-- Right -->
+
+      <div
+          class="col q-pa-md"
+          v-if="current"
+      >
+
+          <q-card flat bordered>
+
+              <q-card-section>
+
+                  <div class="text-h6">
+
+                      Overview
+
+                  </div>
+
+                  <q-input
+                      v-model="current.Overview.Name"
+                      label="Project Name"
+                      @update:model-value="save"
+                  />
+
+                  <q-input
+                      v-model="current.Overview.Description"
+                      label="Description"
+                      type="textarea"
+                      @update:model-value="save"
+                  />
+
+              </q-card-section>
+
+          </q-card>
+
+          <q-card
+              flat
+              bordered
+              class="q-mt-md"
+          >
+
+              <q-card-section>
+
+                  <div class="text-h6">
+
+                      Evaluation
+
+                  </div>
+
+                  <div
+                      v-for="score in scores"
+                      :key="score"
+                  >
+
+                      {{ score }}
+
+                      <q-slider
+
+                          :min="0"
+
+                          :max="5"
+
+                          label
+
+                          v-model="current.Evaluation[score]"
+
+                          @update:model-value="save"
+
+                      />
+
+                  </div>
+
+              </q-card-section>
+
+          </q-card>
+
+      </div>
+
+  </q-page>
+
+  </template>
+
+  <script setup>
+
+  import {ref,onMounted} from 'vue'
+
+  import {
+
+  ref as dbRef,
+
+  onValue,
+
+  push,
+
+  set,
+
+  update
+
+  } from 'firebase/database'
+
+  import {db} from 'boot/firebase'
+
+  const projects=ref([])
+
+  const current=ref(null)
+
+  const scores=[
+
+  "ROI",
+
+  "Market Demand",
+
+  "AI Fit",
+
+  "Automation",
+
+  "Scalability",
+
+  "Interest"
+
+  ]
+
+  onMounted(()=>{
+
+      onValue(
+
+          dbRef(db,"projects"),
+
+          snap=>{
+
+              const obj=snap.val()||{}
+
+              projects.value=Object.keys(obj).map(key=>({
+
+                  key,
+
+                  ...obj[key]
+
+              }))
+
+          }
+
+      )
+
+  })
+
+  function select(item){
+
+      current.value=item
+
+  }
+
+  function save(){
+
+      if(!current.value)return
+
+      update(
+
+          dbRef(db,"projects/"+current.value.key),
+
+          current.value
+
+      )
+
+  }
+
+  async function addProject(){
+
+      const key=push(dbRef(db,"projects")).key
+
+      await set(
+
+          dbRef(db,"projects/"+key),
+
+          {
+
+              Overview:{
+
+                  Name:"New Project",
+
+                  Description:""
+
+              },
+
+              Evaluation:{
+
+                  ROI:0,
+
+                  "Market Demand":0,
+
+                  "AI Fit":0,
+
+                  Automation:0,
+
+                  Scalability:0,
+
+                  Interest:0
+
+              }
+
+          }
+
+      )
+
+  }
+
+  </script>

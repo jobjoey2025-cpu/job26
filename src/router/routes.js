@@ -17,7 +17,6 @@ const routes = [
       { path: 'testNavi', name: 'testNavi',component: () => import('pages/testNavi.vue') },
       { path: 'test', name: 'test',component: () => import('pages/test.vue') },
 
-
       { path: 'bannerWhoAmI', component: () => import('components/bannerWhoAmI.vue'), name: 'bannerWhoAmI' },
       { path: 'bannerService', component: () => import('components/bannerService.vue'), name: 'bannerService' },
       { path: 'bannerBLG', component: () => import('components/bannerBLG.vue'), name: 'bannerBLG' },
@@ -29,7 +28,6 @@ const routes = [
       { path: 'bannerGearbox', component: () => import('components/bannerGearbox.vue'), name: 'bannerGearbox' },
       { path: 'bannerGearAnimate', component: () => import('components/bannerGearAnimate.vue'), name: 'bannerGearAnimate' },
       { path: 'bannerDC10', component: () => import('components/bannerDC10.vue'), name: 'bannerDC10' },
-
 
       { path: 'timeline_g12', component: () => import('components/timeline_g12.vue'), name: 'timeline_g12' },
       { path: 'timeLine_lightSop', component: () => import('components/timeLine_lightSop.vue'), name: 'timeLine_lightSop' },
@@ -70,7 +68,6 @@ const routes = [
       { path: '104priority', component: () => import('components/104priority.vue'), name: '104priority' },
       { path: 'aiFn', component: () => import('components/aiFn.vue'), name: 'aiFn' },
 
-
       { path: 'stock', component: () => import('components/stock.vue'), name: 'stock' },
       { path: 'stockBLGlist', component: () => import('components/stockBLGlist.vue'), name: 'stockBLGlist' },
       { path: 'stockValue', component: () => import('components/stockValue.vue'), name: 'stockValue' },
@@ -79,7 +76,6 @@ const routes = [
       { path: 'stockValue_exchange.vue', component: () => import('components/stockValue_exchange.vue'), name: 'stockValue_exchange.vue' },
       { path: 'stockFB.vue', component: () => import('components/stockFB.vue'), name: 'stockFB.vue' },
       { path: 'stockRailway.vue', component: () => import('components/stockRailway.vue'), name: 'stockRailway.vue' },
-
 
       { path: 'sixDiff', component: () => import('components/sixDiff.vue'), name: 'sixDiff' },
       { path: 'sixDiffExsample', component: () => import('components/sixDiffExsample.vue'), name: 'sixDiffExsample' },
@@ -113,11 +109,8 @@ const routes = [
 
       { path: 'suao_oneDay', component: () => import('components/suao_oneDay.vue'), name: 'suao_oneDay' },
 
-
       { path: 'id_manager', component: () => import('components/id_manager.vue'), name: 'id_manager' },
       { path: 'id_manager_CRUD', component: () => import('components/id_manager_CRUD.vue'), name: 'id_manager_CRUD' },
-
-
 
       { path: '3F_color_googleForm', component: () => import('components/3F_color_googleForm.vue'), name: '3F_color_googleForm' },
 
@@ -126,6 +119,11 @@ const routes = [
       { path: 'a3F_floorPlan', component: () => import('components/a3F_floorPlan.vue'), name: 'a3F_floorPlan' },
       { path: 'a3F_structure', component: () => import('components/a3F_structure.vue'), name: 'a3F_structure' },
       { path: 'a3F_color_desk', component: () => import('components/a3F_color_desk.vue'), name: 'a3F_color_desk' },
+
+      { path: 'roi', component: () => import('components/roi.vue'), name: 'roi' },
+      { path: 'roi_doc', component: () => import('components/roi_doc.vue'), name: 'roi_doc' },
+      { path: 'roi_doc_rfq', component: () => import('components/roi_doc_rfq.vue'), name: 'roi_doc_rfq' },
+
 
 
     ]

@@ -91,7 +91,7 @@ const $q = useQuasar();
   "#E4DFEC": "3倍鏡",
   "#DAEEF3": "長條",
   "#D9D9D9": "筆筒",
-  "#C4BD97": "門 clinic BOX", // 原始文字為：門診BOX
+  "#C4BD97": "門診 BOX", // 原始文字為：門診BOX
   "#8DB4E2": "臨時文件",
   "#B8CCE4": "文件1",
   "#E6B8B7": "文件2",

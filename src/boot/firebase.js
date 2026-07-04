@@ -3,13 +3,6 @@ import { initializeApp } from 'firebase/app'
 import { getDatabase } from 'firebase/database'
 
 const firebaseConfig = {
-  // apiKey: 'YOUR_API_KEY',
-  // authDomain: 'YOUR_PROJECT.firebaseapp.com',
-  // databaseURL: 'https://YOUR_PROJECT-default-rtdb.firebaseio.com',
-  // projectId: 'YOUR_PROJECT',
-  // storageBucket: 'YOUR_PROJECT.appspot.com',
-  // messagingSenderId: 'xxxxxxxx',
-  // appId: 'xxxxxxxx'
   apiKey: "AIzaSyDRBTr-Dvf_Z7ZgzKnPzCfWtN5EY5L_-mY",
   authDomain: "id-manager-8aa1e.firebaseapp.com",
   databaseURL: "https://id-manager-8aa1e-default-rtdb.asia-southeast1.firebasedatabase.app",
