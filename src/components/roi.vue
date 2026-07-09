@@ -3,11 +3,32 @@
     <!-- Left -->
     <div class="col-3 q-pa-sm">
       <q-card flat bordered class="fit column">
-        <q-toolbar>
+        <!-- <q-toolbar>
           <q-toolbar-title> Projects </q-toolbar-title>
 
           <q-btn flat round icon="add" @click="addProject" />
+        </q-toolbar> -->
+        <q-toolbar>
+          <q-toolbar-title> Projects </q-toolbar-title>
+
+          <q-btn flat round icon="upload" @click="exportJson">
+            <q-tooltip>Export JSON</q-tooltip>
+          </q-btn>
+
+          <q-btn flat round icon="download" @click="importJson">
+            <q-tooltip>Import JSON</q-tooltip>
+          </q-btn>
+
+          <q-btn flat round icon="add" @click="addProject" />
         </q-toolbar>
+
+        <input
+          ref="fileInput"
+          type="file"
+          accept=".json"
+          style="display: none"
+          @change="onFileSelected"
+        />
 
         <!-- Project List -->
         <q-list separator>
@@ -110,22 +131,19 @@
 </template>
 
 <script setup>
+// import { ref, computed, onMounted } from "vue";
+// import { ref as dbRef, onValue, push, set, update } from "firebase/database";
 import { ref, computed, onMounted } from "vue";
 import { ref as dbRef, onValue, push, set, update } from "firebase/database";
+
+const fileInput = ref(null); // joey ???
 
 import { db } from "boot/firebase_roi";
 
 const projects = ref([]);
 const current = ref(null);
 
-const scores = [
-  "ROI",
-  "Market Demand",
-  "AI Fit",
-  "Automation",
-  "Scalability",
-  "Interest",
-];
+const scores = ["ROI", "Scalability", "Interest", "Automation"];
 
 const projectSummary = computed(() => {
   return projects.value
@@ -186,5 +204,57 @@ async function addProject() {
       Interest: 0,
     },
   });
+}
+
+function exportJson() {
+  const data = projects.value.map(({ key, ...rest }) => ({
+    key,
+    ...rest,
+  }));
+
+  const blob = new Blob([JSON.stringify(data, null, 2)], {
+    type: "application/json",
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "projects.json";
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+function importJson() {
+  fileInput.value.click();
+}
+
+async function onFileSelected(evt) {
+  const file = evt.target.files[0];
+
+  if (!file) return;
+
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+
+    for (const project of data) {
+      let key = project.key;
+
+      delete project.key;
+
+      if (!key) {
+        key = push(dbRef(db, "projects")).key;
+      }
+
+      await set(dbRef(db, "projects/" + key), project);
+    }
+
+    evt.target.value = "";
+  } catch (err) {
+    console.error(err);
+    alert("JSON 格式錯誤");
+  }
 }
 </script>

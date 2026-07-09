@@ -9,18 +9,26 @@
         <div class="text-h3 text-weight-bold q-mt-sm">
           MOSCOW | Kano Model | RICE <br />模型 優先排序法
         </div>
+        <br />
         <p>
           1.快速分類--如果只需要快速篩掉低優先級需求，MOSCOW 是你的首選。<br />
           2.戶體驗導向--想打造讓用戶拍手叫好的產品？ 選擇 Kano
           Model，傾聽用戶心聲。 想做一個<br />
           x3.量化工具--精算師，幫需求排隊，資源花得超值？非 RICE 莫屬。
         </p>
+        <a href="https://junemilktea.com/pm12lesson6artical/"
+          >想做的事情太多！</a
+        >
+
         <div class="text-subtitle1 q-mt-md">
           從使用者滿意度出發，打造真正讓人驚艷的產品。<br />
           一、为用户故事排优先级<br />
           二、为产品 Bug 排优先级<br />
           比賽資源有限，賽道也不可能讓所有人同時衝刺，因此我們需要決定：誰先跑？誰在中間？誰暫時留在替補席？
         </div>
+        <a href="https://www.woshipm.com/pmd/1958795.html"
+          >如何快速确定 需求列表 的优先级？</a
+        >
 
         <div class="q-mt-lg">
           <q-chip color="white" text-color="primary" icon="psychology">
@@ -37,21 +45,24 @@
         </div>
       </div>
     </section>
+    <br />
 
     <!-- <q-img :src="url" style="height: 140px; max-width: 150px">
       <template v-slot:loading>
         <q-spinner-gears color="white" />
       </template>
     </q-img> -->
-    <q-img
-      v-for="img in cadImgs"
-      :key="img"
-      :src="img"
-      class="thumb"
-      style="width: 28%"
-      @click="open(img)"
-      fit="cover"
-    />
+    <div style="text-align: center">
+      <q-img
+        v-for="img in cadImgs"
+        :key="img"
+        :src="img"
+        class="thumb"
+        style="width: 28%"
+        @click="open(img)"
+        fit="cover"
+      />
+    </div>
 
     <div class="container q-pa-lg">
       <!-- Learning Objectives -->
@@ -127,8 +138,9 @@
             這是專案的<b>「界外球」</b>，也就是明確不在當前範圍內的需求。<br />
             設計數據庫結構 \ 確保每個用戶學習時間能准去紀錄<br />
             儀錶板UI 長條圖樣式顏色 顯示過去30天的學習數據<br />
-            優化圖形顯示效果 \ 減少api的延遲<br />
+            優化圖形顯示效果 \ 減少api的延遲「界外球」<br />
           </p>
+          <hr />
           <p>
             Kano
             Model（狩野模型）由日本東京工業大學教授提出。並非所有需求都值得花一樣的精力對待。「二維品質模型」
@@ -137,16 +149,16 @@
           <p>
             與傳統認為「功能越多、品質越高、使用者越滿意」不同， Kano
             Model認為不同功能對滿意度的影響並不相同。<br />
-            基本需求（M）|期望需求（O）|魅力需求（A）|無差異需求（I）|反向需求（R）<br />
-            滿意度——來自用戶主觀感受，反映需求被滿足的程度。<br />
-            實現程度——功能提供、產品品質的客觀表現，描述需求是否被具體實現。
-            💡 例子： 手機可以打電話、登入功能、付款功能。
-            💡 例子： App 越快、續航越久、搜尋越精準。
-            💡 例子： AI 助手、自動摘要、夜景拍照。
-            💡 例子： 20 種鬧鐘聲音、 過多動畫效果。
-            💡 例子： 預裝大量 App、 自動播放影片、 自動更新。(某些使用者喜歡， 另一群使用者卻討厭。 產品通常需要提供開關或自訂選項。)
+            基本需求（M）| 期望需求（O）| 魅力需求（A）| 無差異需求（I）| 反向需求（R）<br />
+            * 滿意度——來自用戶主觀感受，反映需求被滿足的程度。<br />
+            * 實現程度——功能提供、產品品質的客觀表現，描述需求是否被具體實現。 <br />💡
+            例子： 手機可以打電話、登入功能、付款功能。 <br />💡 例子： App
+            越快、續航越久、搜尋越精準。<br /> 💡 例子： AI 助手、自動摘要、夜景拍照。
+            💡 例子： 20 種鬧鐘聲音、 過多動畫效果。<br /> 💡 例子： 預裝大量 App、
+            自動播放影片、 自動更新。(某些使用者喜歡， 另一群使用者卻討厭。
+            產品通常需要提供開關或自訂選項。)
           </p>
-
+          <hr />
           <p>
             RICE 優先排序模型 是一種專門為產品經理設計的需求評估方法，由
             Intercom 團隊提出。
@@ -172,10 +184,6 @@
         Kano Model 的核心精神不是「功能越多越好」，而是找出
         <strong>哪些功能真正影響使用者滿意度</strong>。
       </q-banner>
-
-
-
-
     </div>
   </q-page>
 </template>
@@ -186,8 +194,8 @@ import { ref } from "vue";
 // const url = ref("https://picsum.photos/500/300");
 
 const cadImgs = [
-  "/img/Kano Model.png",
   "/img/Kano Model sense.png",
+  "/img/Kano Model.png",
   // "/img/Kano Model seperate.png",
   "/img/Kano Model statistics.png",
 ];
