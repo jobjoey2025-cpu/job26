@@ -100,10 +100,35 @@
           />
         </q-card-section>
       </q-card>
+      <q-card flat bordered class="q-mt-md">
+        <q-card-section>
+          <div class="text-h6 q-mb-md">PARA Classification</div>
+
+          <q-option-group
+            v-model="current.Overview.PARA"
+            :options="paraTypes"
+            option-value="value"
+            option-label="label"
+            color="primary"
+            @update:model-value="save"
+          />
+
+          <q-banner v-if="current.Overview.PARA" class="bg-grey-2 q-mt-md">
+            {{
+              paraTypes.find((p) => p.value === current.Overview.PARA)
+                ?.description
+            }}
+          </q-banner>
+        </q-card-section>
+      </q-card>
 
       <q-card flat bordered class="q-mt-md">
         <q-card-section>
           <div class="text-h6 q-mb-md">Evaluation</div>
+          <p>title: "ROI", description: "投入時間後可獲得的回報",</p>
+          <p>title: "Scalability", description: "是否容易擴充成系列專案",</p>
+          <p>title: "Interest", description: "自己是否願意長期投入",</p>
+          <p>title: "Automation", description: "是否能交給 AI 或程式自動化",</p>
 
           <div v-for="score in scores" :key="score" class="q-mb-lg">
             <div class="row justify-between">
@@ -144,6 +169,29 @@ const projects = ref([]);
 const current = ref(null);
 
 const scores = ["ROI", "Scalability", "Interest", "Automation"];
+
+const paraTypes = [
+  {
+    value: "Project",
+    label: "Project",
+    description: "具有明確截止日期 (Deadline)",
+  },
+  {
+    value: "Area",
+    label: "Area",
+    description: "持續維護的領域，沒有截止日",
+  },
+  {
+    value: "Resource",
+    label: "Resource",
+    description: "備用知識、研究資料",
+  },
+  {
+    value: "Archive",
+    label: "Archive",
+    description: "封存，未來可再參考",
+  },
+];
 
 const projectSummary = computed(() => {
   return projects.value
@@ -197,8 +245,8 @@ async function addProject() {
 
     Evaluation: {
       ROI: 0,
-      "Market Demand": 0,
-      "AI Fit": 0,
+      // "Market Demand": 0,
+      // "AI Fit": 0,
       Automation: 0,
       Scalability: 0,
       Interest: 0,

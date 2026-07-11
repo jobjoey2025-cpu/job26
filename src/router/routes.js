@@ -125,6 +125,12 @@ const routes = [
       { path: 'roi_doc_rfq', component: () => import('components/roi_doc_rfq.vue'), name: 'roi_doc_rfq' },
 
 
+      { path: 'ProjectDashboard', component: () => import('pages/ProjectDashboard.vue') },
+      { path: 'OverviewTab', component: () => import('components/OverviewTab.vue'), name: 'OverviewTab' },
+      { path: 'ParaTab', component: () => import('components/ParaTab.vue'), name: 'ParaTab' },
+      { path: 'EvaluationTab', component: () => import('components/EvaluationTab.vue'), name: 'EvaluationTab' },
+
+
 
     ]
   },

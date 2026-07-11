@@ -3,11 +3,32 @@
     <!-- Left -->
     <div class="col-3 q-pa-sm">
       <q-card flat bordered class="fit column">
-        <q-toolbar>
+        <!-- <q-toolbar>
           <q-toolbar-title> Projects </q-toolbar-title>
 
           <q-btn flat round icon="add" @click="addProject" />
+        </q-toolbar> -->
+        <q-toolbar>
+          <q-toolbar-title> Projects </q-toolbar-title>
+
+          <q-btn flat round icon="upload" @click="exportJson">
+            <q-tooltip>Export JSON</q-tooltip>
+          </q-btn>
+
+          <q-btn flat round icon="download" @click="importJson">
+            <q-tooltip>Import JSON</q-tooltip>
+          </q-btn>
+
+          <q-btn flat round icon="add" @click="addProject" />
         </q-toolbar>
+
+        <input
+          ref="fileInput"
+          type="file"
+          accept=".json"
+          style="display: none"
+          @change="onFileSelected"
+        />
 
         <!-- Project List -->
         <q-list separator>
@@ -79,7 +100,6 @@
           />
         </q-card-section>
       </q-card>
-
       <q-card flat bordered class="q-mt-md">
         <q-card-section>
           <div class="text-h6 q-mb-md">PARA Classification</div>
@@ -105,18 +125,13 @@
       <q-card flat bordered class="q-mt-md">
         <q-card-section>
           <div class="text-h6 q-mb-md">Evaluation</div>
+          <p>title: "ROI", description: "投入時間後可獲得的回報",</p>
+          <p>title: "Scalability", description: "是否容易擴充成系列專案",</p>
+          <p>title: "Interest", description: "自己是否願意長期投入",</p>
+          <p>title: "Automation", description: "是否能交給 AI 或程式自動化",</p>
 
           <div v-for="score in scores" :key="score" class="q-mb-lg">
             <div class="row justify-between">
-              <div>
-                <div class="text-subtitle2">
-                  {{ item.title }}
-                </div>
-
-                <div class="text-caption text-grey">
-                  {{ item.description }}
-                </div>
-              </div>
               <div>
                 {{ score }}
               </div>
@@ -136,71 +151,24 @@
           </div>
         </q-card-section>
       </q-card>
-
-      <div v-for="item in evaluations" :key="item.key" class="q-mb-lg">
-        <div class="row items-center justify-between">
-          <div>
-            <div class="text-subtitle2">
-              {{ item.title }}
-            </div>
-
-            <div class="text-caption text-grey">
-              {{ item.description }}
-            </div>
-          </div>
-
-          <div class="text-weight-bold">
-            {{ current.Evaluation[item.key] }}/5
-          </div>
-        </div>
-
-        <q-slider
-          v-model="current.Evaluation[item.key]"
-          :min="0"
-          :max="5"
-          :step="1"
-          label
-          markers
-          color="primary"
-          @update:model-value="save"
-        />
-      </div>
     </div>
   </q-page>
 </template>
 
 <script setup>
+// import { ref, computed, onMounted } from "vue";
+// import { ref as dbRef, onValue, push, set, update } from "firebase/database";
 import { ref, computed, onMounted } from "vue";
 import { ref as dbRef, onValue, push, set, update } from "firebase/database";
+
+const fileInput = ref(null); // joey ???
 
 import { db } from "boot/firebase_roi";
 
 const projects = ref([]);
 const current = ref(null);
 
-const scores = [
-  // const evaluations = [
-  {
-    key: "ROI",
-    title: "ROI",
-    description: "投入時間後可獲得的回報",
-  },
-  {
-    key: "Scalability",
-    title: "Scalability",
-    description: "是否容易擴充成系列專案",
-  },
-  {
-    key: "Interest",
-    title: "Interest",
-    description: "自己是否願意長期投入",
-  },
-  {
-    key: "Automation",
-    title: "Automation",
-    description: "是否能交給 AI 或程式自動化",
-  },
-];
+const scores = ["ROI", "Scalability", "Interest", "Automation"];
 
 const paraTypes = [
   {
@@ -277,12 +245,64 @@ async function addProject() {
 
     Evaluation: {
       ROI: 0,
-      "Market Demand": 0,
-      "AI Fit": 0,
+      // "Market Demand": 0,
+      // "AI Fit": 0,
       Automation: 0,
       Scalability: 0,
       Interest: 0,
     },
   });
+}
+
+function exportJson() {
+  const data = projects.value.map(({ key, ...rest }) => ({
+    key,
+    ...rest,
+  }));
+
+  const blob = new Blob([JSON.stringify(data, null, 2)], {
+    type: "application/json",
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "projects.json";
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+function importJson() {
+  fileInput.value.click();
+}
+
+async function onFileSelected(evt) {
+  const file = evt.target.files[0];
+
+  if (!file) return;
+
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+
+    for (const project of data) {
+      let key = project.key;
+
+      delete project.key;
+
+      if (!key) {
+        key = push(dbRef(db, "projects")).key;
+      }
+
+      await set(dbRef(db, "projects/" + key), project);
+    }
+
+    evt.target.value = "";
+  } catch (err) {
+    console.error(err);
+    alert("JSON 格式錯誤");
+  }
 }
 </script>
