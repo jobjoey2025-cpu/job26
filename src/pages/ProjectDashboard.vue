@@ -2,31 +2,7 @@
   <q-page class="row">
     <!-- Left -->
     <div class="col-3 q-pa-sm">
-      <!-- <q-card flat bordered class="fit column">
-        <p style="text-align: center">just show</p>
-        <ProjectToolbar
-          @add="addProject"
-          @export="exportJson"
-          @import="importJson"
-        />
-        <input
-          ref="fileInput"
-          type="file"
-          accept=".json"
-          style="display: none"
-          @change="onFileSelected"
-        />
-        <ProjectList :projects="projects" :current="current" @select="select" />
-        <q-separator />
-        <ProjectSummary :summary="projectSummary" />
-      </q-card> -->
-
       <q-card flat bordered class="fit column">
-        <!-- <q-toolbar>
-          <q-toolbar-title> Projects </q-toolbar-title>
-
-          <q-btn flat round icon="add" @click="addProject" />
-        </q-toolbar> -->
         <q-toolbar>
           <q-toolbar-title> Projects </q-toolbar-title>
 
@@ -49,52 +25,84 @@
           @change="onFileSelected"
         />
 
-        <!-- Project List -->
-        <q-list separator>
-          <q-item
-            v-for="item in projects"
-            :key="item.key"
-            clickable
-            :active="current?.key === item.key"
-            active-class="bg-primary text-white"
-            @click="select(item)"
-          >
-            <q-item-section>
-              {{ item.Overview.Name }}
-            </q-item-section>
-          </q-item>
-        </q-list>
-
-        <q-separator />
-
-        <!-- Summary -->
-        <q-card-section>
-          <div class="text-subtitle1 q-mb-md">Project Score Summary</div>
-
-          <q-list dense>
-            <q-item v-for="item in projectSummary" :key="item.key">
+        <q-card>
+          <!-- Project List -->
+          <q-list separator>
+            <q-item
+              v-for="item in topProjects"
+              :key="item.key"
+              clickable
+              :active="current?.key === item.key"
+              active-class="bg-primary text-white"
+              @click="select(projects.find((p) => p.key === item.key))"
+            >
               <q-item-section>
-                <div class="row items-center">
-                  <div class="col">
-                    {{ item.name }}
-                  </div>
+                {{ item.name }}
+              </q-item-section>
 
-                  <div class="col-auto text-weight-bold">
-                    {{ item.total }}/30
-                  </div>
-                </div>
-
-                <q-linear-progress
-                  class="q-mt-xs"
-                  rounded
-                  size="8px"
-                  color="positive"
-                  :value="item.total / 30"
-                />
+              <q-item-section side>
+                {{ item.total }}
               </q-item-section>
             </q-item>
           </q-list>
-        </q-card-section>
+        </q-card>
+        <q-separator />
+        <q-card>
+          <!-- Summary -->
+          <q-card-section>
+            <div class="text-subtitle1 q-mb-md">Score Summary</div>
+
+            <!-- <q-item v-for="item in projectSummary" :key="item.key"> -->
+
+            <!-- v-for="item in projectSummary.slice(0, 5)" -->
+            <q-list dense>
+              <q-item
+                v-for="item in projectSummary.slice(0, 5)"
+                :key="item.key"
+              >
+                <q-item-section>
+                  <div class="row items-center">
+                    <div class="col">
+                      {{ item.name }}
+                    </div>
+
+                    <div class="col-auto text-weight-bold">
+                      {{ item.total }}/30
+                    </div>
+                  </div>
+
+                  <q-linear-progress
+                    class="q-mt-xs"
+                    rounded
+                    size="8px"
+                    color="positive"
+                    :value="item.total / 30"
+                  />
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-card-section>
+        </q-card>
+
+        <!-- ------ -->
+        <q-card>
+          <q-list separator>
+            <q-item
+              v-for="item in projects"
+              :key="item.key"
+              clickable
+              :active="current?.key === item.key"
+              active-class="bg-primary text-white"
+              @click="select(item)"
+            >
+              <q-item-section>
+                {{ item.Overview.Name }}
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card>
+
+        <!-- ------- -->
       </q-card>
     </div>
 
@@ -103,14 +111,17 @@
 
     <div class="col q-pa-md" v-if="current">
       <q-tabs v-model="tab" dense align="left" indicator-color="primary">
-        <q-tab name="overview" label="overview" />
-        <q-tab name="para" label="para" />
-        <q-tab name="evaluation" label="Evaluation" />
+        <q-tab name="projects" label="prj T5" />
+        <q-tab name="overview" label="view T5" />
+        <q-tab name="para" label="para T5" />
+        <q-tab name="evaluation" label="Evalu T5" />
       </q-tabs>
 
       <q-separator />
-
       <q-tab-panels v-model="tab" animated>
+        <q-tab-panel name="projects">
+          <projectsTab :project="current" @save="save" />
+        </q-tab-panel>
         <q-tab-panel name="overview">
           <OverviewTab :project="current" @save="save" />
         </q-tab-panel>
@@ -134,10 +145,15 @@ import { ref as dbRef, onValue, push, set, update } from "firebase/database";
 const fileInput = ref(null); // joey ???
 import { db } from "boot/firebase_roi";
 
+import projectsTab from "src/components/projectsTab.vue";
 import OverviewTab from "src/components/OverviewTab.vue";
 import ParaTab from "src/components/ParaTab.vue";
 import EvaluationTab from "src/components/EvaluationTab.vue";
-const tab = ref("overview");
+const tab = ref("projects");
+
+const topProjects = computed(() => {
+  return projectSummary.value.slice(0, 5);
+});
 
 const projects = ref([]);
 const current = ref(null);
