@@ -130,6 +130,7 @@ const routes = [
       { path: 'ParaTab', component: () => import('components/ParaTab.vue'), name: 'ParaTab' },
       { path: 'EvaluationTab', component: () => import('components/EvaluationTab.vue'), name: 'EvaluationTab' },
       { path: 'searchTab', component: () => import('components/searchTab.vue'), name: 'searchTab' },
+      { path: 'import_exportTab', component: () => import('components/import_exportTab.vue'), name: 'import_exportTab' },
 
 
 

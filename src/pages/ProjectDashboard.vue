@@ -6,24 +6,24 @@
         <q-toolbar>
           <q-toolbar-title> Projects </q-toolbar-title>
 
-          <q-btn flat round icon="upload" @click="exportJson">
+          <!-- <q-btn flat round icon="upload" @click="exportJson">
             <q-tooltip>Export JSON</q-tooltip>
           </q-btn>
 
           <q-btn flat round icon="download" @click="importJson">
             <q-tooltip>Import JSON</q-tooltip>
-          </q-btn>
+          </q-btn> -->
 
           <q-btn flat round icon="add" @click="addProject" />
         </q-toolbar>
 
-        <input
+        <!-- <input
           ref="fileInput"
           type="file"
           accept=".json"
           style="display: none"
           @change="onFileSelected"
-        />
+        /> -->
 
         <q-card>
           <!-- Project List -->
@@ -117,6 +117,8 @@
         <q-tab name="evaluation" label="Evalu T5" />
 
         <q-tab name="search" icon="search" label="Search" />
+        <q-tab name="jsonIO" icon="download" label="json_IO" />
+
       </q-tabs>
 
       <q-separator />
@@ -134,40 +136,15 @@
           <EvaluationTab :project="current" :scores="scores" @save="save" />
         </q-tab-panel>
 
-        <!-- <q-tab-panel name="search">
+        <q-tab-panel name="search">
           <searchTab :project="current" :scores="scores" @save="save" />
-        </q-tab-panel> -->
+        </q-tab-panel>
+
+        <q-tab-panel name="jsonIO">
+          <import_exportTab :project="current" :scores="scores" @save="save" />
+        </q-tab-panel>
       </q-tab-panels>
 
-      <q-tab-panel name="search">
-        <q-input
-          filled
-          v-model="searchText"
-          label="Search..."
-          clearable
-          debounce="300"
-          prepend-inner-icon="search"
-        />
-
-        <q-list bordered separator class="q-mt-md">
-          <q-item
-            v-for="item in searchResult"
-            :key="item.key"
-            clickable
-            @click="openProject(item)"
-          >
-            <q-item-section>
-              <div class="text-weight-bold">
-                {{ item.Overview?.Name }}
-              </div>
-
-              <div class="text-caption text-grey">
-                {{ item.match }}
-              </div>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-tab-panel>
     </div>
   </q-page>
 </template>
@@ -185,7 +162,9 @@ import ParaTab from "src/components/ParaTab.vue";
 import EvaluationTab from "src/components/EvaluationTab.vue";
 
 import searchTab from "src/components/searchTab.vue";
-const searchText = ref("");
+import import_exportTab from "src/components/import_exportTab.vue";
+
+// const searchText = ref("");
 
 const tab = ref("projects");
 
@@ -305,55 +284,4 @@ async function addProject() {
   });
 }
 
-function exportJson() {
-  const data = projects.value.map(({ key, ...rest }) => ({
-    key,
-    ...rest,
-  }));
-
-  const blob = new Blob([JSON.stringify(data, null, 2)], {
-    type: "application/json",
-  });
-
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "projects.json";
-  a.click();
-
-  URL.revokeObjectURL(url);
-}
-
-function importJson() {
-  fileInput.value.click();
-}
-
-async function onFileSelected(evt) {
-  const file = evt.target.files[0];
-
-  if (!file) return;
-
-  try {
-    const text = await file.text();
-    const data = JSON.parse(text);
-
-    for (const project of data) {
-      let key = project.key;
-
-      delete project.key;
-
-      if (!key) {
-        key = push(dbRef(db, "projects")).key;
-      }
-
-      await set(dbRef(db, "projects/" + key), project);
-    }
-
-    evt.target.value = "";
-  } catch (err) {
-    console.error(err);
-    alert("JSON 格式錯誤");
-  }
-}
 </script>
