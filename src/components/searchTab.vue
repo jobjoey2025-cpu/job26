@@ -1,5 +1,5 @@
 <template>
-  <p>test</p>
+  <p>PARA = project \ area \ resource \ archive</p>
   <q-tab-panel name="search">
     <q-input
       filled

@@ -95,6 +95,11 @@
     <!-- Right -->
 
     <div class="col q-pa-md" v-if="current">
+      <a
+        target="”_blank”"
+        href="https://console.firebase.google.com/project/roi-project-defb3/database/roi-project-defb3-default-rtdb/data"
+        >Firebase roi-project realtime
+      </a>
       <p>
         Evalu T5 用GPT 評分 \ 不另外用問卷<br />
         使用 修改文字 整理版面 \ 不是用 code 規劃 \ 比較快 & 靈活
