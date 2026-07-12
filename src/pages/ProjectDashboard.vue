@@ -5,25 +5,8 @@
       <q-card flat bordered class="fit column">
         <q-toolbar>
           <q-toolbar-title> Projects </q-toolbar-title>
-
-          <!-- <q-btn flat round icon="upload" @click="exportJson">
-            <q-tooltip>Export JSON</q-tooltip>
-          </q-btn>
-
-          <q-btn flat round icon="download" @click="importJson">
-            <q-tooltip>Import JSON</q-tooltip>
-          </q-btn> -->
-
-          <q-btn flat round icon="add" @click="addProject" />
+          <!-- <q-btn flat round icon="add" @click="addProject" /> -->
         </q-toolbar>
-
-        <!-- <input
-          ref="fileInput"
-          type="file"
-          accept=".json"
-          style="display: none"
-          @change="onFileSelected"
-        /> -->
 
         <q-card>
           <!-- Project List -->
@@ -46,6 +29,7 @@
             </q-item>
           </q-list>
         </q-card>
+        <q-separator />
         <q-separator />
         <q-card>
           <!-- Summary -->
@@ -83,7 +67,8 @@
             </q-list>
           </q-card-section>
         </q-card>
-
+        <q-separator />
+        <q-separator />
         <!-- ------ -->
         <q-card>
           <q-list separator>
@@ -110,6 +95,11 @@
     <!-- Right -->
 
     <div class="col q-pa-md" v-if="current">
+      <p>
+        Evalu T5 用GPT 評分 \ 不另外用問卷<br />
+        使用 修改文字 整理版面 \ 不是用 code 規劃 \ 比較快 & 靈活
+      </p>
+
       <q-tabs v-model="tab" dense align="left" indicator-color="primary">
         <q-tab name="projects" label="prj T5" />
         <q-tab name="overview" label="view T5" />
@@ -118,7 +108,6 @@
 
         <q-tab name="search" icon="search" label="Search" />
         <q-tab name="jsonIO" icon="download" label="json_IO" />
-
       </q-tabs>
 
       <q-separator />
@@ -145,6 +134,7 @@
         </q-tab-panel>
       </q-tab-panels>
 
+      <p>Coding 來不及 \ 先用 標籤紀錄 \ mobile show 很強</p>
     </div>
   </q-page>
 </template>
@@ -152,20 +142,16 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { ref as dbRef, onValue, push, set, update } from "firebase/database";
-
-const fileInput = ref(null); // joey ???
 import { db } from "boot/firebase_roi";
 
 import projectsTab from "src/components/projectsTab.vue";
 import OverviewTab from "src/components/OverviewTab.vue";
 import ParaTab from "src/components/ParaTab.vue";
 import EvaluationTab from "src/components/EvaluationTab.vue";
-
 import searchTab from "src/components/searchTab.vue";
 import import_exportTab from "src/components/import_exportTab.vue";
 
-// const searchText = ref("");
-
+// const fileInput = ref(null); // joey ???
 const tab = ref("projects");
 
 const topProjects = computed(() => {
@@ -216,7 +202,6 @@ const projectSummary = computed(() => {
     .sort((a, b) => b.total - a.total);
 });
 
-
 // ----------
 const searchResult = computed(() => {
   if (!searchText.value) return [];
@@ -260,28 +245,26 @@ function select(item) {
 
 function save() {
   if (!current.value) return;
-
   update(dbRef(db, "projects/" + current.value.key), current.value);
 }
 
-async function addProject() {
-  const key = push(dbRef(db, "projects")).key;
+// async function addProject() {
+//   const key = push(dbRef(db, "projects")).key;
 
-  await set(dbRef(db, "projects/" + key), {
-    Overview: {
-      Name: "New Project",
-      Description: "",
-    },
+//   await set(dbRef(db, "projects/" + key), {
+//     Overview: {
+//       Name: "New Project",
+//       Description: "",
+//     },
 
-    Evaluation: {
-      ROI: 0,
-      // "Market Demand": 0,
-      // "AI Fit": 0,
-      Automation: 0,
-      Scalability: 0,
-      Interest: 0,
-    },
-  });
-}
-
+//     Evaluation: {
+//       ROI: 0,
+//       // "Market Demand": 0,
+//       // "AI Fit": 0,
+//       Automation: 0,
+//       Scalability: 0,
+//       Interest: 0,
+//     },
+//   });
+// }
 </script>
