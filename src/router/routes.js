@@ -129,6 +129,7 @@ const routes = [
       { path: 'OverviewTab', component: () => import('components/OverviewTab.vue'), name: 'OverviewTab' },
       { path: 'ParaTab', component: () => import('components/ParaTab.vue'), name: 'ParaTab' },
       { path: 'EvaluationTab', component: () => import('components/EvaluationTab.vue'), name: 'EvaluationTab' },
+      { path: 'searchTab', component: () => import('components/searchTab.vue'), name: 'searchTab' },
 
 
 

@@ -88,7 +88,7 @@
         <q-card>
           <q-list separator>
             <q-item
-              v-for="item in projects"
+              v-for="item in projects.slice().reverse()"
               :key="item.key"
               clickable
               :active="current?.key === item.key"
@@ -115,6 +115,8 @@
         <q-tab name="overview" label="view T5" />
         <q-tab name="para" label="para T5" />
         <q-tab name="evaluation" label="Evalu T5" />
+
+        <q-tab name="search" icon="search" label="Search" />
       </q-tabs>
 
       <q-separator />
@@ -125,15 +127,47 @@
         <q-tab-panel name="overview">
           <OverviewTab :project="current" @save="save" />
         </q-tab-panel>
-
         <q-tab-panel name="para">
           <ParaTab :project="current" :paraTypes="paraTypes" @save="save" />
         </q-tab-panel>
-
         <q-tab-panel name="evaluation">
           <EvaluationTab :project="current" :scores="scores" @save="save" />
         </q-tab-panel>
+
+        <!-- <q-tab-panel name="search">
+          <searchTab :project="current" :scores="scores" @save="save" />
+        </q-tab-panel> -->
       </q-tab-panels>
+
+      <q-tab-panel name="search">
+        <q-input
+          filled
+          v-model="searchText"
+          label="Search..."
+          clearable
+          debounce="300"
+          prepend-inner-icon="search"
+        />
+
+        <q-list bordered separator class="q-mt-md">
+          <q-item
+            v-for="item in searchResult"
+            :key="item.key"
+            clickable
+            @click="openProject(item)"
+          >
+            <q-item-section>
+              <div class="text-weight-bold">
+                {{ item.Overview?.Name }}
+              </div>
+
+              <div class="text-caption text-grey">
+                {{ item.match }}
+              </div>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-tab-panel>
     </div>
   </q-page>
 </template>
@@ -149,6 +183,10 @@ import projectsTab from "src/components/projectsTab.vue";
 import OverviewTab from "src/components/OverviewTab.vue";
 import ParaTab from "src/components/ParaTab.vue";
 import EvaluationTab from "src/components/EvaluationTab.vue";
+
+import searchTab from "src/components/searchTab.vue";
+const searchText = ref("");
+
 const tab = ref("projects");
 
 const topProjects = computed(() => {
@@ -199,6 +237,29 @@ const projectSummary = computed(() => {
     .sort((a, b) => b.total - a.total);
 });
 
+
+// ----------
+const searchResult = computed(() => {
+  if (!searchText.value) return [];
+
+  const keyword = searchText.value.toLowerCase();
+
+  return projects.value
+    .map((project) => {
+      const text = JSON.stringify(project);
+
+      return {
+        ...project,
+        text,
+        match: text.substring(
+          Math.max(0, text.toLowerCase().indexOf(keyword) - 40),
+          Math.min(text.length, text.toLowerCase().indexOf(keyword) + 120)
+        ),
+      };
+    })
+    .filter((project) => project.text.toLowerCase().includes(keyword));
+});
+// ----------
 onMounted(() => {
   onValue(dbRef(db, "projects"), (snap) => {
     const obj = snap.val() || {};

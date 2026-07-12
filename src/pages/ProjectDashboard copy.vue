@@ -3,12 +3,19 @@
     <!-- Left -->
     <div class="col-3 q-pa-sm">
       <q-card flat bordered class="fit column">
-        <p style="text-align: center">just show</p>
-        <ProjectToolbar
-          @add="addProject"
-          @export="exportJson"
-          @import="importJson"
-        />
+        <q-toolbar>
+          <q-toolbar-title> Projects </q-toolbar-title>
+
+          <q-btn flat round icon="upload" @click="exportJson">
+            <q-tooltip>Export JSON</q-tooltip>
+          </q-btn>
+
+          <q-btn flat round icon="download" @click="importJson">
+            <q-tooltip>Import JSON</q-tooltip>
+          </q-btn>
+
+          <q-btn flat round icon="add" @click="addProject" />
+        </q-toolbar>
 
         <input
           ref="fileInput"
@@ -18,11 +25,84 @@
           @change="onFileSelected"
         />
 
-        <ProjectList :projects="projects" :current="current" @select="select" />
+        <q-card>
+          <!-- Project List -->
+          <q-list separator>
+            <q-item
+              v-for="item in topProjects"
+              :key="item.key"
+              clickable
+              :active="current?.key === item.key"
+              active-class="bg-primary text-white"
+              @click="select(projects.find((p) => p.key === item.key))"
+            >
+              <q-item-section>
+                {{ item.name }}
+              </q-item-section>
 
+              <q-item-section side>
+                {{ item.total }}
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card>
         <q-separator />
+        <q-card>
+          <!-- Summary -->
+          <q-card-section>
+            <div class="text-subtitle1 q-mb-md">Score Summary</div>
 
-        <ProjectSummary :summary="projectSummary" />
+            <!-- <q-item v-for="item in projectSummary" :key="item.key"> -->
+
+            <!-- v-for="item in projectSummary.slice(0, 5)" -->
+            <q-list dense>
+              <q-item
+                v-for="item in projectSummary.slice(0, 5)"
+                :key="item.key"
+              >
+                <q-item-section>
+                  <div class="row items-center">
+                    <div class="col">
+                      {{ item.name }}
+                    </div>
+
+                    <div class="col-auto text-weight-bold">
+                      {{ item.total }}/30
+                    </div>
+                  </div>
+
+                  <q-linear-progress
+                    class="q-mt-xs"
+                    rounded
+                    size="8px"
+                    color="positive"
+                    :value="item.total / 30"
+                  />
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-card-section>
+        </q-card>
+
+        <!-- ------ -->
+        <q-card>
+          <q-list separator>
+            <q-item
+              v-for="item in projects"
+              :key="item.key"
+              clickable
+              :active="current?.key === item.key"
+              active-class="bg-primary text-white"
+              @click="select(item)"
+            >
+              <q-item-section>
+                {{ item.Overview.Name }}
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card>
+
+        <!-- ------- -->
       </q-card>
     </div>
 
@@ -31,50 +111,49 @@
 
     <div class="col q-pa-md" v-if="current">
       <q-tabs v-model="tab" dense align="left" indicator-color="primary">
-        <q-tab name="OverviewTab" label="OverviewTab" />
-        <q-tab name="para" label="PARA" />
-        <q-tab name="evaluation" label="Evaluation" />
+        <q-tab name="projects" label="prj T5" />
+        <q-tab name="overview" label="view T5" />
+        <q-tab name="para" label="para T5" />
+        <q-tab name="evaluation" label="Evalu T5" />
       </q-tabs>
 
       <q-separator />
-
       <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="OverviewTab">
+        <q-tab-panel name="projects">
+          <projectsTab :project="current" @save="save" />
+        </q-tab-panel>
+        <q-tab-panel name="overview">
           <OverviewTab :project="current" @save="save" />
         </q-tab-panel>
 
-        <!-- ez test -->
-        <!-- <q-tab-panel name="OverviewTab"> HELLO1 </q-tab-panel> -->
-
-        <q-tab-panel name="OverPARATab">
+        <q-tab-panel name="para">
           <ParaTab :project="current" :paraTypes="paraTypes" @save="save" />
         </q-tab-panel>
-
-        <!-- <q-tab-panel name="ParaTab"> HELLO2 </q-tab-panel> -->
 
         <q-tab-panel name="evaluation">
           <EvaluationTab :project="current" :scores="scores" @save="save" />
         </q-tab-panel>
-        <!-- <q-tab-panel name="EvaluationTab"> HELLO3 </q-tab-panel> -->
       </q-tab-panels>
     </div>
   </q-page>
 </template>
 
-
 <script setup>
-// import { ref, computed, onMounted } from "vue";
-// import { ref as dbRef, onValue, push, set, update } from "firebase/database";
 import { ref, computed, onMounted } from "vue";
 import { ref as dbRef, onValue, push, set, update } from "firebase/database";
 
 const fileInput = ref(null); // joey ???
 import { db } from "boot/firebase_roi";
 
+import projectsTab from "src/components/projectsTab.vue";
 import OverviewTab from "src/components/OverviewTab.vue";
 import ParaTab from "src/components/ParaTab.vue";
+import EvaluationTab from "src/components/EvaluationTab.vue";
+const tab = ref("projects");
 
-
+const topProjects = computed(() => {
+  return projectSummary.value.slice(0, 5);
+});
 
 const projects = ref([]);
 const current = ref(null);
