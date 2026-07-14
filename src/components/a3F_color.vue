@@ -1,5 +1,13 @@
 <template>
-   <h6 style="text-align: center;">北立面 靠牆 __ ⇩⇩⇩</h6>
+  <h6 style="text-align: center">
+    北立面 靠牆 __ ⇩⇩⇩
+    <a
+      href="https://joey20090710.blogspot.com/2026/07/excel-region-html-btn-manual.html"
+      target="_blank"
+      rel="noopener noreferrer"
+      >excel region >> html btn manual</a
+    >
+  </h6>
   <q-page class="q-pa-md flex flex-center">
     <div class="container">
       <div v-for="(row, r) in grid" :key="r" class="row">

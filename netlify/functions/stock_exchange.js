@@ -20,6 +20,13 @@ exports.handler = async () => {
 
     try {
       const res = await fetch(url);
+
+      console.log(item.symbol, res.status);
+
+      if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+      }
+
       const data = await res.json();
 
       const rate =
@@ -31,9 +38,14 @@ exports.handler = async () => {
       });
 
     } catch (err) {
+
+      console.error(item.symbol, err);
+
       results.push({
         pair: item.pair,
         rate: null,
+
+
       });
     }
   }

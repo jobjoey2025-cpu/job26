@@ -139,7 +139,13 @@
         </q-tab-panel>
       </q-tab-panels>
 
-      <p>Coding 來不及 \ 先用 標籤紀錄 \ mobile show 很強</p>
+      <p>
+        Coding 來不及 \ 先用 標籤紀錄 \ mobile show 很強 <br>
+        ** 整理 資料夾好比整理方間，有用到才 順便處理。實際運做的天性。 <br>
+        PDM 是強制 提前做準備\ 限制範籌的方法 (teamwork use，個人不可能買 PDM)。<br>
+        個人短期 gitK 更好用 \ 只靠人工重新命名。(流水號 \ 日期 + 檔名特徵) \ 靠 email 做 設計履歷 \ 送樣保存紀錄 \<br>
+        小時候 燒垃圾不用錢 \ 所以老一輩人喜歡囤東西 \
+      </p>
     </div>
   </q-page>
 </template>
