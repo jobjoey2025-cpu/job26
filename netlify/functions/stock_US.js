@@ -1,5 +1,6 @@
 export async function handler() {
   const symbols = [
+    "IBM",
     "GOOGL",
     "NFLX",
     "BABA",
