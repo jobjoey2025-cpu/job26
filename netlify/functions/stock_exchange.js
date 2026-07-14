@@ -1,4 +1,4 @@
-exports.handler = async () => {
+export async function handler() {
   const pairs = [
     { pair: "USD", symbol: "USDTWD=X" },
     { pair: "JPY", symbol: "JPYTWD=X" },
@@ -9,43 +9,33 @@ exports.handler = async () => {
     { pair: "Gold", symbol: "GC=F" },
     { pair: "Silver", symbol: "SI=F" },
     { pair: "Oil", symbol: "CL=F" },
-
   ];
 
   const results = [];
 
   for (const item of pairs) {
-    const url =
-      `https://query1.finance.yahoo.com/v8/finance/chart/${item.symbol}`;
+    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${item.symbol}`;
 
     try {
       const res = await fetch(url);
 
-      console.log(item.symbol, res.status);
-
       if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
+        throw new Error(`HTTP ${res.status}`);
       }
 
       const data = await res.json();
 
-      const rate =
-        data.chart?.result?.[0]?.meta?.regularMarketPrice;
-
       results.push({
         pair: item.pair,
-        rate,
+        rate: data.chart?.result?.[0]?.meta?.regularMarketPrice ?? null,
       });
-
     } catch (err) {
-
       console.error(item.symbol, err);
 
       results.push({
         pair: item.pair,
         rate: null,
-
-
+        error: err.message,
       });
     }
   }
@@ -57,4 +47,4 @@ exports.handler = async () => {
     },
     body: JSON.stringify(results),
   };
-};
+}
