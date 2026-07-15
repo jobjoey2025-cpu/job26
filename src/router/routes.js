@@ -133,6 +133,8 @@ const routes = [
       { path: 'import_exportTab', component: () => import('components/import_exportTab.vue'), name: 'import_exportTab' },
 
 
+      { path: 'suao', component: () => import('components/suao.vue'), name: 'suao' },
+
 
     ]
   },
