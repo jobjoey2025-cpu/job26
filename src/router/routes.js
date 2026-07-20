@@ -134,6 +134,7 @@ const routes = [
 
 
       { path: 'suao', component: () => import('components/suao.vue'), name: 'suao' },
+      { path: 'hobby', component: () => import('components/hobby.vue'), name: 'hobby' },
 
 
     ]

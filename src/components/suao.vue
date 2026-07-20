@@ -44,41 +44,6 @@
               {{ item.location }}
             </div> -->
           </q-card-section>
-
-          <!-- <q-card-section>
-            <q-chip
-              dense
-              color="primary"
-              text-color="white"
-              :label="item.tag"
-            />
-          </q-card-section> -->
-
-          <!-- <q-separator /> -->
-
-          <!-- <q-card-actions align="right">
-            <q-btn
-              flat
-              icon="open_in_new"
-              label="Open"
-              :href="item.url"
-              target="_blank"
-            />
-
-            <q-btn flat round icon="more_vert">
-              <q-menu>
-                <q-list dense style="min-width: 150px">
-                  <q-item clickable>
-                    <q-item-section>Edit</q-item-section>
-                  </q-item>
-
-                  <q-item clickable>
-                    <q-item-section>Delete</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
-          </q-card-actions> -->
         </q-card>
       </div>
     </div>
@@ -117,7 +82,7 @@ const items = [
     tag: "打包 上車",
     image: "https://picsum.photos/400/250?1",
     url: "https://google.com",
-    describe: "說明格 test",
+    describe: "說明格 test 不能超過5項",
   },
   {
     id: 2,
@@ -130,13 +95,12 @@ const items = [
   },
   {
     id: 3,
-    title: "FCampLife",
+    title: "2FCampLife",
     location: "Taipei",
     tag: "基本活動",
     image: "https://picsum.photos/400/250?3",
-    url: "https://google.com",
+    url: "https://104vtol.netlify.app/#/FCampLife",
     describe: "評分 new ideas",
-
   },
   {
     id: 4,
@@ -155,7 +119,6 @@ const items = [
     image: "https://picsum.photos/400/250?5",
     url: "https://docs.google.com/spreadsheets/d/1Qf0kQzCAFxaow0SexTyOlAQJldgveq-eiGU70gG_8-0/edit?gid=498659891#gid=498659891",
     describe: "長期蒐集的任務 after Fn Prj",
-
   },
   {
     id: 6,
