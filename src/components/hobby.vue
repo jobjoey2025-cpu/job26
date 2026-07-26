@@ -91,7 +91,7 @@ const items = [
     location: "Tokyo",
     tag: "prj < 5",
     image: "https://picsum.photos/400/250?2",
-    url: "https://104vtol.netlify.app/#/suao3day",
+    url: "https://docs.google.com/spreadsheets/d/1W7_ckWQuxEKj2Tk8KEkA16k3HitxmrLd-luMiIHnexc/edit?gid=107253224#gid=107253224",
     describe: "出發前 1 小時檢查 \ 撤退 水電門窗",
   },
   {
@@ -199,8 +199,8 @@ const items = [
     location: "cellPhone carmera",
     tag: "decorate",
     image: "https://picsum.photos/400/250?14",
-    url: "https://docs.google.com/spreadsheets/d/1EzmKCAbNmE5hW3eHsr2sKJAFDMcuJJbN4dEv3vWekEk/edit?gid=1573640168#gid=1573640168",
-    describe: "最近新增的GDS(重新檢視 time limit)",
+    url: "https://docs.google.com/spreadsheets/d/1ZSW0LW029pU3QyTDeXVNachpthDYFhCxeSsoPVLnB7w/edit?gid=498659891#gid=498659891",
+    describe: "使用 NAS 留存 \ 至少是個人的記憶 \ Galbum 雲端 手機都太貴",
   },
   {
     id: 15,
@@ -208,8 +208,8 @@ const items = [
     location: "goPro FFmpeg 剪映",
     tag: "decorate",
     image: "https://picsum.photos/400/250?15",
-    url: "https://docs.google.com/spreadsheets/d/1EzmKCAbNmE5hW3eHsr2sKJAFDMcuJJbN4dEv3vWekEk/edit?gid=1573640168#gid=1573640168",
-    describe: "最近新增的GDS(重新檢視 time limit)",
+    url: "https://docs.google.com/spreadsheets/d/1ZSW0LW029pU3QyTDeXVNachpthDYFhCxeSsoPVLnB7w/edit?gid=1036555660#gid=1036555660",
+    describe: "真的很好的 upload \ 可能要家硬碟",
   },
   {
     id: 16,
@@ -291,6 +291,15 @@ const items = [
     image: "https://picsum.photos/400/250?24",
     url: "https://docs.google.com/spreadsheets/d/1kDPbAsHuvjC3-TswM2AM5gJGn3yvzbSF9_bttedbbTI/edit?gid=498659891#gid=498659891",
     describe: "靠 直接用 GPT 評分 \ 不用 設計問卷",
+  },
+  {
+    id: 25,
+    title: "群輝 NAS",
+    location: "檔案最後防線",
+    tag: "超大結構",
+    image: "/img/20260726005.jpg",
+    url: "https://docs.google.com/spreadsheets/d/1kDPbAsHuvjC3-TswM2AM5gJGn3yvzbSF9_bttedbbTI/edit?gid=498659891#gid=498659891",
+    describe: "比 DVD 還好用 \ 與 ai 大數據區別",
   },
 ];
 

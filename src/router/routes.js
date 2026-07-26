@@ -136,6 +136,8 @@ const routes = [
       { path: 'suao', component: () => import('components/suao.vue'), name: 'suao' },
       { path: 'hobby', component: () => import('components/hobby.vue'), name: 'hobby' },
 
+      { path: 'a2F_layout', component: () => import('components/a2F_layout.vue'), name: 'a2F_layout' },
+      { path: 'a2F_CAD', component: () => import('components/a2F_CAD.vue'), name: 'a2F_CAD' },
 
     ]
   },
