@@ -138,6 +138,10 @@ const routes = [
 
       { path: 'a2F_layout', component: () => import('components/a2F_layout.vue'), name: 'a2F_layout' },
       { path: 'a2F_CAD', component: () => import('components/a2F_CAD.vue'), name: 'a2F_CAD' },
+      { path: 'a2F_CADcombine', component: () => import('components/a2F_CADcombine.vue'), name: 'a2F_CADcombine' },
+      { path: 'a2F_contractor', component: () => import('components/a2F_contractor.vue'), name: 'a2F_contractor' },
+      { path: 'a2F_areaAlbum', component: () => import('components/a2F_areaAlbum.vue'), name: 'a2F_areaAlbum' },
+
 
     ]
   },

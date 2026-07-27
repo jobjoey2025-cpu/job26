@@ -1,4 +1,5 @@
 <template>
+  <h5 style="text-align: center;">CAD</h5>
   <q-page class="q-pa-md">
     <!-- Category Buttons -->
     <div class="row q-col-gutter-sm q-mb-lg">

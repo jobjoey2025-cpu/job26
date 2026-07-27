@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-md">
-    <div class="text-h4 q-mb-md">Living System Planner</div>
+    <div class="text-h4 q-mb-md">Living System Planner (Fn List)</div>
 
     <q-splitter v-model="splitter" style="height: calc(100vh - 120px)">
       <!-- LEFT -->
