@@ -143,6 +143,8 @@ const routes = [
       { path: 'a2F_areaAlbum', component: () => import('components/a2F_areaAlbum.vue'), name: 'a2F_areaAlbum' },
       { path: 'a2F_btn', component: () => import('components/a2F_btn.vue'), name: 'a2F_btn' },
       { path: 'a2F_album_combine', component: () => import('components/a2F_album_combine.vue'), name: 'a2F_album_combine' },
+      { path: 'a2F_areaZoom', component: () => import('components/a2F_areaZoom.vue'), name: 'a2F_areaZoom' },
+      { path: 'a2F_btnLink', component: () => import('components/a2F_btnLink.vue'), name: 'a2F_btnLink' },
 
     ]
   },

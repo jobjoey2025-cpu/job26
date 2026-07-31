@@ -68,11 +68,24 @@
             <div class="text-subtitle2 q-mb-sm">📷 Photo</div>
 
             <div class="row q-gutter-sm">
-              <q-img
+              <!-- <q-img
                 v-for="img in area.photos"
                 :key="img"
                 :src="img"
                 style="width: 90px; height: 70px; border-radius: 8px"
+              /> -->
+
+              <q-img
+                v-for="img in area.photos"
+                :key="img"
+                :src="img"
+                style="
+                  width: 90px;
+                  height: 70px;
+                  border-radius: 8px;
+                  cursor: pointer;
+                "
+                @click="showImage(img)"
               />
 
               <q-btn
@@ -199,12 +212,42 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+  <!-- Image Preview -->
+  <q-dialog v-model="previewDialog" maximized>
+    <q-card class="bg-black flex flex-center">
+      <q-btn
+        icon="close"
+        flat
+        round
+        dense
+        color="white"
+        class="absolute-top-right q-ma-md"
+        v-close-popup
+      />
+
+      <q-img
+        :src="previewImage"
+        fit="contain"
+        style="width: 100%; height: 100vh"
+      />
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { ref as dbRef, onValue, update } from "firebase/database";
 import { db } from "boot/firebase_album";
+
+// joey----
+const previewDialog = ref(false);
+const previewImage = ref("");
+
+const showImage = (img) => {
+  previewImage.value = img;
+  previewDialog.value = true;
+};
+// joey----
 
 // 分類
 const selectedCategory = ref("All");

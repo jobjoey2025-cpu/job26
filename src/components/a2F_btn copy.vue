@@ -9,6 +9,8 @@
     >
   </h6>
   <q-page class="q-pa-md flex flex-center">
+
+
     <div class="container">
       <div v-for="(row, r) in grid" :key="r" class="row">
         <div
@@ -568,8 +570,8 @@ async function submitGoogleForm(r, c) {
 /* cell */
 .cell {
   /* joey 比例調整 */
-  width: 30px;
-  height: 40px;
+  width: 20px;
+  height: 27px;
 
   display: flex;
   justify-content: center;

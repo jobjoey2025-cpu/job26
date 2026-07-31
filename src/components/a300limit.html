@@ -1,0 +1,160 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codex 筆記整理</title>
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #1565C0;
+            margin-top: 30px;
+        }
+
+        h3 {
+            color: #555;
+        }
+
+        ul {
+            padding-left: 25px;
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        .note {
+            background: #FFF8E1;
+            border-left: 5px solid #FFC107;
+            padding: 12px;
+            margin-top: 15px;
+        }
+
+        .success {
+            background: #E8F5E9;
+            border-left: 5px solid #4CAF50;
+            padding: 12px;
+        }
+
+        .warning {
+            background: #FFEBEE;
+            border-left: 5px solid #F44336;
+            padding: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Codex 筆記整理</h1>
+
+        <h2>1. Codex</h2>
+
+        <div class="success">
+            <ul>
+                <li>可根據照片辨識 <strong>玫瑰石</strong>。</li>
+                <li><strong>Codex 魚缸</strong>已有成功案例，可作為後續開發參考。</li>
+            </ul>
+        </div>
+
+        <h2>2. GPT 使用量（Usage）</h2>
+
+        <ul>
+            <li>通常以 <strong>5 小時</strong>為一個 Reset（重置）窗口。</li>
+            <li>到達使用限制後，需等待下一個窗口恢復額度。</li>
+        </ul>
+
+        <h2>3. 整理 NAS 檔案</h2>
+
+        <h3>目前問題</h3>
+
+        <div class="warning">
+            <ul>
+                <li>資料夾名稱過長。</li>
+                <li>不建議只靠人工逐一重新命名。</li>
+            </ul>
+        </div>
+
+        <h3>建議方案</h3>
+
+        <p>利用 AI（Codex／Python）批次整理檔案與資料夾。</p>
+
+        <p><strong>Joey 個人命名規則：</strong></p>
+
+        <pre><code>流水號 + 日期 + 特徵</code></pre>
+
+        <p>範例：</p>
+
+        <pre><code>0001_20260730_玫瑰石
+0002_20260730_魚缸
+0003_20260801_旅行</code></pre>
+
+        <p>優點：</p>
+
+        <ul>
+            <li>依流水號排序。</li>
+            <li>保留日期資訊。</li>
+            <li>保留重要搜尋關鍵字。</li>
+            <li>避免檔名過長。</li>
+            <li>方便 AI 自動建立標籤（Tags）。</li>
+        </ul>
+
+        <div class="note">
+            <strong>建議：</strong><br>
+            未來可結合 AI 自動辨識照片內容，產生檔名、標籤與索引，提高 NAS 管理效率。
+        </div>
+
+        <h2>4. PDM 之不可能</h2>
+
+        <p>目前僅保留標題，後續可補充：</p>
+
+        <ul>
+            <li>PDM 無法達成的需求。</li>
+            <li>工具本身的限制。</li>
+            <li>流程上的限制。</li>
+            <li>成本或維護因素。</li>
+            <li>是否存在替代方案。</li>
+        </ul>
+
+    </div>
+
+</body>
+
+</html>
+```

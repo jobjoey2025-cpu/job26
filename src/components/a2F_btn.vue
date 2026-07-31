@@ -9,6 +9,8 @@
     >
   </h6>
   <q-page class="q-pa-md flex flex-center">
+
+
     <div class="container">
       <div v-for="(row, r) in grid" :key="r" class="row">
         <div
