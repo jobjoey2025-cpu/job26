@@ -8,6 +8,7 @@
       >excel region >> html btn manual</a
     >
   </h6>
+  <p style="text-align: center;">這是連 google form 不是過濾的</p>
   <q-page class="q-pa-md flex flex-center">
 
 

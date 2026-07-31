@@ -4,7 +4,7 @@
     <!-- <div class="text-h5 text-weight-bold q-mb-sm">📊 股票 Dashboard</div> -->
 
     <!-- <stockValue /> <stockValue_exchange /> -->
-
+<p style="text-align: center;">技術快於籌碼 \ 買還沒漲的 放2,3年 等波段 \ 追高的速度 joey 慢 \ 也沒時間及時賣掉 \ ability limit.</p>
     <stockFB />
     <stockRailway />
 

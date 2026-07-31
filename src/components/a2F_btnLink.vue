@@ -430,11 +430,13 @@ const colorTexts = {
   "#00B050": "騎樓 350",
 };
 
-// joey-----
+// joey modify -----
 const colorCategoryMap = {
   "#D9D9D9": "bath_room",
-  "#948A54": "home",
+  // "#948A54": "home",
   "#C4BD97": "Tent",
+  // "#A7A180": "Tent",
+  "#DDD9C4": "living",
 };
 
 const rows = grid.length;

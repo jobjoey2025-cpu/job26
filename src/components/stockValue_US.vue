@@ -6,9 +6,9 @@
 
       <div class="row items-center q-gutter-sm">
         <div class="text-grey-7 text-caption">最後更新：{{ lastUpdate }}</div>
-        <p>TM 155 \  *BABA 145 \ *NFLX 94 \ *GOOGL 370 \
-          NVDA 88 \  MCD 275 \ KO 70 \ HMC 24.8 \ *GGR 9.3 \ F 10.5 \ CARR 68 \
-        </p>
+        <p>TM 155 \ *GOOGL 370 \ MCD 275 \ *NFLX 94 \ *BABA 145 \
+          NVDA 88 \   KO 70 \ HMC 24.8 \ *GGR 9.3 \ F 10.5 \ CARR 68 \
+          169-37 </p>
         <q-btn
           label="更新股價"
           color="primary"

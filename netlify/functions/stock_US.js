@@ -1,20 +1,20 @@
 export async function handler() {
   const symbols = [
-    "IBM",
+    "TM",
+    "SKHY",
+    "MU",
     "GOOGL",
+    "IBM",
+    "MCD",
     "NFLX",
     "BABA",
-    "TM",
-    "DKILY",
-    "CARR",
-    "MU",
-    "GGR",
     "NVDA",
+    "KO",
     "F",
     "HMC",
-    "MCD",
-    "KO",
+    "CARR",
     "LXRX",
+    "GGR",
     "AAPL",
   ];
 

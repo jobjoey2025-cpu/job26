@@ -11,7 +11,7 @@
     <!-- Header -->
     <div class="row items-center justify-between q-mb-md">
       <div class="text-h6 text-weight-bold">💱 台股 Dashboard</div>
-      <p> *東元 83 \ 宏達電 40 \ 印度 32.2 \ 世芯 526 \ 中華電105 \ TSMC 588 \ *永豐餘 32</p>
+      <p> *東元 83 \ 宏達電 40 \ 和泰車 548 \  世芯 526 \ TSMC 588 \ 印度 32.2 \ 中華電105  \ *永豐餘 32</p>
       <div class="row items-center q-gutter-sm">
         <div class="text-grey-7 text-caption">
           最後更新：{{ formatTime(lastUpdate) }}

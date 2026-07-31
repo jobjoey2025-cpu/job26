@@ -42,10 +42,6 @@
                 {{ area.name }}
               </div>
 
-              <!-- <div class="text-caption text-grey">
-                  {{ area.tag }}
-                </div> -->
-
               <q-chip
                 dense
                 :color="statusColor(area.status)"
@@ -72,7 +68,7 @@
           <!-- Photo -->
           <q-card-section>
             <div class="text-subtitle2 q-mb-sm">📷 Photo</div>
-
+            <div class="text-caption text-grey"></div>
             <div class="row q-gutter-sm">
               <!-- <q-img
                 v-for="img in area.photos"
@@ -104,7 +100,7 @@
           </q-card-section>
           <!-- Issue -->
           <q-card-section>
-            <div class="text-subtitle2">🐞 Issue</div>
+            <div class="text-subtitle2">🐞 Issue - {{ area.tag }}</div>
 
             <q-list separator>
               <q-item v-for="issue in area.issues" :key="issue">
@@ -255,8 +251,9 @@
 
       <q-card-section class="q-gutter-md">
         <q-input v-model="newArea.name" label="Area 名稱" outlined />
-
         <q-input v-model="newArea.tag" label="分類(Tag)" outlined />
+
+        <q-input v-model="newArea.photo" label="第一張照片 URL" outlined />
       </q-card-section>
 
       <q-card-actions align="right">
@@ -291,18 +288,27 @@ const showImage = (img) => {
 // 分類
 const selectedCategory = ref("All");
 
+// joey modify ----- Tabs 過濾項目
 const categories = [
   {
     name: "All",
     icon: "apps",
   },
   {
-    name: "home",
+    name: "living",
     icon: "home",
   },
   {
-    name: "bath_room",
+    name: "bath",
     icon: "shower",
+  },
+  {
+    name: "tent",
+    icon: "holiday_village",
+  },
+  {
+    name: "car",
+    icon: "no_crash",
   },
 ];
 
@@ -337,8 +343,16 @@ const updateTodo = async (areaId, index, value) => {
 
   area.todo[index].done = value;
 
-  await update(dbRef(db, `areas/${areaId}`), {
-    todo: area.todo,
+  // await update(dbRef(db, `areas/${areaId}`), {
+  //   todo: area.todo,
+  // });
+  // joey -----
+  // 欄位都要寫 ,不要送 undefined
+  await update(dbRef(db, `areas/${area.id}`), {
+    name: area.name,
+    tag: area.tag,
+    cost: area.cost ?? 0,
+    photos: area.photos ?? [],
   });
 };
 
@@ -442,6 +456,7 @@ const addDialog = ref(false);
 const newArea = ref({
   name: "",
   tag: "",
+  photo: "",
 });
 
 function createArea() {
@@ -452,13 +467,15 @@ function createArea() {
   push(areaRef, {
     name: newArea.value.name,
     tag: newArea.value.tag || "",
-    photos: [],
+    photos: newArea.value.photo ? [newArea.value.photo] : [],
+
     createdAt: Date.now(),
   });
 
   newArea.value = {
     name: "",
     tag: "",
+    photo: "",
   };
 
   addDialog.value = false;
