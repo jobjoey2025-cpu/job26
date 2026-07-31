@@ -10,6 +10,12 @@
 
     <!-- 分類 -->
     <div class="row q-col-gutter-sm q-mb-lg">
+      <q-btn
+        icon="grid_view"
+        label="選擇區域"
+        color="primary"
+        @click="showSelector = true"
+      />
       <div v-for="category in categories" :key="category.name">
         <q-btn
           rounded
@@ -148,6 +154,10 @@
     >
       沒有符合的 Area
     </div>
+    <!-- joey ---- -->
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn fab color="primary" icon="add" @click="addDialog = true" />
+    </q-page-sticky>
   </q-page>
   <q-dialog v-model="editDialog">
     <q-card style="min-width: 450px">
@@ -232,12 +242,41 @@
       />
     </q-card>
   </q-dialog>
+  <q-dialog v-model="showSelector">
+    <!-- <GridSelector @select="onSelectCategory" /> -->
+    <a2F_btnLink @select="onSelectCategory" />
+  </q-dialog>
+  <!-- joey ---- -->
+  <q-dialog v-model="addDialog">
+    <q-card style="min-width: 400px">
+      <q-card-section>
+        <div class="text-h6">新增 Area</div>
+      </q-card-section>
+
+      <q-card-section class="q-gutter-md">
+        <q-input v-model="newArea.name" label="Area 名稱" outlined />
+
+        <q-input v-model="newArea.tag" label="分類(Tag)" outlined />
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="取消" v-close-popup />
+
+        <q-btn color="primary" label="新增" @click="createArea" />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { ref as dbRef, onValue, update } from "firebase/database";
+import { ref as dbRef, onValue, update, push } from "firebase/database"; // joey -----
 import { db } from "boot/firebase_album";
+
+import a2F_btnLink from "components/a2F_btnLink.vue";
+// 或依你的實際路徑
+// import GridSelector from "./GridSelector.vue";
+const showSelector = ref(false);
 
 // joey----
 const previewDialog = ref(false);
@@ -391,6 +430,39 @@ const filteredItems = computed(() => {
 
   return areas.value.filter((area) => area.tag === selectedCategory.value);
 });
+
+function onSelectCategory(tag) {
+  selectedCategory.value = tag;
+  showSelector.value = false;
+}
+
+// joey------
+const addDialog = ref(false);
+
+const newArea = ref({
+  name: "",
+  tag: "",
+});
+
+function createArea() {
+  if (!newArea.value.name) return;
+
+  const areaRef = dbRef(db, "areas");
+
+  push(areaRef, {
+    name: newArea.value.name,
+    tag: newArea.value.tag || "",
+    photos: [],
+    createdAt: Date.now(),
+  });
+
+  newArea.value = {
+    name: "",
+    tag: "",
+  };
+
+  addDialog.value = false;
+}
 </script>
 
 <style scoped>

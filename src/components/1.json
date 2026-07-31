@@ -1,0 +1,73 @@
+{
+    "areas": [
+      null,
+      {
+        "cost": 9999,
+        "icon": "chair",
+        "issues": [
+          "木作老舊",
+          "牆面需要整理"
+        ],
+        "name": "前方 10坪",
+        "photos": [
+          "https://lh3.googleusercontent.com/d/147Snriv5njVjmUk0nXuQYS69-ByvF3HH=w1200",
+          "https://lh3.googleusercontent.com/d/1xF7T3H0lf_JySL875BU5oAP0XB4WZVd9=w1200",
+          "https://lh3.googleusercontent.com/d/1MrymHC6DDjxx-rXFpcGLZOXY26ZQRBDp=w1200",
+          "https://lh3.googleusercontent.com/d/1IUqLv0RTdo-eglaSQjN95nVXqX_C9QxD=w1200"
+        ],
+        "status": "施工中",
+        "tag": "home",
+        "todo": [
+          {
+            "done": false,
+            "name": "拆除木作"
+          },
+          {
+            "done": false,
+            "name": "清運垃圾"
+          }
+        ]
+      },
+      {
+        "cost": 15000,
+        "icon": "bathroom",
+        "issues": [
+          "防水確認22"
+        ],
+        "name": "廁所",
+        "photos": [
+          "https://picsum.photos/201/100",
+          "https://lh3.googleusercontent.com/d/1IUqLv0RTdo-eglaSQjN95nVXqX_C9QxD=w1200"
+        ],
+        "status": "待施工",
+        "tag": "bath_room",
+        "todo": [
+          {
+            "done": false,
+            "name": "檢查管線"
+          }
+        ]
+      },
+      {
+        "cost": 10000,
+        "icon": "home",
+        "name": "後半段露營區",
+        "photos": [
+          "https://picsum.photos/202/100",
+          "https://lh3.googleusercontent.com/d/1T8aNpAtXgPtlMiIhu5GLS6oDbN8FgUSg=w1200"
+        ],
+        "status": "測試中",
+        "tag": "bath_room",
+        "todo": [
+          {
+            "done": false,
+            "name": "搭帳篷"
+          },
+          {
+            "done": false,
+            "name": "生活測試"
+          }
+        ]
+      }
+    ]
+  }

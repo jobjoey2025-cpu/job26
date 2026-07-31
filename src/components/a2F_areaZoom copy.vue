@@ -8,48 +8,26 @@
       </q-card-section>
     </q-card>
 
-    <!-- 分類 -->
-    <div class="row q-col-gutter-sm q-mb-lg">
-      <div v-for="category in categories" :key="category.name">
-        <q-btn
-          rounded
-          outline
-          :color="selectedCategory === category.name ? 'primary' : 'grey-7'"
-          :icon="category.icon"
-          :label="category.name"
-          @click="selectedCategory = category.name"
-        />
-      </div>
-    </div>
-
-    <!-- Area List -->
+    <!-- Cards -->
     <div class="row q-col-gutter-md">
       <div
-        v-for="area in filteredItems"
+        v-for="area in areas"
         :key="area.id"
         class="col-12 col-sm-6 col-md-4 col-lg-3"
       >
         <q-card bordered>
           <q-card-section>
-            <div class="row justify-between items-center">
-              <div class="text-h6">
-                {{ area.name }}
-              </div>
+            <div class="text-h6">
+              {{ area.name }}
             </div>
           </q-card-section>
+
           <q-separator />
 
-          <!-- Photo -->
           <q-card-section>
             <div class="text-subtitle2 q-mb-sm">📷 Photo</div>
 
             <div class="row q-gutter-sm">
-              <!-- <q-img
-                v-for="img in area.photos"
-                :key="img"
-                :src="img"
-                style="width: 90px; height: 70px; border-radius: 8px"
-              /> -->
               <q-img
                 v-for="img in area.photos"
                 :key="img"
@@ -75,75 +53,65 @@
       </div>
     </div>
 
-    <!-- 無資料 -->
-    <div
-      v-if="filteredItems.length === 0"
-      class="text-center text-grey q-mt-xl"
-    >
-      沒有符合的 Area
+    <div v-if="areas.length === 0" class="text-center text-grey q-mt-xl">
+      沒有 Area 資料
     </div>
+
+    <!-- 預覽 -->
+    <q-dialog v-model="previewDialog">
+      <q-card>
+        <q-img :src="previewImage" style="max-width: 80vw; max-height: 80vh" />
+      </q-card>
+    </q-dialog>
+
+    <!-- joey ---- -->
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn fab color="primary" icon="add" @click="addDialog = true" />
+    </q-page-sticky>
   </q-page>
+  <!-- joey ---- -->
+  <q-dialog v-model="addDialog">
+    <q-card style="min-width: 400px">
+      <q-card-section>
+        <div class="text-h6">新增 Area</div>
+      </q-card-section>
 
-  <!-- Image Preview -->
-  <q-dialog v-model="previewDialog" maximized>
-    <q-card class="bg-black flex flex-center">
-      <q-btn
-        icon="close"
-        flat
-        round
-        dense
-        color="white"
-        class="absolute-top-right q-ma-md"
-        v-close-popup
-      />
+      <q-card-section class="q-gutter-md">
+        <q-input v-model="newArea.name" label="Area 名稱" outlined />
 
-      <q-img
-        :src="previewImage"
-        fit="contain"
-        style="width: 100%; height: 100vh"
-      />
+        <q-input v-model="newArea.tag" label="分類(Tag)" outlined />
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="取消" v-close-popup />
+
+        <q-btn color="primary" label="新增" @click="createArea" />
+      </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import { ref as dbRef, onValue, update } from "firebase/database";
+import { ref, onMounted } from "vue";
+import { ref as dbRef, onValue, push } from "firebase/database"; // joey -----
 import { db } from "boot/firebase_album";
 
-// joey----
+const areas = ref([]);
+
 const previewDialog = ref(false);
 const previewImage = ref("");
 
-const showImage = (img) => {
+function showImage(img) {
   previewImage.value = img;
   previewDialog.value = true;
-};
-// joey----
+}
 
-// 分類
-const selectedCategory = ref("All");
+function uploadPhoto(area) {
+  console.log(area);
+  // TODO: 上傳照片
+}
 
-const categories = [
-  {
-    name: "All",
-    icon: "apps",
-  },
-  {
-    name: "home",
-    icon: "home",
-  },
-  {
-    name: "bath_room",
-    icon: "shower",
-  },
-];
-
-// Firebase Areas
-const areas = ref([]);
-
-// 載入 Firebase 資料
-const loadAreas = () => {
+function loadAreas() {
   const areaRef = dbRef(db, "areas");
 
   onValue(areaRef, (snapshot) => {
@@ -157,33 +125,39 @@ const loadAreas = () => {
     } else {
       areas.value = [];
     }
-
-    // window.alert("a=" + areas.photos);
   });
-};
+}
 
 onMounted(() => {
   loadAreas();
 });
 
-// 分類過濾
-const filteredItems = computed(() => {
-  if (selectedCategory.value === "All") {
-    return areas.value;
-  }
+// joey------
 
-  return areas.value.filter((area) => area.tag === selectedCategory.value);
+const addDialog = ref(false);
+
+const newArea = ref({
+  name: "",
+  tag: "",
 });
+
+function createArea() {
+  if (!newArea.value.name) return;
+
+  const areaRef = dbRef(db, "areas");
+
+  push(areaRef, {
+    name: newArea.value.name,
+    tag: newArea.value.tag || "",
+    photos: [],
+    createdAt: Date.now(),
+  });
+
+  newArea.value = {
+    name: "",
+    tag: "",
+  };
+
+  addDialog.value = false;
+}
 </script>
-
-<style scoped>
-.q-card {
-  border-radius: 16px;
-  transition: all 0.25s;
-}
-
-.q-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
-}
-</style>
