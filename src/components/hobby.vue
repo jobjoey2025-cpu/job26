@@ -301,6 +301,15 @@ const items = [
     url: "https://docs.google.com/spreadsheets/d/1kDPbAsHuvjC3-TswM2AM5gJGn3yvzbSF9_bttedbbTI/edit?gid=498659891#gid=498659891",
     describe: "比 DVD 還好用 \ 與 ai 大數據區別",
   },
+  {
+    id: 26,
+    title: "香水 \ 擴箱",
+    location: "奢侈 短時",
+    tag: "decorate",
+    image: "https://picsum.photos/400/250?26",
+    url: "url",
+    describe: "no time no money 短暫見面禮貌 use",
+  },
 ];
 
 const filteredItems = computed(() => {

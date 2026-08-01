@@ -53,19 +53,9 @@
       </div>
     </div>
 
-    <div
-      v-if="areas.length === 0"
-      class="text-center text-grey q-mt-xl"
-    >
+    <div v-if="areas.length === 0" class="text-center text-grey q-mt-xl">
       沒有 Area 資料
     </div>
-
-    <!-- 預覽 -->
-    <q-dialog v-model="previewDialog">
-      <q-card>
-        <q-img :src="previewImage" style="max-width: 80vw; max-height: 80vh" />
-      </q-card>
-    </q-dialog>
   </q-page>
 </template>
 

@@ -2,14 +2,36 @@
   <q-page class="bg-grey-2 q-pa-md">
     <!-- Header -->
     <q-card flat bordered class="q-mb-md">
-      <q-card-section class="bg-primary text-white">
-        <div class="text-h5">🏠 2F 空間 Area 管理</div>
-        <div class="text-caption">Living Lab / Construction MVP</div>
+      <q-card-section
+        class="bg-primary text-white row items-center justify-between"
+      >
+        <div>
+          <div class="text-h5">🏠 2F 空間 Area 管理</div>
+          <div class="text-caption">Living Lab / Construction MVP</div>
+        </div>
+
+        <!-- <q-btn
+          outline
+          color="white"
+          :icon="viewMode === 'card' ? 'view_list' : 'grid_view'"
+          :label="viewMode === 'card' ? 'List' : 'Card'"
+          @click="toggleView"
+        /> -->
+        <q-btn-toggle
+          v-model="viewMode"
+          toggle-color="white"
+          color="primary"
+          text-color="white"
+          :options="[
+            { label: 'Card', value: 'card', icon: 'grid_view' },
+            { label: 'List', value: 'list', icon: 'view_list' },
+          ]"
+        />
       </q-card-section>
     </q-card>
 
-    <!-- Cards -->
-    <div class="row q-col-gutter-md">
+    <!-- Card View -->
+    <div v-if="viewMode === 'card'" class="row q-col-gutter-md">
       <div
         v-for="area in areas"
         :key="area.id"
@@ -53,56 +75,55 @@
       </div>
     </div>
 
+    <!-- List View -->
+    <q-list v-else bordered separator class="bg-white rounded-borders">
+      <q-item v-for="area in areas" :key="area.id">
+        <q-item-section avatar>
+          <q-img
+            v-if="area.photos?.length"
+            :src="area.photos[0]"
+            style="width: 60px; height: 60px; border-radius: 6px"
+            @click="showImage(area.photos[0])"
+          />
+        </q-item-section>
+
+        <q-item-section>
+          <q-item-label class="text-weight-bold">
+            {{ area.name }}
+          </q-item-label>
+
+          <q-item-label caption>
+            {{ area.photos?.length || 0 }} 張照片
+          </q-item-label>
+        </q-item-section>
+
+        <q-item-section side>
+          <q-btn flat round icon="add_a_photo" @click="uploadPhoto(area)" />
+        </q-item-section>
+      </q-item>
+    </q-list>
+
     <div v-if="areas.length === 0" class="text-center text-grey q-mt-xl">
       沒有 Area 資料
     </div>
-
-    <!-- 預覽 -->
-    <q-dialog v-model="previewDialog">
-      <q-card>
-        <q-img :src="previewImage" style="max-width: 80vw; max-height: 80vh" />
-      </q-card>
-    </q-dialog>
-
-    <!-- joey ---- -->
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab color="primary" icon="add" @click="addDialog = true" />
-    </q-page-sticky>
   </q-page>
-  <!-- joey ---- -->
-  <q-dialog v-model="addDialog">
-    <q-card style="min-width: 400px">
-      <q-card-section>
-        <div class="text-h6">新增 Area</div>
-      </q-card-section>
-
-      <q-card-section class="q-gutter-md">
-        <q-input v-model="newArea.name" label="Area 名稱" outlined />
-
-        <q-input v-model="newArea.tag" label="分類(Tag)" outlined />
-      </q-card-section>
-
-      <q-card-actions align="right">
-        <q-btn flat label="取消" v-close-popup />
-
-        <q-btn color="primary" label="新增" @click="createArea" />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
-
-
-
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { ref as dbRef, onValue, push } from "firebase/database"; // joey -----
+import { ref as dbRef, onValue } from "firebase/database";
 import { db } from "boot/firebase_album";
 
 const areas = ref([]);
 
 const previewDialog = ref(false);
 const previewImage = ref("");
+
+const viewMode = ref("card");
+
+function toggleView() {
+  viewMode.value = viewMode.value === "card" ? "list" : "card";
+}
 
 function showImage(img) {
   previewImage.value = img;
@@ -134,32 +155,4 @@ function loadAreas() {
 onMounted(() => {
   loadAreas();
 });
-
-// joey------
-const addDialog = ref(false);
-
-const newArea = ref({
-  name: "",
-  tag: "",
-});
-
-function createArea() {
-  if (!newArea.value.name) return;
-
-  const areaRef = dbRef(db, "areas");
-
-  push(areaRef, {
-    name: newArea.value.name,
-    tag: newArea.value.tag || "",
-    photos: [],
-    createdAt: Date.now(),
-  });
-
-  newArea.value = {
-    name: "",
-    tag: "",
-  };
-
-  addDialog.value = false;
-}
 </script>

@@ -299,7 +299,7 @@ const categories = [
     icon: "home",
   },
   {
-    name: "bath_room",
+    name: "bath",
     icon: "shower",
   },
   {
@@ -343,8 +343,16 @@ const updateTodo = async (areaId, index, value) => {
 
   area.todo[index].done = value;
 
-  await update(dbRef(db, `areas/${areaId}`), {
-    todo: area.todo,
+  // await update(dbRef(db, `areas/${areaId}`), {
+  //   todo: area.todo,
+  // });
+  // joey -----
+  // 欄位都要寫 ,不要送 undefined
+  await update(dbRef(db, `areas/${area.id}`), {
+    name: area.name,
+    tag: area.tag,
+    cost: area.cost ?? 0,
+    photos: area.photos ?? [],
   });
 };
 
