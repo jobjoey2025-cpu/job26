@@ -146,6 +146,9 @@ const routes = [
       { path: 'a2F_areaZoom', component: () => import('components/a2F_areaZoom.vue'), name: 'a2F_areaZoom' },
       { path: 'a2F_btnLink', component: () => import('components/a2F_btnLink.vue'), name: 'a2F_btnLink' },
 
+
+      { path: 'Firebase_img_map', component: () => import('components/Firebase_img_map.vue'), name: 'Firebase_img_map' },
+
     ]
   },
 

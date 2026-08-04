@@ -432,7 +432,7 @@ const colorTexts = {
 
 // joey modify -----
 const colorCategoryMap = {
-  "#D9D9D9": "bath_room",
+  "#D9D9D9": "bath",
   // "#948A54": "home",
   "#C4BD97": "Tent",
   // "#A7A180": "Tent",

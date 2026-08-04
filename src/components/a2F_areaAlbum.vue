@@ -372,6 +372,10 @@ const categories = [
     name: "car",
     icon: "no_crash",
   },
+  {
+    name: "doc",
+    icon: "document_scanner",
+  },
 ];
 
 // Firebase Areas

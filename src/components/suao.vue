@@ -77,7 +77,7 @@ const categories = [
 const items = [
   {
     id: 1,
-    title: "Senso-ji",
+    title: "範例卡",
     location: "Tokyo",
     tag: "打包 上車",
     image: "https://picsum.photos/400/250?1",
