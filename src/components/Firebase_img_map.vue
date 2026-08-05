@@ -363,7 +363,9 @@ import { db } from "boot/firebase_imgmap";
 const $q = useQuasar();
 
 // const imageUrl = "https://picsum.photos/seed/firebase-image-map/500/300";
-const imageUrl = "https://lh3.googleusercontent.com/d/1lvHK_MG213S1h2q8TET1s3Sl0RMuyBve=w1200";
+// https://lh3.googleusercontent.com/d/1lvHK_MG213S1h2q8TET1s3Sl0RMuyBve=w1200
+// https://lh3.googleusercontent.com/d/1_UMPwSgq15twVJHlzm9eEFw-C3O3ulCU=w1200
+const imageUrl = "https://lh3.googleusercontent.com/d/1E_nQgRNmjzrscCPp8ypr319CVvnXLxfY=w1200";
 // joey modify ---
 const imageRef = ref(null);
 const imageSize = ref({ width: 500, height: 300 });
