@@ -150,6 +150,10 @@ const routes = [
       { path: 'Firebase_img_map', component: () => import('components/Firebase_img_map.vue'), name: 'Firebase_img_map' },
       { path: '1', component: () => import('components/1.vue'), name: '1' },
 
+
+      { path: 'recent_sys', component: () => import('components/recent_sys.vue'), name: 'recent_sys' },
+
+
     ]
   },
 
