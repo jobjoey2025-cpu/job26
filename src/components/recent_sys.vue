@@ -1,6 +1,201 @@
 <template>
   <q-page class="q-pa-lg">
+    <!-- <q-list dense class="q-py-xs"> -->
+    <!-- 最單純的 HTML Anchor 目錄 + id 跳轉 -->
+    <q-list dense class="dense-menu">
+      <q-item-label header class="q-py-xs text-caption text-grey-7">
+        Foundation
+      </q-item-label>
+
+      <q-item clickable v-ripple dense>
+        <q-item-section avatar style="min-width: 28px">
+          <q-icon name="foundation" size="18px" />
+        </q-item-section>
+        <q-item-section>
+          <a href="#" @click.prevent="scrollTo('it-system-foundation')"
+            >IT System Foundation</a
+          >
+        </q-item-section>
+      </q-item>
+
+      <q-item clickable v-ripple dense>
+        <q-item-section avatar style="min-width: 28px">
+          <q-icon name="trending_up" size="18px" />
+        </q-item-section>
+        <!-- <q-item-section>ROI Thinking \ Goal Review</q-item-section> -->
+        <q-item-section>
+          <a href="#" @click.prevent="scrollTo('Goal Review')"
+            >ROI Thinking \ Goal Review</a
+          >
+        </q-item-section>
+      </q-item>
+
+      <q-item clickable v-ripple dense>
+        <q-item-section avatar style="min-width: 28px">
+          <q-icon name="hub" size="18px" />
+        </q-item-section>
+        <!-- <q-item-section>System choose Thinking</q-item-section> -->
+        <q-item-section>
+          <a href="#" @click.prevent="scrollTo('System choose Thinking')"
+            >System choose Thinking</a
+          >
+        </q-item-section>
+        <q-item-section side>
+          <span class="text-caption text-grey-6">最好花時間 想一下這個</span>
+        </q-item-section>
+      </q-item>
+
+      <q-item clickable v-ripple dense to="/energy-level">
+        <q-item-section avatar style="min-width: 28px">
+          <q-icon name="battery_charging_full" size="18px" />
+        </q-item-section>
+        <!-- <q-item-section>Energy Level 定位 </q-item-section> -->
+        <q-item-section>
+          <a href="#" @click.prevent="scrollTo('Energy Level 定位')"
+            >Energy Level 定位</a
+          >
+        </q-item-section>
+        <q-item-section side>
+          <span class="text-caption text-grey-6">當下的能力狀況</span>
+        </q-item-section>
+      </q-item>
+
+      <q-separator class="q-my-xs" />
+      <q-item-label header class="q-py-xs text-caption text-grey-7">
+        Thinking 範例 db \ 比計算快
+      </q-item-label>
+
+      <q-item clickable v-ripple dense to="/mobile-vue">
+        <q-item-section avatar style="min-width: 28px">
+          <q-icon name="phone_android" size="18px" />
+        </q-item-section>
+        <!-- <q-item-section>Mobile Vue</q-item-section> -->
+        <q-item-section>
+          <a href="#" @click.prevent="scrollTo('Mobile Vue')">Mobile Vue</a>
+        </q-item-section>
+      </q-item>
+
+      <q-item clickable v-ripple dense>
+        <q-item-section avatar style="min-width: 28px">
+          <q-icon name="account_tree" size="18px" />
+        </q-item-section>
+        <!-- <q-item-section>CICD 2026 常用的工具 (GDS)</q-item-section> -->
+        <q-item-section>
+          <a href="#" @click.prevent="scrollTo('常用的工具 (GDS)')"
+            >常用的工具 (GDS) PARA</a
+          >
+        </q-item-section>
+      </q-item>
+      <q-item clickable v-ripple dense>
+        <q-item-section avatar style="min-width: 28px">
+          <q-icon name="folder_special" size="18px" />
+        </q-item-section>
+        <q-item-section>PARA prjDashboard</q-item-section>
+      </q-item>
+
+      <q-item clickable v-ripple dense to="/memory">
+        <q-item-section avatar style="min-width: 28px">
+          <q-icon name="psychology" size="18px" />
+        </q-item-section>
+        <!-- <q-item-section>記憶仍然是重要技能</q-item-section> -->
+        <q-item-section>
+          <a href="#" @click.prevent="scrollTo('記憶仍然是重要技能')"
+            >記憶仍然是重要技能</a
+          >
+        </q-item-section>
+      </q-item>
+
+      <!-- ------ -->
+
+      <q-separator class="q-my-xs" />
+
+      <q-item-label header class="q-py-xs text-caption text-grey-7">
+        Field
+      </q-item-label>
+      <q-item clickable v-ripple dense to="/execution-hierarchy">
+        <q-item-section avatar style="min-width: 28px">
+          <q-icon name="account_tree" size="18px" />
+        </q-item-section>
+        <!-- <q-item-section>Execution Hierarchy 到執行層級了</q-item-section> -->
+        <q-item-section>
+          <a href="#" @click.prevent="scrollTo('Execution Hierarchy')"
+            >Execution Hierarchy 到執行層級了</a
+          >
+        </q-item-section>
+      </q-item>
+      <q-item clickable v-ripple dense>
+        <q-item-section avatar style="min-width: 28px">
+          <q-icon name="school" size="18px" />
+        </q-item-section>
+        <!-- <q-item-section>現場 核取方塊</q-item-section> -->
+        <q-item-section>
+          <a href="#" @click.prevent="scrollTo('現場 核取方塊')"
+            >現場 核取方塊</a
+          >
+        </q-item-section>
+      </q-item>
+      <q-item clickable v-ripple dense>
+        <q-item-section avatar style="min-width: 28px">
+          <q-icon name="bolt" size="18px" />
+        </q-item-section>
+        <!-- <q-item-section>快刀亂麻</q-item-section> -->
+        <q-item-section>
+          <a href="#" @click.prevent="scrollTo('快刀亂麻')">快刀亂麻</a>
+        </q-item-section>
+      </q-item>
+
+      <q-item clickable v-ripple dense>
+        <q-item-section avatar style="min-width: 28px">
+          <q-icon name="location_on" size="18px" />
+        </q-item-section>
+        <!-- <q-item-section>從畫圖轉向決策</q-item-section> -->
+        <q-item-section>
+          <a href="#" @click.prevent="scrollTo('從畫圖轉向決策')"
+            >從畫圖轉向決策</a
+          >
+        </q-item-section>
+
+        <q-item-section side>
+          <span class="text-caption text-grey-6">核心原則</span>
+        </q-item-section>
+      </q-item>
+
+      <q-separator class="q-my-xs" />
+
+      <q-item-label header class="q-py-xs text-caption text-grey-7">
+        Final Check
+      </q-item-label>
+
+      <q-item clickable v-ripple dense>
+        <q-item-section avatar style="min-width: 28px">
+          <q-icon name="check_circle" size="18px" />
+        </q-item-section>
+        <!-- <q-item-section>最後確認</q-item-section> -->
+        <q-item-section>
+          <a href="#" @click.prevent="scrollTo('最後確認')">最後確認</a>
+        </q-item-section>
+        <q-item-section side>
+          <span class="text-caption text-grey-6">出發前 1h</span>
+        </q-item-section>
+      </q-item>
+    </q-list>
+
+    <h6>以上是目錄</h6>
+    <hr />
+    <h6>臨時筆記</h6>
+    <div>
+      <pre>
+      *	針對以下句子 做簡要的分析 \ 小於 1000字 :
+      *	將下列 筆記做成 quasar page 提高閱讀品質 :
+      *	整理內容 比 coding 難 \ cuz ai 一直改我的順序
+      *	coding issue is 頭痛還要 解 bug \ like 想睡還要 等 channel JP program
+      *	做得好 才會 常用 \ 做到 常用 才是 KEY
+      *	GPT 基本上會越問越好
+        </pre
+      >
+    </div>
     <!-- ===================================================== -->
+    <h6 id="it-system-foundation">IT System Foundation</h6>
     <q-card class="q-mb-lg">
       <q-card-section>
         <div class="text-h5">
@@ -28,7 +223,7 @@
 
     <!-- ===================================================== -->
     <hr />
-    <br />
+    <h6 id="Goal Review">Goal Review</h6>
 
     <q-card class="q-mb-lg">
       <q-card-section class="text-h5"> ROI Thinking </q-card-section>
@@ -40,13 +235,128 @@
           <q-item-section avatar> ⭐ </q-item-section>
 
           <q-item-section>
-            標定「現在」前後一步的位置。
+            標定「現在」前後一步的位置。 \\ 當下的能力狀況
 
             <div class="text-grey">Then 才能開始 ROI Tasks。</div>
           </q-item-section>
         </q-item>
       </q-list>
     </q-card>
+
+    <!-- -------- -->
+    <!-- ```vue -->
+    <q-separator />
+
+    <q-card-section class="q-pa-md">
+      <q-banner rounded class="bg-blue-1 text-blue-10">
+        <template #avatar>
+          <q-icon name="trending_up" color="primary" size="28px" />
+        </template>
+
+        <!-- 核心判斷 -->
+        <div class="text-subtitle1 text-weight-bold q-mb-xs">
+          先確認 ROI，再投入時間
+        </div>
+
+        <div class="text-body2 q-mb-md">
+          修改內容超過
+          <q-badge color="negative" label="4 小時" class="q-mx-xs" />
+          就是目標不夠強，ROI 很低。
+        </div>
+
+        <q-separator class="q-my-md" />
+
+        <!-- 核心觀念 -->
+        <div class="row items-center q-mb-sm">
+          <q-icon name="lightbulb" color="orange" size="22px" class="q-mr-sm" />
+
+          <div class="text-subtitle2 text-weight-bold">
+            蒐集資料 ≠ 準備開始做
+          </div>
+        </div>
+
+        <div class="text-body2 text-grey-8 q-mb-md">
+          蒐集資料只是 Input， 真正重要的是判斷「這件事值不值得投入」。
+        </div>
+
+        <!-- ROI 判斷 -->
+        <div class="text-subtitle2 text-weight-bold q-mb-sm">
+          🎯 真正目的應該是
+        </div>
+
+        <div class="row q-col-gutter-sm">
+          <div class="col-12 col-md-4">
+            <q-card flat bordered class="full-height bg-white">
+              <q-card-section class="q-pa-sm">
+                <div class="row items-center">
+                  <q-avatar
+                    color="primary"
+                    text-color="white"
+                    size="28px"
+                    class="q-mr-sm"
+                  >
+                    1
+                  </q-avatar>
+
+                  <div class="text-weight-bold">估算 ROI</div>
+                </div>
+
+                <div class="text-caption text-grey-7 q-mt-xs">
+                  投入多少時間？ 可以換回多少價值？
+                </div>
+              </q-card-section>
+            </q-card>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <q-card flat bordered class="full-height bg-white">
+              <q-card-section class="q-pa-sm">
+                <div class="row items-center">
+                  <q-avatar
+                    color="orange"
+                    text-color="white"
+                    size="28px"
+                    class="q-mr-sm"
+                  >
+                    2
+                  </q-avatar>
+
+                  <div class="text-weight-bold">值得做多久？</div>
+                </div>
+
+                <div class="text-caption text-grey-7 q-mt-xs">
+                  設定時間上限， 避免無限投入。
+                </div>
+              </q-card-section>
+            </q-card>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <q-card flat bordered class="full-height bg-white">
+              <q-card-section class="q-pa-sm">
+                <div class="row items-center">
+                  <q-avatar
+                    color="positive"
+                    text-color="white"
+                    size="28px"
+                    class="q-mr-sm"
+                  >
+                    3
+                  </q-avatar>
+
+                  <div class="text-weight-bold">完成後可以撐多久？</div>
+                </div>
+
+                <div class="text-caption text-grey-7 q-mt-xs">
+                  一次投入後， 能產生多久的持續價值？
+                </div>
+              </q-card-section>
+            </q-card>
+          </div>
+        </div>
+      </q-banner>
+    </q-card-section>
+    <!-- ``` -->
 
     <!-- ===================================================== -->
 
@@ -66,7 +376,7 @@
     </q-card>
 
     <!-- ===================================================== -->
-
+    <h6 id="System choose Thinking">System choose Thinking</h6>
     <q-card class="q-mb-lg">
       <q-card-section class="text-h5">
         System Thinking (最好花時間 想一下這個)</q-card-section
@@ -76,20 +386,22 @@
 
       <q-card-section>
         <pre>
-                這架無人機在整個作戰體系中扮演什麼角色？
+這架無人機在整個作戰體系中扮演什麼角色？
 
-                做任何事情前，
-                先看整個系統。
+    做任何事情前，
+    先看整個系統。
 
-                Before：
-                我們要做哪一架無人機？
+  Before：
+  我們要做哪一架無人機？
 
-                朋友的時間 200hrs : 距離(地緣政治) \ 時機(年紀 代溝 人生階段不同) \ 頻率 (講話都很累)
+朋友的時間 200hrs :
+距離(地緣政治) \ 時機(年紀 代溝 人生階段不同) \ 頻率 (講話都很累)
         </pre>
       </q-card-section>
     </q-card>
 
     <!-- ===================================================== -->
+    <h6 id="Energy Level 定位">Energy Level 定位</h6>
 
     <q-card class="q-mb-lg">
       <q-card-section class="text-h5">
@@ -162,22 +474,22 @@
       <q-separator class="q-my-md" />
 
       <pre>
-4 以下難過就不用說了。
+  4 以下難過就不用說了。
 
-如果 4 以上還很難過：
+      如果 4 以上還很難過的原因：
 
-• 長期疼痛
-• 沒有新的熱血知識
-• Fashion 跟不上
+        • 長期疼痛 - 難解 just quait & wait
+        • 沒有新的熱血知識 - need 花錢 上課參展
+        • Fashion 跟不上 - 優質 Podcast 情報猿 101
 
-標定 Joey 在 AIK 的位置：
-中點 = 基本 Coding 經驗
+  標定 Joey 在 aiK 的位置：
+  基準中點 = 基本 Coding 經驗
 </pre
       >
     </q-card>
 
     <!-- ===================================================== -->
-
+    <h6 id="常用的工具 (GDS)">常用的工具 (GDS) \ PARA</h6>
     <q-card class="q-mb-lg">
       <q-card-section class="text-h5">
         Continuous Improvement 2026 常用的工具</q-card-section
@@ -216,21 +528,13 @@
       <q-separator />
 
       <q-card-section>
-        <q-chip color="primary" text-color="white"
-          >Project 具有明確截止日期 (Deadline)</q-chip
-        >
+        <q-chip color="primary" text-color="white">Project</q-chip>
 
-        <q-chip color="secondary" text-color="white"
-          >Area 持續維護的領域，沒有截止日</q-chip
-        >
+        <q-chip color="secondary" text-color="white">Area</q-chip>
 
-        <q-chip color="orange" text-color="white"
-          >Resource 備用知識、研究資料</q-chip
-        >
+        <q-chip color="orange" text-color="white">Resource</q-chip>
 
-        <q-chip color="grey-7" text-color="white"
-          >Archive 封存，未來可再參考</q-chip
-        >
+        <q-chip color="grey-7" text-color="white">Archive</q-chip>
 
         <div class="q-mt-md">
           • 知識管理
@@ -239,11 +543,18 @@
 
           • 專案管理
         </div>
+
+        <pre>
+          * Project 具有明確截止日期 (Deadline)
+          * Area 持續維護的領域，沒有截止日
+          * Resource 備用知識、研究資料
+          * Archive 封存，未來可再參考
+        </pre>
       </q-card-section>
     </q-card>
 
     <!-- ===================================================== -->
-
+    <h6 id="Execution Hierarchy">Execution Hierarchy</h6>
     <q-card>
       <q-card-section class="text-h5">
         Execution Hierarchy 到要執行層級的時候
@@ -290,6 +601,7 @@ Function
     <!-- ===================================================== -->
     <!-- 記憶 -->
     <!-- ===================================================== -->
+    <h6 id="記憶仍然是重要技能">記憶仍然是重要技能</h6>
 
     <q-card flat bordered class="q-mb-lg">
       <q-card-section>
@@ -335,7 +647,8 @@ Function
         <div class="text-h5">🔄 Input → Output</div>
       </q-card-section>
     </q-card>
-    <q-card class="my-card" flat bordered>
+
+    <!-- <q-card class="my-card" flat bordered>
       <q-card-section horizontal>
         <q-card-section>
           <div>
@@ -454,11 +767,312 @@ Function
           </div>
         </q-card-section>
       </q-card-section>
+    </q-card> -->
+
+    <!-- ```vue -->
+    <br />
+    <q-card flat bordered class="q-pa-none">
+      <q-card-section class="q-pa-md">
+        <div class="row q-col-gutter-md">
+          <!-- ========================= -->
+          <!-- IN：輸入 / 收集 -->
+          <!-- ========================= -->
+          <div class="col-12 col-md-6">
+            <div class="row items-center q-mb-sm">
+              <div class="text-h6 text-weight-bold text-primary">IN</div>
+
+              <q-badge
+                color="primary"
+                text-color="white"
+                class="q-ml-sm"
+                label="輸入 / 收集"
+              />
+            </div>
+
+            <div class="text-caption text-grey-7 q-mb-md">
+              把外部資訊快速收進 DB，重點是「速度」。
+            </div>
+
+            <!-- 核心指標 -->
+            <div class="row q-gutter-xs q-mb-md">
+              <q-chip color="primary" text-color="white" icon="bolt" dense>
+                速度
+              </q-chip>
+
+              <q-chip
+                color="deep-purple"
+                text-color="white"
+                icon="verified"
+                dense
+              >
+                品質
+              </q-chip>
+            </div>
+
+            <!-- 核心原則 -->
+            <q-banner rounded class="bg-blue-1 text-blue-10 q-mb-md">
+              <template #avatar>
+                <q-icon name="speed" color="primary" />
+              </template>
+
+              <div class="text-weight-bold">大規模 → 短時間</div>
+
+              <div class="text-caption">先收集，再整理；降低進入成本。</div>
+            </q-banner>
+
+            <!-- 工具 -->
+            <div class="text-subtitle2 text-weight-bold q-mb-sm">收集工具</div>
+
+            <div class="row q-gutter-xs">
+              <q-chip dense color="blue-1" text-color="blue-10" icon="cloud">
+                BLG
+              </q-chip>
+
+              <q-chip dense color="cyan-1" text-color="cyan-10" icon="language">
+                Netlify
+              </q-chip>
+
+              <q-chip
+                dense
+                color="green-1"
+                text-color="green-10"
+                icon="storage"
+              >
+                GDS
+              </q-chip>
+
+              <q-chip
+                dense
+                color="orange-1"
+                text-color="orange-10"
+                icon="description"
+              >
+                Notion
+              </q-chip>
+
+              <q-chip
+                dense
+                color="indigo-1"
+                text-color="indigo-10"
+                icon="view_kanban"
+              >
+                Trello
+              </q-chip>
+
+              <q-chip
+                dense
+                color="blue-grey-1"
+                text-color="blue-grey-10"
+                icon="push_pin"
+              >
+                G Keep
+              </q-chip>
+
+              <q-chip
+                dense
+                color="pink-1"
+                text-color="pink-10"
+                icon="photo_library"
+              >
+                G Album
+              </q-chip>
+
+              <q-chip
+                dense
+                color="purple-1"
+                text-color="purple-10"
+                icon="screenshot_monitor"
+              >
+                Screenshot
+              </q-chip>
+
+              <q-chip dense color="teal-1" text-color="teal-10" icon="mic">
+                Voice → AI2Text
+              </q-chip>
+
+              <q-chip
+                dense
+                color="deep-orange-1"
+                text-color="deep-orange-10"
+                icon="image"
+              >
+                Eagle
+              </q-chip>
+
+              <q-chip dense color="grey-3" text-color="grey-10" icon="dns">
+                NAS
+              </q-chip>
+            </div>
+          </div>
+
+          <!-- ========================= -->
+          <!-- OUT：輸出 / 使用 -->
+          <!-- ========================= -->
+          <div class="col-12 col-md-6">
+            <div class="row items-center q-mb-sm">
+              <div class="text-h6 text-weight-bold text-positive">OUT</div>
+
+              <q-badge
+                color="positive"
+                text-color="white"
+                class="q-ml-sm"
+                label="取出 / 使用"
+              />
+            </div>
+
+            <div class="text-caption text-grey-7 q-mb-md">
+              從 DB 快速取出資訊、靈感與可執行內容。
+            </div>
+
+            <!-- 核心指標 -->
+            <div class="row q-gutter-xs q-mb-md">
+              <q-chip color="positive" text-color="white" icon="verified" dense>
+                品質
+              </q-chip>
+
+              <q-chip dense><b style="visibility: hidden">xxxxxxx</b></q-chip>
+              <!-- q-gutter-* 控制 spacing 範例 \\ 僅控制水平間距（q-gutter-x） -->
+              <q-chip color="teal" text-color="white" icon="bolt" dense>
+                速度
+              </q-chip>
+            </div>
+
+            <!-- 核心原則 -->
+            <q-banner rounded class="bg-green-1 text-green-10 q-mb-md">
+              <template #avatar>
+                <q-icon name="output" color="positive" />
+              </template>
+
+              <div class="text-weight-bold">取出 → 靈感 → Save Time</div>
+
+              <div class="text-caption">讓已經累積的資訊重新產生價值。</div>
+            </q-banner>
+
+            <!-- 工具 -->
+            <div class="text-subtitle2 text-weight-bold q-mb-sm">
+              使用 / 輸出工具
+            </div>
+
+            <div class="row q-gutter-xs">
+              <q-chip dense color="cyan-1" text-color="cyan-10" icon="web">
+                Netlify · Quasar
+              </q-chip>
+
+              <q-chip dense color="blue-1" text-color="blue-10" icon="article">
+                BLG
+              </q-chip>
+
+              <q-chip
+                dense
+                color="green-1"
+                text-color="green-10"
+                icon="newspaper"
+              >
+                GDS · GPT · 官宣 · News
+              </q-chip>
+
+              <q-chip dense color="orange-1" text-color="orange-10" icon="note">
+                Notion · GKeep
+              </q-chip>
+
+              <q-chip dense color="red-1" text-color="red-10" icon="chat">
+                Line Man · WeChat
+              </q-chip>
+
+              <q-chip
+                dense
+                color="deep-purple-1"
+                text-color="deep-purple-10"
+                icon="storage"
+              >
+                SQL · Sort · Firebase
+              </q-chip>
+
+              <q-chip
+                dense
+                color="pink-1"
+                text-color="pink-10"
+                icon="chat_bubble"
+              >
+                Line Man
+              </q-chip>
+            </div>
+
+            <!-- 使用場景 -->
+            <div class="text-subtitle2 text-weight-bold q-mt-lg q-mb-sm">
+              Value
+            </div>
+
+            <div class="row q-gutter-xs">
+              <q-chip dense outline color="positive" icon="menu_book">
+                提高閱讀品質
+              </q-chip>
+              <q-chip dense outline color="purple" icon="lightbulb">
+                靈感
+              </q-chip>
+              <q-chip dense outline color="red" icon="chat_bubble">
+                收斂 出新東西
+              </q-chip>
+              <q-chip dense outline color="pink" icon="celebration">
+                娛樂
+              </q-chip>
+              <q-chip dense outline color="orange" icon="flight">
+                Travel
+              </q-chip>
+            </div>
+          </div>
+        </div>
+      </q-card-section>
+
+      <!-- ========================= -->
+      <!-- IN → DB → OUT -->
+      <!-- ========================= -->
+      <q-separator />
+
+      <q-card-section class="q-pa-md">
+        <div class="row items-center justify-center q-gutter-sm">
+          <q-chip color="primary" text-color="white" icon="input"> IN </q-chip>
+
+          <q-icon name="arrow_forward" color="grey-6" />
+
+          <q-chip color="deep-purple" text-color="white" icon="storage">
+            DB
+          </q-chip>
+
+          <q-icon name="arrow_forward" color="grey-6" />
+
+          <q-chip color="positive" text-color="white" icon="output">
+            OUT
+          </q-chip>
+        </div>
+
+        <div class="text-center text-caption text-grey-7 q-mt-sm">
+          收集 → 儲存 → 找回 → 再利用
+        </div>
+        <div>
+          <pre>
+    ┌────────┬──────────────────┬────────────────────────┐
+    │ 色彩    │ 語意             │ 使用位置                │
+    ├─────────┼──────────────────┼────────────────────────┤
+    │ 🔵 Blue  │ 輸入 / 速度      │ IN / Input / 收集      │
+    │ 🟣 Purple│ 核心 / 知識      │ Thinking / Knowledge   │
+    │ 🟢 Green │ 輸出 / 品質      │ OUT / Result           │
+    │  Teal     │ 效率 / 速度      │ Automation / Efficiency│
+    │ 🟠 Orange │ 工具 / 內容      │ Tools / Content        │
+    │  Pink      │ 娛樂 / 素材      │ Media / Entertainment  │
+    │ ⚪ Grey   │ 基礎 / Infra     │ NAS / Storage          │
+    └────────────┴──────────────────┴────────────────────────┘
+        </pre
+          >
+        </div>
+      </q-card-section>
     </q-card>
+    <!-- ``` -->
 
     <hr />
 
     <!-- ===================================================== -->
+    <h6 id="快刀亂麻">快刀亂麻</h6>
 
     <q-card flat bordered class="q-mb-lg">
       <q-card-section>
@@ -504,6 +1118,7 @@ Function
     </q-card>
 
     <!-- ===================================================== -->
+    <h6 id="Mobile Vue">Mobile Vue</h6>
 
     <q-card flat bordered class="q-mb-lg">
       <q-card-section>
@@ -565,7 +1180,7 @@ Function
 
     <!-- ===================================================== -->
 
-    <q-card flat bordered>
+    <!-- <q-card flat bordered>
       <q-card-section>
         <div class="text-h5">🎯 ROI 思考</div>
       </q-card-section>
@@ -593,168 +1208,13 @@ Function
           </div>
         </q-banner>
       </q-card-section>
-    </q-card>
+    </q-card> -->
 
     <hr />
-    <hr />
-    <br />
-    <!-- ================================================= -->
-    <!-- Core -->
-    <!-- ================================================= -->
 
-    <q-card flat bordered class="q-mb-lg">
-      <q-card-section>
-        <div class="text-h4 text-weight-bold">🧠 Learning Strategy</div>
-
-        <div class="text-grey">在資訊爆炸下，提高學習與解題命中率</div>
-      </q-card-section>
-    </q-card>
-
-    <!-- ================================================= -->
-
-    <div class="row q-col-gutter-md">
-      <div class="col-12 col-md-6">
-        <q-card bordered>
-          <q-card-section>
-            <div class="text-h6">🎯 核心原則</div>
-          </q-card-section>
-
-          <q-list separator>
-            <q-item>
-              <q-item-section avatar> 📍 </q-item-section>
-
-              <q-item-section>
-                <q-item-label> 現場優先 </q-item-label>
-
-                <q-item-label caption>
-                  現場資訊密度最高， AI、照片只能輔助。
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <q-item>
-              <q-item-section avatar> 🧠 </q-item-section>
-
-              <q-item-section>
-                <q-item-label> 承認認知限制 </q-item-label>
-
-                <q-item-label caption>
-                  超過一頁、 超過一個畫面， 就開始 overload。
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <q-item>
-              <q-item-section avatar> 🔄 </q-item-section>
-
-              <q-item-section>
-                <q-item-label> 重複 > 記憶 </q-item-label>
-
-                <q-item-label caption> 記不起來， 就重新做。 </q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <q-item>
-              <q-item-section avatar> 💰 </q-item-section>
-
-              <q-item-section>
-                <q-item-label> ROI </q-item-label>
-
-                <q-item-label caption>
-                  工具是降低複習成本， 不是保存所有資訊。
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-card>
-      </div>
-
-      <!-- ====================================== -->
-
-      <div class="col-12 col-md-6">
-        <q-card bordered>
-          <q-card-section>
-            <div class="text-h6">🚫 Overload Rule</div>
-          </q-card-section>
-
-          <q-separator />
-
-          <q-card-section>
-            <q-banner class="bg-red-1 text-black rounded">
-              <div class="text-subtitle1">$$ 隨手寫超過一頁</div>
-
-              <div>= Overload</div>
-            </q-banner>
-
-            <br />
-
-            <q-banner class="bg-orange-1 rounded">
-              GDS 超過一頁 View
-
-              <br />
-
-              Brian Limit
-            </q-banner>
-
-            <br />
-
-            <q-banner class="bg-green-1 rounded">
-              Fashion 熱度
-
-              <br />
-
-              約 3 個月
-            </q-banner>
-          </q-card-section>
-        </q-card>
-      </div>
-    </div>
-
-    <!-- ================================================= -->
-
-    <q-card bordered class="q-mt-lg">
-      <q-card-section>
-        <div class="text-h6">🔧 Tool Philosophy</div>
-      </q-card-section>
-
-      <q-separator />
-
-      <q-list separator>
-        <q-item>
-          <q-item-section>
-            <q-item-label> TD6 </q-item-label>
-
-            <q-item-label caption> 最小成本複習弱點 </q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item>
-          <q-item-section>
-            <q-item-label> GDS </q-item-label>
-
-            <q-item-label caption> 一頁內完成閱讀 </q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item>
-          <q-item-section>
-            <q-item-label> Firebase Album </q-item-label>
-
-            <q-item-label caption> 專題碎片知識 </q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item>
-          <q-item-section>
-            <q-item-label> AI </q-item-label>
-
-            <q-item-label caption> 降低搜尋成本 </q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-card>
-
-    <!-- ================================================= -->
+    <h6 id="從畫圖轉向決策">
+      從畫圖轉向決策 \ 用畫圖 來發現決策 \ 收斂 出新東西
+    </h6>
 
     <q-card bordered class="q-mt-lg">
       <q-card-section>
@@ -785,33 +1245,33 @@ Function
     </q-card>
 
     <!-- ================================================= -->
-
     <q-card bordered class="q-mt-lg">
       <q-card-section>
-        <div class="text-h6">⚙ Engineering Thinking</div>
+        <div class="text-h6">⚙ Engineering Thinking \\ 從畫圖轉向決策</div>
       </q-card-section>
 
       <q-separator />
 
       <q-timeline color="primary">
         <q-timeline-entry title="① 定義需求">
-          系統真正要解決什麼問題？
+          系統真正要解決什麼問題？\\ 規格阿陸 可以做到 都是中國人
         </q-timeline-entry>
 
-        <q-timeline-entry title="② 設置約束">
-          負載、材料、成本、邊界條件。
+        <q-timeline-entry title="② 設置約束 \ 邊界條件">
+          負載、材料、成本、邊界條件。\\ 把負載 材料 製造邊界 寫正確
         </q-timeline-entry>
 
         <q-timeline-entry title="③ 系統權衡">
-          性能 × 成本 × 可維護性。
+          性能 × 成本 × <b>可維護性</b> \\ 選系統/ 至少與 阿陸 system 比較基準
+          80%
         </q-timeline-entry>
 
         <q-timeline-entry title="④ 判斷風險">
-          GPT 找不到的現實變數。
+          use GPT 不用設計問卷。\\ 識別模型沒有覆蓋的現實變量
         </q-timeline-entry>
 
         <q-timeline-entry title="⑤ 最終驗證">
-          Prototype → Test → 認證 → 封存。
+          Prototype → Test → 認證 → 封存。\\ 用樣機 試驗與認證做結論
         </q-timeline-entry>
       </q-timeline>
     </q-card>
@@ -857,12 +1317,13 @@ Function
         </div>
       </q-card-section>
     </q-card>
-
-    <hr />
-    <hr />
     <br />
+    <hr />
 
     <!-- Header -->
+
+    <h6 id="現場 核取方塊">現場 核取方塊</h6>
+
     <div class="row items-center justify-between q-mb-md">
       <div>
         <div class="text-h5 text-weight-bold">
@@ -1000,6 +1461,9 @@ Function
         </div>
       </q-card-section>
     </q-card>
+
+    <h6 id="最後確認">最後確認</h6>
+
     <q-card bordered class="bg-blue-1">
       <q-card-section>
         <div class="text-h6">🎯 最後確認</div>
@@ -1039,7 +1503,15 @@ Function
 </template>
 <script setup>
 import { computed, ref } from "vue";
-
+const scrollTo = (id) => {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({
+      behavior: "smooth", // 平滑捲動效果
+      block: "start", // 對齊頂端
+    });
+  }
+};
 const sections = ref([
   {
     id: "cognition",
@@ -1049,17 +1521,17 @@ const sections = ref([
     items: [
       {
         id: "c1",
-        text: "隨手寫 超過一頁，就是overload",
+        text: "隨手寫 超過一頁 \\ 就是overload",
         checked: false,
       },
       {
         id: "c2",
-        text: "超過一個畫面了嗎？",
+        text: "超過 GDS 1page view 也沒辦法 \\ Cuz Brian Limit.",
         checked: false,
       },
       {
         id: "c3",
-        text: "是否開始 Overload？",
+        text: "是否開始 Overload？ \\ 以為年輕體力好",
         checked: false,
       },
     ],
@@ -1067,18 +1539,18 @@ const sections = ref([
 
   {
     id: "field",
-    title: "📍 現場",
+    title: "📍 現場優先 \\ 現場資訊密度最高， AI、照片只能輔助。",
     icon: "location_on",
     color: "blue",
     items: [
       {
         id: "f1",
-        text: "是否真的需要親自看？",
+        text: "是否真的需要親自看？ \ 太難的 \ 太重要 \ 緊急的",
         checked: false,
       },
       {
         id: "f2",
-        text: "Checklist 是否已抓到重點？出發前 1hr",
+        text: "Checklist 是否已抓到重點？出發前 1hr check list",
         checked: false,
       },
     ],
@@ -1092,7 +1564,7 @@ const sections = ref([
     items: [
       {
         id: "t1",
-        text: "TD6 就是要 最小成本 複習弱點",
+        text: "TD6 是複習 發現弱點的 最小成本 ",
         checked: false,
       },
       {
@@ -1116,12 +1588,12 @@ const sections = ref([
     items: [
       {
         id: "l1",
-        text: "記不起來\ 是否重做就能回復？",
+        text: " 是否重做就能回復？\\ 會再用到的 sop",
         checked: false,
       },
       {
         id: "l2",
-        text: "有機會增加接觸次數？$",
+        text: "joey 記不起來 \\ 記不起來， 就重新做。$",
         checked: false,
       },
       {
@@ -1140,17 +1612,22 @@ const sections = ref([
     items: [
       {
         id: "r1",
-        text: "三個月後還有價值嗎？",
+        text: "三個月後還有價值嗎？接觸次數 ↑ 理解深度 ↑ 解題命中率 ↑",
         checked: false,
       },
       {
         id: "r2",
-        text: "ROI 是否大於維護成本？",
+        text: "ROI 注意維護成本部分？ \\ 工具是降低複習成本， 不是保存所有資訊。",
         checked: false,
       },
       {
         id: "r3",
-        text: "Fashion 3個月 比較容易現實",
+        text: "Fashion 3個月 比較容易現實 \\ 東京情報猿",
+        checked: false,
+      },
+      {
+        id: "r4",
+        text: "Firebase Album 專題碎片知識 \\ GPT 降低搜尋成本",
         checked: false,
       },
     ],
@@ -1253,5 +1730,23 @@ function resetAll() {
 
 .q-item {
   min-height: 52px;
+}
+
+/* ------------------ */
+.dense-menu .q-item {
+  min-height: 30px;
+  padding: 2px 8px;
+}
+
+.dense-menu .q-item__section--avatar {
+  min-width: 26px;
+}
+
+.dense-menu .q-item-label {
+  padding: 4px 8px 2px;
+}
+
+.dense-menu .q-separator {
+  margin: 3px 0;
 }
 </style>
