@@ -52,7 +52,7 @@
         <!-- <q-item-section>Energy Level 定位 </q-item-section> -->
         <q-item-section>
           <a href="#" @click.prevent="scrollTo('Energy Level 定位')"
-            >Energy Level 定位</a
+            >** Energy Level 定位</a
           >
         </q-item-section>
         <q-item-section side>
@@ -79,10 +79,9 @@
         <q-item-section avatar style="min-width: 28px">
           <q-icon name="account_tree" size="18px" />
         </q-item-section>
-        <!-- <q-item-section>CICD 2026 常用的工具 (GDS)</q-item-section> -->
         <q-item-section>
           <a href="#" @click.prevent="scrollTo('常用的工具 (GDS)')"
-            >常用的工具 (GDS) PARA</a
+            >** 常用的工具 (GDS) PARA</a
           >
         </q-item-section>
       </q-item>
@@ -119,7 +118,7 @@
         <!-- <q-item-section>Execution Hierarchy 到執行層級了</q-item-section> -->
         <q-item-section>
           <a href="#" @click.prevent="scrollTo('Execution Hierarchy')"
-            >Execution Hierarchy 到執行層級了</a
+            >** Execution Hierarchy 到執行層級了</a
           >
         </q-item-section>
       </q-item>
@@ -140,7 +139,7 @@
         </q-item-section>
         <!-- <q-item-section>快刀亂麻</q-item-section> -->
         <q-item-section>
-          <a href="#" @click.prevent="scrollTo('快刀亂麻')">快刀亂麻</a>
+          <a href="#" @click.prevent="scrollTo('快刀亂麻')"> ** 快刀亂麻</a>
         </q-item-section>
       </q-item>
 
@@ -234,11 +233,11 @@
         <q-item>
           <q-item-section avatar> ⭐ </q-item-section>
 
-          <q-item-section>
-            標定「現在」前後一步的位置。 \\ 當下的能力狀況
-
+          <div class="text-body4 q-mb-md">
+            標定「現在」前後一步的位置。
+            <q-badge color="negative" label="當下的能力狀況" class="q-mx-xs" />
             <div class="text-grey">Then 才能開始 ROI Tasks。</div>
-          </q-item-section>
+          </div>
         </q-item>
       </q-list>
     </q-card>
@@ -1466,32 +1465,29 @@ Function
 
     <q-card bordered class="bg-blue-1">
       <q-card-section>
-        <div class="text-h6">🎯 最後確認</div>
+        <div class="text-h6">🎯 最後確認 (出發前 1hr)</div>
 
         <q-list dense>
           <q-item>
             <q-item-section avatar>✅</q-item-section>
-
+            <q-item-section> 超過基地 10mins ? 水廁 5mins (人多塞車 ? ) </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section avatar>✅</q-item-section>
+            <q-item-section> One Page 原則。 </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section avatar>✅</q-item-section>
             <q-item-section>
               不要保存全部資訊，只保存未來會複習的資訊。
             </q-item-section>
           </q-item>
-
           <q-item>
             <q-item-section avatar>✅</q-item-section>
-
-            <q-item-section> One Page 原則。 </q-item-section>
-          </q-item>
-
-          <q-item>
-            <q-item-section avatar>✅</q-item-section>
-
             <q-item-section> 降低成本 > 增加資料。 </q-item-section>
           </q-item>
-
           <q-item>
             <q-item-section avatar>✅</q-item-section>
-
             <q-item-section>
               重複 + 組織 + 篩選， 讓成功不再依賴運氣。
             </q-item-section>
