@@ -1,4 +1,13 @@
 <template>
+  <!-- 總共需要修改 4 個地方（讀取、新增、更新、刪除）。
+// 讀取
+const areasRef = dbRef(db, "area_joey1");
+// 更新
+await update(dbRef(db, "area_joey1/" + editingId.value), payload);
+// 新增
+const createdRef = await push(dbRef(db, "area_joey1"), payload);
+// 刪除
+await remove(dbRef(db, "area_joey1/" + id)); -->
   <q-page class="q-pa-md">
     <div class="editor-shell">
       <div class="text-center q-mb-md">
@@ -363,7 +372,8 @@ import { db } from "boot/firebase_imgmap";
 const $q = useQuasar();
 
 // const imageUrl = "https://picsum.photos/seed/firebase-image-map/500/300";
-const imageUrl = "https://lh3.googleusercontent.com/d/1E_nQgRNmjzrscCPp8ypr319CVvnXLxfY=w1200";
+const imageUrl =
+  "https://lh3.googleusercontent.com/d/1E_nQgRNmjzrscCPp8ypr319CVvnXLxfY=w1200";
 // joey modify ---
 const imageRef = ref(null);
 const imageSize = ref({ width: 500, height: 300 });
@@ -464,7 +474,8 @@ function finiteNumber(value, fallback) {
 }
 
 function listenAreas() {
-  const areasRef = dbRef(db, "areas");
+  // const areasRef = dbRef(db, "areas");
+  const areasRef = dbRef(db, "area_joey1");
 
   stopAreasListener = onValue(
     areasRef,
@@ -675,11 +686,15 @@ async function saveArea() {
     if (editorMode.value === "edit") {
       if (!editingId.value) throw new Error("找不到要更新的熱區 ID。");
 
-      await update(dbRef(db, "areas/" + editingId.value), payload);
+      // await update(dbRef(db, "areas/" + editingId.value), payload);
+      await update(dbRef(db, "area_joey1/" + editingId.value), payload);
+
       selectedAreaId.value = editingId.value;
       $q.notify({ type: "positive", message: "熱區已更新。" });
     } else {
-      const createdRef = await push(dbRef(db, "areas"), payload);
+      // const createdRef = await push(dbRef(db, "areas"), payload);
+      const createdRef = await push(dbRef(db, "area_joey1"), payload);
+
       selectedAreaId.value = createdRef.key;
       $q.notify({ type: "positive", message: "熱區已新增。" });
     }
@@ -725,7 +740,8 @@ async function confirmDelete() {
   if (wasSelected) selectedAreaId.value = null;
 
   try {
-    await remove(dbRef(db, "areas/" + id));
+    // await remove(dbRef(db, "areas/" + id));
+    await remove(dbRef(db, "area_joey1/" + id));
 
     if (editingId.value === id) {
       showEditor.value = false;

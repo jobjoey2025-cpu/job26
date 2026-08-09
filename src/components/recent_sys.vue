@@ -174,7 +174,7 @@
           <a href="#" @click.prevent="scrollTo('最後確認')">最後確認</a>
         </q-item-section>
         <q-item-section side>
-          <span class="text-caption text-grey-6">出發前 1h</span>
+          <span class="text-caption text-grey-6">出發前 1h (check list 核取方塊)</span>
         </q-item-section>
       </q-item>
     </q-list>
@@ -190,6 +190,8 @@
       *	coding issue is 頭痛還要 解 bug \ like 想睡還要 等 channel JP program
       *	做得好 才會 常用 \ 做到 常用 才是 KEY
       *	GPT 基本上會越問越好
+
+      * 六個賺錢差 \ 5個苦 都是深入研究不是ez選擇，不適合 recent sys。
         </pre
       >
     </div>

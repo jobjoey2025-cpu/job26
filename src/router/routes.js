@@ -146,9 +146,11 @@ const routes = [
       { path: 'a2F_areaZoom', component: () => import('components/a2F_areaZoom.vue'), name: 'a2F_areaZoom' },
       { path: 'a2F_btnLink', component: () => import('components/a2F_btnLink.vue'), name: 'a2F_btnLink' },
 
-
       { path: 'Firebase_img_map', component: () => import('components/Firebase_img_map.vue'), name: 'Firebase_img_map' },
       { path: '1', component: () => import('components/1.vue'), name: '1' },
+      { path: 'Firebase_img_map_Onlyview', component: () => import('components/Firebase_img_map_Onlyview.vue'), name: 'Firebase_img_map_Onlyview' },
+      { path: 'Firedb_RC10', component: () => import('components/Firedb_RC10.vue'), name: 'Firedb_RC10' },
+
 
 
       { path: 'recent_sys', component: () => import('components/recent_sys.vue'), name: 'recent_sys' },

@@ -1,4 +1,13 @@
 <template>
+  <!-- 總共需要修改 4 個地方（讀取、新增、更新、刪除）。
+// 讀取
+const areasRef = dbRef(db, "area_joey1");
+// 更新
+await update(dbRef(db, "area_joey1/" + editingId.value), payload);
+// 新增
+const createdRef = await push(dbRef(db, "area_joey1"), payload);
+// 刪除
+await remove(dbRef(db, "area_joey1/" + id)); -->
   <q-page class="bg-grey-2 q-pa-md">
     <!-- Header -->
     <q-card flat bordered class="q-mb-md">
