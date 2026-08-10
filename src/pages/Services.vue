@@ -2,9 +2,9 @@
   <div>
     <schoolCards />
 
-    <h3 style="text-align: center">技能樹</h3>
+    <!-- <h3 style="text-align: center">技能樹</h3> -->
 
-    <ansysTree />
+    <!-- <ansysTree /> -->
     <!-- <p>* _____ electric104</p> -->
     <!-- https://electric104.netlify.app/#/ -->
     <!-- <p>* _____ Experience : 公司	職位	成果</p> -->

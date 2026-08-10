@@ -3,10 +3,10 @@
     <profileCard />
   </q-page>
   <br><br></br>
-  <bannerWhoAmI />
+  <!-- <bannerWhoAmI />
   <bannerService />
   <bannerExperience />
-  <bannerBLG />
+  <bannerBLG /> -->
   <timeCurve />
 
 

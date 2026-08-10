@@ -150,9 +150,11 @@ const routes = [
       { path: '1', component: () => import('components/1.vue'), name: '1' },
       { path: 'Firebase_img_map_Onlyview', component: () => import('components/Firebase_img_map_Onlyview.vue'), name: 'Firebase_img_map_Onlyview' },
       { path: 'Firedb_RC10', component: () => import('components/Firedb_RC10.vue'), name: 'Firedb_RC10' },
+      { path: 'Firedb_RC10_Onlyview', component: () => import('components/Firedb_RC10_Onlyview.vue'), name: 'Firedb_RC10_Onlyview' },
+      { path: 'Firedb_Building', component: () => import('components/Firedb_Building.vue'), name: 'Firedb_Building' },
+      { path: 'Firedb_Building_Onlyview', component: () => import('components/Firedb_Building_Onlyview.vue'), name: 'Firedb_Building_Onlyview' },
 
-
-
+      // Firedb_RC10_Onlyview
       { path: 'recent_sys', component: () => import('components/recent_sys.vue'), name: 'recent_sys' },
 
 

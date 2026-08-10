@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <bannerMotor />
+      <!-- <bannerMotor /> -->
       <bannerGearbox />
       <bannerDC10 />
       <CFDtimeline />

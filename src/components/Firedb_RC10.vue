@@ -1,4 +1,5 @@
 <template>
+  <!-- 目前 資料會存到 areas \ 希望改成 存到 area_joey1: -->
   <!-- 總共需要修改 4 個地方（讀取、新增、更新、刪除）。
 // 讀取
 const areasRef = dbRef(db, "area_joey1");
