@@ -1,10 +1,41 @@
 <template>
+  <!-- 總共需要修改 4 個地方（讀取、新增、更新、刪除）。
+// 讀取
+const areasRef = dbRef(db, "area_joey1");
+// 更新
+await update(dbRef(db, "area_joey1/" + editingId.value), payload);
+// 新增
+const createdRef = await push(dbRef(db, "area_joey1"), payload);
+// 刪除
+await remove(dbRef(db, "area_joey1/" + id)); -->
   <q-page class="bg-grey-2 q-pa-md">
     <!-- Header -->
     <q-card flat bordered class="q-mb-md">
-      <q-card-section class="bg-primary text-white">
-        <div class="text-h5">🏠 2F 空間 Area 管理</div>
-        <div class="text-caption">Living Lab / Construction MVP</div>
+      <q-card-section
+        class="bg-primary text-white row items-center justify-between"
+      >
+        <div>
+          <div class="text-h5">🏠 2F 空間 Area 管理</div>
+          <div class="text-caption">Living Lab / Construction MVP</div>
+        </div>
+
+        <!-- <q-btn
+          outline
+          color="white"
+          :icon="viewMode === 'card' ? 'view_list' : 'grid_view'"
+          :label="viewMode === 'card' ? 'List' : 'Card'"
+          @click="toggleView"
+        /> -->
+        <q-btn-toggle
+          v-model="viewMode"
+          toggle-color="white"
+          color="primary"
+          text-color="white"
+          :options="[
+            { label: 'Card', value: 'card', icon: 'grid_view' },
+            { label: 'List', value: 'list', icon: 'view_list' },
+          ]"
+        />
       </q-card-section>
     </q-card>
 
@@ -29,119 +60,152 @@
     </div>
 
     <!-- Area List -->
-    <div class="row q-col-gutter-md">
-      <div
-        v-for="area in filteredItems"
-        :key="area.id"
-        class="col-12 col-sm-6 col-md-4 col-lg-3"
-      >
-        <q-card bordered>
-          <q-card-section>
-            <div class="row justify-between items-center">
-              <div class="text-h6">
-                {{ area.name }}
+    <!-- Card View -->
+    <div v-if="viewMode === 'card'" class="row q-col-gutter-md">
+      <div class="row q-col-gutter-md">
+        <div
+          v-for="area in filteredItems"
+          :key="area.id"
+          class="col-12 col-sm-6 col-md-4 col-lg-3"
+        >
+          <q-card bordered>
+            <q-card-section>
+              <div class="row justify-between items-center">
+                <div class="text-h6">
+                  {{ area.name }}
+                </div>
+
+                <q-chip
+                  dense
+                  :color="statusColor(area.status)"
+                  text-color="white"
+                >
+                  {{ area.status }}
+                </q-chip>
+
+                <q-btn
+                  flat
+                  round
+                  icon="edit"
+                  color="primary"
+                  @click="openEdit(area)"
+                />
+
+                <q-avatar color="grey-3" size="56px">
+                  <q-icon :name="area.icon" size="30px" />
+                </q-avatar>
               </div>
+            </q-card-section>
+            <q-separator />
 
-              <q-chip
-                dense
-                :color="statusColor(area.status)"
-                text-color="white"
-              >
-                {{ area.status }}
-              </q-chip>
-
-              <q-btn
-                flat
-                round
-                icon="edit"
-                color="primary"
-                @click="openEdit(area)"
-              />
-
-              <q-avatar color="grey-3" size="56px">
-                <q-icon :name="area.icon" size="30px" />
-              </q-avatar>
-            </div>
-          </q-card-section>
-          <q-separator />
-
-          <!-- Photo -->
-          <q-card-section>
-            <div class="text-subtitle2 q-mb-sm">📷 Photo</div>
-            <div class="text-caption text-grey"></div>
-            <div class="row q-gutter-sm">
-              <!-- <q-img
+            <!-- Photo -->
+            <q-card-section>
+              <div class="text-subtitle2 q-mb-sm">📷 Photo</div>
+              <div class="text-caption text-grey"></div>
+              <div class="row q-gutter-sm">
+                <!-- <q-img
                 v-for="img in area.photos"
                 :key="img"
                 :src="img"
                 style="width: 90px; height: 70px; border-radius: 8px"
               /> -->
 
-              <q-img
-                v-for="img in area.photos"
-                :key="img"
-                :src="img"
-                style="
-                  width: 90px;
-                  height: 70px;
-                  border-radius: 8px;
-                  cursor: pointer;
-                "
-                @click="showImage(img)"
+                <q-img
+                  v-for="img in area.photos"
+                  :key="img"
+                  :src="img"
+                  style="
+                    width: 90px;
+                    height: 70px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                  "
+                  @click="showImage(img)"
+                />
+
+                <q-btn
+                  outline
+                  icon="add_a_photo"
+                  label="新增"
+                  @click="uploadPhoto(area)"
+                />
+              </div>
+            </q-card-section>
+            <!-- Issue -->
+            <q-card-section>
+              <div class="text-subtitle2">🐞 Issue - {{ area.tag }}</div>
+
+              <q-list separator>
+                <q-item v-for="issue in area.issues" :key="issue">
+                  <q-item-section>
+                    {{ issue }}
+                  </q-item-section>
+
+                  <q-item-section side>
+                    <q-icon color="negative" name="warning" />
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-card-section>
+
+            <!-- Todo -->
+            <q-card-section>
+              <div class="text-subtitle2">🔧 Todo</div>
+
+              <q-checkbox
+                v-for="(todo, index) in area.todo"
+                :key="todo.name"
+                :model-value="todo.done"
+                :label="todo.name"
+                @update:model-value="updateTodo(area.id, index, $event)"
               />
+            </q-card-section>
 
-              <q-btn
-                outline
-                icon="add_a_photo"
-                label="新增"
-                @click="uploadPhoto(area)"
-              />
-            </div>
-          </q-card-section>
-          <!-- Issue -->
-          <q-card-section>
-            <div class="text-subtitle2">🐞 Issue - {{ area.tag }}</div>
+            <!-- Cost -->
+            <q-card-section>
+              <q-banner rounded class="bg-green-1">
+                💰 預估成本
+                <strong>{{ area.cost }} 元</strong>
+              </q-banner>
+            </q-card-section>
 
-            <q-list separator>
-              <q-item v-for="issue in area.issues" :key="issue">
-                <q-item-section>
-                  {{ issue }}
-                </q-item-section>
-
-                <q-item-section side>
-                  <q-icon color="negative" name="warning" />
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-card-section>
-
-          <!-- Todo -->
-          <q-card-section>
-            <div class="text-subtitle2">🔧 Todo</div>
-
-            <q-checkbox
-              v-for="(todo, index) in area.todo"
-              :key="todo.name"
-              :model-value="todo.done"
-              :label="todo.name"
-              @update:model-value="updateTodo(area.id, index, $event)"
-            />
-          </q-card-section>
-
-          <!-- Cost -->
-          <q-card-section>
-            <q-banner rounded class="bg-green-1">
-              💰 預估成本
-              <strong>{{ area.cost }} 元</strong>
-            </q-banner>
-          </q-card-section>
-
-          <!-- <q-card-section>
+            <!-- <q-card-section>
             <div class="text-caption text-grey-7">ID：{{ area.id }}</div>
           </q-card-section> -->
-        </q-card>
+          </q-card>
+        </div>
       </div>
     </div>
+
+    <!-- jjj---- -->
+    <!-- List View -->
+    <q-list v-else bordered separator class="bg-white rounded-borders">
+      <!-- <q-item v-for="area in areas" :key="area.id"> -->
+      <q-item v-for="area in filteredItems" :key="area.id">
+        <q-item-section avatar>
+          <q-img
+            v-if="area.photos?.length"
+            :src="area.photos[0]"
+            style="width: 60px; height: 60px; border-radius: 6px"
+            @click="showImage(area.photos[0])"
+          />
+        </q-item-section>
+
+        <q-item-section>
+          <q-item-label class="text-weight-bold">
+            {{ area.name }}
+          </q-item-label>
+
+          <q-item-label caption>
+            {{ area.photos?.length || 0 }} 張照片
+          </q-item-label>
+        </q-item-section>
+
+        <q-item-section side>
+          <q-btn flat round icon="add_a_photo" @click="uploadPhoto(area)" />
+        </q-item-section>
+      </q-item>
+    </q-list>
 
     <!-- 無資料 -->
     <div
@@ -155,6 +219,7 @@
       <q-btn fab color="primary" icon="add" @click="addDialog = true" />
     </q-page-sticky>
   </q-page>
+
   <q-dialog v-model="editDialog">
     <q-card style="min-width: 450px">
       <q-card-section>
@@ -276,6 +341,12 @@ import a2F_btnLink from "components/a2F_btnLink.vue";
 const showSelector = ref(false);
 
 // joey----
+const viewMode = ref("card");
+function toggleView() {
+  viewMode.value = viewMode.value === "card" ? "list" : "card";
+}
+// joey----
+
 const previewDialog = ref(false);
 const previewImage = ref("");
 
@@ -309,6 +380,10 @@ const categories = [
   {
     name: "car",
     icon: "no_crash",
+  },
+  {
+    name: "doc",
+    icon: "document_scanner",
   },
 ];
 

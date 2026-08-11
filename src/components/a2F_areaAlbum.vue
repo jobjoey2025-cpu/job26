@@ -1,13 +1,4 @@
 <template>
-  <!-- 總共需要修改 4 個地方（讀取、新增、更新、刪除）。
-// 讀取
-const areasRef = dbRef(db, "area_joey1");
-// 更新
-await update(dbRef(db, "area_joey1/" + editingId.value), payload);
-// 新增
-const createdRef = await push(dbRef(db, "area_joey1"), payload);
-// 刪除
-await remove(dbRef(db, "area_joey1/" + id)); -->
   <q-page class="bg-grey-2 q-pa-md">
     <!-- Header -->
     <q-card flat bordered class="q-mb-md">
@@ -228,6 +219,30 @@ await remove(dbRef(db, "area_joey1/" + id)); -->
 
       <q-card-section>
         <q-input v-model="editArea.name" label="Area Name" />
+
+        <!-- jjj---- -->
+        <!-- <q-input
+          v-model="editArea.message"
+          outlined
+          autogrow
+          label="訊息"
+          maxlength="500"
+        /> -->
+
+        <q-input
+          v-model="editArea.message"
+          outlined
+          type="textarea"
+          autogrow
+          label="訊息 - autogrow 文字越多時輸入框自動變大。"
+          maxlength="500"
+          counter
+          :input-style="{
+            minHeight: '200px',
+            lineHeight: '1.6',
+          }"
+        />
+        <!-- jjj---- -->
 
         <q-select
           class="q-mt-md"
@@ -457,6 +472,8 @@ async function saveArea() {
       icon: editArea.value.icon,
 
       photos: editArea.value.photos,
+
+      message: editArea.value.message, // joey
     }
   );
 
