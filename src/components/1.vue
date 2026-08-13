@@ -30,7 +30,23 @@ await remove(dbRef(db, "area_joey1/" + id)); -->
         </div>
       </div>
 
-      <div class="row justify-center q-mb-md">
+      <!-- <div class="row justify-center q-mb-md">
+        <q-btn
+          :color="waitingCapture ? 'negative' : 'primary'"
+          :icon="waitingCapture ? 'close' : 'add_location_alt'"
+          :label="waitingCapture ? '取消擷取' : '新增熱區'"
+          @click="toggleCapture"
+        />
+      </div> -->
+      <div class="row justify-center q-gutter-sm q-mb-md">
+        <q-btn
+          color="secondary"
+          icon="photo_library"
+          label="所有照片"
+          :disable="!allPhotos.length"
+          @click="openAllPhotosGallery"
+        />
+
         <q-btn
           :color="waitingCapture ? 'negative' : 'primary'"
           :icon="waitingCapture ? 'close' : 'add_location_alt'"
@@ -433,6 +449,17 @@ const selectedArea = computed(() =>
   mapData.value.find((area) => area.id === selectedAreaId.value)
 );
 
+// 0813----
+const allPhotos = computed(() =>
+  mapData.value.flatMap((area) =>
+    area.photos.map((photo, index) => ({
+      src: photo,
+      areaName: area.alt,
+      key: `${area.id}-${index}-${photo}`,
+    }))
+  )
+);
+
 const editorTitle = computed(() =>
   editorMode.value === "edit" ? "編輯熱區" : "新增熱區"
 );
@@ -781,6 +808,21 @@ async function confirmDelete() {
   } finally {
     deletingArea.value = false;
   }
+}
+// 0813-----
+function openAllPhotosGallery() {
+  if (!allPhotos.value.length) {
+    $q.notify({
+      type: "warning",
+      message: "目前沒有任何照片。",
+    });
+    return;
+  }
+
+  galleryPhotos.value = allPhotos.value.map((item) => item.src);
+  galleryTitle.value = "所有 area_namba 的照片";
+  currentSlide.value = 0;
+  showGallery.value = true;
 }
 
 function openGallery(area, startIndex = 0) {
