@@ -155,8 +155,13 @@ const routes = [
       { path: 'Firedb_Building_Onlyview', component: () => import('components/Firedb_Building_Onlyview.vue'), name: 'Firedb_Building_Onlyview' },
       { path: 'Firedb_Kyoto', component: () => import('components/Firedb_Kyoto.vue'), name: 'Firedb_Kyoto' },
       { path: 'Firedb_Umeda', component: () => import('components/Firedb_Umeda.vue'), name: 'Firedb_Umeda' },
+      { path: 'Firedb_Numba', component: () => import('components/Firedb_Numba.vue'), name: 'Firedb_Numba' },
+      { path: 'Firedb_Tokyo', component: () => import('components/Firedb_Tokyo.vue'), name: 'Firedb_Tokyo' },
+
       // Firedb_Umeda
       // Firedb_RC10_Onlyview
+
+
       { path: 'recent_sys', component: () => import('components/recent_sys.vue'), name: 'recent_sys' },
 
 

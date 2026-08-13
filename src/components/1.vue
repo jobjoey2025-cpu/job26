@@ -2,7 +2,7 @@
   <!-- 目前 資料會存到 areas \ 希望改成 存到 area_joey1: -->
   <!-- 總共需要修改 4 個地方（讀取、新增、更新、刪除）。
 // 讀取
-const areasRef = dbRef(db, "area_namba");
+const areasRef = dbRef(db, "area_tokyo");
 // 更新
 await update(dbRef(db, "area_joey1/" + editingId.value), payload);
 // 新增
@@ -415,7 +415,7 @@ const $q = useQuasar();
 
 // const imageUrl = "https://picsum.photos/seed/firebase-image-map/500/300";
 const imageUrl =
-  "https://lh3.googleusercontent.com/d/1RbxjUFKrZ5FNoNOaNGHEfMKtzaerfHz2=w1200";
+  "https://lh3.googleusercontent.com/d/1n6Fo4zfb_Qgun2_vW3mLHgwdX6m6ca1g=w1200";
 // joey modify ---
 const imageRef = ref(null);
 const imageSize = ref({ width: 500, height: 300 });
@@ -528,7 +528,7 @@ function finiteNumber(value, fallback) {
 
 function listenAreas() {
   // const areasRef = dbRef(db, "areas");
-  const areasRef = dbRef(db, "area_namba");
+  const areasRef = dbRef(db, "area_tokyo");
 
   stopAreasListener = onValue(
     areasRef,
@@ -740,13 +740,13 @@ async function saveArea() {
       if (!editingId.value) throw new Error("找不到要更新的熱區 ID。");
 
       // await update(dbRef(db, "areas/" + editingId.value), payload);
-      await update(dbRef(db, "area_namba/" + editingId.value), payload);
+      await update(dbRef(db, "area_tokyo/" + editingId.value), payload);
 
       selectedAreaId.value = editingId.value;
       $q.notify({ type: "positive", message: "熱區已更新。" });
     } else {
       // const createdRef = await push(dbRef(db, "areas"), payload);
-      const createdRef = await push(dbRef(db, "area_namba"), payload);
+      const createdRef = await push(dbRef(db, "area_tokyo"), payload);
 
       selectedAreaId.value = createdRef.key;
       $q.notify({ type: "positive", message: "熱區已新增。" });
@@ -794,7 +794,7 @@ async function confirmDelete() {
 
   try {
     // await remove(dbRef(db, "areas/" + id));
-    await remove(dbRef(db, "area_namba/" + id));
+    await remove(dbRef(db, "area_tokyo/" + id));
 
     if (editingId.value === id) {
       showEditor.value = false;
@@ -820,7 +820,7 @@ function openAllPhotosGallery() {
   }
 
   galleryPhotos.value = allPhotos.value.map((item) => item.src);
-  galleryTitle.value = "所有 area_namba 的照片";
+  galleryTitle.value = "所有 area_tokyo 的照片";
   currentSlide.value = 0;
   showGallery.value = true;
 }
