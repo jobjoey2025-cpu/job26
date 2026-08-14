@@ -14,8 +14,8 @@ const routes = [
       { path: 'Experience', component: () => import('pages/Experience.vue'), name: 'Experience' },
       { path: 'BLG', component: () => import('pages/BLG.vue'), name: 'BLG' },
       { path: 'Configurator', component: () => import('pages/Configurator.vue') },
-      { path: 'testNavi', name: 'testNavi',component: () => import('pages/testNavi.vue') },
-      { path: 'test', name: 'test',component: () => import('pages/test.vue') },
+      { path: 'testNavi', name: 'testNavi', component: () => import('pages/testNavi.vue') },
+      { path: 'test', name: 'test', component: () => import('pages/test.vue') },
 
       { path: 'bannerWhoAmI', component: () => import('components/bannerWhoAmI.vue'), name: 'bannerWhoAmI' },
       { path: 'bannerService', component: () => import('components/bannerService.vue'), name: 'bannerService' },
@@ -147,7 +147,6 @@ const routes = [
       { path: 'a2F_btnLink', component: () => import('components/a2F_btnLink.vue'), name: 'a2F_btnLink' },
 
       { path: 'Firebase_img_map', component: () => import('components/Firebase_img_map.vue'), name: 'Firebase_img_map' },
-      { path: '1', component: () => import('components/1.vue'), name: '1' },
       { path: 'Firebase_img_map_Onlyview', component: () => import('components/Firebase_img_map_Onlyview.vue'), name: 'Firebase_img_map_Onlyview' },
       { path: 'Firedb_RC10', component: () => import('components/Firedb_RC10.vue'), name: 'Firedb_RC10' },
       { path: 'Firedb_RC10_Onlyview', component: () => import('components/Firedb_RC10_Onlyview.vue'), name: 'Firedb_RC10_Onlyview' },
@@ -155,14 +154,41 @@ const routes = [
       { path: 'Firedb_Building_Onlyview', component: () => import('components/Firedb_Building_Onlyview.vue'), name: 'Firedb_Building_Onlyview' },
       { path: 'Firedb_Kyoto', component: () => import('components/Firedb_Kyoto.vue'), name: 'Firedb_Kyoto' },
       { path: 'Firedb_Umeda', component: () => import('components/Firedb_Umeda.vue'), name: 'Firedb_Umeda' },
-      { path: 'Firedb_Numba', component: () => import('components/Firedb_Numba.vue'), name: 'Firedb_Numba' },
-      { path: 'Firedb_Tokyo', component: () => import('components/Firedb_Tokyo.vue'), name: 'Firedb_Tokyo' },
+      // { path: 'Firedb_Numba', component: () => import('components/Firedb_Numba.vue'), name: 'Firedb_Numba' },
+      // { path: 'Firedb_Tokyo', component: () => import('components/Firedb_Tokyo.vue'), name: 'Firedb_Tokyo' },
+      // { path: 'recent_sys', component: () => import('components/recent_sys.vue'), name: 'recent_sys' },
+      { path: '1', component: () => import('components/1.vue'), name: '1' },
+      { path: '2', component: () => import('components/2.vue'), name: '2' },
+      { path: '2_2', component: () => import('components/2_2.vue'), name: '2_2' },
 
-      // Firedb_Umeda
-      // Firedb_RC10_Onlyview
 
+      { path: 'recent_sys', component: () => import('components/recent_sys.vue'), name: 'recent_sys',
+        meta: {
+          menu: true,
+          label: 'recent_sys',
+          icon: 'note',
+          group: 'Doc',
+        },
+       },
+      {
+        path: 'Firedb_Tokyo', component: () => import('components/Firedb_Tokyo.vue'), name: 'Firedb_Tokyo',
+        meta: {
+          menu: true,
+          label: 'Tokyo - Image Map',
+          icon: 'map',
+          group: 'Firebase',
+        },
+      },
+      {
+        path: 'Firedb_Numba', component: () => import('components/Firedb_Numba.vue'), name: 'Firedb_Numba',
+        meta: {
+          menu: true,
+          label: 'Numba - Image Map',
+          icon: 'map',
+          group: 'Firebase',
+        },
+      },
 
-      { path: 'recent_sys', component: () => import('components/recent_sys.vue'), name: 'recent_sys' },
 
 
     ]
