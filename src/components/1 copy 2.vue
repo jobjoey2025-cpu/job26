@@ -1,134 +1,149 @@
 <template>
-  <q-page padding>
-    <!-- 標題 -->
-    <div class="row items-center q-mb-md">
-      <div>
-        <div class="text-h5">地圖座標管理</div>
-
-        <div class="text-grey-7">
-          點擊地圖新增 Marker，拖曳 Marker 可更新座標
-        </div>
-      </div>
-
-      <q-space />
-
-      <!-- 目前位置 -->
-      <q-btn
-        color="primary"
-        icon="my_location"
-        label="取得目前位置"
-        :loading="locating"
-        @click="getCurrentLocation"
-      />
-
-      <!-- 清除全部 -->
-      <q-btn
-        class="q-ml-sm"
-        color="negative"
-        outline
-        icon="delete_sweep"
-        label="清除全部"
-        :disable="markers.length === 0"
-        @click="clearAllMarkers"
-      />
-    </div>
-
-    <div class="row q-col-gutter-md">
-      <!-- 地圖 -->
+  <q-page class="q-pa-md bg-grey-2">
+    <div class="row justify-center">
       <div class="col-12 col-md-8">
-        <q-card>
-          <div ref="mapRef" class="map-container" />
-        </q-card>
-      </div>
-
-      <!-- 右側資訊 -->
-      <div class="col-12 col-md-4">
-        <q-card>
+        <!-- Header -->
+        <q-card class="q-mb-md">
           <q-card-section>
-            <div class="text-h6">Marker Summary</div>
+            <div class="text-h5">🛠️ 工作 To-Do List</div>
 
-            <div class="text-grey-7">
-              目前共有 {{ markers.length }} 個 Marker
-            </div>
-          </q-card-section>
-
-          <q-separator />
-
-          <q-card-section>
-            <div class="text-subtitle2 q-mb-sm">操作方式</div>
-
-            <div class="text-grey-7">1. 點擊地圖新增 Marker</div>
-
-            <div class="text-grey-7">2. 拖曳 Marker 更新座標</div>
-
-            <div class="text-grey-7">3. 點擊 Marker 查看資訊</div>
-
-            <div class="text-grey-7">4. 使用下方表格管理 Marker</div>
-          </q-card-section>
-
-          <q-separator />
-
-          <q-card-section>
-            <div class="text-subtitle2">最後新增座標</div>
-
-            <div v-if="lastMarker" class="q-mt-sm">
-              <div>
-                Latitude:
-                <b>{{ lastMarker.lat }}</b>
-              </div>
-
-              <div>
-                Longitude:
-                <b>{{ lastMarker.lng }}</b>
-              </div>
+            <div class="text-caption text-grey">
+              {{ completedCount }} / {{ totalCount }} 已完成
             </div>
 
-            <div v-else class="text-grey-6 q-mt-sm">尚未新增 Marker</div>
+            <q-linear-progress
+              class="q-mt-sm"
+              :value="progress"
+              rounded
+              size="10px"
+              color="positive"
+            />
           </q-card-section>
         </q-card>
-      </div>
 
-      <!-- Marker Table -->
-      <div class="col-12">
+        <!-- Loading -->
+        <div v-if="loading" class="row justify-center q-pa-lg">
+          <q-spinner color="primary" size="50px" />
+        </div>
+
+        <!-- Todo Categories -->
+
+        <q-card
+          v-for="(category, categoryIndex) in categories"
+          :key="category.id"
+          class="q-mb-md"
+        >
+          <q-card-section class="row items-center">
+            <div class="text-h6 col">
+              {{ category.icon }} {{ category.name }}
+            </div>
+
+            <q-btn
+              flat
+              round
+              dense
+              icon="keyboard_arrow_up"
+              :disable="categoryIndex === 0"
+              @click="moveCategory(category, 'up')"
+            >
+              <q-tooltip> 往上移動 </q-tooltip>
+            </q-btn>
+
+            <q-btn
+              flat
+              round
+              dense
+              icon="keyboard_arrow_down"
+              :disable="categoryIndex === categories.length - 1"
+              @click="moveCategory(category, 'down')"
+            >
+              <q-tooltip> 往下移動 </q-tooltip>
+            </q-btn>
+          </q-card-section>
+          <q-separator />
+
+          <q-list separator>
+            <q-item
+              v-for="task in category.tasks"
+              :key="task.id"
+              clickable
+              @click="toggleTask(category, task)"
+            >
+              <q-item-section avatar>
+                <q-checkbox
+                  :model-value="task.done"
+                  @click.stop
+                  @update:model-value="toggleTask(category, task)"
+                />
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label
+                  :class="{
+                    'text-strike text-grey': task.done,
+                    'text-weight-bold': task.priority,
+                  }"
+                >
+                  {{ task.title }}
+                </q-item-label>
+
+                <q-item-label v-if="task.note" caption>
+                  {{ task.note }}
+                </q-item-label>
+              </q-item-section>
+
+              <q-item-section side>
+                <q-badge v-if="task.priority" color="red" label="優先" />
+
+                <q-icon
+                  v-if="task.done"
+                  name="check_circle"
+                  color="positive"
+                  size="sm"
+                />
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card>
+
+        <!-- Add Task -->
         <q-card>
           <q-card-section>
-            <div class="text-h6">Marker List</div>
-          </q-card-section>
+            <div class="text-h6">➕ 新增工作</div>
 
-          <q-table
-            :rows="markers"
-            :columns="columns"
-            row-key="id"
-            :pagination="{
-              rowsPerPage: 10,
-            }"
-            flat
-          >
-            <!-- Actions -->
-            <template #body-cell-actions="props">
-              <q-td :props="props">
+            <div class="row q-col-gutter-sm q-mt-sm">
+              <div class="col-12 col-sm-7">
+                <q-input
+                  v-model="newTask"
+                  outlined
+                  label="輸入工作內容"
+                  @keyup.enter="addTask"
+                />
+              </div>
+
+              <div class="col-12 col-sm-3">
+                <q-select
+                  v-model="selectedCategory"
+                  outlined
+                  label="分類"
+                  :options="categoryOptions"
+                  emit-value
+                  map-options
+                />
+              </div>
+
+              <div class="col-12 col-sm-2">
                 <q-btn
-                  flat
-                  round
                   color="primary"
-                  icon="location_on"
-                  @click="focusMarker(props.row)"
-                >
-                  <q-tooltip> 定位 Marker </q-tooltip>
-                </q-btn>
-
-                <q-btn
-                  flat
-                  round
-                  color="negative"
-                  icon="delete"
-                  @click="removeMarker(props.row.id)"
-                >
-                  <q-tooltip> 刪除 Marker </q-tooltip>
-                </q-btn>
-              </q-td>
-            </template>
-          </q-table>
+                  label="新增"
+                  class="full-width"
+                  size="lg"
+                  :loading="addingTask"
+                  @click="addTask"
+                />
+              </div>
+            </div>
+          </q-card-section>
         </q-card>
       </div>
     </div>
@@ -136,408 +151,310 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 
-import L from "leaflet";
+import { onValue, push, ref as dbRef, update } from "firebase/database";
 
-import "leaflet/dist/leaflet.css";
+import { useQuasar } from "quasar";
+import { db } from "boot/firebase_todolist";
 
-/* --------------------------------
- * Leaflet Marker Icon Fix
- * Vite / Quasar 專案需要處理圖片路徑
- * -------------------------------- */
+const $q = useQuasar();
 
-import markerIcon from "leaflet/dist/images/marker-icon.png";
-import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
+const loading = ref(true);
+const addingTask = ref(false);
 
-delete L.Icon.Default.prototype._getIconUrl;
-
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: markerIcon2x,
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
-});
-
-/* --------------------------------
- * DOM
- * -------------------------------- */
-
-const mapRef = ref(null);
-
-/* --------------------------------
- * Leaflet Map
- * -------------------------------- */
-
-let map = null;
+const newTask = ref("");
 
 /*
- * Leaflet Marker instance
- *
- * Key:
- * marker id
- *
- * Value:
- * Leaflet Marker Object
- */
+  categories 結構：
 
-const leafletMarkers = new Map();
+  [
+    {
+      id: 'firebase-category-id',
+      name: '建立／工具',
+      icon: '🧪',
+      tasks: [
+        {
+          id: 'firebase-task-id',
+          title: '建立化學箱',
+          done: false
+        }
+      ]
+    }
+  ]
+*/
+const categories = ref([]);
 
-/* --------------------------------
- * Vue State
- * -------------------------------- */
+const selectedCategory = ref(null);
 
-const markers = ref([]);
+let unsubscribe = null;
 
-const locating = ref(false);
+/*
+|--------------------------------------------------------------------------
+| Firebase Reference
+|--------------------------------------------------------------------------
+*/
 
-/* --------------------------------
- * Default Position
- * 台北 101
- * -------------------------------- */
+const categoriesRef = dbRef(db, "todoCategories");
 
-const defaultPosition = {
-  lat: 25.033,
-  lng: 121.5654,
+/*
+|--------------------------------------------------------------------------
+| 即時抓取 Firebase Realtime Database
+|--------------------------------------------------------------------------
+*/
+
+// joey ---
+const loadCategories = () => {
+  unsubscribe = onValue(
+    categoriesRef,
+    (snapshot) => {
+      const data = snapshot.val();
+
+      if (!data) {
+        categories.value = [];
+        loading.value = false;
+        return;
+      }
+
+      categories.value = Object.entries(data)
+        .map(([categoryId, category]) => {
+          const tasks = category.tasks
+            ? Object.entries(category.tasks).map(([taskId, task]) => ({
+                id: taskId,
+                title: task.title || "",
+                note: task.note || "",
+                done: task.done || false,
+                priority: task.priority || false,
+              }))
+            : [];
+
+          return {
+            id: categoryId,
+            name: category.name || "",
+            icon: category.icon || "📁",
+
+            // ⭐ 從 Firebase 取得排序值
+            order: category.order ?? 999,
+
+            tasks,
+          };
+        })
+
+        // ⭐⭐⭐ 這裡就是你問的 .sort()
+        .sort((a, b) => a.order - b.order);
+
+      // 如果目前沒有選擇分類
+      // 自動選第一個
+      if (!selectedCategory.value && categories.value.length > 0) {
+        selectedCategory.value = categories.value[0].id;
+      }
+
+      loading.value = false;
+    },
+
+    (error) => {
+      console.error("Firebase load error:", error);
+
+      $q.notify({
+        type: "negative",
+        message: "讀取 Firebase 資料失敗",
+      });
+
+      loading.value = false;
+    }
+  );
+};
+// joey ------
+/*
+|--------------------------------------------------------------------------
+| Category Options
+|--------------------------------------------------------------------------
+*/
+
+const categoryOptions = computed(() =>
+  categories.value.map((category) => ({
+    label: `${category.icon} ${category.name}`,
+    value: category.id,
+  }))
+);
+
+/*
+|--------------------------------------------------------------------------
+| Progress
+|--------------------------------------------------------------------------
+*/
+
+const totalCount = computed(() =>
+  categories.value.reduce((total, category) => total + category.tasks.length, 0)
+);
+
+const completedCount = computed(() =>
+  categories.value.reduce(
+    (total, category) =>
+      total + category.tasks.filter((task) => task.done).length,
+    0
+  )
+);
+
+const progress = computed(() => {
+  if (totalCount.value === 0) {
+    return 0;
+  }
+
+  return completedCount.value / totalCount.value;
+});
+
+/*
+|--------------------------------------------------------------------------
+| Toggle Task
+|--------------------------------------------------------------------------
+*/
+
+const toggleTask = async (category, task) => {
+  try {
+    const newDoneValue = !task.done;
+
+    /*
+      Firebase Path:
+      todoCategories/
+        {categoryId}/
+          tasks/
+            {taskId}/
+              done
+    */
+
+    const taskRef = dbRef(db, `todoCategories/${category.id}/tasks/${task.id}`);
+
+    await update(taskRef, {
+      done: newDoneValue,
+    });
+  } catch (error) {
+    console.error("Update task error:", error);
+
+    $q.notify({
+      type: "negative",
+      message: "更新工作狀態失敗",
+    });
+  }
 };
 
-/* --------------------------------
- * QTable Columns
- * -------------------------------- */
+/*
+|--------------------------------------------------------------------------
+| Add Task
+|--------------------------------------------------------------------------
+*/
 
-const columns = [
-  {
-    name: "id",
-    label: "ID",
-    field: "id",
-    align: "left",
-    sortable: true,
-  },
-  {
-    name: "name",
-    label: "名稱",
-    field: "name",
-    align: "left",
-    sortable: true,
-  },
-  {
-    name: "lat",
-    label: "Latitude",
-    field: "lat",
-    align: "left",
-    sortable: true,
-  },
-  {
-    name: "lng",
-    label: "Longitude",
-    field: "lng",
-    align: "left",
-    sortable: true,
-  },
-  {
-    name: "actions",
-    label: "操作",
-    field: "actions",
-    align: "center",
-  },
-];
-
-/* --------------------------------
- * 最後一個 Marker
- * -------------------------------- */
-
-const lastMarker = computed(() => {
-  if (markers.value.length === 0) {
-    return null;
-  }
-
-  return markers.value[markers.value.length - 1];
-});
-
-/* --------------------------------
- * 建立 Marker
- * -------------------------------- */
-
-function addMarker(lat, lng, options = {}) {
-  const id = Date.now() + Math.random();
-
-  const markerData = {
-    id,
-    name: options.name || `Marker ${markers.value.length + 1}`,
-    lat: Number(lat.toFixed(6)),
-    lng: Number(lng.toFixed(6)),
-  };
-
-  /*
-   * 加入 Vue ref 陣列
-   */
-
-  markers.value.push(markerData);
-
-  /*
-   * 建立 Leaflet Marker
-   */
-
-  const leafletMarker = L.marker([markerData.lat, markerData.lng], {
-    draggable: true,
-  }).addTo(map);
-
-  /*
-   * Popup
-   */
-
-  updatePopup(leafletMarker, markerData);
-
-  /*
-   * Marker 拖曳結束
-   */
-
-  leafletMarker.on("dragend", () => {
-    const position = leafletMarker.getLatLng();
-
-    updateMarkerPosition(markerData.id, position.lat, position.lng);
-  });
-
-  /*
-   * 儲存 Leaflet Marker instance
-   */
-
-  leafletMarkers.set(markerData.id, leafletMarker);
-
-  /*
-   * 自動打開 Popup
-   */
-
-  leafletMarker.openPopup();
-
-  return markerData;
-}
-
-/* --------------------------------
- * 更新 Popup
- * -------------------------------- */
-
-function updatePopup(leafletMarker, markerData) {
-  leafletMarker.bindPopup(`
-    <div>
-      <b>${markerData.name}</b>
-
-      <br>
-
-      Latitude:
-      ${markerData.lat}
-
-      <br>
-
-      Longitude:
-      ${markerData.lng}
-    </div>
-  `);
-}
-
-/* --------------------------------
- * 更新 Marker 座標
- * -------------------------------- */
-
-function updateMarkerPosition(id, lat, lng) {
-  const markerData = markers.value.find((item) => item.id === id);
-
-  if (!markerData) {
+const addTask = async () => {
+  if (!newTask.value.trim()) {
     return;
   }
 
-  markerData.lat = Number(lat.toFixed(6));
-  markerData.lng = Number(lng.toFixed(6));
-
-  /*
-   * 更新 Popup
-   */
-
-  const leafletMarker = leafletMarkers.get(id);
-
-  if (leafletMarker) {
-    updatePopup(leafletMarker, markerData);
-  }
-}
-
-/* --------------------------------
- * 刪除單一 Marker
- * -------------------------------- */
-
-function removeMarker(id) {
-  /*
-   * 移除 Leaflet Marker
-   */
-
-  const leafletMarker = leafletMarkers.get(id);
-
-  if (leafletMarker) {
-    leafletMarker.remove();
-
-    leafletMarkers.delete(id);
-  }
-
-  /*
-   * 移除 Vue Array 資料
-   */
-
-  const index = markers.value.findIndex((item) => item.id === id);
-
-  if (index !== -1) {
-    markers.value.splice(index, 1);
-  }
-}
-
-/* --------------------------------
- * 清除全部 Marker
- * -------------------------------- */
-
-function clearAllMarkers() {
-  leafletMarkers.forEach((leafletMarker) => {
-    leafletMarker.remove();
-  });
-
-  leafletMarkers.clear();
-
-  markers.value = [];
-}
-
-/* --------------------------------
- * 定位到指定 Marker
- * -------------------------------- */
-
-function focusMarker(markerData) {
-  if (!map) {
-    return;
-  }
-
-  map.flyTo([markerData.lat, markerData.lng], 18);
-
-  const leafletMarker = leafletMarkers.get(markerData.id);
-
-  if (leafletMarker) {
-    leafletMarker.openPopup();
-  }
-}
-
-/* --------------------------------
- * 取得目前位置
- * -------------------------------- */
-
-function getCurrentLocation() {
-  if (!map) {
-    return;
-  }
-
-  locating.value = true;
-
-  /*
-   * Leaflet locationfound
-   */
-
-  map.once("locationfound", (event) => {
-    locating.value = false;
-
-    const { lat, lng } = event.latlng;
-
-    /*
-     * 移動地圖
-     */
-
-    map.setView([lat, lng], 17);
-
-    /*
-     * 新增 Marker
-     */
-
-    addMarker(lat, lng, {
-      name: "目前位置",
+  if (!selectedCategory.value) {
+    $q.notify({
+      type: "warning",
+      message: "請先選擇分類",
     });
-  });
 
-  /*
-   * Leaflet locationerror
-   */
+    return;
+  }
 
-  map.once("locationerror", (event) => {
-    locating.value = false;
+  try {
+    addingTask.value = true;
 
-    console.error("Location error:", event.message);
+    /*
+      Firebase Path:
+      todoCategories/
+        {categoryId}/
+          tasks/
+    */
 
-    alert(`無法取得目前位置：${event.message}`);
-  });
+    const tasksRef = dbRef(
+      db,
+      `todoCategories/${selectedCategory.value}/tasks`
+    );
 
-  /*
-   * 開始定位
-   */
+    await push(tasksRef, {
+      title: newTask.value.trim(),
+      note: "",
+      done: false,
+      priority: false,
+      createdAt: Date.now(),
+    });
 
-  map.locate({
-    setView: false,
-    enableHighAccuracy: true,
-  });
-}
+    newTask.value = "";
 
-/* --------------------------------
- * Map Click
- * -------------------------------- */
+    $q.notify({
+      type: "positive",
+      message: "工作已新增",
+    });
+  } catch (error) {
+    console.error("Add task error:", error);
 
-function onMapClick(event) {
-  const { lat, lng } = event.latlng;
+    $q.notify({
+      type: "negative",
+      message: "新增工作失敗",
+    });
+  } finally {
+    addingTask.value = false;
+  }
+};
 
-  addMarker(lat, lng);
-}
-
-/* --------------------------------
- * 初始化地圖
- * -------------------------------- */
-
-onMounted(() => {
-  /*
-   * 建立地圖
-   */
-
-  map = L.map(mapRef.value).setView(
-    [defaultPosition.lat, defaultPosition.lng],
-    15
+const moveCategory = async (category, direction) => {
+  const currentIndex = categories.value.findIndex(
+    (item) => item.id === category.id
   );
 
-  /*
-   * OpenStreetMap
-   */
+  const targetIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1;
 
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-
-    attribution: "&copy; OpenStreetMap contributors",
-  }).addTo(map);
-
-  /*
-   * 點擊地圖
-   */
-
-  map.on("click", onMapClick);
-});
-
-/* --------------------------------
- * 清除
- * -------------------------------- */
-
-onBeforeUnmount(() => {
-  if (map) {
-    map.off("click", onMapClick);
-
-    map.remove();
-
-    map = null;
+  if (
+    currentIndex === -1 ||
+    targetIndex < 0 ||
+    targetIndex >= categories.value.length
+  ) {
+    return;
   }
 
-  leafletMarkers.clear();
+  const targetCategory = categories.value[targetIndex];
+
+  try {
+    const updates = {
+      [`todoCategories/${category.id}/order`]: targetCategory.order,
+
+      [`todoCategories/${targetCategory.id}/order`]: category.order,
+    };
+
+    await update(dbRef(db), updates);
+
+    $q.notify({
+      type: "positive",
+      message: "分類排序已更新",
+    });
+  } catch (error) {
+    console.error("Category order update error:", error);
+
+    $q.notify({
+      type: "negative",
+      message: "分類排序更新失敗",
+    });
+  }
+};
+
+/*
+|--------------------------------------------------------------------------
+| Lifecycle
+|--------------------------------------------------------------------------
+*/
+
+onMounted(() => {
+  loadCategories();
+});
+
+onUnmounted(() => {
+  /*
+    Firebase onValue 會回傳 unsubscribe function
+  */
+  if (unsubscribe) {
+    unsubscribe();
+  }
 });
 </script>
-
-<style scoped>
-.map-container {
-  width: 100%;
-  height: 600px;
-}
-</style>

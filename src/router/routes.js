@@ -89,11 +89,10 @@ const routes = [
 
       { path: 'fastAPI', component: () => import('components/fastAPI.vue'), name: 'fastAPI' },
       { path: 'sunTzu', component: () => import('components/sunTzu.vue'), name: 'sunTzu' },
-      { path: 'FCampLife', component: () => import('components/FCampLife.vue'), name: 'FCampLife' },
-      { path: 'FCampLife_add', component: () => import('components/FCampLife_add.vue'), name: 'FCampLife_add' },
+
       { path: 'aiLoopLevel', component: () => import('components/aiLoopLevel.vue'), name: 'aiLoopLevel' },
 
-      { path: 'suao3day', component: () => import('components/suao3day.vue'), name: 'suao3day' },
+
       { path: 'English', component: () => import('components/English.vue'), name: 'English' },
       { path: 'stockPureText', component: () => import('components/stockPureText.vue'), name: 'stockPureText' },
 
@@ -107,7 +106,6 @@ const routes = [
       { path: 'F_aiAnalysis_Radar', component: () => import('components/F_aiAnalysis_Radar.vue'), name: 'F_aiAnalysis_Radar' },
       { path: '2F_Gemini', component: () => import('components/2F_Gemini.vue'), name: '2F_Gemini' },
 
-      { path: 'suao_oneDay', component: () => import('components/suao_oneDay.vue'), name: 'suao_oneDay' },
 
       { path: 'id_manager', component: () => import('components/id_manager.vue'), name: 'id_manager' },
       { path: 'id_manager_CRUD', component: () => import('components/id_manager_CRUD.vue'), name: 'id_manager_CRUD' },
@@ -133,7 +131,6 @@ const routes = [
       { path: 'import_exportTab', component: () => import('components/import_exportTab.vue'), name: 'import_exportTab' },
 
 
-      { path: 'suao', component: () => import('components/suao.vue'), name: 'suao' },
       { path: 'hobby', component: () => import('components/hobby.vue'), name: 'hobby' },
 
       { path: 'a2F_layout', component: () => import('components/a2F_layout.vue'), name: 'a2F_layout' },
@@ -142,7 +139,6 @@ const routes = [
       { path: 'a2F_contractor', component: () => import('components/a2F_contractor.vue'), name: 'a2F_contractor' },
       { path: 'a2F_areaAlbum', component: () => import('components/a2F_areaAlbum.vue'), name: 'a2F_areaAlbum' },
       { path: 'a2F_btn', component: () => import('components/a2F_btn.vue'), name: 'a2F_btn' },
-      { path: 'a2F_album_combine', component: () => import('components/a2F_album_combine.vue'), name: 'a2F_album_combine' },
       { path: 'a2F_areaZoom', component: () => import('components/a2F_areaZoom.vue'), name: 'a2F_areaZoom' },
       { path: 'a2F_btnLink', component: () => import('components/a2F_btnLink.vue'), name: 'a2F_btnLink' },
 
@@ -162,14 +158,71 @@ const routes = [
       { path: '2_2', component: () => import('components/2_2.vue'), name: '2_2' },
 
 
-      { path: 'recent_sys', component: () => import('components/recent_sys.vue'), name: 'recent_sys',
+      { path: 'a2F_album_combine', component: () => import('components/a2F_album_combine.vue'), name: 'a2F_album_combine',
+        meta: {
+          menu: true,
+          label: 'a2F_album_combine',
+          icon: 'note',
+          group: 'suao-Trip',
+        },
+       },
+
+      { path: 'FCampLife', component: () => import('components/FCampLife.vue'), name: 'FCampLife',
+        meta: {
+          menu: true,
+          label: 'FCampLife',
+          icon: 'note',
+          group: 'suao-Trip',
+        },
+       },
+
+      { path: 'FCampLife_add', component: () => import('components/FCampLife_add.vue'), name: 'FCampLife_add',
+        meta: {
+          menu: true,
+          label: 'FCampLife_add',
+          icon: 'note',
+          group: 'suao-Trip',
+        },
+       },
+
+      { path: 'suao', component: () => import('components/suao.vue'), name: 'suao' ,
+        meta: {
+          menu: true,
+          label: 'suao',
+          icon: 'note',
+          group: 'suao-Trip',
+        },
+      },
+
+      { path: 'suao_oneDay', component: () => import('components/suao_oneDay.vue'), name: 'suao_oneDay' ,
+        meta: {
+          menu: true,
+          label: 'suao_oneDay',
+          icon: 'note',
+          group: 'suao-Trip',
+        },
+      },
+
+      {
+        path: 'suao3day', component: () => import('components/suao3day.vue'), name: 'suao3day',
+        meta: {
+          menu: true,
+          label: 'suao3day',
+          icon: 'note',
+          group: 'suao-Trip',
+        },
+      },
+
+      {
+        path: 'recent_sys', component: () => import('components/recent_sys.vue'), name: 'recent_sys',
         meta: {
           menu: true,
           label: 'recent_sys',
           icon: 'note',
           group: 'Doc',
         },
-       },
+      },
+
       {
         path: 'Firedb_Tokyo', component: () => import('components/Firedb_Tokyo.vue'), name: 'Firedb_Tokyo',
         meta: {
@@ -179,6 +232,7 @@ const routes = [
           group: 'Firebase',
         },
       },
+
       {
         path: 'Firedb_Numba', component: () => import('components/Firedb_Numba.vue'), name: 'Firedb_Numba',
         meta: {
@@ -188,8 +242,6 @@ const routes = [
           group: 'Firebase',
         },
       },
-
-
 
     ]
   },
