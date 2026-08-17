@@ -122,7 +122,6 @@ const routes = [
       { path: 'roi_doc', component: () => import('components/roi_doc.vue'), name: 'roi_doc' },
       { path: 'roi_doc_rfq', component: () => import('components/roi_doc_rfq.vue'), name: 'roi_doc_rfq' },
 
-
       { path: 'ProjectDashboard', component: () => import('pages/ProjectDashboard.vue') },
       { path: 'OverviewTab', component: () => import('components/OverviewTab.vue'), name: 'OverviewTab' },
       { path: 'ParaTab', component: () => import('components/ParaTab.vue'), name: 'ParaTab' },
@@ -148,44 +147,79 @@ const routes = [
       { path: 'Firedb_RC10_Onlyview', component: () => import('components/Firedb_RC10_Onlyview.vue'), name: 'Firedb_RC10_Onlyview' },
       { path: 'Firedb_Building', component: () => import('components/Firedb_Building.vue'), name: 'Firedb_Building' },
       { path: 'Firedb_Building_Onlyview', component: () => import('components/Firedb_Building_Onlyview.vue'), name: 'Firedb_Building_Onlyview' },
-      { path: 'Firedb_Kyoto', component: () => import('components/Firedb_Kyoto.vue'), name: 'Firedb_Kyoto' },
-      { path: 'Firedb_Umeda', component: () => import('components/Firedb_Umeda.vue'), name: 'Firedb_Umeda' },
       // { path: 'Firedb_Numba', component: () => import('components/Firedb_Numba.vue'), name: 'Firedb_Numba' },
       // { path: 'Firedb_Tokyo', component: () => import('components/Firedb_Tokyo.vue'), name: 'Firedb_Tokyo' },
       // { path: 'recent_sys', component: () => import('components/recent_sys.vue'), name: 'recent_sys' },
       { path: '1', component: () => import('components/1.vue'), name: '1' },
       { path: '2', component: () => import('components/2.vue'), name: '2' },
       { path: '2_2', component: () => import('components/2_2.vue'), name: '2_2' },
+      // Firedb_Todolist.vue
 
 
-      { path: 'a2F_album_combine', component: () => import('components/a2F_album_combine.vue'), name: 'a2F_album_combine',
+
+      {
+        path: 'Firedb_Kyoto', component: () => import('components/Firedb_Kyoto.vue'), name: 'Firedb_Kyoto',
+        meta: {
+          menu: true,
+          label: 'Firedb_Kyoto',
+          icon: 'note',
+          group: 'Japan',
+        },
+
+      },
+
+      {
+        path: 'Firedb_Umeda', component: () => import('components/Firedb_Umeda.vue'), name: 'Firedb_Umeda',
+        meta: {
+          menu: true,
+          label: 'Firedb_Umeda',
+          icon: 'note',
+          group: 'Japan',
+        },
+      },
+
+      {
+        path: 'Firedb_Todolist', component: () => import('components/Firedb_Todolist.vue'), name: 'Firedb_Todolist',
+        meta: {
+          menu: true,
+          label: 'Firedb_Todolist',
+          icon: 'note',
+          group: 'suao-Trip',
+        },
+      },
+
+      {
+        path: 'a2F_album_combine', component: () => import('components/a2F_album_combine.vue'), name: 'a2F_album_combine',
         meta: {
           menu: true,
           label: 'a2F_album_combine',
           icon: 'note',
           group: 'suao-Trip',
         },
-       },
+      },
 
-      { path: 'FCampLife', component: () => import('components/FCampLife.vue'), name: 'FCampLife',
+      {
+        path: 'FCampLife', component: () => import('components/FCampLife.vue'), name: 'FCampLife',
         meta: {
           menu: true,
           label: 'FCampLife',
           icon: 'note',
           group: 'suao-Trip',
         },
-       },
+      },
 
-      { path: 'FCampLife_add', component: () => import('components/FCampLife_add.vue'), name: 'FCampLife_add',
+      {
+        path: 'FCampLife_add', component: () => import('components/FCampLife_add.vue'), name: 'FCampLife_add',
         meta: {
           menu: true,
           label: 'FCampLife_add',
           icon: 'note',
           group: 'suao-Trip',
         },
-       },
+      },
 
-      { path: 'suao', component: () => import('components/suao.vue'), name: 'suao' ,
+      {
+        path: 'suao', component: () => import('components/suao.vue'), name: 'suao',
         meta: {
           menu: true,
           label: 'suao',
@@ -194,7 +228,8 @@ const routes = [
         },
       },
 
-      { path: 'suao_oneDay', component: () => import('components/suao_oneDay.vue'), name: 'suao_oneDay' ,
+      {
+        path: 'suao_oneDay', component: () => import('components/suao_oneDay.vue'), name: 'suao_oneDay',
         meta: {
           menu: true,
           label: 'suao_oneDay',
@@ -227,9 +262,9 @@ const routes = [
         path: 'Firedb_Tokyo', component: () => import('components/Firedb_Tokyo.vue'), name: 'Firedb_Tokyo',
         meta: {
           menu: true,
-          label: 'Tokyo - Image Map',
+          label: 'Firedb_Tokyo',
           icon: 'map',
-          group: 'Firebase',
+          group: 'Japan',
         },
       },
 
@@ -237,12 +272,11 @@ const routes = [
         path: 'Firedb_Numba', component: () => import('components/Firedb_Numba.vue'), name: 'Firedb_Numba',
         meta: {
           menu: true,
-          label: 'Numba - Image Map',
+          label: 'Firedb_Numba',
           icon: 'map',
-          group: 'Firebase',
+          group: 'Japan',
         },
       },
-
     ]
   },
 
