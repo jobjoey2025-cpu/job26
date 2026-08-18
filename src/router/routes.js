@@ -183,7 +183,7 @@ const routes = [
           menu: true,
           label: 'Firedb_Todolist',
           icon: 'note',
-          group: 'suao-Trip',
+          group: 'Doc',
         },
       },
 

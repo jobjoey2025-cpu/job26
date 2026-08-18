@@ -372,14 +372,33 @@
       </q-card-section>
 
       <q-card-section>
+        <!-- joey modify --- -->
         <div>
           <pre>
   Shift + Tab 鍵 (可向左縮排。)
   * 記錄我在哪裡找到遺失？然後規範這個入口。
+    pic 只能隨便拍，沒有多於力去整理才是key，快刀斬亂麻 just do it
+    拍了也沒辦法 仔細檢查 \ need 更短的 判斷 → 1hr 前 check list
+    todo list in Firedb then quasar 閱讀品質會更好 (短時間可以實現吸收)
+
   * 縮 and 作目錄 link \ 精簡 提高密度
   * 只做分類、去除重複位置與整理層級，盡量保留你的原句，不改變原本意思。
-  * 出發後就不開NB，Max is iPad。原則啟動前24hrs 就 ☏多休息☏ Focus One \ 不再 開發其他 Prj \ focus GDS
+  * 出發後就不開NB，Max is iPad。原則啟動前24hrs 就 ☏多休息☏ Focus One \
+  不再 開發其他 Prj \ modify 就 GDS - 隨手寫 no VSC
   * 終於想到 洗車廠 也可以 洗水槽 \ 不需要載回宜蘭院子
+
+
+記錄我在哪裡找到遺失？然後規範這個入口。
+      忘了再做一次 \ 直到 快刀斬亂麻 dash 很好用
+      pic 只能隨便拍，沒有多於力去整理才是key，need 快刀斬亂麻 just do it
+      拍了也沒辦法 仔細檢查 \ need 更好的內容品質 for 更短判斷 →
+  1hr 前 check list \\\
+  作目錄 Link \ 精簡 提高密度 \\\
+  熟悉熟練的區域 限制裡 \\\ google GPT
+  即使累，也知道從哪裡開始找 \\\ 1Btn 剪髮日
+  是 UI 要顯示 \\\ ?? 顯示的 Rule ?
+  封存設計 \\\ 怎麼找 ? key words \ 標籤 ?
+  Firedb then Quasar \\\ todo list in Firedb then quasar 閱讀品質會更好 (短時間可以實現吸收)
         </pre
           >
         </div>
