@@ -149,7 +149,6 @@ const routes = [
       { path: 'Firedb_Building_Onlyview', component: () => import('components/Firedb_Building_Onlyview.vue'), name: 'Firedb_Building_Onlyview' },
       // { path: 'Firedb_Numba', component: () => import('components/Firedb_Numba.vue'), name: 'Firedb_Numba' },
       // { path: 'Firedb_Tokyo', component: () => import('components/Firedb_Tokyo.vue'), name: 'Firedb_Tokyo' },
-      // { path: 'recent_sys', component: () => import('components/recent_sys.vue'), name: 'recent_sys' },
       { path: '1', component: () => import('components/1.vue'), name: '1' },
       { path: '2', component: () => import('components/2.vue'), name: '2' },
       { path: '2_2', component: () => import('components/2_2.vue'), name: '2_2' },
@@ -253,6 +252,16 @@ const routes = [
         meta: {
           menu: true,
           label: 'recent_sys',
+          icon: 'note',
+          group: 'Doc',
+        },
+      },
+
+      {
+        path: 'recent2', component: () => import('components/recent2.vue'), name: 'recent2',
+        meta: {
+          menu: true,
+          label: 'recent2',
           icon: 'note',
           group: 'Doc',
         },

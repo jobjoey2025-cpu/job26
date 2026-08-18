@@ -3,7 +3,10 @@
     <!-- Header -->
     <div class="row items-center q-mb-md">
       <div class="col">
-        <div class="text-h5 text-weight-bold">Recent System</div>
+        <div class="text-h5 text-weight-bold">
+          Recent System --
+          <q-btn color="primary" label="臨時筆記" @click="dialog0 = true" />
+        </div>
         <div class="text-caption text-grey-7">縮小範圍，縮小虛實之間的差距</div>
       </div>
 
@@ -344,14 +347,49 @@
         />
       </q-card-section>
     </q-card>
-    <q-btn color="primary" label="joey 的底氣 GGB" @click="dialog = true" />
-    -
-    <q-btn color="primary" label="減少投入 的項目" @click="dialog2 = true" />
-    -
-    <q-btn color="primary" label="新開發" @click="dialog3 = true" />
-    -
-    <q-btn color="primary" label="精神狀態 / 工作節奏" @click="dialog4 = true" />
+    <div>
+      <q-btn color="primary" label="joey 的底氣 GGB" @click="dialog = true" />
+      -
+      <q-btn color="primary" label="減少投入 的項目" @click="dialog2 = true" />
+      -
+      <q-btn color="primary" label="新開發" @click="dialog3 = true" />
+      -
+    </div>
+    <br />
+    <div>
+      <q-btn
+        color="primary"
+        label="精神狀態 / 工作節奏"
+        @click="dialog4 = true"
+      />
+    </div>
   </q-page>
+  <!-- Dialog0-->
+  <q-dialog v-model="dialog0">
+    <q-card style="min-width: 300px">
+      <q-card-section>
+        <div class="text-h6">臨時筆記 不能太多</div>
+      </q-card-section>
+
+      <q-card-section>
+        <div>
+          <pre>
+  Shift + Tab 鍵 (可向左縮排。)
+  * 記錄我在哪裡找到遺失？然後規範這個入口。
+  * 縮 and 作目錄 link \ 精簡 提高密度
+  * 只做分類、去除重複位置與整理層級，盡量保留你的原句，不改變原本意思。
+  * 出發後就不開NB，Max is iPad。原則啟動前24hrs 就 ☏多休息☏ Focus One \ 不再 開發其他 Prj \ focus GDS
+  * 終於想到 洗車廠 也可以 洗水槽 \ 不需要載回宜蘭院子
+        </pre
+          >
+        </div>
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="關閉" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 
   <!-- Dialog -->
   <q-dialog v-model="dialog">
@@ -480,7 +518,7 @@ digital area pic \ 在螢幕找 比較能推進 \
 │   ├── 降低視覺負荷
 │   ├── 降低認知負荷
 │   ├── 不主動出現在目前工作區
-│   └── 搜尋 / 標籤仍然可以找到	
+│   └── 搜尋 / 標籤仍然可以找到
         </pre
           >
         </div>
@@ -531,6 +569,7 @@ Room DB、Firebase DB、suao UI 都屬於搜尋與決策成本較高的工作。
 <script setup>
 import { ref, computed } from "vue";
 
+const dialog0 = ref(false);
 const dialog = ref(false);
 const dialog2 = ref(false);
 const dialog3 = ref(false);
