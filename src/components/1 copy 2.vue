@@ -1,460 +1,411 @@
 <template>
-  <q-page class="q-pa-md bg-grey-2">
-    <div class="row justify-center">
-      <div class="col-12 col-md-8">
-        <!-- Header -->
-        <q-card class="q-mb-md">
-          <q-card-section>
-            <div class="text-h5">🛠️ 工作 To-Do List</div>
+  <q-page class="q-pa-md">
+    <div class="page-container">
+      <!-- Header -->
+      <div class="text-h5 text-weight-bold q-mb-xs">Execution System</div>
 
-            <div class="text-caption text-grey">
-              {{ completedCount }} / {{ totalCount }} 已完成
-            </div>
+      <div class="text-caption text-grey-7 q-mb-md">
+        問題發現 → 執行 → 能見度 → 留白 → 意志力 → 否決 → 系統
+      </div>
 
-            <q-linear-progress
-              class="q-mt-sm"
-              :value="progress"
-              rounded
-              size="10px"
-              color="positive"
-            />
-          </q-card-section>
-        </q-card>
+      <!-- Outline -->
+      <q-card flat bordered class="q-mb-xl outline-card">
+        <q-card-section>
+          <div class="text-subtitle1 text-weight-bold q-mb-sm">📑 目錄大綱</div>
 
-        <!-- Loading -->
-        <div v-if="loading" class="row justify-center q-pa-lg">
-          <q-spinner color="primary" size="50px" />
-        </div>
-
-        <!-- Todo Categories -->
-
-        <q-card
-          v-for="(category, categoryIndex) in categories"
-          :key="category.id"
-          class="q-mb-md"
-        >
-          <q-card-section class="row items-center">
-            <div class="text-h6 col">
-              {{ category.icon }} {{ category.name }}
-            </div>
-
-            <q-btn
-              flat
-              round
-              dense
-              icon="keyboard_arrow_up"
-              :disable="categoryIndex === 0"
-              @click="moveCategory(category, 'up')"
-            >
-              <q-tooltip> 往上移動 </q-tooltip>
-            </q-btn>
-
-            <q-btn
-              flat
-              round
-              dense
-              icon="keyboard_arrow_down"
-              :disable="categoryIndex === categories.length - 1"
-              @click="moveCategory(category, 'down')"
-            >
-              <q-tooltip> 往下移動 </q-tooltip>
-            </q-btn>
-          </q-card-section>
-          <q-separator />
-
-          <q-list separator>
+          <q-list dense>
             <q-item
-              v-for="task in category.tasks"
-              :key="task.id"
+              v-for="item in sections"
+              :key="item.id"
               clickable
-              @click="toggleTask(category, task)"
+              tag="a"
+              :href="`#${item.id}`"
+              :class="{
+                'outline-active': activeSection === item.id,
+              }"
+              @click="scrollToSection(item.id)"
             >
               <q-item-section avatar>
-                <q-checkbox
-                  :model-value="task.done"
-                  @click.stop
-                  @update:model-value="toggleTask(category, task)"
+                <q-icon
+                  :name="item.icon"
+                  :color="activeSection === item.id ? item.color : 'grey-6'"
                 />
               </q-item-section>
 
               <q-item-section>
-                <q-item-label
+                <span
                   :class="{
-                    'text-strike text-grey': task.done,
-                    'text-weight-bold': task.priority,
+                    'text-weight-bold': activeSection === item.id,
                   }"
                 >
-                  {{ task.title }}
-                </q-item-label>
-
-                <q-item-label v-if="task.note" caption>
-                  {{ task.note }}
-                </q-item-label>
-              </q-item-section>
-
-              <q-item-section side>
-                <q-badge v-if="task.priority" color="red" label="優先" />
-
-                <q-icon
-                  v-if="task.done"
-                  name="check_circle"
-                  color="positive"
-                  size="sm"
-                />
+                  {{ item.title }}
+                </span>
               </q-item-section>
             </q-item>
           </q-list>
-        </q-card>
+        </q-card-section>
+      </q-card>
 
-        <!-- Add Task -->
-        <q-card>
-          <q-card-section>
-            <div class="text-h6">➕ 新增工作</div>
+      <!-- Timeline -->
+      <q-timeline color="primary">
+        <!-- 1 -->
+        <section
+          id="problem"
+          class="timeline-section"
+          ref="sectionRefs"
+          data-section="problem"
+        >
+          <q-timeline-entry heading icon="priority_high" color="negative">
+            🟥 發現問題
+          </q-timeline-entry>
 
-            <div class="row q-col-gutter-sm q-mt-sm">
-              <div class="col-12 col-sm-7">
-                <q-input
-                  v-model="newTask"
-                  outlined
-                  label="輸入工作內容"
-                  @keyup.enter="addTask"
-                />
-              </div>
-
-              <div class="col-12 col-sm-3">
-                <q-select
-                  v-model="selectedCategory"
-                  outlined
-                  label="分類"
-                  :options="categoryOptions"
-                  emit-value
-                  map-options
-                />
-              </div>
-
-              <div class="col-12 col-sm-2">
-                <q-btn
-                  color="primary"
-                  label="新增"
-                  class="full-width"
-                  size="lg"
-                  :loading="addingTask"
-                  @click="addTask"
-                />
-              </div>
+          <q-timeline-entry
+            title="先不要判斷自己"
+            subtitle="Problem"
+            icon="psychology"
+            color="negative"
+          >
+            <div class="text-body1">
+              思緒跑到 JPT，正要做 Su-Ao Project 沒動力， 更不要說 Room DB。
             </div>
-          </q-card-section>
-        </q-card>
-      </div>
+
+            <q-separator class="q-my-md" />
+
+            <div class="text-body1">不要先判斷自己，先試著問 GPT。</div>
+          </q-timeline-entry>
+        </section>
+
+        <!-- 2 -->
+        <section
+          id="test"
+          class="timeline-section"
+          ref="sectionRefs"
+          data-section="test"
+        >
+          <q-timeline-entry heading icon="flash_on" color="orange">
+            🔪 執行：10mins Test／快刀亂麻
+          </q-timeline-entry>
+
+          <q-timeline-entry
+            title="先做 10 分鐘"
+            subtitle="Action"
+            icon="timer"
+            color="orange"
+          >
+            <div class="text-body1">10mins Test 還是快刀亂麻？</div>
+
+            <div class="q-mt-md text-body1">先做 10 分鐘，不先判斷自己。</div>
+
+            <q-separator class="q-my-md" />
+
+            <div class="text-body1">
+              水／廁所：5mins 可到 \ 人不多、有位置 \ 就 GO。
+            </div>
+          </q-timeline-entry>
+        </section>
+
+        <!-- 3 -->
+        <section
+          id="visibility"
+          class="timeline-section"
+          ref="sectionRefs"
+          data-section="visibility"
+        >
+          <q-timeline-entry heading icon="visibility" color="primary">
+            👁 執行層級能見度
+          </q-timeline-entry>
+
+          <q-timeline-entry
+            title="讓下一步看得見"
+            subtitle="Visibility"
+            icon="visibility"
+            color="primary"
+          >
+            <q-list separator>
+              <q-item>
+                <q-item-section avatar>
+                  <q-icon name="list_alt" />
+                </q-item-section>
+                <q-item-section> Fn Prj Task List </q-item-section>
+              </q-item>
+
+              <q-item>
+                <q-item-section avatar>
+                  <q-icon name="storage" />
+                </q-item-section>
+                <q-item-section> PARA 有想到的 db（img map） </q-item-section>
+              </q-item>
+
+              <q-item>
+                <q-item-section avatar>
+                  <q-icon name="battery_charging_full" />
+                </q-item-section>
+                <q-item-section> Energy Level 當下 </q-item-section>
+              </q-item>
+
+              <q-item>
+                <q-item-section avatar>
+                  <q-icon name="phone_iphone" />
+                </q-item-section>
+                <q-item-section> 📱 Mobile Vue（list） </q-item-section>
+              </q-item>
+            </q-list>
+          </q-timeline-entry>
+        </section>
+
+        <!-- 4 -->
+        <section
+          id="space"
+          class="timeline-section"
+          ref="sectionRefs"
+          data-section="space"
+        >
+          <q-timeline-entry heading icon="space_bar" color="grey-7">
+            留白／重新取得視野
+          </q-timeline-entry>
+
+          <q-timeline-entry
+            title="留白"
+            subtitle="Reset"
+            icon="visibility"
+            color="grey-7"
+          >
+            <div class="text-body1">留白是系統重新取得視野的時間。</div>
+          </q-timeline-entry>
+        </section>
+
+        <!-- 5 -->
+        <section
+          id="energy"
+          class="timeline-section"
+          ref="sectionRefs"
+          data-section="energy"
+        >
+          <q-timeline-entry heading icon="battery_alert" color="amber-8">
+            🔋 意志力消耗管理
+          </q-timeline-entry>
+
+          <q-timeline-entry
+            title="不要用興趣判斷工作的價值"
+            subtitle="Energy"
+            icon="battery_alert"
+            color="amber-8"
+          >
+            <div class="text-body1">
+              不要用興趣判斷工作的價值（醫院宅 \ ROI）。
+            </div>
+
+            <q-separator class="q-my-md" />
+
+            <div class="text-body1">增加時間尺度。</div>
+          </q-timeline-entry>
+        </section>
+
+        <!-- 6 -->
+        <section
+          id="decision"
+          class="timeline-section"
+          ref="sectionRefs"
+          data-section="decision"
+        >
+          <q-timeline-entry heading icon="block" color="deep-orange">
+            否決條件／決策
+          </q-timeline-entry>
+
+          <q-timeline-entry
+            title="最後加一道否決條件"
+            subtitle="Decision"
+            icon="gavel"
+            color="deep-orange"
+          >
+            <div class="text-body1">
+              最後加一道「否決條件」， 有些事情不是平均分數可以解決的。
+            </div>
+          </q-timeline-entry>
+        </section>
+
+        <!-- 7 -->
+        <section
+          id="system"
+          class="timeline-section"
+          ref="sectionRefs"
+          data-section="system"
+        >
+          <q-timeline-entry heading icon="memory" color="deep-purple">
+            🧠 記憶／GPT／系統
+          </q-timeline-entry>
+
+          <q-timeline-entry
+            title="記憶仍然是重要技能"
+            subtitle="System"
+            icon="memory"
+            color="deep-purple"
+          >
+            <div class="text-body1">
+              🧠 記憶仍然是重要技能 \ 比 GPT 快 & 30y link maybe。
+            </div>
+
+            <q-separator class="q-my-md" />
+
+            <div class="text-body1">
+              sys 最好能解決人腦的疑問， 不然快刀亂麻損失會比較多。
+            </div>
+          </q-timeline-entry>
+        </section>
+      </q-timeline>
     </div>
   </q-page>
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
 
-import { onValue, push, ref as dbRef, update } from "firebase/database";
+const sections = [
+  {
+    id: "problem",
+    title: "🟥 發現問題",
+    icon: "priority_high",
+    color: "negative",
+  },
+  {
+    id: "test",
+    title: "🔪 10mins Test／快刀亂麻",
+    icon: "flash_on",
+    color: "orange",
+  },
+  {
+    id: "visibility",
+    title: "👁 執行層級能見度",
+    icon: "visibility",
+    color: "primary",
+  },
+  {
+    id: "space",
+    title: "留白／重新取得視野",
+    icon: "space_bar",
+    color: "grey-7",
+  },
+  {
+    id: "energy",
+    title: "🔋 意志力消耗管理",
+    icon: "battery_alert",
+    color: "amber-8",
+  },
+  {
+    id: "decision",
+    title: "否決條件／決策",
+    icon: "block",
+    color: "deep-orange",
+  },
+  {
+    id: "system",
+    title: "🧠 記憶／GPT／系統",
+    icon: "memory",
+    color: "deep-purple",
+  },
+];
 
-import { useQuasar } from "quasar";
-import { db } from "boot/firebase_todolist";
+const activeSection = ref("problem");
 
-const $q = useQuasar();
+const sectionRefs = ref([]);
 
-const loading = ref(true);
-const addingTask = ref(false);
+let observer = null;
 
-const newTask = ref("");
+function scrollToSection(id) {
+  activeSection.value = id;
+}
 
-/*
-  categories 結構：
+onMounted(async () => {
+  await nextTick();
 
-  [
-    {
-      id: 'firebase-category-id',
-      name: '建立／工具',
-      icon: '🧪',
-      tasks: [
-        {
-          id: 'firebase-task-id',
-          title: '建立化學箱',
-          done: false
-        }
-      ]
-    }
-  ]
-*/
-const categories = ref([]);
+  const elements = document.querySelectorAll(".timeline-section");
 
-const selectedCategory = ref(null);
+  observer = new IntersectionObserver(
+    (entries) => {
+      /*
+       * 找出目前最接近 viewport 上方
+       * 的 section。
+       */
+      const visibleSections = [...entries].filter(
+        (entry) => entry.isIntersecting
+      );
 
-let unsubscribe = null;
-
-/*
-|--------------------------------------------------------------------------
-| Firebase Reference
-|--------------------------------------------------------------------------
-*/
-
-const categoriesRef = dbRef(db, "todoCategories");
-
-/*
-|--------------------------------------------------------------------------
-| 即時抓取 Firebase Realtime Database
-|--------------------------------------------------------------------------
-*/
-
-// joey ---
-const loadCategories = () => {
-  unsubscribe = onValue(
-    categoriesRef,
-    (snapshot) => {
-      const data = snapshot.val();
-
-      if (!data) {
-        categories.value = [];
-        loading.value = false;
+      if (!visibleSections.length) {
         return;
       }
 
-      categories.value = Object.entries(data)
-        .map(([categoryId, category]) => {
-          const tasks = category.tasks
-            ? Object.entries(category.tasks).map(([taskId, task]) => ({
-                id: taskId,
-                title: task.title || "",
-                note: task.note || "",
-                done: task.done || false,
-                priority: task.priority || false,
-              }))
-            : [];
+      visibleSections.sort(
+        (a, b) =>
+          Math.abs(a.boundingClientRect.top) -
+          Math.abs(b.boundingClientRect.top)
+      );
 
-          return {
-            id: categoryId,
-            name: category.name || "",
-            icon: category.icon || "📁",
+      const current = visibleSections[0].target.dataset.section;
 
-            // ⭐ 從 Firebase 取得排序值
-            order: category.order ?? 999,
-
-            tasks,
-          };
-        })
-
-        // ⭐⭐⭐ 這裡就是你問的 .sort()
-        .sort((a, b) => a.order - b.order);
-
-      // 如果目前沒有選擇分類
-      // 自動選第一個
-      if (!selectedCategory.value && categories.value.length > 0) {
-        selectedCategory.value = categories.value[0].id;
+      if (current) {
+        activeSection.value = current;
       }
-
-      loading.value = false;
     },
+    {
+      /*
+       * 上方留 100px，
+       * 讓 header / outline 不會干擾判斷。
+       */
+      root: null,
 
-    (error) => {
-      console.error("Firebase load error:", error);
+      rootMargin: "-100px 0px -55% 0px",
 
-      $q.notify({
-        type: "negative",
-        message: "讀取 Firebase 資料失敗",
-      });
-
-      loading.value = false;
+      threshold: [0, 0.1, 0.5],
     }
   );
-};
-// joey ------
-/*
-|--------------------------------------------------------------------------
-| Category Options
-|--------------------------------------------------------------------------
-*/
 
-const categoryOptions = computed(() =>
-  categories.value.map((category) => ({
-    label: `${category.icon} ${category.name}`,
-    value: category.id,
-  }))
-);
-
-/*
-|--------------------------------------------------------------------------
-| Progress
-|--------------------------------------------------------------------------
-*/
-
-const totalCount = computed(() =>
-  categories.value.reduce((total, category) => total + category.tasks.length, 0)
-);
-
-const completedCount = computed(() =>
-  categories.value.reduce(
-    (total, category) =>
-      total + category.tasks.filter((task) => task.done).length,
-    0
-  )
-);
-
-const progress = computed(() => {
-  if (totalCount.value === 0) {
-    return 0;
-  }
-
-  return completedCount.value / totalCount.value;
+  elements.forEach((element) => observer.observe(element));
 });
 
-/*
-|--------------------------------------------------------------------------
-| Toggle Task
-|--------------------------------------------------------------------------
-*/
-
-const toggleTask = async (category, task) => {
-  try {
-    const newDoneValue = !task.done;
-
-    /*
-      Firebase Path:
-      todoCategories/
-        {categoryId}/
-          tasks/
-            {taskId}/
-              done
-    */
-
-    const taskRef = dbRef(db, `todoCategories/${category.id}/tasks/${task.id}`);
-
-    await update(taskRef, {
-      done: newDoneValue,
-    });
-  } catch (error) {
-    console.error("Update task error:", error);
-
-    $q.notify({
-      type: "negative",
-      message: "更新工作狀態失敗",
-    });
-  }
-};
-
-/*
-|--------------------------------------------------------------------------
-| Add Task
-|--------------------------------------------------------------------------
-*/
-
-const addTask = async () => {
-  if (!newTask.value.trim()) {
-    return;
-  }
-
-  if (!selectedCategory.value) {
-    $q.notify({
-      type: "warning",
-      message: "請先選擇分類",
-    });
-
-    return;
-  }
-
-  try {
-    addingTask.value = true;
-
-    /*
-      Firebase Path:
-      todoCategories/
-        {categoryId}/
-          tasks/
-    */
-
-    const tasksRef = dbRef(
-      db,
-      `todoCategories/${selectedCategory.value}/tasks`
-    );
-
-    await push(tasksRef, {
-      title: newTask.value.trim(),
-      note: "",
-      done: false,
-      priority: false,
-      createdAt: Date.now(),
-    });
-
-    newTask.value = "";
-
-    $q.notify({
-      type: "positive",
-      message: "工作已新增",
-    });
-  } catch (error) {
-    console.error("Add task error:", error);
-
-    $q.notify({
-      type: "negative",
-      message: "新增工作失敗",
-    });
-  } finally {
-    addingTask.value = false;
-  }
-};
-
-const moveCategory = async (category, direction) => {
-  const currentIndex = categories.value.findIndex(
-    (item) => item.id === category.id
-  );
-
-  const targetIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1;
-
-  if (
-    currentIndex === -1 ||
-    targetIndex < 0 ||
-    targetIndex >= categories.value.length
-  ) {
-    return;
-  }
-
-  const targetCategory = categories.value[targetIndex];
-
-  try {
-    const updates = {
-      [`todoCategories/${category.id}/order`]: targetCategory.order,
-
-      [`todoCategories/${targetCategory.id}/order`]: category.order,
-    };
-
-    await update(dbRef(db), updates);
-
-    $q.notify({
-      type: "positive",
-      message: "分類排序已更新",
-    });
-  } catch (error) {
-    console.error("Category order update error:", error);
-
-    $q.notify({
-      type: "negative",
-      message: "分類排序更新失敗",
-    });
-  }
-};
-
-/*
-|--------------------------------------------------------------------------
-| Lifecycle
-|--------------------------------------------------------------------------
-*/
-
-onMounted(() => {
-  loadCategories();
-});
-
-onUnmounted(() => {
-  /*
-    Firebase onValue 會回傳 unsubscribe function
-  */
-  if (unsubscribe) {
-    unsubscribe();
-  }
+onBeforeUnmount(() => {
+  observer?.disconnect();
 });
 </script>
+
+<style scoped>
+.page-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.outline-card {
+  border-radius: 12px;
+
+  /*
+   * 如果之後希望目錄固定在上面，
+   * 可以打開這個設定。
+   */
+  /*
+  position: sticky;
+  top: 16px;
+  z-index: 10;
+  */
+}
+
+.timeline-section {
+  scroll-margin-top: 80px;
+}
+
+/* Active Outline */
+.outline-active {
+  background: rgba(25, 118, 210, 0.08);
+  border-left: 3px solid var(--q-primary);
+}
+
+.outline-active .q-item__section {
+  color: var(--q-primary);
+}
+
+.text-body1 {
+  line-height: 1.8;
+}
+
+.q-timeline {
+  padding-bottom: 40px;
+}
+</style>
