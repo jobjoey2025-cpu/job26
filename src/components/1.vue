@@ -430,7 +430,7 @@ const activeSection = ref("problem");
 const timelineSections = [
   {
     id: "problem",
-    navTitle: "先確認問題",
+    navTitle: "先確認問題 \ room db NG",
     title: "先判斷真正的問題",
     subtitle: "Problem",
     icon: "priority_high",
@@ -446,7 +446,7 @@ const timelineSections = [
   },
   {
     id: "test",
-    navTitle: "10 分鐘測試",
+    navTitle: "10 分鐘測試 或快刀",
     title: "10 分鐘測試，或快刀斬亂麻",
     subtitle: "Action",
     icon: "flash_on",
@@ -461,7 +461,7 @@ const timelineSections = [
   },
   {
     id: "visibility",
-    navTitle: "讓行動可見",
+    navTitle: "讓行動可見 - List",
     title: "讓下一步看得見",
     subtitle: "Visibility",
     icon: "visibility",
@@ -496,7 +496,7 @@ const timelineSections = [
   },
   {
     id: "decision",
-    navTitle: "設定否決條件",
+    navTitle: "設定否決條件(風險 超控)",
     title: "最後加入否決條件",
     subtitle: "Decision",
     icon: "gavel",
@@ -510,7 +510,7 @@ const timelineSections = [
   },
   {
     id: "system",
-    navTitle: "建立外部記憶",
+    navTitle: "人腦記憶(印象 補腦)",
     title: "把記憶放進可回看的系統",
     subtitle: "System",
     icon: "memory",
