@@ -155,6 +155,9 @@ const routes = [
       { path: '2', component: () => import('components/2.vue'), name: '2' },
       { path: '2_2', component: () => import('components/2_2.vue'), name: '2_2' },
 
+      { path: '3', component: () => import('components/3.vue'), name: '3' },
+
+
 
 
       {
