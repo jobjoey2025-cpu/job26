@@ -11,6 +11,7 @@
             <p class="text-body2 text-grey-7 q-my-none">
               縮小範圍、縮小實驗、縮小差距，讓下一步清楚可執行。
             </p>
+            <p>* 記錄我在哪裡找到遺失？然後規範這個入口。</p>
           </div>
 
           <div class="col-12 col-sm-auto row q-gutter-sm">
@@ -26,7 +27,7 @@
               outline
               icon-right="open_in_new"
               label="開啟 GDS"
-              href="https://docs.google.com/spreadsheets/d/1bZ6SuThGhK8dr51nmCOE6hSAqwR_77cQm9xTqzoey4Q/edit?gid=0#gid=0"
+              href="https://docs.google.com/spreadsheets/d/1bZ6SuThGhK8dr51nmCOE6hSAqwR_77cQm9xTqzoey4Q/edit?gid=212352960#gid=212352960"
               target="_blank"
               rel="noopener noreferrer"
             />
@@ -127,21 +128,37 @@
 
             <!-- <p>aa</p> -->
             <template v-if="item.id === 'test'">
-              <p>pre 預先格式化元素 for CICD speed</p>
-              <!-- joey modify --- -->
-              <div>
-                <pre>
+              <div class="q-pa-md" style="max-width: 350px">
+                <q-expansion-item
+                  v-model="expanded"
+                  icon="perm_identity"
+                  label="⏱ 10mins Test"
+                  caption="觀察當下實際能力狀況"
+                >
+                  <!-- joey modify --- -->
+                  <p>pre 預先格式化元素 for CICD speed</p>
+                  <pre>
   <b>⏱ 10mins Test，不先判斷自己。</b>
   * Shift + Tab 鍵 (可向左縮排。)
   先做 10 分鐘， 用實際執行結果判斷自己現在的狀態。
   觀察當下實際能力狀況 (6個 level)
   確認 Fn → Project → Task → List 是否能具體 描述能見度
   做 10 分鐘 體驗後重新判斷 \ 現場訊息密度比數位高
-              </pre>
+
+  * 某金錢以下是情面 \ 以上是利益
+                  </pre>
+                </q-expansion-item>
               </div>
 
-              <div>
-                <pre>
+              <!-- joey modify --- -->
+              <div class="q-pa-md" style="max-width: 350px">
+                <q-expansion-item
+                  v-model="expanded"
+                  icon="perm_identity"
+                  label="⚔ 快刀亂麻"
+                  caption="just do it 突破"
+                >
+                  <pre>
   <b>⚔ 快刀亂麻 - just do it 突破。</b>
   * Shift + Tab 鍵 (可向左縮排。)
   一定要親自做的類型 (不用浪費精力逃避) :
@@ -164,6 +181,7 @@ BLG - 一寫就是四小時， 104 前要減少 TD6。
 * 必要時收兵 : 身體不好 \ <b>一直出錯 不順</b> \ 忘東忘西 \ Bugs 2個 ⇧
 * Allow Lose：允許今天沒有完成 \ 難過的事情 如果不能變好，就加速他的速度 減少存在感。
               </pre>
+                </q-expansion-item>
               </div>
             </template>
 
@@ -442,11 +460,12 @@ const timelineSections = [
       "描述目前狀態與預期結果。",
       "列出已知限制，區分事實、推測與情緒。",
       "把問題縮小成下一個可以驗證的假設。",
+      "recent 是 joey level 範圍，再大的規模 need 主流品牌系統。",
     ],
   },
   {
     id: "test",
-    navTitle: "10 分鐘測試 或快刀",
+    navTitle: "* 10 分鐘測試 或快刀",
     title: "10 分鐘測試，或快刀斬亂麻",
     subtitle: "Action",
     icon: "flash_on",
@@ -461,7 +480,7 @@ const timelineSections = [
   },
   {
     id: "visibility",
-    navTitle: "讓行動可見 - List",
+    navTitle: "* 讓行動可見 - List (6 Level) \ 範本",
     title: "讓下一步看得見",
     subtitle: "Visibility",
     icon: "visibility",
@@ -473,16 +492,20 @@ const timelineSections = [
   {
     id: "space",
     navTitle: "保留空白",
-    title: "留白：停止只見樹不見林",
+    title: "留白：防止只見樹不見林",
     subtitle: "Reset",
     icon: "space_bar",
     color: "grey-7",
     summary: "留出沒有輸入與任務的時間，重新檢查方向、限制與優先順序。",
-    details: ["先處理睡眠、飲食、移動與環境。", "清掉不再服務目前目標的項目。"],
+    details: [
+      "先處理睡眠、飲食、移動與環境。",
+      "清掉不再服務目前目標的項目。",
+      "預留緩衝，馬斯克 先砍。",
+    ],
   },
   {
     id: "energy",
-    navTitle: "管理能量",
+    navTitle: "x 管理能量 (意志力消耗)",
     title: "🔋 意志力消耗管理",
     subtitle: "Energy",
     icon: "battery_alert",
@@ -490,36 +513,53 @@ const timelineSections = [
     summary:
       "先看能量，再看任務；把最佳狀態保留給高價值、高不確定性的工作。<br>* 不要用高能量處理低價值問題",
     details: [
+      "增加時間尺度。",
       "低能量時以恢復與維持為主。",
       "高能量時處理判斷、創作與長期價值。",
+      "很多時後就是健保卡 找不到，身體不適 起不了床，這些 很難繞過的阻礙。",
+      "so 投資阻礙 solution 對即時解 is 有用的， ex recent sys page。",
+      "大型系統 引用 穩定主流大牌 在緊急Bug出現時 比較好解。",
+      "如果是突破 一定會跟預想的不一樣。所以留緩衝預算 is better",
+      "不要用興趣判斷工作的價值（醫院宅 \ ROI）。。",
     ],
   },
   {
     id: "decision",
-    navTitle: "設定否決條件(風險 超控)",
+    navTitle: "x 設定否決條件(風險 超控)",
     title: "最後加入否決條件",
     subtitle: "Decision",
     icon: "gavel",
     color: "deep-orange",
     summary: "好選項不只要有優點，也要通過底線檢查；任一重大風險成立就停止。",
     details: [
+      "事情太好 捨不得放棄",
       "是否傷害健康或基本生活？",
       "維護成本是否高於長期收益？",
       "是否擠壓更重要且不可逆的選擇？",
+      "issue 規劃沒完 不敢睡",
+      "事情太好 捨不得放棄",
+      "塞車 沒車位 沒辦法平躺 水廁",
+      "頭痛就要停，maybe 脹氣的影響",
     ],
   },
+
+  // 老婆花掉你一半以上的資產，小孩再花掉一半以上的資產，剩下的只有還到死的負債。一個男生，要活得很好，把爸媽照顧好，很簡單，...........但加上老婆小孩，基本上，注定負債一輩子。
+
   {
     id: "system",
-    navTitle: "人腦記憶(印象 補腦)",
-    title: "把記憶放進可回看的系統",
+    navTitle: "* 人腦記憶(印象 補腦)",
+    title: "記憶仍然是重要技能",
     subtitle: "System",
     icon: "memory",
     color: "deep-purple",
-    summary: "系統負責保存脈絡、連結與決策理由，人只需要專注在目前這一步。",
+    summary: "系統負責保存脈絡、連結與決策理由，人只需要專注在目前這一步。<br>🧠 記憶仍然是重要技能 \ 比 GPT 快 & 剩 30y 的身體連結。<br>把記憶放進可回看的系統",
     details: [
       "所有入口集中到一個索引。",
       "每個專案保留狀態、下一步與最近決策。",
       "定期整理，不要求一次完成。",
+      "只要一點文字 影像 joey 就很可能想起來。",
+      "GPT is good \ joey 有投錢。",
+      "sys 最好能解決人腦的疑問， 不然快刀亂麻損失會比較多。",
     ],
   },
 ];
@@ -528,7 +568,7 @@ const outlineItems = computed(() => [
   ...timelineSections,
   {
     id: "checklist",
-    title: "現場快速檢查",
+    title: "現場快速檢查 (不同 json)",
     icon: "checklist",
     color: "positive",
   },
