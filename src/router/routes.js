@@ -148,8 +148,6 @@ const routes = [
       { path: 'Firedb_Building', component: () => import('components/Firedb_Building.vue'), name: 'Firedb_Building' },
       { path: 'Firedb_Building_Onlyview', component: () => import('components/Firedb_Building_Onlyview.vue'), name: 'Firedb_Building_Onlyview' },
 
-      { path: 'GPT', component: () => import('components/GPT.vue'), name: 'GPT' },
-
 
       { path: '1', component: () => import('components/1.vue'), name: '1' },
       { path: '2', component: () => import('components/2.vue'), name: '2' },
@@ -157,6 +155,42 @@ const routes = [
 
       { path: '3', component: () => import('components/3.vue'), name: '3' },
 
+
+
+      // { path: 'GPT', component: () => import('components/GPT.vue'), name: 'GPT' },
+      // { path: 'Firedb_recent', component: () => import('components/Firedb_recent.vue'), name: 'Firedb_recent' },
+      // { path: 'recent26-08', component: () => import('components/recent26-08.vue'), name: 'recent26-08' },
+
+
+      {
+        path: 'recent26-08', component: () => import('components/recent26-08.vue'), name: 'recent26-08',
+        meta: {
+          menu: true,
+          label: 'recent26-08',
+          icon: 'note',
+          group: 'Doc',
+        },
+      },
+      {
+        path: 'GPT', component: () => import('components/GPT.vue'), name: 'GPT',
+        meta: {
+          menu: true,
+          label: 'GPT',
+          icon: 'note',
+          group: 'Doc',
+        },
+      },
+
+
+      {
+        path: 'Firedb_recent', component: () => import('components/Firedb_recent.vue'), name: 'Firedb_recent',
+        meta: {
+          menu: true,
+          label: 'Firedb_recent',
+          icon: 'note',
+          group: 'Doc',
+        },
+      },
 
 
 

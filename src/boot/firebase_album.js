@@ -22,6 +22,7 @@ const db = getDatabase(app)
 
 export { app, db }
 
+
 export default boot(() => { })
 
 
