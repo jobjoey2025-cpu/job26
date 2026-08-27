@@ -11,7 +11,10 @@
             <p class="text-body2 text-grey-7 q-my-none">
               縮小範圍、縮小實驗、縮小差距，讓下一步清楚可執行。
             </p>
-            <p>* 記錄我在哪裡找到遺失？然後規範強化這個入口。</p>
+            <p class="text-body2 text-grey-7 q-my-none">
+              * 記錄我在哪裡找到遺失？然後規範強化這個入口。
+            </p>
+            <p>* 這一個 Page 超過 500行 \ 不要再增加 Fn 只 modify \ use routes 嵌入其他 Page。</p>
           </div>
 
           <div class="col-12 col-sm-auto row q-gutter-sm">
@@ -455,7 +458,7 @@ const timelineSections = [
     color: "negative",
     // ，避免直接把工具或 AI 當成答案
     summary:
-      "卡住時先確認現在要解決的是什麼。 <br>* 思緒跑到 JPT，正要做 Su-Ao Project 沒動力， 更不要說 Room DB。<br>* 不要先判斷自己，先試著問 GPT。",
+      "思緒跑到 JPT，正要做 Su-Ao Project 沒動力， 更不要說 Room DB。<br>* 卡住時先確認現在要解決的是什麼。 <br>* 不要先判斷自己，先試著問 GPT。",
     details: [
       "描述目前狀態與預期結果。",
       "列出已知限制，區分事實、推測與情緒。",
@@ -471,11 +474,12 @@ const timelineSections = [
     icon: "flash_on",
     color: "orange",
     summary:
-      "先用低成本測試取得資訊；若事情已經足夠明確，就直接完成最小可交付結果。",
+      "* 水／廁所：5mins 可到 人不多、Parking 有位置 就 GO。",
     details: [
       "測試前先寫下要驗證的問題。",
       "設定 10 分鐘上限，時間到就整理結果。",
       "不能增加決策資訊的工作，指引用db，要計算判斷的停止或延後。",
+      "先用低成本測試取得資訊；若事情已經足夠明確，就直接完成最小可交付結果。",
     ],
   },
   {
@@ -486,7 +490,7 @@ const timelineSections = [
     icon: "visibility",
     color: "primary",
     summary:
-      "把 Function、Project、Task 與 List 分層呈現，並依目前能量選擇合適工作。",
+      "把 Function、Project、Task 與 List (有 Table 就算可以具體執行) 分層呈現，並依目前能量選擇合適工作。",
     details: [],
   },
   {
@@ -496,8 +500,9 @@ const timelineSections = [
     subtitle: "Reset",
     icon: "space_bar",
     color: "grey-7",
-    summary: "留出沒有輸入與任務的時間，重新檢查方向、限制與優先順序。",
+    summary: "停下來 \ 觀察環境 \ 想想 GGB。",
     details: [
+      "留出沒有輸入與任務的時間，重新檢查方向、限制與優先順序。",
       "先處理睡眠、飲食、移動與環境。",
       "清掉不再服務目前目標的項目。",
       "預留緩衝，馬斯克 先砍。",
@@ -511,9 +516,10 @@ const timelineSections = [
     icon: "battery_alert",
     color: "amber-8",
     summary:
-      "先看能量，再看任務；把最佳狀態保留給高價值、高不確定性的工作。<br>* 不要用高能量處理低價值問題",
+      "TD6 強制轉換心情 \ 減少內耗。<br> * 大規模 sys follow 大品牌 \ 自己想不贏大組織(choose NOT build) <br>* 不要用高能量處理低價值問題 ",
     details: [
       "增加時間尺度。",
+      "先看能量，再看任務；把最佳狀態保留給高價值、高不確定性的工作。<br>* 不要用高能量處理低價值問題",
       "低能量時以恢復與維持為主。",
       "高能量時處理判斷、創作與長期價值。",
       "很多時後就是健保卡 找不到，身體不適 起不了床，這些 很難繞過的阻礙。",
@@ -530,13 +536,14 @@ const timelineSections = [
     subtitle: "Decision",
     icon: "gavel",
     color: "deep-orange",
-    summary: "好選項不只要有優點，也要通過底線檢查；任一重大風險成立就停止。",
+    summary:
+      "塞車 沒車位 沒辦法平躺 水廁 \\ 好選項不只要有優點，也要通過底線檢查；<br>* 任一重大風險成立就停止。",
     details: [
+      "issue 規劃沒完 不敢睡",
       "事情太好 捨不得放棄",
       "是否傷害健康或基本生活？",
       "維護成本是否高於長期收益？",
       "是否擠壓更重要且不可逆的選擇？",
-      "issue 規劃沒完 不敢睡",
       "事情太好 捨不得放棄",
       "塞車 沒車位 沒辦法平躺 水廁",
       "頭痛就要停，maybe 脹氣的影響",
@@ -552,7 +559,8 @@ const timelineSections = [
     subtitle: "System",
     icon: "memory",
     color: "deep-purple",
-    summary: "系統負責保存脈絡、連結與決策理由，人只需要專注在目前這一步。<br>🧠 記憶仍然是重要技能 \ 比 GPT 快 & 剩 30y 的身體連結。<br>把記憶放進可回看的系統",
+    summary:
+      "🧠 記憶仍然是重要技能 \ 比 GPT 快 & 還有 30y 的身體連結。<br>* 系統負責保存脈絡、連結與決策理由，人只需要專注在目前這一步。<br>* 把記憶放進可回看的系統",
     details: [
       "所有入口集中到一個索引。",
       "每個專案保留狀態、下一步與最近決策。",
@@ -613,37 +621,38 @@ const energyLevels = [
   {
     level: 1,
     title: "生存",
-    description: "安全、補水、進食、睡眠與基本移動。",
+    description: "*最差裝況 \\ 生病醫院專心求生 other NG \\ 安全、補水、進食、睡眠與基本移動。\\ A4 paper + printer",
     color: "red-8",
   },
   {
     level: 2,
     title: "恢復",
-    description: "休息、散步、低刺激活動與環境整理。",
+    description: "*狀況不好 \\ relax TV TD6 wait 好轉睡好 \\ 休息、散步、低刺激活動與環境整理。",
     color: "orange-8",
   },
   {
     level: 3,
     title: "緊急",
-    description: "處理有時限、會快速擴大的必要事項。",
+    description: "*緊急處理 \\ team work，財產 旅行機會 \\ 處理有時限、會快速擴大的必要事項。\\ GKeep NB GDS",
     color: "amber-8",
   },
   {
     level: 4,
     title: "學習",
-    description: "練習技能、整理 SOP 與吸收關鍵知識。",
+    description: "* 104 work 這個會很硬 學很多。\\ 為了飛行保養廠 GoPro ready \\ GKeep \\ NB GDS \\ 練習技能、整理 SOP 與吸收關鍵知識。",
     color: "light-green-8",
   },
   {
     level: 5,
     title: "興趣",
-    description: "影像、創作、遊戲或其他能補充動力的活動。",
+    color: "teal-7",
+    description: "* ez hobby \\ pic video 球賽...hobby hobby hobby wait  hobby money \\ 影像、創作、遊戲或其他能補充動力的活動。\\ cellPhone Firebase Quasar",
     color: "teal-7",
   },
   {
     level: 6,
     title: "創造價值",
-    description: "高判斷、高創造、可累積長期成果的工作。",
+    description: "* 賺錢 開發 \\ 認知 處理 watch 3DP，ez go life limit \\ 高判斷、高創造、可累積長期成果的工作。\\ NB GDS VSC",
     color: "deep-purple-7",
   },
 ];
@@ -713,10 +722,12 @@ const checklistSections = ref([
     ],
   },
 ]);
-// modify -----
+// modify dialog -----
 const quickNotes = [
+  "有成功常用的Page: oneBtn(剪髮) \\ Crypto(BLG) \\ stock \\ recent \\ 1 2 2_2(autoBtn)。",
   "不是很會水電，是實地體驗 水電在那裏休息，一把手 怎麽處理 已知 未知問題。",
   "我都準備 GoPro 降低學習門檻(現場的記憶速度，拍一次就會了），wait 學現場飛行了。",
+  "Target is 醫院宅 GGB \ 無人機保養廠",
   "copy past speed。",
   "先寫下目前狀態、目標與限制，再決定要不要使用工具。",
   "需要更多資訊時，設定 10 分鐘或一小時的檢查點。",
