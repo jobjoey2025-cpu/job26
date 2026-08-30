@@ -92,9 +92,15 @@
     <!-- Area Selector -->
     <!-- ========================= -->
 
-    <AreaSelectorDialog
+    <!-- <AreaSelectorDialog
       v-model="showSelector"
       :categories="categories"
+      :selected="selectedCategory"
+      @select="onSelectCategory"
+    /> -->
+    <AreaSelectorDialog
+      v-model="showSelector"
+      :areas="areas"
       :selected="selectedCategory"
       @select="onSelectCategory"
     />
