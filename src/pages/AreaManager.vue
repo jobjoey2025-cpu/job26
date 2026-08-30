@@ -1,13 +1,16 @@
 <template>
   <q-page class="bg-grey-2 q-pa-md">
+    <!-- Header -->
     <AreaHeader v-model:view-mode="viewMode" />
 
+    <!-- Category -->
     <AreaCategoryBar
       v-model="selectedCategory"
       :categories="categories"
       @open-selector="showSelector = true"
     />
 
+    <!-- Error -->
     <q-banner
       v-if="displayError"
       rounded
@@ -15,6 +18,10 @@
     >
       {{ displayError }}
     </q-banner>
+
+    <!-- ========================= -->
+    <!-- Card View -->
+    <!-- ========================= -->
 
     <AreaCardView
       v-if="viewMode === 'card'"
@@ -25,6 +32,10 @@
       @todo="handleUpdateTodo"
     />
 
+    <!-- ========================= -->
+    <!-- List View -->
+    <!-- ========================= -->
+
     <AreaListView
       v-else
       :areas="filteredAreas"
@@ -32,6 +43,7 @@
       @upload="uploadPhoto"
     />
 
+    <!-- Empty -->
     <div
       v-if="!loading && filteredAreas.length === 0"
       class="text-center text-grey q-mt-xl"
@@ -39,9 +51,14 @@
       沒有符合的 Area
     </div>
 
+    <!-- Loading -->
     <q-inner-loading :showing="loading">
       <q-spinner color="primary" size="48px" />
     </q-inner-loading>
+
+    <!-- ========================= -->
+    <!-- Edit Dialog -->
+    <!-- ========================= -->
 
     <AreaEditDialog
       v-model="editDialog"
@@ -51,13 +68,29 @@
       @save="handleSaveArea"
     />
 
+    <!-- ========================= -->
+    <!-- Add Dialog -->
+    <!-- ========================= -->
+
     <AreaAddDialog
       v-model="addDialog"
       :saving="creatingArea"
       @create="handleCreateArea"
     />
 
-    <AreaPhotoPreview v-model="previewDialog" :image="previewImage" />
+    <!-- ========================= -->
+    <!-- Photo Preview -->
+    <!-- ========================= -->
+
+    <AreaPhotoPreview
+      v-model="previewDialog"
+      :image="previewImage"
+      :photos="previewPhotos"
+    />
+
+    <!-- ========================= -->
+    <!-- Area Selector -->
+    <!-- ========================= -->
 
     <AreaSelectorDialog
       v-model="showSelector"
@@ -65,6 +98,10 @@
       :selected="selectedCategory"
       @select="onSelectCategory"
     />
+
+    <!-- ========================= -->
+    <!-- Add Button -->
+    <!-- ========================= -->
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab color="primary" icon="add" @click="addDialog = true" />
@@ -75,41 +112,117 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 
+// =========================
+// Components
+// =========================
+
 import AreaHeader from "../components/area/AreaHeader.vue";
+
 import AreaCategoryBar from "../components/area/AreaCategoryBar.vue";
+
 import AreaCardView from "../components/area/AreaCardView.vue";
+
 import AreaListView from "../components/area/AreaListView.vue";
+
 import AreaEditDialog from "../components/area/dialogs/AreaEditDialog.vue";
+
 import AreaAddDialog from "../components/area/dialogs/AreaAddDialog.vue";
+
 import AreaPhotoPreview from "../components/area/dialogs/AreaPhotoPreview.vue";
+
 import AreaSelectorDialog from "../components/area/dialogs/AreaSelectorDialog.vue";
+
+// =========================
+// Data Layer
+// =========================
+
 import { useAreas } from "../composables/useAreas";
 
+// =========================
+// Categories
+// =========================
+
 const categories = [
-  { name: "All", icon: "apps" },
-  { name: "living", icon: "home" },
-  { name: "bath", icon: "shower" },
-  { name: "tent", icon: "holiday_village" },
-  { name: "car", icon: "no_crash" },
-  { name: "doc", icon: "document_scanner" },
+  {
+    name: "All",
+    icon: "apps",
+  },
+  {
+    name: "living",
+    icon: "home",
+  },
+  {
+    name: "bath",
+    icon: "shower",
+  },
+  {
+    name: "tent",
+    icon: "holiday_village",
+  },
+  {
+    name: "car",
+    icon: "no_crash",
+  },
+  {
+    name: "doc",
+    icon: "document_scanner",
+  },
 ];
 
+// =========================
+// Status
+// =========================
+
 const statusOptions = ["整理中", "施工中", "測試中", "待施工"];
+
+// =========================
+// Upload
+// =========================
+
 const uploadUrl =
   "https://script.google.com/macros/s/AKfycbzJ_d-j6Z_kxKvp7RNu_93yuueqZwiFoNfzm0FI_GR0SM9Av9bwwLRz0p3ZHkEYOE-j/exec";
 
-// 畫面狀態只留在頁面層；子元件不直接接觸 Firebase。
+// =========================
+// UI State
+// =========================
+
 const viewMode = ref("card");
+
 const selectedCategory = ref("All");
+
 const showSelector = ref(false);
+
 const editDialog = ref(false);
+
 const addDialog = ref(false);
+
 const previewDialog = ref(false);
+
+// =========================
+// Photo Preview State
+// =========================
+
+// 目前顯示的照片
 const previewImage = ref("");
+
+// 所有照片
+const previewPhotos = ref([]);
+
+// =========================
+// Area State
+// =========================
+
 const editArea = ref(null);
+
 const savingArea = ref(false);
+
 const creatingArea = ref(false);
+
 const operationError = ref("");
+
+// =========================
+// Firebase / Data
+// =========================
 
 const {
   areas,
@@ -122,23 +235,45 @@ const {
   createArea,
 } = useAreas();
 
+// =========================
+// Filter
+// =========================
+
 const filteredAreas = computed(() => {
-  if (selectedCategory.value === "All") return areas.value;
+  if (selectedCategory.value === "All") {
+    return areas.value;
+  }
+
   return areas.value.filter((area) => area.tag === selectedCategory.value);
 });
 
-const displayError = computed(
-  () => operationError.value || dataError.value,
-);
+// =========================
+// Error
+// =========================
+
+const displayError = computed(() => {
+  return operationError.value || dataError.value;
+});
+
+// =========================
+// Edit Area
+// =========================
 
 function openEdit(area) {
   operationError.value = "";
+
   editArea.value = area;
+
   editDialog.value = true;
 }
 
+// =========================
+// Save Area
+// =========================
+
 async function handleSaveArea(area) {
   savingArea.value = true;
+
   operationError.value = "";
 
   try {
@@ -150,6 +285,7 @@ async function handleSaveArea(area) {
       photos: area.photos ?? [],
       message: area.message ?? "",
     });
+
     editDialog.value = false;
   } catch (error) {
     operationError.value = error.message || "Area 儲存失敗";
@@ -158,12 +294,18 @@ async function handleSaveArea(area) {
   }
 }
 
+// =========================
+// Create Area
+// =========================
+
 async function handleCreateArea(area) {
   creatingArea.value = true;
+
   operationError.value = "";
 
   try {
     await createArea(area);
+
     addDialog.value = false;
   } catch (error) {
     operationError.value = error.message || "Area 新增失敗";
@@ -171,6 +313,10 @@ async function handleCreateArea(area) {
     creatingArea.value = false;
   }
 }
+
+// =========================
+// Todo
+// =========================
 
 async function handleUpdateTodo(areaId, index, done) {
   operationError.value = "";
@@ -182,21 +328,47 @@ async function handleUpdateTodo(areaId, index, done) {
   }
 }
 
-function showImage(image) {
+// =========================
+// Photo Preview
+// =========================
+
+function showImage(image, photos = []) {
   if (!image) return;
+
   previewImage.value = image;
+
+  previewPhotos.value = photos;
+
   previewDialog.value = true;
 }
+
+// =========================
+// Upload Photo
+// =========================
 
 function uploadPhoto() {
   window.open(uploadUrl, "_blank", "width=520,height=620");
 }
 
+// =========================
+// Category Selector
+// =========================
+
 function onSelectCategory(category) {
   selectedCategory.value = category;
+
   showSelector.value = false;
 }
 
-onMounted(loadAreas);
-onBeforeUnmount(dispose);
+// =========================
+// Lifecycle
+// =========================
+
+onMounted(() => {
+  loadAreas();
+});
+
+onBeforeUnmount(() => {
+  dispose();
+});
 </script>

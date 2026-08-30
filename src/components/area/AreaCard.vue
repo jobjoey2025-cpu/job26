@@ -1,5 +1,9 @@
 <template>
   <q-card bordered class="area-card full-height">
+    <!-- ========================= -->
+    <!-- Header -->
+    <!-- ========================= -->
+
     <q-card-section>
       <div class="row items-center no-wrap q-gutter-sm">
         <q-avatar color="grey-3" size="56px">
@@ -7,12 +11,11 @@
         </q-avatar>
 
         <div class="col">
-          <div class="text-h6">{{ area.name }}</div>
-          <q-chip
-            dense
-            :color="statusColor(area.status)"
-            text-color="white"
-          >
+          <div class="text-h6">
+            {{ area.name }}
+          </div>
+
+          <q-chip dense :color="statusColor(area.status)" text-color="white">
             {{ area.status || "未設定" }}
           </q-chip>
         </div>
@@ -23,47 +26,66 @@
           icon="edit"
           color="primary"
           aria-label="編輯 Area"
-          @click="$emit('edit', area)"
+          @click="emit('edit', area)"
         />
       </div>
     </q-card-section>
 
     <q-separator />
 
+    <!-- ========================= -->
+    <!-- Photo -->
+    <!-- ========================= -->
+
     <q-card-section>
       <div class="text-subtitle2 q-mb-sm">📷 Photo</div>
+
       <div class="row q-gutter-sm">
+        <!-- 照片 -->
         <q-img
           v-for="(image, index) in photos"
           :key="`${image}-${index}`"
           :src="image"
           class="area-photo"
           fit="cover"
-          @click="$emit('photo', image)"
+          @click="openPhoto(image)"
         />
 
+        <!-- 新增照片 -->
         <q-btn
           outline
           icon="add_a_photo"
           label="新增"
-          @click="$emit('upload', area)"
+          @click="emit('upload', area)"
         />
       </div>
     </q-card-section>
+
+    <!-- ========================= -->
+    <!-- Issue -->
+    <!-- ========================= -->
 
     <q-card-section>
       <div class="text-subtitle2">🐞 Issue - {{ area.tag || "未分類" }}</div>
 
       <q-list v-if="issues.length" separator>
         <q-item v-for="(issue, index) in issues" :key="`${issue}-${index}`">
-          <q-item-section>{{ issue }}</q-item-section>
+          <q-item-section>
+            {{ issue }}
+          </q-item-section>
+
           <q-item-section side>
             <q-icon color="negative" name="warning" />
           </q-item-section>
         </q-item>
       </q-list>
+
       <div v-else class="text-caption text-grey-6 q-mt-sm">目前沒有 Issue</div>
     </q-card-section>
+
+    <!-- ========================= -->
+    <!-- Todo -->
+    <!-- ========================= -->
 
     <q-card-section>
       <div class="text-subtitle2">🔧 Todo</div>
@@ -74,17 +96,22 @@
           :key="`${todo.name}-${index}`"
           :model-value="Boolean(todo.done)"
           :label="todo.name"
-          @update:model-value="
-            $emit('todo', area.id, index, $event)
-          "
+          @update:model-value="emit('todo', area.id, index, $event)"
         />
       </div>
+
       <div v-else class="text-caption text-grey-6 q-mt-sm">目前沒有 Todo</div>
     </q-card-section>
 
+    <!-- ========================= -->
+    <!-- Cost -->
+    <!-- ========================= -->
+
     <q-card-section>
       <q-banner rounded class="bg-green-1">
-        💰 預估成本 <strong>{{ area.cost ?? 0 }} 元</strong>
+        💰 預估成本
+
+        <strong> {{ area.cost ?? 0 }} 元 </strong>
       </q-banner>
     </q-card-section>
   </q-card>
@@ -93,6 +120,10 @@
 <script setup>
 import { computed } from "vue";
 
+// =========================
+// Props
+// =========================
+
 const props = defineProps({
   area: {
     type: Object,
@@ -100,44 +131,86 @@ const props = defineProps({
   },
 });
 
-defineEmits(["edit", "photo", "upload", "todo"]);
+// =========================
+// Events
+// =========================
 
-const photos = computed(() =>
-  Array.isArray(props.area.photos) ? props.area.photos.filter(Boolean) : [],
-);
-const issues = computed(() =>
-  Array.isArray(props.area.issues) ? props.area.issues : [],
-);
-const todos = computed(() =>
-  Array.isArray(props.area.todo) ? props.area.todo : [],
-);
+const emit = defineEmits(["edit", "photo", "upload", "todo"]);
+
+// =========================
+// Photos
+// =========================
+
+const photos = computed(() => {
+  return Array.isArray(props.area.photos)
+    ? props.area.photos.filter(Boolean)
+    : [];
+});
+
+// =========================
+// Issues
+// =========================
+
+const issues = computed(() => {
+  return Array.isArray(props.area.issues) ? props.area.issues : [];
+});
+
+// =========================
+// Todos
+// =========================
+
+const todos = computed(() => {
+  return Array.isArray(props.area.todo) ? props.area.todo : [];
+});
+
+// =========================
+// Photo Preview
+// =========================
+
+function openPhoto(image) {
+  if (!image) return;
+
+  // 同時傳：
+  // 1. 被點擊的照片
+  // 2. 此 Area 的全部照片
+  emit("photo", image, photos.value);
+}
+
+// =========================
+// Status Color
+// =========================
 
 function statusColor(status) {
-  return {
-    整理中: "orange",
-    施工中: "blue",
-    測試中: "green",
-    待施工: "grey",
-  }[status] || "grey";
+  return (
+    {
+      整理中: "orange",
+      施工中: "blue",
+      測試中: "green",
+      待施工: "grey",
+    }[status] || "grey"
+  );
 }
 </script>
 
 <style scoped>
 .area-card {
   border-radius: 16px;
+
   transition: transform 0.25s, box-shadow 0.25s;
 }
 
 .area-card:hover {
   transform: translateY(-3px);
+
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
 }
 
 .area-photo {
   width: 90px;
   height: 70px;
+
   border-radius: 8px;
+
   cursor: pointer;
 }
 </style>
-

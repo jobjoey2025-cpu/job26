@@ -1,5 +1,9 @@
 
 ----- 26-08 -----
+
+BLG : https://joey20090710.blogspot.com/2026/08/areamanagervue-cicd.html
+
+
 主資料夾 : VTOL\src\components\area
 composables/useAreas.js
 pages/AreaManager.vue
