@@ -147,6 +147,8 @@ const routes = [
       { path: 'Firedb_RC10_Onlyview', component: () => import('components/Firedb_RC10_Onlyview.vue'), name: 'Firedb_RC10_Onlyview' },
       { path: 'Firedb_Building', component: () => import('components/Firedb_Building.vue'), name: 'Firedb_Building' },
       { path: 'Firedb_Building_Onlyview', component: () => import('components/Firedb_Building_Onlyview.vue'), name: 'Firedb_Building_Onlyview' },
+      { path: 'GPS', component: () => import('components/GPS.vue'), name: 'GPS' },
+
 
 
       { path: '1', component: () => import('components/1.vue'), name: '1' },
@@ -324,6 +326,69 @@ const routes = [
           group: 'Japan',
         },
       },
+
+
+
+      // AreaManager 重構 \
+      // { path: '1', component: () => import('components/1.vue'), name: '1' },
+      // 主資料夾 : VTOL\src\components\area
+      // composables/useAreas.js
+      // pages/AreaManager.vue
+
+      {
+        path: 'AreaManager', component: () => import('pages/AreaManager.vue'), name: 'AreaManager',
+        meta: {
+          menu: true,
+          label: 'AreaManager',
+          icon: 'map',
+          group: 'Doc',
+        },
+      },
+      {
+        path: 'AreaCard',
+        component: () => import('components/area/AreaCard.vue'),
+        name: 'AreaCard'
+      },
+      {
+        path: 'AreaCardView',
+        component: () => import('components/area/AreaCardView.vue'),
+        name: 'AreaCardView'
+      },
+      {
+        path: 'AreaCategoryBar',
+        component: () => import('components/area/AreaCategoryBar.vue'),
+        name: 'AreaCategoryBar'
+      },
+
+      {
+        path: 'AreaHeader',
+        component: () => import('components/area/AreaHeader.vue'),
+        name: 'AreaHeader'
+      },
+      {
+        path: 'AreaListView',
+        component: () => import('components/area/AreaListView.vue'),
+        name: 'AreaListView'
+      },
+
+      {
+        path: 'dialogs/AreaAddDialog',
+        component: () => import('components/area/dialogs/AreaAddDialog.vue'),
+        name: 'AreaAddDialog'
+      },
+      {
+        path: 'AreaEditDialog',
+        component: () => import('components/area/dialogs/AreaEditDialog.vue'),
+        name: 'AreaEditDialog'
+      },
+
+      {
+        path: 'AreaSelectorDialog',
+        component: () => import('components/area/dialogs/AreaSelectorDialog.vue'),
+        name: 'AreaSelectorDialog'
+      },
+      // ----- ----- -----
+
     ]
   },
 

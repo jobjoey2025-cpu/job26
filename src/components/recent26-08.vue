@@ -3,7 +3,8 @@
     <main class="page-container">
       <header class="q-mb-lg">
         <div class="row items-start justify-between q-col-gutter-md">
-          <div class="col-12 col-sm">
+          <!-- <div class="col-12 col-sm"> -->
+          <div class="col-12 col-sm-auto">
             <div class="text-overline text-primary text-weight-bold">
               Execution System
             </div>
@@ -14,7 +15,30 @@
             <p class="text-body2 text-grey-7 q-my-none">
               * 記錄我在哪裡找到遺失？然後規範強化這個入口。
             </p>
-            <p>* 這一個 Page 超過 500行 \ 不要再增加 Fn 只 modify \ use routes 嵌入其他 Page。</p>
+            <p class="text-body2 text-grey-7 q-my-none">* GPT | Firedb_recent | Firedb_Todolist</p>
+            <p>不要要求自己記住：應該讓系統自動顯示。</p>
+            <!-- <p>
+              * 這一個 Page 超過 500行 \ 不要再增加 Fn 只 modify \ use routes
+              嵌入其他 Page。
+            </p> -->
+
+            <q-expansion-item
+              v-model="expanded"
+              icon="perm_identity"
+              label="◎ 最近重點"
+              caption="最近 遇到的問題"
+            >
+              <!-- joey modify --- -->
+              <pre>
+讓系統在沒有情緒時，仍然可以指出下一步。
+
+* 這一個 Page 超過 500行 \ 不要再增加 Fn 只 modify \ use routes 嵌入其他 Page。
+* 發現 寫執行計畫 很花時間幾天 幾週
+## 物業管理 不是小規模，Room db 也是選不到 好 system
+* 事情很多可以做(基本2F做不完 還有阿媽花園) \ 但是有 team 組織的 多一點優先, after 身體狀況  \ 尤其是運動項目 \
+* GPT 對 SuAo 物業管理的效果，沒有 Quasar db 有效。
+              </pre>
+            </q-expansion-item>
           </div>
 
           <div class="col-12 col-sm-auto row q-gutter-sm">
@@ -29,7 +53,7 @@
               color="primary"
               outline
               icon-right="open_in_new"
-              label="開啟 GDS"
+              label="開啟job2021"
               href="https://docs.google.com/spreadsheets/d/1bZ6SuThGhK8dr51nmCOE6hSAqwR_77cQm9xTqzoey4Q/edit?gid=212352960#gid=212352960"
               target="_blank"
               rel="noopener noreferrer"
@@ -468,13 +492,12 @@ const timelineSections = [
   },
   {
     id: "test",
-    navTitle: "* 10 分鐘測試 或快刀",
+    navTitle: "* 10 分鐘測試 或 快刀",
     title: "10 分鐘測試，或快刀斬亂麻",
     subtitle: "Action",
     icon: "flash_on",
     color: "orange",
-    summary:
-      "* 水／廁所：5mins 可到 人不多、Parking 有位置 就 GO。",
+    summary: "* 水／廁所：5mins 可到 人不多、Parking 有位置 就 GO。",
     details: [
       "測試前先寫下要驗證的問題。",
       "設定 10 分鐘上限，時間到就整理結果。",
@@ -519,6 +542,7 @@ const timelineSections = [
       "TD6 強制轉換心情 \ 減少內耗。<br> * 大規模 sys follow 大品牌 \ 自己想不贏大組織(choose NOT build) <br>* 不要用高能量處理低價值問題 ",
     details: [
       "增加時間尺度。",
+      "如果 目前沒辦法完成，儘量先把 BOX 做出來。大綱 能常用的元素",
       "先看能量，再看任務；把最佳狀態保留給高價值、高不確定性的工作。<br>* 不要用高能量處理低價值問題",
       "低能量時以恢復與維持為主。",
       "高能量時處理判斷、創作與長期價值。",
@@ -621,38 +645,44 @@ const energyLevels = [
   {
     level: 1,
     title: "生存",
-    description: "*最差裝況 \\ 生病醫院專心求生 other NG \\ 安全、補水、進食、睡眠與基本移動。\\ A4 paper + printer",
+    description:
+      "*最差裝況 \\ 生病醫院專心求生 other NG \\ 安全、補水、進食、睡眠與基本移動。\\ A4 paper + printer",
     color: "red-8",
   },
   {
     level: 2,
     title: "恢復",
-    description: "*狀況不好 \\ relax TV TD6 wait 好轉睡好 \\ 休息、散步、低刺激活動與環境整理。",
+    description:
+      "*狀況不好 \\ relax TV TD6 wait 好轉睡好 \\ 休息、散步、低刺激活動與環境整理。",
     color: "orange-8",
   },
   {
     level: 3,
     title: "緊急",
-    description: "*緊急處理 \\ team work，財產 旅行機會 \\ 處理有時限、會快速擴大的必要事項。\\ GKeep NB GDS",
+    description:
+      "*緊急處理 \\ team work，財產 旅行機會 \\ 處理有時限、會快速擴大的必要事項。\\ GKeep NB GDS",
     color: "amber-8",
   },
   {
     level: 4,
     title: "學習",
-    description: "* 104 work 這個會很硬 學很多。\\ 為了飛行保養廠 GoPro ready \\ GKeep \\ NB GDS \\ 練習技能、整理 SOP 與吸收關鍵知識。",
+    description:
+      "* 104 work 這個會很硬 學很多。\\ 為了飛行保養廠 GoPro ready \\ GKeep \\ NB GDS \\ 練習技能、整理 SOP 與吸收關鍵知識。",
     color: "light-green-8",
   },
   {
     level: 5,
     title: "興趣",
     color: "teal-7",
-    description: "* ez hobby \\ pic video 球賽...hobby hobby hobby wait  hobby money \\ 影像、創作、遊戲或其他能補充動力的活動。\\ cellPhone Firebase Quasar",
+    description:
+      "* ez hobby \\ pic video 球賽...hobby hobby hobby wait  hobby money \\ 影像、創作、遊戲或其他能補充動力的活動。\\ cellPhone Firebase Quasar",
     color: "teal-7",
   },
   {
     level: 6,
     title: "創造價值",
-    description: "* 賺錢 開發 \\ 認知 處理 watch 3DP，ez go life limit \\ 高判斷、高創造、可累積長期成果的工作。\\ NB GDS VSC",
+    description:
+      "* 賺錢 開發 \\ 認知 處理 watch 3DP，ez go life limit \\ 高判斷、高創造、可累積長期成果的工作。\\ NB GDS VSC",
     color: "deep-purple-7",
   },
 ];
