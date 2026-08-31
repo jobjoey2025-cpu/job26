@@ -331,7 +331,7 @@ const routes = [
 
       // RecentSystem
 
-
+      { path: 'RecentSystem', component: () => import('pages/RecentSystem.vue'), name: 'RecentSystem' },
       { path: 'RecentSystemChecklist', component: () => import('components/recentSystem/RecentSystemChecklist.vue'), name: 'RecentSystemChecklist' },
       { path: 'RecentSystemHeader', component: () => import('components/recentSystem/RecentSystemHeader.vue'), name: 'RecentSystemHeader' },
       { path: 'RecentSystemNoteDialog', component: () => import('components/recentSystem/RecentSystemNoteDialog.vue'), name: 'RecentSystemNoteDialog' },
@@ -339,7 +339,8 @@ const routes = [
       { path: 'RecentSystemTest', component: () => import('components/recentSystem/RecentSystemTest.vue'), name: 'RecentSystemTest' },
       { path: 'RecentSystemTimeline', component: () => import('components/recentSystem/RecentSystemTimeline.vue'), name: 'RecentSystemTimeline' },
       { path: 'RecentSystemVisibility', component: () => import('components/recentSystem/RecentSystemVisibility.vue'), name: 'RecentSystemVisibility' },
-      { path: 'RecentSystem', component: () => import('pages/RecentSystem.vue'), name: 'RecentSystem' },
+      { path: 'recentSelectDialog', component: () => import('components/recentSystem/recentSelectDialog.vue'), name: 'recentSelectDialog' },
+
 
 
       // AreaManager 重構 \

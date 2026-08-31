@@ -66,7 +66,7 @@ Recent System
             label="3☏ FCards"
             :to="{ name: 'AreaManager' }"
           />
-          <q-btn
+          <!-- <q-btn
             color="primary"
             unelevated
             icon="sticky_note_2"
@@ -91,9 +91,28 @@ Recent System
             href="https://docs.google.com/spreadsheets/d/1bZ6SuThGhK8dr51nmCOE6hSAqwR_77cQm9xTqzoey4Q/edit?gid=212352960#gid=212352960"
             target="_blank"
             rel="noopener noreferrer"
-          />
+          /> -->
 
           <q-btn label="biz 排序" color="primary" @click="alert = true" />
+
+          <!-- 選擇區域 -->
+          <div class="col-12 col-sm-auto">
+            <q-btn
+              icon="grid_view"
+              label="選擇區域"
+              color="primary"
+              unelevated
+              @click="showSelector = true"
+            />
+          </div>
+          <!-- Area Selector Dialog -->
+          <recentSelectDialog
+            v-model="showSelector"
+            :items="recentItems"
+            :selected="selectedRecentItem"
+            @select="onRecentSelect"
+          />
+
           <q-dialog v-model="alert">
             <q-card>
               <q-card-section>
@@ -127,10 +146,112 @@ Quasar FireJson in cellPhone 還是最重要的
 <script setup>
 import { ref } from "vue";
 
-defineEmits(["open-notes"]);
-const alert = ref(false);
+// defineEmits(["open-notes"]);
+// const alert = ref(false);
+// const expanded = ref(false);
 
+import { useRouter } from "vue-router";
+// import recentSelectDialog from "../components/recentSystem/recentSelectDialog.vue";
+import recentSelectDialog from "./recentSelectDialog.vue";
+
+
+// defineEmits(["open-notes"]);
+// Emits
+const emit = defineEmits(["open-notes"]);
+// Router
+const router = useRouter();
+
+// Other state
+const alert = ref(false);
 const expanded = ref(false);
+
+const showSelector = ref(false);
+
+// Recent Items
+const recentItems = [
+  {
+    id: "notes",
+    label: "快速筆記",
+    icon: "sticky_note_2",
+    action: "open-notes",
+  },
+
+  {
+    id: "fcards",
+    label: "3☏ FCards",
+    icon: "sticky_note_2",
+    action: "route",
+    route: {
+      name: "AreaManager",
+    },
+  },
+
+  {
+    id: "todo",
+    label: "4☏ ToDo",
+    icon: "sticky_note_2",
+    action: "route",
+    route: {
+      name: "Firedb_Todolist",
+    },
+  },
+
+  {
+    id: "biz-sort",
+    label: "biz 排序",
+    icon: "sort",
+    action: "alert",
+  },
+
+  {
+    id: "gskld",
+    label: "2☏ Gskld",
+    icon: "open_in_new",
+    iconRight: "open_in_new",
+    color: "primary",
+    outline: true,
+    action: "external",
+    href: "https://docs.google.com/spreadsheets/d/1EzmKCAbNmE5hW3eHsr2sKJAFDMcuJJbN4dEv3vWekEk/edit?gid=56163573#gid=56163573",
+  },
+];
+
+// Recent Select Dialog
+const showRecentSelectDialog = ref(false);
+const selectedRecentItem = ref(null);
+// 點擊 Recent Button
+function openRecentSelectDialog(item) {
+  selectedRecentItem.value = item;
+  showRecentSelectDialog.value = true;
+}
+// Dialog 選擇項目後執行
+function onRecentSelect(item) {
+  showRecentSelectDialog.value = false;
+  if (!item) {
+    return;
+  }
+  switch (item.action) {
+    // 快速筆記
+    case "open-notes":
+      emit("open-notes");
+      break;
+    // Vue Router
+    case "route":
+      if (item.route) {
+        router.push(item.route);
+      }
+      break;
+    // biz 排序
+    case "alert":
+      alert.value = true;
+      break;
+    // 外部網址
+    case "external":
+      if (item.href) {
+        window.open(item.href, "_blank", "noopener,noreferrer");
+      }
+      break;
+  }
+}
 </script>
 
 <style scoped>
