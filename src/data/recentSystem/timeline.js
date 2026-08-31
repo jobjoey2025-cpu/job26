@@ -1,0 +1,135 @@
+export const timelineSections = [
+  {
+    id: "problem",
+    navTitle: "先確認問題 \ room db NG",
+    title: "先判斷真正的問題",
+    subtitle: "Problem",
+    icon: "priority_high",
+    color: "negative",
+    // ，避免直接把工具或 AI 當成答案
+    summary:
+      "思緒跑到 JPT，正要做 Su-Ao Project 沒動力， 更不要說 Room DB。<br>* 卡住時先確認現在要解決的是什麼。 <br>* 不要先判斷自己，先試著問 GPT。",
+    details: [
+      "描述目前狀態與預期結果。",
+      "列出已知限制，區分事實、推測與情緒。",
+      "把問題縮小成下一個可以驗證的假設。",
+      "recent 是 joey level 範圍，再大的規模 need 主流品牌系統。",
+    ],
+  },
+  {
+    id: "test",
+    navTitle: "* 10 分鐘測試 或 快刀",
+    title: "1☏ 10 分鐘測試，或快刀斬亂麻",
+    subtitle: "Action",
+    icon: "flash_on",
+    color: "orange",
+    summary: "* 水／廁所：5mins 可到 人不多、Parking 有位置 就 GO。",
+    details: [
+      "測試前先寫下要驗證的問題。",
+      "設定 10 分鐘上限，時間到就整理結果。",
+      "不能增加決策資訊的工作，指引用db，要計算判斷的停止或延後。",
+      "先用低成本測試取得資訊；若事情已經足夠明確，就直接完成最小可交付結果。",
+    ],
+  },
+  {
+    id: "visibility",
+    navTitle: "* 讓行動可見 - List (6 Level) \ 範本",
+    title: "讓下一步看得見",
+    subtitle: "Visibility",
+    icon: "visibility",
+    color: "primary",
+    summary:
+      "把 Function、Project、Task 與 List (有 Table 就算可以具體執行) 分層呈現，並依目前能量選擇合適工作。",
+    details: [],
+  },
+  {
+    id: "space",
+    navTitle: "保留空白",
+    title: "留白：防止只見樹不見林",
+    subtitle: "Reset",
+    icon: "space_bar",
+    color: "grey-7",
+    summary: "停下來 \ 觀察環境 \ 想想 GGB。",
+    details: [
+      "留出沒有輸入與任務的時間，重新檢查方向、限制與優先順序。",
+      "先處理睡眠、飲食、移動與環境。",
+      "清掉不再服務目前目標的項目。",
+      "預留緩衝，馬斯克 先砍。",
+    ],
+  },
+  {
+    id: "energy",
+    navTitle: "x 管理能量 (意志力消耗)",
+    title: "🔋 意志力消耗管理",
+    subtitle: "Energy",
+    icon: "battery_alert",
+    color: "amber-8",
+    summary:
+      "TD6 強制轉換心情 \ 減少內耗。<br> * 大規模 sys follow 大品牌 \ 自己想不贏大組織(choose NOT build) <br>* 不要用高能量處理低價值問題 ",
+    details: [
+      "增加時間尺度。",
+      "如果 目前沒辦法完成，儘量先把 BOX 做出來。大綱 能常用的元素",
+      "先看能量，再看任務；把最佳狀態保留給高價值、高不確定性的工作。<br>* 不要用高能量處理低價值問題",
+      "低能量時以恢復與維持為主。",
+      "高能量時處理判斷、創作與長期價值。",
+      "很多時後就是健保卡 找不到，身體不適 起不了床，這些 很難繞過的阻礙。",
+      "so 投資阻礙 solution 對即時解 is 有用的， ex recent sys page。",
+      "大型系統 引用 穩定主流大牌 在緊急Bug出現時 比較好解。",
+      "如果是突破 一定會跟預想的不一樣。所以留緩衝預算 is better",
+      "不要用興趣判斷工作的價值（醫院宅 \ ROI）。。",
+    ],
+  },
+  {
+    id: "decision",
+    navTitle: "x 設定否決條件(風險 超控)",
+    title: "最後加入否決條件",
+    subtitle: "Decision",
+    icon: "gavel",
+    color: "deep-orange",
+    summary:
+      "塞車 沒車位 沒辦法平躺 水廁 \\ 好選項不只要有優點，也要通過底線檢查；<br>* 任一重大風險成立就停止。",
+    details: [
+      "issue 規劃沒完 不敢睡",
+      "事情太好 捨不得放棄",
+      "是否傷害健康或基本生活？",
+      "維護成本是否高於長期收益？",
+      "是否擠壓更重要且不可逆的選擇？",
+      "事情太好 捨不得放棄",
+      "塞車 沒車位 沒辦法平躺 水廁",
+      "頭痛就要停，maybe 脹氣的影響",
+    ],
+  },
+
+  // 老婆花掉你一半以上的資產，小孩再花掉一半以上的資產，剩下的只有還到死的負債。一個男生，要活得很好，把爸媽照顧好，很簡單，...........但加上老婆小孩，基本上，注定負債一輩子。
+
+  {
+    id: "system",
+    navTitle: "* 人腦記憶(印象 補腦)",
+    title: "記憶仍然是重要技能",
+    subtitle: "System",
+    icon: "memory",
+    color: "deep-purple",
+    summary:
+      "🧠 記憶仍然是重要技能 \ 比 GPT 快 & 還有 30y 的身體連結。<br>* 系統負責保存脈絡、連結與決策理由，人只需要專注在目前這一步。<br>* 把記憶放進可回看的系統",
+    details: [
+      "所有入口集中到一個索引。",
+      "每個專案保留狀態、下一步與最近決策。",
+      "定期整理，不要求一次完成。",
+      "只要一點文字 影像 joey 就很可能想起來。",
+      "GPT is good \ joey 有投錢。",
+      "sys 最好能解決人腦的疑問， 不然快刀亂麻損失會比較多。",
+    ],
+  },
+];
+
+export const testActions = [
+  {
+    title: "⏱先做10分鐘測試",
+    description: "適合資訊不足、需要先看結果再決定的情況。",
+  },
+  {
+    title: "⚔ 快刀亂麻，直接完成",
+    description:
+      "適合風險低、方向清楚，而且拖延成本較高的情況。just do it 突破 <br>* 水／廁所：5mins 可到 \\ 人不多、有位置 \\ 就 GO。 ",
+  },
+];

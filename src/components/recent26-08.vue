@@ -15,7 +15,9 @@
             <p class="text-body2 text-grey-7 q-my-none">
               * 記錄我在哪裡找到遺失？然後規範強化這個入口。
             </p>
-            <p class="text-body2 text-grey-7 q-my-none">* GPT | Firedb_recent | Firedb_Todolist</p>
+            <p class="text-body2 text-grey-7 q-my-none">
+              * GPT | Firedb_recent | Firedb_Todolist
+            </p>
             <p>不要要求自己記住：應該讓系統自動顯示。</p>
             <!-- <p>
               * 這一個 Page 超過 500行 \ 不要再增加 Fn 只 modify \ use routes
@@ -95,7 +97,8 @@
 
       <!-- time line -->
 
-      <q-timeline color="primary" layout="comfortable">
+      <!-- <q-timeline color="primary" layout="comfortable"> -->
+      <q-timeline color="primary">
         <section
           v-for="item in timelineSections"
           :id="item.id"
@@ -316,6 +319,8 @@ BLG - 一寫就是四小時， 104 前要減少 TD6。
           </q-timeline-entry>
         </section>
       </q-timeline>
+
+      
       <!-- 現場快速檢查 -->
       <section
         id="checklist"
