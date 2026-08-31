@@ -6,6 +6,8 @@ cd VTOL
 netlify dev
 
 
+還是 timeout
+
 style="text-align: center;"
 OK -- http://localhost:8888/.netlify/functions/stock_US
 
