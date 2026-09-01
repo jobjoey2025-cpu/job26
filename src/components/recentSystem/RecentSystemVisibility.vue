@@ -24,7 +24,7 @@
       <q-item-section avatar>
         <q-icon name="phone_iphone" />
       </q-item-section>
-      <q-item-section>📱 Mobile Vue（list） 有時間 Quasar ?</q-item-section>
+      <q-item-section>📱 Mobile Vue（list） 有時間 Quasar ? 通常是 "隨手寫"</q-item-section>
     </q-item>
   </q-list>
 

@@ -16,15 +16,25 @@ Recent System
           </div>
           <h1 class="page-title q-my-xs">Recent System</h1>
           <p class="text-body2 text-grey-7 q-my-none">
-            縮小範圍、縮小實驗、縮小差距，讓下一步清楚可執行。
+            Searching 更有效的 system 導入 \ 以現在的 架構 為比較基準。
           </p>
           <p class="text-body2 text-grey-7 q-my-none">
             * 記錄我在哪裡找到遺失？然後規範強化這個入口。
           </p>
           <p class="text-body2 text-grey-7 q-my-none">
+            讓系統在沒有情緒時，仍然可以指出下一步。
+          </p>
+          <p class="text-body2 text-grey-7 q-my-none">
+            不要要求自己記住：應該讓系統自動顯示。
+          </p>
+          <p class="text-body2 text-grey-7 q-my-none">
+            縮小範圍、縮小實驗、縮小差距，讓下一步清楚可執行。
+          </p>
+
+          <p class="text-body2 text-grey-7 q-my-none">
             * GPT | Firedb_recent | Firedb_Todolist
           </p>
-          <p>不要要求自己記住：應該讓系統自動顯示。</p>
+
           <!-- <p>
               * 這一個 Page 超過 500行 \ 不要再增加 Fn 只 modify \ use routes
               嵌入其他 Page。
@@ -38,13 +48,20 @@ Recent System
           >
             <!-- joey modify --- -->
             <pre>
-讓系統在沒有情緒時，仍然可以指出下一步。
+沒情緒、沒記憶力時怎麼辦？
+不靠記憶，讓系統自動告訴你「下一步」\ quasar view
+讓系統對我的弱點有容錯能力。
 
 * 這一個 Page 超過 500行 \ 不要再增加 Fn 只 modify \ use routes 嵌入其他 Page。
-* 發現 寫執行計畫 很花時間幾天 幾週
-## 物業管理 不是小規模，Room db 也是選不到 好 system
 * 事情很多可以做(基本2F做不完 還有阿媽花園) \ 但是有 team 組織的 多一點優先, after 身體狀況  \ 尤其是運動項目 \
 * GPT 對 SuAo 物業管理的效果，沒有 Quasar db 有效。
+* 發現 寫執行計畫 很花時間幾天 幾週
+## 物業管理 不是小規模，Room db 也是選不到 好 system
+
+正在形成的 個人運作系統（only Recent System）。
+不要靠意志力把事情做完
+要建立一個即使人在低能量、沒情緒、身體不舒服、事情爆量時，仍能把你導向正確下一步的系統。
+仍能把你導向正確下一步
               </pre
             >
           </q-expansion-item>
@@ -125,7 +142,8 @@ Recent System
   <b>⏱ 104 Drone 有那麼難嗎 ?</b>
   * Shift + Tab 鍵 (可向左縮排。)
 suao 泉源 \ key is 怎麼賣 ?
-Drone 保養廠 \ 水電工 \ 2F 機電保修
+
+2F 機電保修 \  水電工 \ Drone 保養廠 \
 Watch DIY \ 縫紉 3DP \
 Quasar FireJson in cellPhone 還是最重要的
   * 某金錢以下是情面，以上是利益。
@@ -154,7 +172,6 @@ import { useRouter } from "vue-router";
 // import recentSelectDialog from "../components/recentSystem/recentSelectDialog.vue";
 import recentSelectDialog from "./recentSelectDialog.vue";
 
-
 // defineEmits(["open-notes"]);
 // Emits
 const emit = defineEmits(["open-notes"]);
@@ -179,7 +196,7 @@ const recentItems = [
   {
     id: "fcards",
     label: "3☏ FCards",
-    icon: "sticky_note_2",
+    icon: "document_scanner",
     action: "route",
     route: {
       name: "AreaManager",
@@ -189,7 +206,8 @@ const recentItems = [
   {
     id: "todo",
     label: "4☏ ToDo",
-    icon: "sticky_note_2",
+    icon: "no_crash",
+    outline: true,
     action: "route",
     route: {
       name: "Firedb_Todolist",
@@ -212,6 +230,39 @@ const recentItems = [
     outline: true,
     action: "external",
     href: "https://docs.google.com/spreadsheets/d/1EzmKCAbNmE5hW3eHsr2sKJAFDMcuJJbN4dEv3vWekEk/edit?gid=56163573#gid=56163573",
+  },
+
+  {
+    id: "doc",
+    label: "文件Firedb",
+    icon: "sort",
+    outline: true,
+    action: "route",
+    route: {
+      name: "Firedb_recent",
+    },
+  },
+
+  {
+    id: "GPT",
+    label: "GPT Tips",
+    icon: "sort",
+    outline: true,
+    action: "route",
+    route: {
+      name: "GPT",
+    },
+  },
+
+  {
+    id: "roi",
+    label: "Prj ROI",
+    icon: "sort",
+    outline: true,
+    action: "route",
+    route: {
+      name: "roi",
+    },
   },
 ];
 
