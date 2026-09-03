@@ -1,6 +1,7 @@
 <template>
   <q-page class="q-pa-md">
     <div class="text-h5 q-mb-lg">Page Menu</div>
+    <h6>直接改 routes group 部分</h6>
 
     <div v-for="group in groups" :key="group.name" class="q-mb-lg">
       <!-- Group Title -->

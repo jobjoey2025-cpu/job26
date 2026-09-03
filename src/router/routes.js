@@ -3,13 +3,21 @@ import RecentSystem from 'src/pages/RecentSystem.vue'
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    // component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/0903.vue'),
+
+
+    // component: () => import('layouts/mechanism.vue'),
+
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
+
+      // { path: 'MainLayout', component: () => import('pages/MainLayout.vue') },
+      // ??
+
+
       { path: 'classC', component: () => import('components/classC.vue') },
       { path: 'timeCurve', component: () => import('components/timeCurve.vue') },
-
-
 
       { path: 'MyPage', component: () => import('pages/MyPage.vue'), name: 'MyPage' },
       { path: 'Services', component: () => import('pages/Services.vue'), name: 'Services' },
@@ -164,7 +172,54 @@ const routes = [
       // { path: 'GPT', component: () => import('components/GPT.vue'), name: 'GPT' },
       // { path: 'Firedb_recent', component: () => import('components/Firedb_recent.vue'), name: 'Firedb_recent' },
       // { path: 'recent26-08', component: () => import('components/recent26-08.vue'), name: 'recent26-08' },
+      // { path: 'Electric', component: () => import('pages/Electric.vue') },
+      // mechanism
+      // { path: 'mechanism', component: () => import('pages/mechanism.vue') },
 
+      // { path: 'MainLayout', component: () => import('pages/MainLayout.vue') },
+
+      // --------
+
+      {
+        path: '104MainLayout', component: () => import('pages/104MainLayout.vue'), name: '104MainLayout',
+        meta: {
+          menu: true,
+          label: 'VTOL',
+          icon: 'note',
+          group: '104',
+        },
+      },
+      {
+        path: '104mechanism', component: () => import('pages/104mechanism.vue'), name: '104mechanism',
+        meta: {
+          menu: true,
+          label: '機構 CAD',
+          icon: 'note',
+          group: '104',
+        },
+      },
+
+      {
+        path: '104Thermal', component: () => import('pages/104Thermal.vue'), name: '104Thermal',
+        meta: {
+          menu: true,
+          label: 'Thermal',
+          icon: 'note',
+          group: '104',
+        },
+      },
+
+      {
+        path: '104Electric', component: () => import('pages/104Electric.vue'), name: '104Electric',
+        meta: {
+          menu: true,
+          label: '機電保修',
+          icon: 'note',
+          group: '104',
+        },
+      },
+
+      // --------
 
       {
         path: 'recent26-08', component: () => import('components/recent26-08.vue'), name: 'recent26-08',

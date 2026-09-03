@@ -71,16 +71,16 @@ const getImg = (name) => {
 
 // 資料
 const messages = ref([
-{
-    title: "迷你無人機研習營",
+  {
+    title: "丙級室內配線技術士",
     time: "",
     text: `
-FPV 無人機 組裝 設定 與 飛行操作
-Betaflight PID 設定
-https://www.facebook.com/share/v/16bSxwa2Kp/
+富民機電技術訓練中心
+丙級室內配線技術士班
     `,
-    img: "robot.jpg",
+    img: "CertificateC.png",
   },
+
   {
     title: "team associated",
     time: "",
@@ -91,16 +91,17 @@ https://www.facebook.com/share/v/16bSxwa2Kp/
     `,
     img: "DC10_BOX.jpg",
   },
-{
-    title: "丙級室內配線技術士",
+
+  {
+    title: "迷你無人機研習營",
     time: "",
     text: `
-富民機電技術訓練中心
-丙級室內配線技術士班
+FPV 無人機 組裝 設定 與 飛行操作
+Betaflight PID 設定
+https://www.facebook.com/share/v/16bSxwa2Kp/
     `,
-    img: "CertificateC.png",
+    img: "robot.jpg",
   },
-
   {
     title: "蘇澳國中",
     time: "",
@@ -193,8 +194,6 @@ ERP
     `,
     img: "bikeLight.jpg",
   },
-
-
 
   {
     title: "統領百貨",
