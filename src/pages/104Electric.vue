@@ -16,7 +16,7 @@
         <q-route-tab to="/ERP" label="工程資料管理" />
         <q-route-tab to="/testNavi" label="自行車前燈專案" />
         <q-route-tab to="/Gearbox" label="齒輪箱修模專案" />
-        <!-- <q-route-tab to="/MyPage" label="經驗與技術" /> -->
+        <q-route-tab to="/MyPage" label="經驗與技術" />
       </q-tabs>
     </q-header>
 
