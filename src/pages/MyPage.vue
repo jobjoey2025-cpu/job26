@@ -5,8 +5,9 @@
     />
   </div> -->
   <!-- <bannerBike /> -->
-  <Firedb_RC10_Onlyview />
   <Firedb_Building_Onlyview />
+  <Firedb_RC10_Onlyview />
+
   <div>
     <!-- <p>xx * _____ Value : BOM sql \ SQL 處理複雜的老問題 \ 二次開發</p> -->
   </div>

@@ -166,7 +166,9 @@ const routes = [
       { path: '2_2', component: () => import('components/2_2.vue'), name: '2_2' },
 
       { path: '3', component: () => import('components/3.vue'), name: '3' },
+      { path: 'carousel_104Electric', component: () => import('components/carousel_104Electric.vue'), name: 'carousel_104Electric' },
 
+      // carousel_104Electric
 
 
       // { path: 'GPT', component: () => import('components/GPT.vue'), name: 'GPT' },

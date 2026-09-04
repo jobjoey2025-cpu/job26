@@ -6,7 +6,7 @@
           <!-- <q-avatar>
             <img alt="Quasar logo" src="/logo/logo-mono-white.svg" />
           </q-avatar> -->
-          Mechanism JOEY
+          履歷 JOEY
         </q-toolbar-title>
       </q-toolbar>
 
@@ -23,7 +23,9 @@
     <br />
     <br />
     <br />
-    <classC />
+
+    <carousel_104Electric />
+    <!-- <classC /> -->
 
     <q-page-container>
       <router-view />
@@ -31,6 +33,7 @@
     <q-page class="flex flex-center" style="min-height: 5vh">
       <profileCard />
     </q-page>
+
     <timeCurve />
 
     <br />
@@ -42,7 +45,7 @@
           <!-- <q-avatar>
             <img alt="Quasar logo" src="/logo/logo-mono-white.svg" />
           </q-avatar> -->
-          <div>Mechanism End</div>
+          <div>End</div>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
@@ -50,7 +53,8 @@
 </template>
 <script setup>
 import { ref } from "vue";
-import classC from "components/classC.vue"; // 輪播
+// import classC from "components/classC.vue"; // 輪播
+import carousel_104Electric from "components/carousel_104Electric.vue"; // 輪播
 
 import profileCard from "src/components/profileCard.vue";
 import timeCurve from "components/timeCurve.vue";

@@ -58,7 +58,7 @@
           <!-- <q-avatar>
             <img alt="Quasar logo" src="/logo/logo-mono-white.svg" />
           </q-avatar> -->
-          <div>Mechanism End</div>
+          <div>底部</div>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>

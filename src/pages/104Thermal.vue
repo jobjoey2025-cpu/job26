@@ -42,7 +42,7 @@
           <!-- <q-avatar>
             <img alt="Quasar logo" src="/logo/logo-mono-white.svg" />
           </q-avatar> -->
-          <div>Mechanism End</div>
+          <div>End</div>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
