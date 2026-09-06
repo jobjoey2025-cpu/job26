@@ -180,6 +180,30 @@ const routes = [
 
       // { path: 'MainLayout', component: () => import('pages/MainLayout.vue') },
 
+
+      // RecentSystem
+
+      // { path: 'RecentSystem', component: () => import('pages/RecentSystem.vue'), name: 'RecentSystem' },
+
+      {
+        path: 'RecentSystem', component: () => import('pages/RecentSystem.vue'), name: 'RecentSystem',
+        meta: {
+          menu: true,
+          label: 'RecentSystem',
+          icon: 'map',
+          group: 'recent',
+        },
+      },
+
+      { path: 'RecentSystemChecklist', component: () => import('components/recentSystem/RecentSystemChecklist.vue'), name: 'RecentSystemChecklist' },
+      { path: 'RecentSystemHeader', component: () => import('components/recentSystem/RecentSystemHeader.vue'), name: 'RecentSystemHeader' },
+      { path: 'RecentSystemNoteDialog', component: () => import('components/recentSystem/RecentSystemNoteDialog.vue'), name: 'RecentSystemNoteDialog' },
+      { path: 'RecentSystemOutline', component: () => import('components/recentSystem/RecentSystemOutline.vue'), name: 'RecentSystemOutline' },
+      { path: 'RecentSystemTest', component: () => import('components/recentSystem/RecentSystemTest.vue'), name: 'RecentSystemTest' },
+      { path: 'RecentSystemTimeline', component: () => import('components/recentSystem/RecentSystemTimeline.vue'), name: 'RecentSystemTimeline' },
+      { path: 'RecentSystemVisibility', component: () => import('components/recentSystem/RecentSystemVisibility.vue'), name: 'RecentSystemVisibility' },
+      { path: 'recentSelectDialog', component: () => import('components/recentSystem/recentSelectDialog.vue'), name: 'recentSelectDialog' },
+
       // --------
 
       {
@@ -386,17 +410,7 @@ const routes = [
         },
       },
 
-      // RecentSystem
 
-      { path: 'RecentSystem', component: () => import('pages/RecentSystem.vue'), name: 'RecentSystem' },
-      { path: 'RecentSystemChecklist', component: () => import('components/recentSystem/RecentSystemChecklist.vue'), name: 'RecentSystemChecklist' },
-      { path: 'RecentSystemHeader', component: () => import('components/recentSystem/RecentSystemHeader.vue'), name: 'RecentSystemHeader' },
-      { path: 'RecentSystemNoteDialog', component: () => import('components/recentSystem/RecentSystemNoteDialog.vue'), name: 'RecentSystemNoteDialog' },
-      { path: 'RecentSystemOutline', component: () => import('components/recentSystem/RecentSystemOutline.vue'), name: 'RecentSystemOutline' },
-      { path: 'RecentSystemTest', component: () => import('components/recentSystem/RecentSystemTest.vue'), name: 'RecentSystemTest' },
-      { path: 'RecentSystemTimeline', component: () => import('components/recentSystem/RecentSystemTimeline.vue'), name: 'RecentSystemTimeline' },
-      { path: 'RecentSystemVisibility', component: () => import('components/recentSystem/RecentSystemVisibility.vue'), name: 'RecentSystemVisibility' },
-      { path: 'recentSelectDialog', component: () => import('components/recentSystem/recentSelectDialog.vue'), name: 'recentSelectDialog' },
 
 
 
