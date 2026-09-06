@@ -169,6 +169,11 @@ const routes = [
       { path: 'carousel_104Electric', component: () => import('components/carousel_104Electric.vue'), name: 'carousel_104Electric' },
 
       // carousel_104Electric
+      // Firedb_Umeda_Onlyview
+      { path: 'Firedb_Umeda_Onlyview', component: () => import('components/Firedb_Umeda_Onlyview.vue'), name: 'Firedb_Umeda_Onlyview' },
+      { path: 'Tripjapan', component: () => import('pages/Tripjapan.vue'), name: 'Tripjapan' },
+      { path: 'Firedb_Tokyo_Onlyview', component: () => import('components/Firedb_Tokyo_Onlyview.vue'), name: 'Firedb_Tokyo_Onlyview' },
+
 
 
       // { path: 'GPT', component: () => import('components/GPT.vue'), name: 'GPT' },
