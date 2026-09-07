@@ -174,6 +174,17 @@ const routes = [
       { path: 'Tripjapan', component: () => import('pages/Tripjapan.vue'), name: 'Tripjapan' },
       { path: 'Firedb_Tokyo_Onlyview', component: () => import('components/Firedb_Tokyo_Onlyview.vue'), name: 'Firedb_Tokyo_Onlyview' },
 
+      {
+        path: 'Tripjapan', component: () => import('pages/Tripjapan.vue'), name: 'Tripjapan',
+        meta: {
+          menu: true,
+          label: 'Tripjapan',
+          icon: 'map',
+          group: 'Japan',
+        },
+      },
+
+
 
 
       // { path: 'GPT', component: () => import('components/GPT.vue'), name: 'GPT' },
