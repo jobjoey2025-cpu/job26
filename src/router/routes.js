@@ -178,7 +178,7 @@ const routes = [
         path: 'Tripjapan', component: () => import('pages/Tripjapan.vue'), name: 'Tripjapan',
         meta: {
           menu: true,
-          label: 'Tripjapan',
+          label: 'Only View',
           icon: 'map',
           group: 'Japan',
         },

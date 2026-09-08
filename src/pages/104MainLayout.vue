@@ -38,6 +38,12 @@
 
     <classC />
 
+    <q-page class="flex flex-center" style="min-height: 5vh">
+      <profileCard />
+    </q-page>
+
+    <timeCurve />
+
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -52,6 +58,9 @@ import EssentialLink from "components/EssentialLink.vue";
 
 import classC from "components/classC.vue"; // 輪播
 import bannerFoot from "components/bannerFoot.vue";
+
+import profileCard from "src/components/profileCard.vue";
+import timeCurve from "components/timeCurve.vue";
 
 const linksList = [
   {
