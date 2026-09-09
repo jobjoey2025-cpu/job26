@@ -159,11 +159,27 @@ const routes = [
       { path: 'Firedb_Building_Onlyview', component: () => import('components/Firedb_Building_Onlyview.vue'), name: 'Firedb_Building_Onlyview' },
       { path: 'GPS', component: () => import('components/GPS.vue'), name: 'GPS' },
 
-      { path: 'ED', component: () => import('components/ED.vue'), name: 'ED' },
-      { path: 'EDcellPhone', component: () => import('components/EDcellPhone.vue'), name: 'EDcellPhone' },
+      // { path: 'ED', component: () => import('components/ED.vue'), name: 'ED' },
+      // { path: 'EDcellPhone', component: () => import('components/EDcellPhone.vue'), name: 'EDcellPhone' },
 
-
-
+      {
+        path: 'ED', component: () => import('components/ED.vue'), name: 'ED',
+        meta: {
+          menu: true,
+          label: 'ED',
+          icon: 'map',
+          group: 'recent',
+        },
+      },
+      {
+        path: 'EDcellPhone', component: () => import('components/EDcellPhone.vue'), name: 'EDcellPhone',
+        meta: {
+          menu: true,
+          label: 'EDcellPhone',
+          icon: 'map',
+          group: 'recent',
+        },
+      },
 
 
 
