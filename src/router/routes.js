@@ -159,6 +159,12 @@ const routes = [
       { path: 'Firedb_Building_Onlyview', component: () => import('components/Firedb_Building_Onlyview.vue'), name: 'Firedb_Building_Onlyview' },
       { path: 'GPS', component: () => import('components/GPS.vue'), name: 'GPS' },
 
+      { path: 'ED', component: () => import('components/ED.vue'), name: 'ED' },
+      { path: 'EDcellPhone', component: () => import('components/EDcellPhone.vue'), name: 'EDcellPhone' },
+
+
+
+
 
 
       { path: '1', component: () => import('components/1.vue'), name: '1' },
@@ -185,20 +191,7 @@ const routes = [
       },
 
 
-
-
-      // { path: 'GPT', component: () => import('components/GPT.vue'), name: 'GPT' },
-      // { path: 'Firedb_recent', component: () => import('components/Firedb_recent.vue'), name: 'Firedb_recent' },
-      // { path: 'recent26-08', component: () => import('components/recent26-08.vue'), name: 'recent26-08' },
-      // { path: 'Electric', component: () => import('pages/Electric.vue') },
-      // mechanism
-      // { path: 'mechanism', component: () => import('pages/mechanism.vue') },
-
-      // { path: 'MainLayout', component: () => import('pages/MainLayout.vue') },
-
-
       // RecentSystem
-
       // { path: 'RecentSystem', component: () => import('pages/RecentSystem.vue'), name: 'RecentSystem' },
 
       {
