@@ -12,7 +12,7 @@
       <q-btn flat round icon="refresh" @click="resetAll" />
     </div>
 
-    <!-- ----- -->
+    <!-- --- 大便 火果 問題 --- -->
     <div>
       腸道問題: 缺火龍果 硬便 卡腸, 早上蠕動 牽動到 腎結石, 加上 但膽結石脹氣
       結果 : 左下腹 一陣陣的抽痛
@@ -47,7 +47,112 @@
       </div>
     </div>
 
-    <!-- ----- -->
+    <!-- ---疼痛程度--- -->
+
+    <!-- Header -->
+    <div class="page-header">
+      <div class="text-h4 text-weight-bold">🧠 疼痛程度</div>
+      <div class="text-subtitle1 text-grey-7 q-mt-sm">
+        平時背起來，痛時不用閱讀
+      </div>
+    </div>
+    <!-- Core Rule -->
+    <q-card flat bordered class="core-rule">
+      <q-card-section>
+        <div class="text-h6 text-weight-bold">⚠️ 核心 Rule</div>
+        <div class="rule-text">痛時沒有辦法閱讀</div>
+        <div class="rule-text"><strong>所以平時就要背起來</strong></div>
+      </q-card-section>
+    </q-card>
+    <!-- ========================= -->
+    <!-- 0 -->
+    <!-- ========================= -->
+    <q-card class="pain-card level-0">
+      <q-card-section>
+        <div class="level-title">0 分</div>
+        <div class="level-subtitle">無痛</div>
+        <q-separator class="q-my-md" />
+        <div class="action-title">💻 可以 Coding 500 行</div>
+      </q-card-section>
+    </q-card>
+    <!-- ========================= -->
+    <!-- 1-3 -->
+    <!-- ========================= -->
+    <q-card class="pain-card">
+      <q-card-section>
+        <div class="level-title">1–3 分</div>
+        <div class="level-subtitle">輕度疼痛</div>
+        <q-separator class="q-my-md" />
+        <div class="description">可忍受，不影響睡眠</div>
+        <div class="example">如打針、輕微擦傷</div>
+        <q-separator class="q-my-md" />
+        <div class="action-title">🏃 可以正常活動</div>
+        <div class="action">脹氣／外訓／練功</div>
+      </q-card-section>
+    </q-card>
+    <!-- ========================= -->
+    <!-- 4-6 -->
+    <!-- ========================= -->
+    <q-card class="pain-card">
+      <q-card-section>
+        <div class="level-title">4–6 分</div>
+        <div class="level-subtitle">中度疼痛</div>
+        <q-separator class="q-my-md" />
+        <div class="description">會干擾睡眠</div>
+        <div class="example">可能需要止痛藥協助</div>
+        <div class="example q-mt-sm">如牙痛、經痛、運動傷害</div>
+        <q-separator class="q-my-md" />
+        <div class="action-title">💊 止痛</div>
+        <div class="action">痛到會發熱 → 止牙痛藥 OK</div>
+      </q-card-section>
+    </q-card>
+    <!-- ========================= -->
+    <!-- 7-10 -->
+    <!-- ========================= -->
+    <q-card class="pain-card severe-card">
+      <q-card-section>
+        <div class="level-title">7–10 分</div>
+        <div class="level-subtitle">重度／劇烈疼痛</div>
+        <q-separator class="q-my-md" />
+        <div class="description">痛到無法入睡、無法忍受</div>
+        <div class="description q-mt-sm">嚴重影響生活</div>
+        <div class="example q-mt-md">如生產痛、嚴重燒燙傷、 斷指或癌症疼痛</div>
+        <q-separator class="q-my-md" />
+        <div class="action-title">🚨 抽痛 → 不能想</div>
+        <div class="action">Need Page 指導</div>
+        <div class="action q-mt-sm">
+          <strong>不用思考，只要照 Recent</strong>
+        </div>
+      </q-card-section>
+    </q-card>
+    <!-- ========================= -->
+    <!-- Memory Card -->
+    <!-- ========================= -->
+    <q-card flat bordered class="memory-card">
+      <q-card-section>
+        <div class="text-h6 text-weight-bold">🧠 背這個就好</div>
+        <div class="memory-list">
+          <div><span>0</span> → Coding</div>
+          <div><span>1–3</span> → 可以活動</div>
+          <div><span>4–6</span> → 止痛</div>
+          <div><span>7–10</span> → 不能想</div>
+        </div>
+      </q-card-section>
+    </q-card>
+    <!-- ========================= -->
+    <!-- Final Rule -->
+    <!-- ========================= -->
+    <q-card class="final-rule">
+      <q-card-section>
+        <div class="final-rule-big">🚨 不能想</div>
+        <div class="final-rule-text">不用思考</div>
+        <div class="final-rule-text"><strong>只要照 Recent</strong></div>
+      </q-card-section>
+    </q-card>
+
+    <br>
+    <br>
+
     <!-- ========================= -->
     <!-- ① 現況 -->
     <!-- ========================= -->
@@ -372,3 +477,86 @@ function resetAll() {
   bodyNote.value = "";
 }
 </script>
+
+<style scoped>
+.pain-page {
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+} /* ========================= */ /* Header */ /* ========================= */
+.page-header {
+  margin-bottom: 20px;
+} /* ========================= */ /* Core Rule */ /* ========================= */
+.core-rule {
+  border-radius: 18px;
+  margin-bottom: 20px;
+}
+.rule-text {
+  font-size: 20px;
+  line-height: 1.6;
+  margin-top: 8px;
+} /* ========================= */ /* Pain Card */ /* ========================= */
+.pain-card {
+  border-radius: 18px;
+  margin-bottom: 16px;
+}
+.level-0 {
+  border: 2px solid currentColor;
+}
+.severe-card {
+  border: 2px solid currentColor;
+} /* ========================= */ /* Level */ /* ========================= */
+.level-title {
+  font-size: 34px;
+  font-weight: 700;
+}
+.level-subtitle {
+  font-size: 20px;
+  margin-top: 4px;
+} /* ========================= */ /* Content */ /* ========================= */
+.description {
+  font-size: 19px;
+  line-height: 1.5;
+}
+.example {
+  font-size: 16px;
+  color: #666;
+  margin-top: 8px;
+}
+.action-title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.action {
+  font-size: 20px;
+  line-height: 1.5;
+  margin-top: 8px;
+} /* ========================= */ /* Memory */ /* ========================= */
+.memory-card {
+  border-radius: 18px;
+  margin-top: 24px;
+}
+.memory-list {
+  margin-top: 16px;
+  font-size: 22px;
+  line-height: 2;
+}
+.memory-list span {
+  font-weight: 700;
+} /* ========================= */ /* Final Rule */ /* ========================= */
+.final-rule {
+  margin-top: 20px;
+  border-radius: 20px;
+  text-align: center;
+}
+.final-rule-big {
+  font-size: 36px;
+  font-weight: 800;
+}
+.final-rule-text {
+  font-size: 24px;
+  line-height: 1.6;
+  margin-top: 6px;
+}
+</style>
