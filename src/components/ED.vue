@@ -121,7 +121,7 @@
         <div class="action-title">🚨 抽痛 → 不能想</div>
         <div class="action">Need Page 指導</div>
         <div class="action q-mt-sm">
-          <strong>不用思考，只要照 Recent</strong>
+          <strong>不用思考，只要照 Recent \ 急診: 健保卡 手機 水壺 行動電源 外套 </strong>
         </div>
       </q-card-section>
     </q-card>

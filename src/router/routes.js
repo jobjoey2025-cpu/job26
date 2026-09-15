@@ -181,6 +181,27 @@ const routes = [
         },
       },
 
+      {
+        path: 'ED_hospitalization', component: () => import('components/ED_hospitalization.vue'), name: 'ED_hospitalization',
+        meta: {
+          menu: true,
+          label: '手術行程',
+          icon: 'map',
+          group: 'recent',
+        },
+      },
+
+      {
+        path: 'EDbag', component: () => import('components/EDbag.vue'), name: 'EDbag',
+        meta: {
+          menu: true,
+          label: '🎒 ED bag 住院包',
+          icon: 'map',
+          group: 'recent',
+        },
+      },
+
+
 
 
       { path: '1', component: () => import('components/1.vue'), name: '1' },
