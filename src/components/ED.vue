@@ -43,6 +43,11 @@
           spinner-color="white"
           style="max-width: 250px"
         />
+        <q-img
+          src="./statics/ED5.jpg"
+          spinner-color="white"
+          style="max-width: 250px"
+        />
         <!-- <q-img src="./statics/ED.jpg" class="tech-image" fit="cover" /> -->
       </div>
     </div>

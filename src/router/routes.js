@@ -168,7 +168,7 @@ const routes = [
           menu: true,
           label: 'ED',
           icon: 'map',
-          group: 'recent',
+          group: '病痛',
         },
       },
       {
@@ -177,7 +177,7 @@ const routes = [
           menu: true,
           label: 'EDcellPhone',
           icon: 'map',
-          group: 'recent',
+          group: '病痛',
         },
       },
 
@@ -185,9 +185,9 @@ const routes = [
         path: 'ED_hospitalization', component: () => import('components/ED_hospitalization.vue'), name: 'ED_hospitalization',
         meta: {
           menu: true,
-          label: '手術行程',
+          label: '手術行程(膽結石)',
           icon: 'map',
-          group: 'recent',
+          group: '病痛',
         },
       },
 
@@ -195,9 +195,9 @@ const routes = [
         path: 'EDbag', component: () => import('components/EDbag.vue'), name: 'EDbag',
         meta: {
           menu: true,
-          label: '🎒 ED bag 住院包',
-          icon: 'map',
-          group: 'recent',
+          label: 'ED bag 住院包 🎒 ',
+          icon: 'luggage',
+          group: '病痛',
         },
       },
 
@@ -317,9 +317,9 @@ const routes = [
         path: 'Firedb_recent', component: () => import('components/Firedb_recent.vue'), name: 'Firedb_recent',
         meta: {
           menu: true,
-          label: 'Firedb_recent',
+          label: '*Firedb_大方向 校準*',
           icon: 'note',
-          group: 'Doc',
+          group: 'recent',
         },
       },
 
