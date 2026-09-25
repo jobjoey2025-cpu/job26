@@ -1,174 +1,267 @@
 <template>
-  <q-page class="row">
-    <!-- Left : Document List -->
-    <div class="col-3 q-pa-md">
-      <q-card flat bordered>
-        <q-card-section>
+  <q-page class="document-page">
+    <!-- ================================================= -->
+    <!-- MOBILE : Library Header -->
+    <!-- ================================================= -->
+    <div v-if="isMobile && !current" class="mobile-header q-pa-md">
+      <div class="row items-center">
+        <div>
           <div class="text-h6">Document Library</div>
-
-          <q-input
-            v-model="search"
-            dense
-            outlined
-            placeholder="Search..."
-            class="q-mt-md"
-            clearable
-          />
-
-          <q-btn
-            color="primary"
-            icon="add"
-            label="New Document"
-            class="full-width q-mt-md"
-            @click="addDocument"
-          />
-        </q-card-section>
-
-        <q-separator />
-
-        <q-list separator>
-          <q-item
-            v-for="doc in filteredDocuments"
-            :key="doc.key"
-            clickable
-            :active="current?.key === doc.key"
-            active-class="bg-blue-1"
-            @click="select(doc)"
-          >
-            <q-item-section avatar>
-              <q-icon :name="getDocumentIcon(doc.Type)" color="primary" />
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>
-                {{ doc.Name || "Untitled" }}
-              </q-item-label>
-
-              <q-item-label caption>
-                {{ doc.Type }}
-              </q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-card>
-    </div>
-
-    <!-- Right : Document Editor -->
-    <div class="col q-pa-md" v-if="current">
-      <q-card flat bordered>
-        <q-card-section>
-          <div class="row items-center">
-            <div class="text-h6">Document</div>
-
-            <q-space />
-
-            <q-btn
-              flat
-              round
-              color="negative"
-              icon="delete"
-              @click="deleteDocument"
-            >
-              <q-tooltip> Delete </q-tooltip>
-            </q-btn>
+          <div class="text-caption text-grey">
+            {{ filteredDocuments.length }} documents
           </div>
-        </q-card-section>
-
-        <q-separator />
-
-        <q-card-section>
-          <!-- Name -->
-          <q-input
-            v-model="current.Name"
-            label="Document Name"
-            outlined
-            @update:model-value="save"
-          />
-
-          <!-- Type -->
-          <q-select
-            v-model="current.Type"
-            :options="paraTypes"
-            emit-value
-            map-options
-            label="Type"
-            outlined
-            class="q-mt-md"
-            @update:model-value="save"
-          />
-
-          <!-- Tags -->
-          <q-input
-            v-model="current.Tags"
-            label="Tags"
-            hint="例如：firebase, vue, project"
-            outlined
-            class="q-mt-md"
-            @update:model-value="save"
-          />
-
-          <!-- Description -->
-          <q-input
-            v-model="current.Description"
-            type="textarea"
-            label="Description"
-            outlined
-            autogrow
-            class="q-mt-md"
-            @update:model-value="save"
-          />
-        </q-card-section>
-
-        <q-separator />
-
-        <!-- Content -->
-        <q-card-section>
-          <div class="text-subtitle1 q-mb-sm">Content</div>
-
-          <q-input
-            v-model="current.Content"
-            type="textarea"
-            outlined
-            autogrow
-            :input-style="{
-              minHeight: '400px',
-              fontFamily: 'monospace',
-            }"
-            @update:model-value="save"
-          />
-        </q-card-section>
-
-        <q-separator />
-
-        <q-card-section class="text-caption text-grey">
-          Created:
-          {{ formatDate(current.CreatedAt) }}
-
-          <br />
-
-          Updated:
-          {{ formatDate(current.UpdatedAt) }}
-        </q-card-section>
-      </q-card>
-    </div>
-
-    <!-- No document -->
-    <div v-else class="col flex flex-center">
-      <div class="text-grey text-center">
-        <q-icon name="description" size="64px" />
-
-        <div class="text-h6 q-mt-md">No Document Selected</div>
-
-        <q-btn
-          color="primary"
-          label="Create Document"
-          class="q-mt-md"
-          @click="addDocument"
-        />
+        </div>
+        <q-space />
+        <q-btn round color="primary" icon="add" @click="addDocument">
+          <q-tooltip>New Document</q-tooltip>
+        </q-btn>
       </div>
     </div>
-
-    <!-- JSON File Input -->
+    <!-- ================================================= -->
+    <!-- MAIN LAYOUT -->
+    <!-- ================================================= -->
+    <div class="document-layout">
+      <!-- ================================================= -->
+      <!-- LEFT : DOCUMENT LIBRARY -->
+      <!-- Desktop : 4/12 -->
+      <!-- Mobile : full screen -->
+      <!-- ================================================= -->
+      <div v-if="!isMobile || !current" class="document-sidebar">
+        <q-card flat bordered class="document-card">
+          <!-- Header -->
+          <q-card-section>
+            <div class="row items-center">
+              <div>
+                <div class="text-h6">Document Library</div>
+                <div class="text-caption text-grey">
+                  {{ filteredDocuments.length }} documents
+                </div>
+              </div>
+              <q-space />
+              <!-- Mobile Add -->
+              <q-btn
+                v-if="isMobile"
+                round
+                flat
+                color="primary"
+                icon="add"
+                @click="addDocument"
+              />
+            </div>
+            <!-- Search -->
+            <q-input
+              v-model="search"
+              dense
+              outlined
+              placeholder="Search documents..."
+              class="q-mt-md"
+              clearable
+            >
+              <template #prepend> <q-icon name="search" /> </template>
+            </q-input>
+            <!-- Desktop New -->
+            <q-btn
+              v-if="!isMobile"
+              color="primary"
+              icon="add"
+              label="New Document"
+              class="full-width q-mt-md"
+              @click="addDocument"
+            />
+          </q-card-section>
+          <q-separator />
+          <!-- Document List -->
+          <q-list separator>
+            <q-item
+              v-for="doc in filteredDocuments"
+              :key="doc.key"
+              clickable
+              :active="current?.key === doc.key"
+              active-class="bg-blue-1"
+              class="document-item"
+              @click="select(doc)"
+            >
+              <q-item-section avatar>
+                <q-icon
+                  :name="getDocumentIcon(doc.Type)"
+                  color="primary"
+                  size="26px"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label class="text-weight-medium">
+                  {{ doc.Name || "Untitled" }}
+                </q-item-label>
+                <q-item-label caption> {{ doc.Type }} </q-item-label>
+                <q-item-label
+                  v-if="doc.Tags"
+                  caption
+                  class="text-grey-6 ellipsis"
+                >
+                  {{ doc.Tags }}
+                </q-item-label>
+              </q-item-section>
+              <q-item-section side>
+                <q-icon name="chevron_right" color="grey-5" />
+              </q-item-section>
+            </q-item>
+            <!-- Empty -->
+            <q-item v-if="filteredDocuments.length === 0">
+              <q-item-section class="text-center text-grey q-pa-lg">
+                <q-icon name="search_off" size="40px" />
+                <div class="q-mt-sm">No documents found</div>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card>
+      </div>
+      <!-- ================================================= -->
+      <!-- RIGHT : DOCUMENT EDITOR -->
+      <!-- Desktop : 8/12 -->
+      <!-- Mobile : full screen -->
+      <!-- ================================================= -->
+      <div v-if="current" class="document-editor">
+        <q-card flat bordered class="document-card">
+          <!-- Editor Header -->
+          <q-card-section>
+            <div class="row items-center">
+              <!-- Mobile Back -->
+              <q-btn
+                v-if="isMobile"
+                flat
+                round
+                icon="arrow_back"
+                class="q-mr-sm"
+                @click="current = null"
+              >
+                <q-tooltip>Documents</q-tooltip>
+              </q-btn>
+              <div class="col">
+                <div class="text-h6 ellipsis">
+                  {{ current.Name || "Document" }}
+                </div>
+                <div class="text-caption text-grey">{{ current.Type }}</div>
+              </div>
+              <!-- Delete -->
+              <q-btn
+                flat
+                round
+                color="negative"
+                icon="delete"
+                @click="deleteDocument"
+              >
+                <q-tooltip> Delete </q-tooltip>
+              </q-btn>
+            </div>
+          </q-card-section>
+          <q-separator />
+          <!-- ================================================= -->
+          <!-- BASIC INFORMATION -->
+          <!-- ================================================= -->
+          <q-card-section>
+            <div class="text-subtitle1 q-mb-md">Document Information</div>
+            <!-- Name -->
+            <q-input
+              v-model="current.Name"
+              label="Document Name"
+              outlined
+              @update:model-value="save"
+            />
+            <!-- Type -->
+            <q-select
+              v-model="current.Type"
+              :options="paraTypes"
+              emit-value
+              map-options
+              label="Type"
+              outlined
+              class="q-mt-md"
+              @update:model-value="save"
+            />
+            <!-- Tags -->
+            <q-input
+              v-model="current.Tags"
+              label="Tags"
+              hint="例如：firebase, vue, project"
+              outlined
+              class="q-mt-md"
+              @update:model-value="save"
+            />
+            <!-- Description -->
+            <q-input
+              v-model="current.Description"
+              type="textarea"
+              label="Description"
+              outlined
+              autogrow
+              class="q-mt-md"
+              @update:model-value="save"
+            />
+          </q-card-section>
+          <q-separator />
+          <!-- ================================================= -->
+          <!-- CONTENT -->
+          <!-- ================================================= -->
+          <q-card-section>
+            <div class="row items-center q-mb-sm">
+              <div class="text-subtitle1">Content</div>
+              <q-space />
+              <div class="text-caption text-grey">
+                {{ current.Content?.length || 0 }} chars
+              </div>
+            </div>
+            <q-input
+              v-model="current.Content"
+              type="textarea"
+              outlined
+              autogrow
+              :input-style="{
+                minHeight: isMobile ? '300px' : '400px',
+                fontFamily: 'monospace',
+                lineHeight: '1.5',
+              }"
+              @update:model-value="save"
+            />
+          </q-card-section>
+          <q-separator />
+          <!-- ================================================= -->
+          <!-- META -->
+          <!-- ================================================= -->
+          <q-card-section class="text-caption text-grey">
+            <div>
+              <q-icon name="schedule" class="q-mr-xs" /> Created:
+              {{ formatDate(current.CreatedAt) }}
+            </div>
+            <div class="q-mt-xs">
+              <q-icon name="update" class="q-mr-xs" /> Updated:
+              {{ formatDate(current.UpdatedAt) }}
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
+      <!-- ================================================= -->
+      <!-- NO DOCUMENT -->
+      <!-- ================================================= -->
+      <div v-if="!current && !isMobile" class="document-empty">
+        <div class="text-grey text-center">
+          <q-icon name="description" size="64px" />
+          <div class="text-h6 q-mt-md">No Document Selected</div>
+          <div class="text-caption q-mt-sm">
+            Select a document from the library
+          </div>
+          <q-btn
+            color="primary"
+            label="Create Document"
+            icon="add"
+            class="q-mt-md"
+            @click="addDocument"
+          />
+        </div>
+      </div>
+    </div>
+    <!-- ================================================= -->
+    <!-- JSON FILE INPUT -->
+    <!-- ================================================= -->
     <input
       ref="fileInput"
       type="file"
@@ -180,7 +273,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 
 import {
   ref as dbRef,
@@ -204,6 +297,18 @@ const documents = ref([]);
 const current = ref(null);
 
 const search = ref("");
+
+const isMobile = ref(false);
+const checkMobile = () => {
+  isMobile.value = window.innerWidth < 768;
+};
+onMounted(() => {
+  checkMobile();
+  window.addEventListener("resize", checkMobile);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", checkMobile);
+});
 
 /* --------------------------------
    Document Types
@@ -498,3 +603,82 @@ async function onFileSelected(evt) {
   }
 }
 </script>
+<style scoped>
+.document-page {
+  min-height: 100vh;
+  background: #f5f6f8;
+} /* ================================================= */ /* Main Layout */ /* ================================================= */
+.document-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 4fr) minmax(0, 8fr);
+  gap: 16px;
+  padding: 16px;
+  height: calc(100vh - 32px);
+} /* ================================================= */ /* Sidebar */ /* ================================================= */
+.document-sidebar {
+  min-width: 0;
+  overflow: hidden;
+}
+.document-sidebar .document-card {
+  height: 100%;
+  overflow-y: auto;
+} /* ================================================= */ /* Editor */ /* ================================================= */
+.document-editor {
+  min-width: 0;
+  overflow-y: auto;
+}
+.document-editor .document-card {
+  min-height: 100%;
+} /* ================================================= */ /* Empty */ /* ================================================= */
+.document-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} /* ================================================= */ /* Document Item */ /* ================================================= */
+.document-item {
+  min-height: 64px;
+} /* ================================================= */ /* Mobile */ /* ================================================= */
+@media (max-width: 767px) {
+  .document-page {
+    background: #fff;
+  }
+  .document-layout {
+    display: block;
+    padding: 0;
+    height: auto;
+  }
+  .document-sidebar {
+    width: 100%;
+    height: auto;
+  }
+  .document-sidebar .document-card {
+    border: none;
+    border-radius: 0;
+  }
+  .document-editor {
+    width: 100%;
+    overflow: visible;
+  }
+  .document-editor .document-card {
+    border: none;
+    border-radius: 0;
+  }
+  .document-item {
+    min-height: 68px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .mobile-header {
+    border-bottom: 1px solid #ddd;
+    background: #fff;
+  }
+} /* ================================================= */ /* Small Phone */ /* ================================================= */
+@media (max-width: 400px) {
+  .document-item {
+    min-height: 64px;
+  }
+  .document-item .q-item__section--avatar {
+    min-width: 44px;
+  }
+}
+</style>

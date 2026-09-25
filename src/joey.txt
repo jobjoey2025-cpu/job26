@@ -22,3 +22,26 @@ xx netlify dev --port 8889
 
 npm list rss-parser \\ 降版本 - steady
 
+
+------------------------------------------------------
+** firedb list **
+
+1## email-login
+2## id manager
+
+3## img-map
+
+4## area-album
+http://localhost:9000/#/a2F_areaAlbum
+
+5## to-do-list
+http://localhost:9000/#/Firedb_Todolist
+
+6## suao-unit (縷一縷 碎片訊息)
+http://localhost:9000/#/Firedb_recent
+
+7## roi-project (Tasks 優先順序)
+https://104vtol.netlify.app/#/roi
+
+回憶減少重複 開始有效了 with Firedb_Quasar_GPT
+

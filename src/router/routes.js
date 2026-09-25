@@ -323,6 +323,16 @@ const routes = [
         },
       },
 
+      {
+        path: 'roi', component: () => import('components/roi.vue'), name: 'roi',
+        meta: {
+          menu: true,
+          label: '*ROI 項目優先 校準*',
+          icon: 'note',
+          group: 'recent',
+        },
+      },
+
 
 
       {
