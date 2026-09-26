@@ -378,7 +378,7 @@ const routes = [
         path: 'a2F_album_combine', component: () => import('components/a2F_album_combine.vue'), name: 'a2F_album_combine',
         meta: {
           menu: true,
-          label: 'a2F_album_combine',
+          label: 'a2F_album_combine(NG)',
           icon: 'note',
           group: 'suao-Trip',
         },
@@ -470,6 +470,16 @@ const routes = [
           menu: true,
           label: 'Firedb_Numba',
           icon: 'map',
+          group: 'Japan',
+        },
+      },
+
+      {
+        path: 'GAS_picUP', component: () => import('components/GAS_picUP.vue'), name: 'GAS_picUP',
+        meta: {
+          menu: true,
+          label: '照片上傳',
+          icon: 'photo',
           group: 'Japan',
         },
       },

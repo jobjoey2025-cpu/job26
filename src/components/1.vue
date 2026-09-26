@@ -1,562 +1,886 @@
-```vue
 <template>
-  <q-page class="q-pa-sm bg-grey-2">
+  <div class="q-pa-md q-gutter-sm">
+    <q-btn label="Alert" color="primary" @click="alert = true" />
+    <q-btn label="Dummy" color="primary" @click="Dummy = true" />
 
-    <!-- Header -->
-    <q-card flat bordered class="q-mb-sm">
-      <q-card-section class="q-py-sm">
-        <div class="row items-center justify-between">
-          <div>
-            <div class="text-h6 text-weight-bold">
-              膽囊切除後
+    <q-dialog v-model="alert">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Alert</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <pre>
+          GGB CICD #
+          </pre>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+  </div>
+
+  <q-page class="document-page">
+    <!-- ================================================= -->
+    <!-- MAIN LAYOUT -->
+    <!-- ================================================= -->
+    <div class="document-layout">
+      <!-- ================================================= -->
+      <!-- LEFT : DOCUMENT LIBRARY -->
+      <!-- Desktop : 4/12 -->
+      <!-- Mobile : full screen -->
+      <!-- ================================================= -->
+      <div v-if="!isMobile || !current" class="document-sidebar">
+        <q-card flat bordered class="document-card">
+          <!-- Header -->
+          <q-card-section>
+            <div class="row items-center">
+              <div>
+                <div class="text-h6">Document Library</div>
+                <div class="text-caption text-grey">
+                  {{ filteredDocuments.length }} documents
+                </div>
+              </div>
+              <q-space />
+              <!-- Mobile Add -->
+              <!-- <q-btn round flat color="primary" icon="add" @click="addDocument"> -->
+
+              <q-btn
+                v-if="isMobile"
+                round
+                color="primary"
+                icon="add"
+                @click="addDocument"
+              />
             </div>
-            <div class="text-caption text-grey-7">
-              術後 1～14 天恢復指南
+            <!-- Search -->
+            <q-input
+              v-model="search"
+              dense
+              outlined
+              placeholder="Search documents..."
+              class="q-mt-md"
+              clearable
+            >
+              <template #prepend> <q-icon name="search" /> </template>
+            </q-input>
+            <!-- Desktop New -->
+            <q-btn
+              v-if="!isMobile"
+              color="primary"
+              icon="add"
+              label="New Document"
+              class="full-width q-mt-md"
+              @click="addDocument"
+            />
+          </q-card-section>
+          <q-separator />
+          <!-- Document List -->
+          <q-list separator>
+            <q-item
+              v-for="doc in filteredDocuments"
+              :key="doc.key"
+              clickable
+              :active="current?.key === doc.key"
+              active-class="bg-blue-1"
+              class="document-item"
+              @click="select(doc)"
+            >
+              <q-item-section avatar>
+                <q-icon
+                  :name="getDocumentIcon(doc.Type)"
+                  color="primary"
+                  size="26px"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label class="text-weight-medium">
+                  {{ doc.Name || "Untitled" }}
+                </q-item-label>
+                <q-item-label caption> {{ doc.Type }} </q-item-label>
+                <q-item-label
+                  v-if="doc.Tags"
+                  caption
+                  class="text-grey-6 ellipsis"
+                >
+                  {{ doc.Tags }}
+                </q-item-label>
+              </q-item-section>
+              <q-item-section side>
+                <q-icon name="chevron_right" color="grey-5" />
+              </q-item-section>
+            </q-item>
+            <!-- Empty -->
+            <q-item v-if="filteredDocuments.length === 0">
+              <q-item-section class="text-center text-grey q-pa-lg">
+                <q-icon name="search_off" size="40px" />
+                <div class="q-mt-sm">No documents found</div>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-card>
+      </div>
+      <!-- ================================================= -->
+      <!-- RIGHT : DOCUMENT EDITOR -->
+      <!-- Desktop : 8/12 -->
+      <!-- Mobile : full screen -->
+      <!-- ================================================= -->
+      <div v-if="current" class="document-editor">
+        <q-card flat bordered class="document-card">
+          <!-- Editor Header -->
+          <q-card-section>
+            <div class="row items-center">
+              <!-- Mobile Back -->
+              <q-btn
+                v-if="isMobile"
+                flat
+                round
+                icon="arrow_back"
+                class="q-mr-sm"
+                @click="current = null"
+              >
+                <q-tooltip>Documents</q-tooltip>
+              </q-btn>
+              <div class="col">
+                <div class="text-h6 ellipsis">
+                  {{ current.Name || "Document" }}
+                </div>
+                <div class="text-caption text-grey">{{ current.Type }}</div>
+              </div>
+              <!-- Delete -->
+              <q-btn
+                flat
+                round
+                color="negative"
+                icon="delete"
+                @click="deleteDocument"
+              >
+                <q-tooltip> Delete </q-tooltip>
+              </q-btn>
             </div>
+          </q-card-section>
+          <q-separator />
+          <!-- ================================================= -->
+          <!-- BASIC INFORMATION -->
+          <!-- ================================================= -->
+          <q-card-section>
+            <div class="text-subtitle1 q-mb-md">Document Information</div>
+            <!-- Name -->
+            <q-input
+              v-model="current.Name"
+              label="Document Name"
+              outlined
+              @update:model-value="save"
+            />
+            <!-- Type -->
+            <q-select
+              v-model="current.Type"
+              :options="paraTypes"
+              emit-value
+              map-options
+              label="Type"
+              outlined
+              class="q-mt-md"
+              @update:model-value="save"
+            />
+            <!-- Tags -->
+            <q-input
+              v-model="current.Tags"
+              label="Tags"
+              hint="例如：firebase, vue, project"
+              outlined
+              class="q-mt-md"
+              @update:model-value="save"
+            />
+            <!-- Description -->
+            <q-input
+              v-model="current.Description"
+              type="textarea"
+              label="Description"
+              outlined
+              autogrow
+              class="q-mt-md"
+              @update:model-value="save"
+            />
+          </q-card-section>
+          <q-separator />
+          <!-- ================================================= -->
+          <!-- CONTENT -->
+          <!-- ================================================= -->
+
+          <!-- ================================================= -->
+          <!-- PHOTOS -->
+          <!-- ================================================= -->
+          <q-card-section>
+            <div class="row items-center q-mb-md">
+              <div class="text-subtitle1">📷 Photos</div>
+
+              <q-space />
+
+              <div class="text-caption text-grey">
+                {{ current.Photos?.length || 0 }} photos
+              </div>
+            </div>
+
+            <!-- Photo Grid -->
+            <div v-if="current.Photos?.length" class="photo-grid">
+              <q-card
+                v-for="(photo, index) in current.Photos"
+                :key="index"
+                flat
+                bordered
+                class="photo-card"
+              >
+                <q-img
+                  :src="photo"
+                  fit="cover"
+                  class="photo-image"
+                  spinner-color="primary"
+                  @click="previewPhoto(photo)"
+                >
+                  <template #error>
+                    <div class="absolute-full flex flex-center bg-grey-3">
+                      <q-icon name="broken_image" size="40px" color="grey-6" />
+                    </div>
+                  </template>
+                </q-img>
+
+                <q-card-section class="q-pa-xs">
+                  <div class="row items-center">
+                    <div class="col text-caption ellipsis">
+                      {{ photo }}
+                    </div>
+
+                    <q-btn
+                      flat
+                      round
+                      dense
+                      color="negative"
+                      icon="delete"
+                      @click="removePhoto(index)"
+                    />
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+
+            <!-- No Photo -->
+            <div v-else class="photo-empty">
+              <q-icon name="photo_library" size="48px" color="grey-5" />
+
+              <div class="text-grey q-mt-sm">尚無照片</div>
+            </div>
+
+            <!-- Add Photo URL -->
+            <div class="row q-col-gutter-sm q-mt-md">
+              <div class="col">
+                <q-input
+                  v-model="newPhotoUrl"
+                  outlined
+                  dense
+                  label="Firebase Photo URL"
+                  placeholder="https://..."
+                  @keyup.enter="addPhoto"
+                />
+              </div>
+
+              <div class="col-auto">
+                <q-btn
+                  color="primary"
+                  icon="add"
+                  label="新增"
+                  @click="addPhoto"
+                />
+              </div>
+            </div>
+          </q-card-section>
+
+          <q-separator />
+
+          <q-card-section>
+            <div class="row items-center q-mb-sm">
+              <div class="text-subtitle1">Content</div>
+              <q-space />
+              <div class="text-caption text-grey">
+                {{ current.Content?.length || 0 }} chars
+              </div>
+            </div>
+            <q-input
+              v-model="current.Content"
+              type="textarea"
+              outlined
+              autogrow
+              :input-style="{
+                minHeight: isMobile ? '300px' : '400px',
+                fontFamily: 'monospace',
+                lineHeight: '1.5',
+              }"
+              @update:model-value="save"
+            />
+          </q-card-section>
+          <q-separator />
+
+          <!-- ================================================= -->
+          <!-- META -->
+          <!-- ================================================= -->
+          <q-card-section class="text-caption text-grey">
+            <div>
+              <q-icon name="schedule" class="q-mr-xs" /> Created:
+              {{ formatDate(current.CreatedAt) }}
+            </div>
+            <div class="q-mt-xs">
+              <q-icon name="update" class="q-mr-xs" /> Updated:
+              {{ formatDate(current.UpdatedAt) }}
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
+      <!-- ================================================= -->
+      <!-- NO DOCUMENT -->
+      <!-- ================================================= -->
+      <div v-if="!current && !isMobile" class="document-empty">
+        <div class="text-grey text-center">
+          <q-icon name="description" size="64px" />
+          <div class="text-h6 q-mt-md">No Document Selected</div>
+          <div class="text-caption q-mt-sm">
+            Select a document from the library
           </div>
-
-          <q-chip
-            color="primary"
-            text-color="white"
-            size="md"
-          >
-            Day {{ currentDay }}
-          </q-chip>
-        </div>
-      </q-card-section>
-    </q-card>
-
-
-    <!-- Day Selector -->
-    <q-card flat bordered class="q-mb-sm">
-      <q-card-section class="q-pa-sm">
-
-        <div class="text-subtitle2 q-mb-xs">
-          術後第幾天？
-        </div>
-
-        <div class="day-grid">
           <q-btn
-            v-for="day in 14"
-            :key="day"
-            :label="`D${day}`"
-            dense
-            unelevated
-            :color="currentDay === day ? 'primary' : 'grey-3'"
-            :text-color="currentDay === day ? 'white' : 'grey-8'"
-            @click="currentDay = day"
+            color="primary"
+            label="Create Document"
+            icon="add"
+            class="q-mt-md"
+            @click="addDocument"
           />
         </div>
-
-      </q-card-section>
-    </q-card>
-
-
-    <!-- Today's Main Message -->
-    <q-card flat bordered class="q-mb-sm">
-      <q-card-section class="q-py-md">
-
-        <div class="text-center">
-          <div class="text-caption text-grey-7">
-            今天的重點
-          </div>
-
-          <div class="text-h5 text-weight-bold q-mt-xs">
-            {{ today.title }}
-          </div>
-
-          <div class="text-body2 text-grey-8 q-mt-sm">
-            {{ today.summary }}
-          </div>
-        </div>
-
-      </q-card-section>
-    </q-card>
-
-
-    <!-- Food -->
-    <q-card flat bordered class="q-mb-sm">
-      <q-card-section class="q-py-sm">
-
-        <div class="text-subtitle1 text-weight-bold">
-          🍚 今天可以吃
-        </div>
-
-        <div class="text-body2 q-mt-sm">
-          {{ today.food }}
-        </div>
-
-      </q-card-section>
-    </q-card>
-
-
-    <!-- Avoid -->
-    <q-card flat bordered class="q-mb-sm">
-      <q-card-section class="q-py-sm">
-
-        <div class="text-subtitle1 text-weight-bold">
-          ⛔ 今天先不要
-        </div>
-
-        <div class="text-body2 q-mt-sm">
-          {{ today.avoid }}
-        </div>
-
-      </q-card-section>
-    </q-card>
-
-
-    <!-- Activity -->
-    <q-card flat bordered class="q-mb-sm">
-      <q-card-section class="q-py-sm">
-
-        <div class="text-subtitle1 text-weight-bold">
-          🚶 活動
-        </div>
-
-        <div class="text-body2 q-mt-sm">
-          {{ today.activity }}
-        </div>
-
-      </q-card-section>
-    </q-card>
-
-
-    <!-- Normal Symptoms -->
-    <q-card flat bordered class="q-mb-sm">
-      <q-card-section class="q-py-sm">
-
-        <div class="text-subtitle1 text-weight-bold">
-          🟢 可能正常
-        </div>
-
-        <div class="text-body2 q-mt-sm">
-          {{ today.normal }}
-        </div>
-
-      </q-card-section>
-    </q-card>
-
-
+      </div>
+    </div>
     <!-- ================================================= -->
-    <!-- Side Effects -->
+    <!-- JSON FILE INPUT -->
     <!-- ================================================= -->
-
-    <q-card flat bordered class="q-mb-sm">
-
-      <q-card-section class="q-py-sm">
-
-        <div class="row items-center justify-between">
-          <div class="text-subtitle1 text-weight-bold">
-            📋 膽囊切除副作用
-          </div>
-
-          <q-chip
-            dense
-            color="orange-2"
-            text-color="orange-10"
-          >
-            術後可能出現
-          </q-chip>
-        </div>
-
-      </q-card-section>
-
-
-      <!-- Key reminder -->
-      <q-card-section class="q-pt-none">
-
-        <div class="side-effect-summary">
-
-          <div class="text-body2">
-            <b>排便習慣可能改變</b>
-          </div>
-
-          <div class="text-body2 q-mt-xs">
-            高油脂 → 比較容易腹瀉／腹脹
-          </div>
-
-          <div class="text-caption text-grey-7 q-mt-sm">
-            部分持續性症狀可由醫師評估是否需要用藥物控制膽汁酸。
-          </div>
-
-        </div>
-
-      </q-card-section>
-
-
-      <!-- Mobile Side Effect List -->
-      <q-list separator>
-
-        <q-item
-          v-for="item in sideEffects"
-          :key="item.name"
-          class="side-effect-item"
-        >
-
-          <q-item-section>
-
-            <q-item-label class="text-weight-bold">
-              {{ item.name }}
-            </q-item-label>
-
-            <q-item-label caption class="q-mt-xs">
-              {{ item.condition }}
-            </q-item-label>
-
-            <q-item-label
-              caption
-              class="text-grey-8 q-mt-xs"
-            >
-              {{ item.description }}
-            </q-item-label>
-
-          </q-item-section>
-
-
-          <q-item-section side top>
-
-            <q-chip
-              dense
-              size="sm"
-              :color="item.color"
-              :text-color="item.textColor"
-            >
-              {{ item.frequency }}
-            </q-chip>
-
-          </q-item-section>
-
-        </q-item>
-
-      </q-list>
-
-    </q-card>
-
-
-    <!-- ================================================= -->
-    <!-- Red Flags -->
-    <!-- ================================================= -->
-
-    <q-card
-      flat
-      bordered
-      class="warning-card q-mb-sm"
-    >
-
-      <q-card-section class="q-py-md">
-
-        <div class="text-subtitle1 text-weight-bold">
-          🚨 需要聯絡醫師／回醫院
-        </div>
-
-        <div class="text-body2 q-mt-sm">
-          {{ today.warning }}
-        </div>
-
-      </q-card-section>
-
-    </q-card>
-
-
-    <!-- Bottom Rule -->
-    <q-card flat class="bg-primary text-white">
-
-      <q-card-section class="q-pa-md text-center">
-
-        <div class="text-subtitle1 text-weight-bold">
-          記住
-        </div>
-
-        <div class="text-body2 q-mt-xs">
-          少量吃・慢慢走・不要用力
-        </div>
-
-      </q-card-section>
-
-    </q-card>
-
+    <input
+      ref="fileInput"
+      type="file"
+      accept=".json"
+      style="display: none"
+      @change="onFileSelected"
+    />
   </q-page>
+
+  <q-dialog v-model="photoPreview" maximized>
+    <q-card class="bg-black">
+      <q-btn
+        flat
+        round
+        icon="close"
+        color="white"
+        class="absolute-top-right q-ma-md"
+        style="z-index: 10"
+        v-close-popup
+      />
+
+      <q-img
+        :src="previewImage"
+        fit="contain"
+        style="width: 100%; height: 100vh"
+      />
+    </q-card>
+  </q-dialog>
 </template>
 
-
 <script setup>
-import { computed, ref } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 
-const currentDay = ref(1)
+import {
+  ref as dbRef,
+  onValue,
+  push,
+  set,
+  update,
+  remove,
+} from "firebase/database";
 
+import { db } from "boot/firebase_suaoUnit";
 
-/* =====================================================
-   Day 1 ~ 14
-===================================================== */
+/* --------------------------------
+   State
+-------------------------------- */
+const alert = ref(false);
 
-const days = {
+const fileInput = ref(null);
 
-  1: {
-    title: '先休息，少量進食',
-    summary: '麻醉剛退，今天重點是補水與觀察。',
-    food: '水、溫開水、清淡流質；能吃再吃稀飯、軟食。',
-    avoid: '油炸、肥肉、酒、辛辣、大餐。',
-    activity: '休息為主，可以短距離慢慢走。',
-    normal: '傷口痛、腹脹、肩膀痠痛、輕微噁心。',
-    warning: '劇烈腹痛、持續嘔吐、呼吸困難、大量出血。'
+const documents = ref([]);
+
+const current = ref(null);
+
+const search = ref("");
+
+const isMobile = ref(false);
+const checkMobile = () => {
+  isMobile.value = window.innerWidth < 768;
+};
+
+const newPhotoUrl = ref("");
+onMounted(() => {
+  checkMobile();
+  window.addEventListener("resize", checkMobile);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", checkMobile);
+});
+
+/* --------------------------------
+   Document Types
+-------------------------------- */
+
+const paraTypes = [
+  {
+    value: "Project",
+    label: "Project",
+    description: "具有明確截止日期",
   },
-
-  2: {
-    title: '開始吃軟食',
-    summary: '能吃就慢慢增加，不要一次吃太多。',
-    food: '稀飯、麵、吐司、蒸蛋、嫩豆腐。',
-    avoid: '炸物、肥肉、油湯、酒。',
-    activity: '短距離走路，避免提重物。',
-    normal: '腹脹、排氣、傷口疼痛。',
-    warning: '發燒、腹痛明顯增加、持續嘔吐。'
+  {
+    value: "Area",
+    label: "Area",
+    description: "持續維護的領域",
   },
-
-  3: {
-    title: '慢慢恢復正常飲食',
-    summary: '開始加入瘦肉、魚、熟蔬菜。',
-    food: '白飯＋瘦肉／魚＋熟蔬菜。',
-    avoid: '油炸、肥肉、麻辣、大餐。',
-    activity: '可以增加走路，但不要用力。',
-    normal: '軟便、排便習慣改變、輕微腹脹。',
-    warning: '黃疸、深色尿、持續劇烈腹痛。'
+  {
+    value: "Resource",
+    label: "Resource",
+    description: "知識、研究資料",
   },
-
-  4: {
-    title: '增加食物種類',
-    summary: '觀察自己吃油後是否腹瀉或腹脹。',
-    food: '正常食物逐步增加，維持低油。',
-    avoid: '炸雞、香腸、培根、肥肉。',
-    activity: '輕度日常活動。',
-    normal: '腹脹、軟便仍可能存在。',
-    warning: '發燒、傷口紅腫熱痛、流膿。'
+  {
+    value: "Archive",
+    label: "Archive",
+    description: "封存資料",
   },
+];
 
-  5: {
-    title: '接近一般飲食',
-    summary: '少量多餐，繼續控制油脂。',
-    food: '飯、魚、雞肉、蛋、豆腐、蔬菜。',
-    avoid: '高油脂食物、酒。',
-    activity: '可做簡單家事，不搬重物。',
-    normal: '食慾、精神逐漸恢復。',
-    warning: '無法進食、無法喝水、持續噁心。'
-  },
+/* --------------------------------
+   Firebase
+-------------------------------- */
 
-  6: {
-    title: '觀察腸胃反應',
-    summary: '不要因為好一點就突然大吃。',
-    food: '接近正常飲食，但油脂適量。',
-    avoid: '一次大量油脂。',
-    activity: '繼續散步。',
-    normal: '軟便、腹瀉可能仍存在。',
-    warning: '腹痛反而越來越嚴重。'
-  },
+onMounted(() => {
+  const documentsRef = dbRef(db, "documents");
 
-  7: {
-    title: '第一週檢查點',
-    summary: '大部分活動可以逐步恢復。',
-    food: '正常均衡飲食，仍控制油脂。',
-    avoid: '油炸、大餐、酒。',
-    activity: '增加日常活動，但避免劇烈運動。',
-    normal: '傷口仍可能有拉扯感。',
-    warning: '傷口裂開、流膿、持續發燒。'
-  },
+  onValue(documentsRef, (snap) => {
+    const obj = snap.val() || {};
 
-  8: {
-    title: '逐漸恢復',
-    summary: '如果前幾天吃得穩定，可以增加食物種類。',
-    food: '接近正常飲食。',
-    avoid: '一次吃大量油脂。',
-    activity: '逐漸增加活動量。',
-    normal: '偶爾腹脹。',
-    warning: '黃疸、持續右上腹痛。'
-  },
+    documents.value = Object.keys(obj).map((key) => ({
+      key,
+      ...obj[key],
+    }));
 
-  9: {
-    title: '觀察排便',
-    summary: '注意哪些食物會讓你腹瀉。',
-    food: '正常均衡飲食。',
-    avoid: '會明顯造成腹瀉的食物。',
-    activity: '依身體狀況增加活動。',
-    normal: '排便逐漸穩定。',
-    warning: '持續大量水瀉。'
-  },
+    /*
+     * 如果目前沒有選擇文件，
+     * 自動選第一份
+     */
+    if (!current.value && documents.value.length > 0) {
+      current.value = documents.value[0];
+    }
 
-  10: {
-    title: '逐漸回到生活',
-    summary: '不要急著完全恢復所有活動。',
-    food: '正常飲食，油脂適量。',
-    avoid: '酒、油炸、大餐。',
-    activity: '逐步恢復日常活動。',
-    normal: '輕微傷口不適。',
-    warning: '腹痛＋發燒／嘔吐。'
-  },
+    /*
+     * 如果目前選擇的文件已被刪除
+     */
+    if (
+      current.value &&
+      !documents.value.find((doc) => doc.key === current.value.key)
+    ) {
+      current.value = documents.value.length > 0 ? documents.value[0] : null;
+    }
+  });
+});
 
-  11: {
-    title: '接近正常',
-    summary: '持續觀察吃油後的腸胃反應。',
-    food: '正常均衡飲食。',
-    avoid: '個人明顯不耐受食物。',
-    activity: '輕度運動依醫師許可。',
-    normal: '消化逐漸恢復。',
-    warning: '症狀突然惡化。'
-  },
+/* --------------------------------
+   Search
+-------------------------------- */
 
-  12: {
-    title: '恢復日常',
-    summary: '飲食可以接近平常。',
-    food: '正常均衡飲食。',
-    avoid: '大量油炸食品。',
-    activity: '逐步恢復活動。',
-    normal: '偶爾腹脹。',
-    warning: '黃疸、深色尿、持續腹痛。'
-  },
+const filteredDocuments = computed(() => {
+  const keyword = search.value?.trim().toLowerCase();
 
-  13: {
-    title: '最後觀察',
-    summary: '確認飲食、排便與傷口是否穩定。',
-    food: '正常飲食。',
-    avoid: '暴飲暴食。',
-    activity: '逐漸恢復正常生活。',
-    normal: '傷口逐漸穩定。',
-    warning: '持續明顯腹瀉或腹痛。'
-  },
+  if (!keyword) {
+    return documents.value;
+  }
 
-  14: {
-    title: '兩週檢查點',
-    summary: '多數人已逐漸回到正常生活。',
-    food: '可接近正常飲食。',
-    avoid: '仍依個人耐受調整油脂。',
-    activity: '重訓、搬重物依醫師指示。',
-    normal: '傷口逐漸穩定。',
-    warning: '任何持續或惡化的異常症狀。'
+  return documents.value.filter((doc) => {
+    return (
+      doc.Name?.toLowerCase().includes(keyword) ||
+      doc.Description?.toLowerCase().includes(keyword) ||
+      doc.Tags?.toLowerCase().includes(keyword) ||
+      doc.Content?.toLowerCase().includes(keyword)
+    );
+  });
+});
+
+/* --------------------------------
+   Select
+-------------------------------- */
+
+function select(doc) {
+  current.value = doc;
+}
+
+/* --------------------------------
+   Create
+-------------------------------- */
+
+async function addDocument() {
+  const key = push(dbRef(db, "documents")).key;
+
+  const now = Date.now();
+
+  const document = {
+    Name: "New Document",
+    Type: "Resource",
+    Tags: "",
+    Description: "",
+    Content: "",
+
+    // 📷 Photos
+    Photos: [],
+
+    CreatedAt: now,
+    UpdatedAt: now,
+  };
+
+  await set(dbRef(db, "documents/" + key), document);
+
+  /*
+   * 立即選取新文件
+   */
+  current.value = {
+    key,
+    ...document,
+  };
+}
+
+/* --------------------------------
+   Save
+-------------------------------- */
+
+async function save() {
+  if (!current.value) return;
+
+  const key = current.value.key;
+
+  await update(dbRef(db, "documents/" + key), {
+    Name: current.value.Name || "",
+    Type: current.value.Type || "Resource",
+    Tags: current.value.Tags || "",
+    Description: current.value.Description || "",
+    Content: current.value.Content || "",
+    Photos: current.value.Photos || [],
+    UpdatedAt: Date.now(),
+  });
+}
+
+/* --------------------------------
+   Delete
+-------------------------------- */
+
+async function deleteDocument() {
+  if (!current.value) return;
+
+  const name = current.value.Name || "Untitled";
+
+  if (!confirm(`Delete "${name}" ?`)) {
+    return;
+  }
+
+  const key = current.value.key;
+
+  await remove(dbRef(db, "documents/" + key));
+
+  current.value = null;
+}
+
+/* --------------------------------
+   Document Icon
+-------------------------------- */
+
+function getDocumentIcon(type) {
+  switch (type) {
+    case "Project":
+      return "folder";
+
+    case "Area":
+      return "workspaces";
+
+    case "Resource":
+      return "library_books";
+
+    case "Archive":
+      return "inventory_2";
+
+    default:
+      return "description";
   }
 }
 
+/* --------------------------------
+   Date
+-------------------------------- */
 
-/* =====================================================
-   Side Effects
-===================================================== */
-
-const sideEffects = [
-
-  {
-    name: '腹瀉、軟便',
-    frequency: '常見',
-    condition: '排便習慣可能改變',
-    description: '多在數週～數月內逐漸改善。',
-    color: 'orange-2',
-    textColor: 'orange-10'
-  },
-
-  {
-    name: '吃油膩後容易拉肚子',
-    frequency: '常見',
-    condition: '高油脂 → 腹瀉／腹脹',
-    description: '膽汁直接進入腸道，對高脂食物可能比較敏感。',
-    color: 'orange-2',
-    textColor: 'orange-10'
-  },
-
-  {
-    name: '腹脹、放屁',
-    frequency: '常見',
-    condition: '腸胃重新適應',
-    description: '術後腸胃需要一段時間重新適應。',
-    color: 'orange-2',
-    textColor: 'orange-10'
-  },
-
-  {
-    name: '消化不良、吃太飽不舒服',
-    frequency: '可能',
-    condition: '少量多餐',
-    description: '少量多餐通常比較容易適應。',
-    color: 'blue-2',
-    textColor: 'blue-10'
-  },
-
-  {
-    name: '右上腹或傷口附近疼痛',
-    frequency: '術後常見',
-    condition: '恢復期間',
-    description: '通常會隨著時間逐漸減輕。',
-    color: 'blue-2',
-    textColor: 'blue-10'
-  },
-
-  {
-    name: '噁心',
-    frequency: '可能',
-    condition: '術後早期較常見',
-    description: '可能與麻醉、止痛藥或腸胃適應有關。',
-    color: 'blue-2',
-    textColor: 'blue-10'
-  },
-
-  {
-    name: '排便習慣改變',
-    frequency: '可能',
-    condition: '恢復期間',
-    description: '有些人會持續一段時間。',
-    color: 'blue-2',
-    textColor: 'blue-10'
+function formatDate(timestamp) {
+  if (!timestamp) {
+    return "-";
   }
 
-]
+  return new Date(timestamp).toLocaleString();
+}
 
+/* --------------------------------
+   Export JSON
+-------------------------------- */
 
-const today = computed(() => days[currentDay.value])
+function exportJson() {
+  const data = documents.value.map(({ key, ...rest }) => ({
+    key,
+    ...rest,
+  }));
 
+  const blob = new Blob([JSON.stringify(data, null, 2)], {
+    type: "application/json",
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+
+  a.href = url;
+
+  a.download = "documents.json";
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+/* --------------------------------
+   Import JSON
+-------------------------------- */
+
+function importJson() {
+  fileInput.value.click();
+}
+
+/* --------------------------------
+   Import File
+-------------------------------- */
+
+async function onFileSelected(evt) {
+  const file = evt.target.files[0];
+
+  if (!file) {
+    return;
+  }
+
+  try {
+    const text = await file.text();
+
+    const data = JSON.parse(text);
+
+    if (!Array.isArray(data)) {
+      throw new Error("JSON 必須是 Array");
+    }
+
+    for (const item of data) {
+      const document = {
+        ...item,
+      };
+
+      let key = document.key;
+
+      delete document.key;
+
+      /*
+       * 沒有 key 就建立新的
+       */
+      if (!key) {
+        key = push(dbRef(db, "documents")).key;
+      }
+
+      /*
+       * 如果是舊資料沒有時間，
+       * 自動補上
+       */
+      if (!document.CreatedAt) {
+        document.CreatedAt = Date.now();
+      }
+
+      document.UpdatedAt = Date.now();
+
+      await set(dbRef(db, "documents/" + key), document);
+    }
+
+    evt.target.value = "";
+  } catch (err) {
+    console.error(err);
+
+    alert("JSON 格式錯誤");
+  }
+}
+async function addPhoto() {
+  if (!current.value) return;
+
+  const url = newPhotoUrl.value.trim();
+
+  if (!url) return;
+
+  if (!current.value.Photos) {
+    current.value.Photos = [];
+  }
+
+  current.value.Photos.push(url);
+
+  await update(dbRef(db, "documents/" + current.value.key), {
+    Photos: current.value.Photos,
+    UpdatedAt: Date.now(),
+  });
+
+  newPhotoUrl.value = "";
+}
+async function removePhoto(index) {
+  if (!current.value?.Photos) return;
+
+  current.value.Photos.splice(index, 1);
+
+  await update(dbRef(db, "documents/" + current.value.key), {
+    Photos: current.value.Photos,
+    UpdatedAt: Date.now(),
+  });
+}
+const photoPreview = ref(false);
+const previewImage = ref("");
+
+function previewPhoto(url) {
+  previewImage.value = url;
+  photoPreview.value = true;
+}
 </script>
-
-
 <style scoped>
-
-.day-grid {
+.document-page {
+  min-height: 100vh;
+  background: #f5f6f8;
+} /* ================================================= */ /* Main Layout */ /* ================================================= */
+.document-layout {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
+  grid-template-columns: minmax(280px, 4fr) minmax(0, 8fr);
+  gap: 16px;
+  padding: 16px;
+  height: calc(100vh - 32px);
+} /* ================================================= */ /* Sidebar */ /* ================================================= */
+.document-sidebar {
+  min-width: 0;
+  overflow: hidden;
 }
-
-.day-grid .q-btn {
-  min-height: 34px;
-  padding: 0;
+.document-sidebar .document-card {
+  height: 100%;
+  overflow-y: auto;
+} /* ================================================= */ /* Editor */ /* ================================================= */
+.document-editor {
+  min-width: 0;
+  overflow-y: auto;
 }
-
-
-/* Side Effect */
-
-.side-effect-summary {
-  background: #fff8e1;
-  border-radius: 8px;
-  padding: 12px;
-}
-
-.side-effect-item {
-  min-height: 72px;
-}
-
-
-/* Warning */
-
-.warning-card {
-  border: 2px solid #c62828;
-}
-
-
+.document-editor .document-card {
+  min-height: 100%;
+} /* ================================================= */ /* Empty */ /* ================================================= */
+.document-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} /* ================================================= */ /* Document Item */ /* ================================================= */
+.document-item {
+  min-height: 64px;
+} /* ================================================= */ /* Mobile */ /* ================================================= */
+@media (max-width: 767px) {
+  .document-page {
+    background: #fff;
+  }
+  .document-layout {
+    display: block;
+    padding: 0;
+    height: auto;
+  }
+  .document-sidebar {
+    width: 100%;
+    height: auto;
+  }
+  .document-sidebar .document-card {
+    border: none;
+    border-radius: 0;
+  }
+  .document-editor {
+    width: 100%;
+    overflow: visible;
+  }
+  .document-editor .document-card {
+    border: none;
+    border-radius: 0;
+  }
+  .document-item {
+    min-height: 68px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .mobile-header {
+    border-bottom: 1px solid #ddd;
+    background: #fff;
+  }
+} /* ================================================= */ /* Small Phone */ /* ================================================= */
 @media (max-width: 400px) {
-
-  .day-grid {
-    grid-template-columns: repeat(7, 1fr);
-    gap: 2px;
+  .document-item {
+    min-height: 64px;
   }
-
-  .day-grid .q-btn {
-    font-size: 11px;
+  .document-item .q-item__section--avatar {
+    min-width: 44px;
   }
+}
+/* ================================================= */
+/* Photos */
+/* ================================================= */
 
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
 }
 
+.photo-card {
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.photo-image {
+  width: 100%;
+  height: 150px;
+  cursor: pointer;
+}
+
+.photo-empty {
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px dashed #ccc;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+/* Mobile */
+
+@media (max-width: 767px) {
+  .photo-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .photo-image {
+    height: 120px;
+  }
+}
 </style>
-```

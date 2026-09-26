@@ -11,7 +11,7 @@
 
         <q-card-section class="q-pt-none">
           <pre>
-GGB CICD #
+          GGB CICD #
 
             回憶減少重複 開始有效了 with Firedb_Quasar_GPT
             Firedb_recent \\ roi
@@ -35,23 +35,6 @@ GGB CICD #
   </div>
 
   <q-page class="document-page">
-    <!-- ================================================= -->
-    <!-- MOBILE : Library Header -->
-    <!-- ================================================= -->
-    <!-- <div v-if="isMobile && !current" class="mobile-header q-pa-md">
-      <div class="row items-center">
-        <div>
-          <div class="text-h6">Document Library</div>
-          <div class="text-caption text-grey">
-            {{ filteredDocuments.length }} documents
-          </div>
-        </div>
-        <q-space />
-        <q-btn round color="primary" icon="add" @click="addDocument">
-          <q-tooltip>New Document</q-tooltip>
-        </q-btn>
-      </div>
-    </div> -->
     <!-- ================================================= -->
     <!-- MAIN LAYOUT -->
     <!-- ================================================= -->
@@ -79,7 +62,6 @@ GGB CICD #
               <q-btn
                 v-if="isMobile"
                 round
-
                 color="primary"
                 icon="add"
                 @click="addDocument"
@@ -239,6 +221,96 @@ GGB CICD #
           <!-- ================================================= -->
           <!-- CONTENT -->
           <!-- ================================================= -->
+
+          <!-- ================================================= -->
+          <!-- PHOTOS -->
+          <!-- ================================================= -->
+          <q-card-section>
+            <div class="row items-center q-mb-md">
+              <div class="text-subtitle1">📷 Photos</div>
+
+              <q-space />
+
+              <div class="text-caption text-grey">
+                {{ current.Photos?.length || 0 }} photos
+              </div>
+            </div>
+
+            <!-- Photo Grid -->
+            <div v-if="current.Photos?.length" class="photo-grid">
+              <q-card
+                v-for="(photo, index) in current.Photos"
+                :key="index"
+                flat
+                bordered
+                class="photo-card"
+              >
+                <q-img
+                  :src="photo"
+                  fit="cover"
+                  class="photo-image"
+                  spinner-color="primary"
+                  @click="previewPhoto(photo)"
+                >
+                  <template #error>
+                    <div class="absolute-full flex flex-center bg-grey-3">
+                      <q-icon name="broken_image" size="40px" color="grey-6" />
+                    </div>
+                  </template>
+                </q-img>
+
+                <q-card-section class="q-pa-xs">
+                  <div class="row items-center">
+                    <div class="col text-caption ellipsis">
+                      {{ photo }}
+                    </div>
+
+                    <q-btn
+                      flat
+                      round
+                      dense
+                      color="negative"
+                      icon="delete"
+                      @click="removePhoto(index)"
+                    />
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+
+            <!-- No Photo -->
+            <div v-else class="photo-empty">
+              <q-icon name="photo_library" size="48px" color="grey-5" />
+
+              <div class="text-grey q-mt-sm">尚無照片</div>
+            </div>
+
+            <!-- Add Photo URL -->
+            <div class="row q-col-gutter-sm q-mt-md">
+              <div class="col">
+                <q-input
+                  v-model="newPhotoUrl"
+                  outlined
+                  dense
+                  label="Firebase Photo URL"
+                  placeholder="https://..."
+                  @keyup.enter="addPhoto"
+                />
+              </div>
+
+              <div class="col-auto">
+                <q-btn
+                  color="primary"
+                  icon="add"
+                  label="新增"
+                  @click="addPhoto"
+                />
+              </div>
+            </div>
+          </q-card-section>
+
+          <q-separator />
+
           <q-card-section>
             <div class="row items-center q-mb-sm">
               <div class="text-subtitle1">Content</div>
@@ -261,6 +333,7 @@ GGB CICD #
             />
           </q-card-section>
           <q-separator />
+
           <!-- ================================================= -->
           <!-- META -->
           <!-- ================================================= -->
@@ -307,6 +380,26 @@ GGB CICD #
       @change="onFileSelected"
     />
   </q-page>
+
+  <q-dialog v-model="photoPreview" maximized>
+    <q-card class="bg-black">
+      <q-btn
+        flat
+        round
+        icon="close"
+        color="white"
+        class="absolute-top-right q-ma-md"
+        style="z-index: 10"
+        v-close-popup
+      />
+
+      <q-img
+        :src="previewImage"
+        fit="contain"
+        style="width: 100%; height: 100vh"
+      />
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -340,6 +433,8 @@ const isMobile = ref(false);
 const checkMobile = () => {
   isMobile.value = window.innerWidth < 768;
 };
+
+const newPhotoUrl = ref("");
 onMounted(() => {
   checkMobile();
   window.addEventListener("resize", checkMobile);
@@ -450,17 +545,15 @@ async function addDocument() {
 
   const document = {
     Name: "New Document",
-
     Type: "Resource",
-
     Tags: "",
-
     Description: "",
-
     Content: "",
 
-    CreatedAt: now,
+    // 📷 Photos
+    Photos: [],
 
+    CreatedAt: now,
     UpdatedAt: now,
   };
 
@@ -490,6 +583,7 @@ async function save() {
     Tags: current.value.Tags || "",
     Description: current.value.Description || "",
     Content: current.value.Content || "",
+    Photos: current.value.Photos || [],
     UpdatedAt: Date.now(),
   });
 }
@@ -640,6 +734,43 @@ async function onFileSelected(evt) {
     alert("JSON 格式錯誤");
   }
 }
+async function addPhoto() {
+  if (!current.value) return;
+
+  const url = newPhotoUrl.value.trim();
+
+  if (!url) return;
+
+  if (!current.value.Photos) {
+    current.value.Photos = [];
+  }
+
+  current.value.Photos.push(url);
+
+  await update(dbRef(db, "documents/" + current.value.key), {
+    Photos: current.value.Photos,
+    UpdatedAt: Date.now(),
+  });
+
+  newPhotoUrl.value = "";
+}
+async function removePhoto(index) {
+  if (!current.value?.Photos) return;
+
+  current.value.Photos.splice(index, 1);
+
+  await update(dbRef(db, "documents/" + current.value.key), {
+    Photos: current.value.Photos,
+    UpdatedAt: Date.now(),
+  });
+}
+const photoPreview = ref(false);
+const previewImage = ref("");
+
+function previewPhoto(url) {
+  previewImage.value = url;
+  photoPreview.value = true;
+}
 </script>
 <style scoped>
 .document-page {
@@ -717,6 +848,51 @@ async function onFileSelected(evt) {
   }
   .document-item .q-item__section--avatar {
     min-width: 44px;
+  }
+}
+/* ================================================= */
+/* Photos */
+/* ================================================= */
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.photo-card {
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.photo-image {
+  width: 100%;
+  height: 150px;
+  cursor: pointer;
+}
+
+.photo-empty {
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px dashed #ccc;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+/* Mobile */
+
+@media (max-width: 767px) {
+  .photo-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .photo-image {
+    height: 120px;
   }
 }
 </style>
