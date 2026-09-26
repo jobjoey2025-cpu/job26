@@ -1,901 +1,562 @@
 ```vue
 <template>
-  <!-- autoplay="6000" -->
-  <div class="q-pa-md tech-section">
-    <q-carousel
-      v-model="slide"
-      animated
-      swipeable
-      infinite
-      navigation
-      :autoplay="isPaused ? false : 6000"
-      height="460px"
-      class="tech-carousel"
+  <q-page class="q-pa-sm bg-grey-2">
+
+    <!-- Header -->
+    <q-card flat bordered class="q-mb-sm">
+      <q-card-section class="q-py-sm">
+        <div class="row items-center justify-between">
+          <div>
+            <div class="text-h6 text-weight-bold">
+              膽囊切除後
+            </div>
+            <div class="text-caption text-grey-7">
+              術後 1～14 天恢復指南
+            </div>
+          </div>
+
+          <q-chip
+            color="primary"
+            text-color="white"
+            size="md"
+          >
+            Day {{ currentDay }}
+          </q-chip>
+        </div>
+      </q-card-section>
+    </q-card>
+
+
+    <!-- Day Selector -->
+    <q-card flat bordered class="q-mb-sm">
+      <q-card-section class="q-pa-sm">
+
+        <div class="text-subtitle2 q-mb-xs">
+          術後第幾天？
+        </div>
+
+        <div class="day-grid">
+          <q-btn
+            v-for="day in 14"
+            :key="day"
+            :label="`D${day}`"
+            dense
+            unelevated
+            :color="currentDay === day ? 'primary' : 'grey-3'"
+            :text-color="currentDay === day ? 'white' : 'grey-8'"
+            @click="currentDay = day"
+          />
+        </div>
+
+      </q-card-section>
+    </q-card>
+
+
+    <!-- Today's Main Message -->
+    <q-card flat bordered class="q-mb-sm">
+      <q-card-section class="q-py-md">
+
+        <div class="text-center">
+          <div class="text-caption text-grey-7">
+            今天的重點
+          </div>
+
+          <div class="text-h5 text-weight-bold q-mt-xs">
+            {{ today.title }}
+          </div>
+
+          <div class="text-body2 text-grey-8 q-mt-sm">
+            {{ today.summary }}
+          </div>
+        </div>
+
+      </q-card-section>
+    </q-card>
+
+
+    <!-- Food -->
+    <q-card flat bordered class="q-mb-sm">
+      <q-card-section class="q-py-sm">
+
+        <div class="text-subtitle1 text-weight-bold">
+          🍚 今天可以吃
+        </div>
+
+        <div class="text-body2 q-mt-sm">
+          {{ today.food }}
+        </div>
+
+      </q-card-section>
+    </q-card>
+
+
+    <!-- Avoid -->
+    <q-card flat bordered class="q-mb-sm">
+      <q-card-section class="q-py-sm">
+
+        <div class="text-subtitle1 text-weight-bold">
+          ⛔ 今天先不要
+        </div>
+
+        <div class="text-body2 q-mt-sm">
+          {{ today.avoid }}
+        </div>
+
+      </q-card-section>
+    </q-card>
+
+
+    <!-- Activity -->
+    <q-card flat bordered class="q-mb-sm">
+      <q-card-section class="q-py-sm">
+
+        <div class="text-subtitle1 text-weight-bold">
+          🚶 活動
+        </div>
+
+        <div class="text-body2 q-mt-sm">
+          {{ today.activity }}
+        </div>
+
+      </q-card-section>
+    </q-card>
+
+
+    <!-- Normal Symptoms -->
+    <q-card flat bordered class="q-mb-sm">
+      <q-card-section class="q-py-sm">
+
+        <div class="text-subtitle1 text-weight-bold">
+          🟢 可能正常
+        </div>
+
+        <div class="text-body2 q-mt-sm">
+          {{ today.normal }}
+        </div>
+
+      </q-card-section>
+    </q-card>
+
+
+    <!-- ================================================= -->
+    <!-- Side Effects -->
+    <!-- ================================================= -->
+
+    <q-card flat bordered class="q-mb-sm">
+
+      <q-card-section class="q-py-sm">
+
+        <div class="row items-center justify-between">
+          <div class="text-subtitle1 text-weight-bold">
+            📋 膽囊切除副作用
+          </div>
+
+          <q-chip
+            dense
+            color="orange-2"
+            text-color="orange-10"
+          >
+            術後可能出現
+          </q-chip>
+        </div>
+
+      </q-card-section>
+
+
+      <!-- Key reminder -->
+      <q-card-section class="q-pt-none">
+
+        <div class="side-effect-summary">
+
+          <div class="text-body2">
+            <b>排便習慣可能改變</b>
+          </div>
+
+          <div class="text-body2 q-mt-xs">
+            高油脂 → 比較容易腹瀉／腹脹
+          </div>
+
+          <div class="text-caption text-grey-7 q-mt-sm">
+            部分持續性症狀可由醫師評估是否需要用藥物控制膽汁酸。
+          </div>
+
+        </div>
+
+      </q-card-section>
+
+
+      <!-- Mobile Side Effect List -->
+      <q-list separator>
+
+        <q-item
+          v-for="item in sideEffects"
+          :key="item.name"
+          class="side-effect-item"
+        >
+
+          <q-item-section>
+
+            <q-item-label class="text-weight-bold">
+              {{ item.name }}
+            </q-item-label>
+
+            <q-item-label caption class="q-mt-xs">
+              {{ item.condition }}
+            </q-item-label>
+
+            <q-item-label
+              caption
+              class="text-grey-8 q-mt-xs"
+            >
+              {{ item.description }}
+            </q-item-label>
+
+          </q-item-section>
+
+
+          <q-item-section side top>
+
+            <q-chip
+              dense
+              size="sm"
+              :color="item.color"
+              :text-color="item.textColor"
+            >
+              {{ item.frequency }}
+            </q-chip>
+
+          </q-item-section>
+
+        </q-item>
+
+      </q-list>
+
+    </q-card>
+
+
+    <!-- ================================================= -->
+    <!-- Red Flags -->
+    <!-- ================================================= -->
+
+    <q-card
+      flat
+      bordered
+      class="warning-card q-mb-sm"
     >
-      <!-- =====================================================
-           01 / LAM
-      ====================================================== -->
-      <q-carousel-slide name="tv" class="tech-slide">
-        <div class="tech-card">
-          <!-- IMAGE -->
-          <div class="tech-visual">
-            <q-img src="./statics/LAM2.jpg" class="tech-image" fit="cover" />
 
-            <div class="image-overlay"></div>
+      <q-card-section class="q-py-md">
 
-            <!-- top technical line -->
-            <div class="scan-line"></div>
-
-            <!-- image label -->
-            <div class="tech-label">
-              <span class="label-dot"></span>
-              PLASMA ETCHING / LAM / APPLIED
-            </div>
-
-            <!-- image number -->
-            <div class="image-number">01 <span>/</span> 03</div>
-
-            <!-- corner decoration -->
-            <div class="corner corner-tl"></div>
-            <div class="corner corner-br"></div>
-          </div>
-
-          <!-- CONTENT -->
-          <div class="tech-content">
-            <div class="content-index">
-              <span>01</span>
-              <i></i>
-              SEMICONDUCTOR EQUIPMENT
-            </div>
-
-            <div class="tech-category">半導體設備</div>
-
-            <div class="tech-title">乾溼電漿蝕刻 AGV車</div>
-
-            <div class="tech-line"></div>
-
-            <div class="tech-highlight">Class 1 潔淨室相容</div>
-
-            <div class="tech-description">
-              半導體設備工程師（Equipment Engineer, EE）
-              主要負責半導體製程機台的安裝、校驗、日常監測、
-              維修與效能優化，確保產線穩定運行並提升產品良率。
-            </div>
-
-            <div class="tech-keywords">
-              <span>Installation</span>
-              <span>Maintain</span>
-              <span>Optimization</span>
-            </div>
-          </div>
+        <div class="text-subtitle1 text-weight-bold">
+          🚨 需要聯絡醫師／回醫院
         </div>
-      </q-carousel-slide>
 
-      <!-- =====================================================
-           02 / VACUUM FORMING
-      ====================================================== -->
-      <q-carousel-slide name="layers" class="tech-slide">
-        <div class="tech-card">
-          <div class="tech-visual">
-            <q-img src="./statics/rc10.jpg" class="tech-image" fit="cover" />
-
-            <div class="image-overlay"></div>
-            <div class="scan-line"></div>
-
-            <div class="tech-label">
-              <span class="label-dot"></span>
-              RC / VACUUM FORMING
-            </div>
-
-            <div class="image-number">02 <span>/</span> 03</div>
-
-            <div class="corner corner-tl"></div>
-            <div class="corner corner-br"></div>
-          </div>
-
-          <div class="tech-content">
-            <div class="content-index">
-              <span>02</span>
-              <i></i>
-              MANUFACTURING PROCESS
-            </div>
-
-            <div class="tech-category">製造工藝</div>
-
-            <div class="tech-title">車架懸吊與車殼設計開模</div>
-
-            <div class="tech-line"></div>
-
-            <div class="tech-highlight">VACUUM FORMING</div>
-
-            <div class="tech-description">
-              車架懸吊與車殼從設計到開模，是一套結合機械結構、空氣動力學與模具工藝的系統化工程。
-              開發一款專業的模型車，必須根據車型定位（如競速越野、平路跑車或攀爬車）來決定懸吊幾何。
-            </div>
-
-            <div class="tech-keywords">
-              <span>BLISTER</span>
-              <span>VACUUM</span>
-              <span>MOLD</span>
-              <span>ABS</span>
-            </div>
-          </div>
+        <div class="text-body2 q-mt-sm">
+          {{ today.warning }}
         </div>
-      </q-carousel-slide>
 
-      <!-- =====================================================
-           03 / ELECTRICAL
-      ====================================================== -->
-      <q-carousel-slide name="map" class="tech-slide">
-        <div class="tech-card">
-          <div class="tech-visual">
-            <q-img
-              src="./statics/controlBOX2.jpg"
-              class="tech-image"
-              fit="cover"
-            />
+      </q-card-section>
 
-            <div class="image-overlay"></div>
-            <div class="scan-line"></div>
+    </q-card>
 
-            <div class="tech-label">
-              <span class="label-dot"></span>
-              ELECTRICAL / CONTROL
-            </div>
 
-            <div class="image-number">03 <span>/</span> 03</div>
+    <!-- Bottom Rule -->
+    <q-card flat class="bg-primary text-white">
 
-            <div class="corner corner-tl"></div>
-            <div class="corner corner-br"></div>
-          </div>
+      <q-card-section class="q-pa-md text-center">
 
-          <div class="tech-content">
-            <div class="content-index">
-              <span>03</span>
-              <i></i>
-              ELECTRICAL SYSTEM
-            </div>
-
-            <div class="tech-category">電氣控制</div>
-
-            <div class="tech-title">電氣控制與配線</div>
-
-            <div class="tech-line"></div>
-
-            <div class="tech-highlight">CONTROL SYSTEM</div>
-
-            <div class="tech-description">
-              維護電氣系統涵蓋設備配線、馬達控制、控制電路、
-              漏電檢測、絕緣測試及接地系統， 確保設備安全與穩定運作。
-            </div>
-
-            <div class="tech-keywords">
-              <span>CONTROL</span>
-              <span>WIRING</span>
-              <span>MOTOR</span>
-              <span>SAFETY</span>
-            </div>
-          </div>
+        <div class="text-subtitle1 text-weight-bold">
+          記住
         </div>
-      </q-carousel-slide>
-    </q-carousel>
-  </div>
-  <div style="text-align: center">
-    <!-- PAUSE / PLAY BUTTON -->
-    <button
-      class="carousel-control"
-      type="button"
-      @click="toggleAutoplay"
-      :aria-label="isPaused ? '播放輪播' : '暫停輪播'"
-    >
-      <span v-if="!isPaused" class="pause-icon">
-        <i></i>
-        <i></i>
-      </span>
 
-      <span v-else class="play-icon"></span>
+        <div class="text-body2 q-mt-xs">
+          少量吃・慢慢走・不要用力
+        </div>
 
-      <span class="control-text">
-        {{ isPaused ? "PLAY" : "PAUSE" }}
-      </span>
-    </button>
-  </div>
+      </q-card-section>
+
+    </q-card>
+
+  </q-page>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      slide: "tv",
-      isPaused: false,
-    };
+
+<script setup>
+import { computed, ref } from 'vue'
+
+const currentDay = ref(1)
+
+
+/* =====================================================
+   Day 1 ~ 14
+===================================================== */
+
+const days = {
+
+  1: {
+    title: '先休息，少量進食',
+    summary: '麻醉剛退，今天重點是補水與觀察。',
+    food: '水、溫開水、清淡流質；能吃再吃稀飯、軟食。',
+    avoid: '油炸、肥肉、酒、辛辣、大餐。',
+    activity: '休息為主，可以短距離慢慢走。',
+    normal: '傷口痛、腹脹、肩膀痠痛、輕微噁心。',
+    warning: '劇烈腹痛、持續嘔吐、呼吸困難、大量出血。'
   },
 
-  methods: {
-    toggleAutoplay() {
-      this.isPaused = !this.isPaused;
-    },
+  2: {
+    title: '開始吃軟食',
+    summary: '能吃就慢慢增加，不要一次吃太多。',
+    food: '稀飯、麵、吐司、蒸蛋、嫩豆腐。',
+    avoid: '炸物、肥肉、油湯、酒。',
+    activity: '短距離走路，避免提重物。',
+    normal: '腹脹、排氣、傷口疼痛。',
+    warning: '發燒、腹痛明顯增加、持續嘔吐。'
   },
-};
+
+  3: {
+    title: '慢慢恢復正常飲食',
+    summary: '開始加入瘦肉、魚、熟蔬菜。',
+    food: '白飯＋瘦肉／魚＋熟蔬菜。',
+    avoid: '油炸、肥肉、麻辣、大餐。',
+    activity: '可以增加走路，但不要用力。',
+    normal: '軟便、排便習慣改變、輕微腹脹。',
+    warning: '黃疸、深色尿、持續劇烈腹痛。'
+  },
+
+  4: {
+    title: '增加食物種類',
+    summary: '觀察自己吃油後是否腹瀉或腹脹。',
+    food: '正常食物逐步增加，維持低油。',
+    avoid: '炸雞、香腸、培根、肥肉。',
+    activity: '輕度日常活動。',
+    normal: '腹脹、軟便仍可能存在。',
+    warning: '發燒、傷口紅腫熱痛、流膿。'
+  },
+
+  5: {
+    title: '接近一般飲食',
+    summary: '少量多餐，繼續控制油脂。',
+    food: '飯、魚、雞肉、蛋、豆腐、蔬菜。',
+    avoid: '高油脂食物、酒。',
+    activity: '可做簡單家事，不搬重物。',
+    normal: '食慾、精神逐漸恢復。',
+    warning: '無法進食、無法喝水、持續噁心。'
+  },
+
+  6: {
+    title: '觀察腸胃反應',
+    summary: '不要因為好一點就突然大吃。',
+    food: '接近正常飲食，但油脂適量。',
+    avoid: '一次大量油脂。',
+    activity: '繼續散步。',
+    normal: '軟便、腹瀉可能仍存在。',
+    warning: '腹痛反而越來越嚴重。'
+  },
+
+  7: {
+    title: '第一週檢查點',
+    summary: '大部分活動可以逐步恢復。',
+    food: '正常均衡飲食，仍控制油脂。',
+    avoid: '油炸、大餐、酒。',
+    activity: '增加日常活動，但避免劇烈運動。',
+    normal: '傷口仍可能有拉扯感。',
+    warning: '傷口裂開、流膿、持續發燒。'
+  },
+
+  8: {
+    title: '逐漸恢復',
+    summary: '如果前幾天吃得穩定，可以增加食物種類。',
+    food: '接近正常飲食。',
+    avoid: '一次吃大量油脂。',
+    activity: '逐漸增加活動量。',
+    normal: '偶爾腹脹。',
+    warning: '黃疸、持續右上腹痛。'
+  },
+
+  9: {
+    title: '觀察排便',
+    summary: '注意哪些食物會讓你腹瀉。',
+    food: '正常均衡飲食。',
+    avoid: '會明顯造成腹瀉的食物。',
+    activity: '依身體狀況增加活動。',
+    normal: '排便逐漸穩定。',
+    warning: '持續大量水瀉。'
+  },
+
+  10: {
+    title: '逐漸回到生活',
+    summary: '不要急著完全恢復所有活動。',
+    food: '正常飲食，油脂適量。',
+    avoid: '酒、油炸、大餐。',
+    activity: '逐步恢復日常活動。',
+    normal: '輕微傷口不適。',
+    warning: '腹痛＋發燒／嘔吐。'
+  },
+
+  11: {
+    title: '接近正常',
+    summary: '持續觀察吃油後的腸胃反應。',
+    food: '正常均衡飲食。',
+    avoid: '個人明顯不耐受食物。',
+    activity: '輕度運動依醫師許可。',
+    normal: '消化逐漸恢復。',
+    warning: '症狀突然惡化。'
+  },
+
+  12: {
+    title: '恢復日常',
+    summary: '飲食可以接近平常。',
+    food: '正常均衡飲食。',
+    avoid: '大量油炸食品。',
+    activity: '逐步恢復活動。',
+    normal: '偶爾腹脹。',
+    warning: '黃疸、深色尿、持續腹痛。'
+  },
+
+  13: {
+    title: '最後觀察',
+    summary: '確認飲食、排便與傷口是否穩定。',
+    food: '正常飲食。',
+    avoid: '暴飲暴食。',
+    activity: '逐漸恢復正常生活。',
+    normal: '傷口逐漸穩定。',
+    warning: '持續明顯腹瀉或腹痛。'
+  },
+
+  14: {
+    title: '兩週檢查點',
+    summary: '多數人已逐漸回到正常生活。',
+    food: '可接近正常飲食。',
+    avoid: '仍依個人耐受調整油脂。',
+    activity: '重訓、搬重物依醫師指示。',
+    normal: '傷口逐漸穩定。',
+    warning: '任何持續或惡化的異常症狀。'
+  }
+}
+
+
+/* =====================================================
+   Side Effects
+===================================================== */
+
+const sideEffects = [
+
+  {
+    name: '腹瀉、軟便',
+    frequency: '常見',
+    condition: '排便習慣可能改變',
+    description: '多在數週～數月內逐漸改善。',
+    color: 'orange-2',
+    textColor: 'orange-10'
+  },
+
+  {
+    name: '吃油膩後容易拉肚子',
+    frequency: '常見',
+    condition: '高油脂 → 腹瀉／腹脹',
+    description: '膽汁直接進入腸道，對高脂食物可能比較敏感。',
+    color: 'orange-2',
+    textColor: 'orange-10'
+  },
+
+  {
+    name: '腹脹、放屁',
+    frequency: '常見',
+    condition: '腸胃重新適應',
+    description: '術後腸胃需要一段時間重新適應。',
+    color: 'orange-2',
+    textColor: 'orange-10'
+  },
+
+  {
+    name: '消化不良、吃太飽不舒服',
+    frequency: '可能',
+    condition: '少量多餐',
+    description: '少量多餐通常比較容易適應。',
+    color: 'blue-2',
+    textColor: 'blue-10'
+  },
+
+  {
+    name: '右上腹或傷口附近疼痛',
+    frequency: '術後常見',
+    condition: '恢復期間',
+    description: '通常會隨著時間逐漸減輕。',
+    color: 'blue-2',
+    textColor: 'blue-10'
+  },
+
+  {
+    name: '噁心',
+    frequency: '可能',
+    condition: '術後早期較常見',
+    description: '可能與麻醉、止痛藥或腸胃適應有關。',
+    color: 'blue-2',
+    textColor: 'blue-10'
+  },
+
+  {
+    name: '排便習慣改變',
+    frequency: '可能',
+    condition: '恢復期間',
+    description: '有些人會持續一段時間。',
+    color: 'blue-2',
+    textColor: 'blue-10'
+  }
+
+]
+
+
+const today = computed(() => days[currentDay.value])
+
 </script>
 
+
 <style scoped>
-/* =========================================================
-   TECH SECTION
-========================================================= */
 
-.tech-section {
-  width: 100%;
-}
-
-/* =========================================================
-   CAROUSEL
-========================================================= */
-
-.tech-carousel {
-  position: relative;
-  overflow: hidden;
-
-  border-radius: 18px;
-
-  background: radial-gradient(
-      circle at 15% 0%,
-      rgba(0, 170, 255, 0.13),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at 90% 100%,
-      rgba(0, 100, 255, 0.08),
-      transparent 35%
-    ),
-    #040a12;
-
-  border: 1px solid rgba(0, 150, 255, 0.16);
-
-  box-shadow: inset 0 0 50px rgba(0, 120, 255, 0.04),
-    0 20px 60px rgba(0, 0, 0, 0.45);
-}
-
-/* =========================================================
-   SLIDE
-========================================================= */
-
-.tech-slide {
-  padding: 22px 60px 48px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: linear-gradient(
-    135deg,
-    rgba(7, 18, 32, 0.98),
-    rgba(2, 7, 14, 0.99)
-  );
-}
-
-/* =========================================================
-   MAIN CARD
-========================================================= */
-
-.tech-card {
-  position: relative;
-
+.day-grid {
   display: grid;
-  grid-template-columns: 55% 45%;
-
-  width: min(1080px, 94vw);
-  min-height: 360px;
-
-  overflow: hidden;
-
-  background: linear-gradient(
-    120deg,
-    rgba(7, 18, 29, 0.98),
-    rgba(4, 12, 21, 0.98)
-  );
-
-  border: 1px solid rgba(0, 164, 255, 0.35);
-  border-radius: 14px;
-
-  box-shadow: 0 0 10px rgba(0, 153, 255, 0.16), 0 0 35px rgba(0, 120, 255, 0.08),
-    inset 0 0 30px rgba(0, 150, 255, 0.025);
-
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
 }
 
-.tech-card:hover {
-  transform: translateY(-3px);
-
-  box-shadow: 0 0 14px rgba(0, 170, 255, 0.25),
-    0 15px 45px rgba(0, 100, 255, 0.12), inset 0 0 35px rgba(0, 150, 255, 0.04);
+.day-grid .q-btn {
+  min-height: 34px;
+  padding: 0;
 }
 
-/* =========================================================
-   VISUAL
-========================================================= */
 
-.tech-visual {
-  position: relative;
-  min-height: 360px;
-  overflow: hidden;
+/* Side Effect */
 
-  border-right: 1px solid rgba(0, 170, 255, 0.16);
+.side-effect-summary {
+  background: #fff8e1;
+  border-radius: 8px;
+  padding: 12px;
 }
 
-.tech-image {
-  position: absolute;
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  transition: transform 0.8s ease;
+.side-effect-item {
+  min-height: 72px;
 }
 
-.tech-card:hover .tech-image {
-  transform: scale(1.035);
+
+/* Warning */
+
+.warning-card {
+  border: 2px solid #c62828;
 }
 
-/* =========================================================
-   IMAGE OVERLAY
-========================================================= */
 
-.image-overlay {
-  position: absolute;
-  inset: 0;
+@media (max-width: 400px) {
 
-  background: linear-gradient(
-      90deg,
-      rgba(2, 8, 15, 0.08) 0%,
-      rgba(2, 8, 15, 0.05) 45%,
-      rgba(2, 8, 15, 0.55) 100%
-    ),
-    linear-gradient(0deg, rgba(2, 8, 15, 0.92) 0%, transparent 38%);
-}
-
-/* =========================================================
-   SCAN LINE
-========================================================= */
-
-.scan-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 1px;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(0, 200, 255, 0.9),
-    transparent
-  );
-
-  box-shadow: 0 0 12px rgba(0, 200, 255, 0.6);
-
-  opacity: 0.7;
-}
-
-/* =========================================================
-   TECH LABEL
-========================================================= */
-
-.tech-label {
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
-
-  display: flex;
-  align-items: center;
-
-  padding: 8px 13px;
-
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1.6px;
-
-  color: #d9f5ff;
-
-  background: rgba(3, 14, 26, 0.78);
-
-  border-left: 2px solid #00b7ff;
-
-  backdrop-filter: blur(8px);
-
-  box-shadow: 0 0 15px rgba(0, 160, 255, 0.15);
-}
-
-.label-dot {
-  width: 6px;
-  height: 6px;
-
-  margin-right: 8px;
-
-  border-radius: 50%;
-
-  background: #00d0ff;
-
-  box-shadow: 0 0 7px #00d0ff, 0 0 14px rgba(0, 200, 255, 0.5);
-}
-
-/* =========================================================
-   IMAGE NUMBER
-========================================================= */
-
-.image-number {
-  position: absolute;
-  right: 20px;
-  bottom: 21px;
-
-  font-size: 12px;
-  letter-spacing: 3px;
-
-  color: rgba(215, 240, 255, 0.75);
-}
-
-.image-number span {
-  margin: 0 4px;
-
-  color: rgba(0, 180, 255, 0.5);
-}
-
-/* =========================================================
-   CORNER DECORATION
-========================================================= */
-
-.corner {
-  position: absolute;
-
-  width: 18px;
-  height: 18px;
-
-  pointer-events: none;
-}
-
-.corner-tl {
-  top: 14px;
-  left: 14px;
-
-  border-top: 1px solid rgba(0, 200, 255, 0.75);
-  border-left: 1px solid rgba(0, 200, 255, 0.75);
-}
-
-.corner-br {
-  right: 14px;
-  bottom: 14px;
-
-  border-right: 1px solid rgba(0, 200, 255, 0.45);
-  border-bottom: 1px solid rgba(0, 200, 255, 0.45);
-}
-
-/* =========================================================
-   CONTENT
-========================================================= */
-
-.tech-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  padding: 34px 38px 30px;
-}
-
-/* =========================================================
-   CONTENT INDEX
-========================================================= */
-
-.content-index {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  margin-bottom: 14px;
-
-  font-size: 9px;
-  font-weight: 600;
-
-  letter-spacing: 2px;
-
-  color: rgba(160, 210, 235, 0.5);
-}
-
-.content-index span {
-  font-size: 12px;
-  color: #00baff;
-}
-
-.content-index i {
-  width: 28px;
-  height: 1px;
-
-  background: rgba(0, 180, 255, 0.45);
-}
-
-/* =========================================================
-   CATEGORY
-========================================================= */
-
-.tech-category {
-  margin-bottom: 5px;
-
-  font-size: 11px;
-  font-weight: 600;
-
-  letter-spacing: 3px;
-
-  color: #00adff;
-}
-
-/* =========================================================
-   TITLE
-========================================================= */
-
-.tech-title {
-  font-size: clamp(22px, 2.2vw, 29px);
-  font-weight: 700;
-
-  line-height: 1.3;
-  letter-spacing: 0.5px;
-
-  color: #f2f9ff;
-
-  text-shadow: 0 0 16px rgba(0, 170, 255, 0.16);
-}
-
-/* =========================================================
-   DIVIDER
-========================================================= */
-
-.tech-line {
-  width: 48px;
-  height: 2px;
-
-  margin: 13px 0 12px;
-
-  background: #00b8ff;
-
-  box-shadow: 0 0 10px rgba(0, 190, 255, 0.75);
-}
-
-/* =========================================================
-   HIGHLIGHT
-========================================================= */
-
-.tech-highlight {
-  margin-bottom: 8px;
-
-  font-size: 12px;
-  font-weight: 600;
-
-  letter-spacing: 1.8px;
-
-  color: #b9edff;
-}
-
-/* =========================================================
-   DESCRIPTION
-========================================================= */
-
-.tech-description {
-  max-width: 430px;
-
-  font-size: 13px;
-  line-height: 1.75;
-
-  color: rgba(220, 235, 245, 0.68);
-}
-
-/* =========================================================
-   KEYWORDS
-========================================================= */
-
-.tech-keywords {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-
-  margin-top: 18px;
-}
-
-.tech-keywords span {
-  padding: 5px 9px;
-
-  font-size: 8px;
-  font-weight: 600;
-
-  letter-spacing: 1.3px;
-
-  color: #82ddff;
-
-  background: rgba(0, 140, 255, 0.055);
-
-  border: 1px solid rgba(0, 175, 255, 0.22);
-
-  border-radius: 3px;
-
-  transition: background 0.25s ease, border-color 0.25s ease;
-}
-
-.tech-keywords span:hover {
-  background: rgba(0, 160, 255, 0.12);
-
-  border-color: rgba(0, 190, 255, 0.55);
-}
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-.tech-carousel :deep(.q-carousel__navigation) {
-  bottom: 9px;
-
-  gap: 3px;
-}
-
-.tech-carousel :deep(.q-carousel__navigation-icon) {
-  font-size: 7px;
-
-  opacity: 0.35;
-
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.tech-carousel :deep(.q-carousel__navigation-icon--active) {
-  opacity: 1;
-
-  filter: drop-shadow(0 0 5px #00baff);
-
-  transform: scale(1.25);
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 800px) {
-  .tech-carousel {
-    height: auto !important;
+  .day-grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
   }
 
-  .tech-slide {
-    padding: 14px 14px 42px;
-  }
-
-  .tech-card {
-    grid-template-columns: 1fr;
-
-    width: 100%;
-    min-height: auto;
-  }
-
-  .tech-visual {
-    min-height: 220px;
-
-    border-right: none;
-    border-bottom: 1px solid rgba(0, 170, 255, 0.15);
-  }
-
-  .tech-content {
-    padding: 22px 20px 24px;
-  }
-
-  .tech-title {
-    font-size: 21px;
-  }
-
-  .tech-description {
-    max-width: none;
-
-    font-size: 12px;
-    line-height: 1.7;
-  }
-
-  .tech-label {
-    left: 14px;
-    bottom: 14px;
-
-    max-width: calc(100% - 85px);
-
-    font-size: 8px;
-    letter-spacing: 1.2px;
-  }
-
-  .image-number {
-    right: 14px;
-    bottom: 16px;
-
-    font-size: 10px;
-  }
-}
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media (max-width: 480px) {
-  .tech-slide {
-    padding: 10px 10px 38px;
-  }
-
-  .tech-visual {
-    min-height: 175px;
-  }
-
-  .tech-content {
-    padding: 18px 16px 20px;
-  }
-
-  .content-index {
-    font-size: 8px;
-    letter-spacing: 1.4px;
-  }
-
-  .tech-category {
-    font-size: 9px;
-    letter-spacing: 2.2px;
-  }
-
-  .tech-title {
-    font-size: 19px;
-  }
-
-  .tech-highlight {
-    font-size: 10px;
-  }
-
-  .tech-description {
+  .day-grid .q-btn {
     font-size: 11px;
-    line-height: 1.65;
   }
 
-  .tech-keywords {
-    margin-top: 14px;
-  }
-
-  .tech-keywords span {
-    padding: 4px 7px;
-    font-size: 7px;
-  }
-
-  .tech-label {
-    padding: 6px 9px;
-
-    font-size: 7px;
-  }
-
-  /* ---joey--- */
-
-  /* =========================================================
-   PAUSE / PLAY CONTROL — CENTER
-========================================================= */
-
-  .carousel-control {
-    position: absolute;
-    left: 50%;
-    bottom: 9px;
-
-    z-index: 20;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 9px;
-
-    height: 30px;
-    padding: 0 13px;
-
-    color: rgba(205, 240, 255, 0.78);
-
-    background: rgba(3, 14, 25, 0.78);
-
-    border: 1px solid rgba(0, 175, 255, 0.3);
-    border-radius: 3px;
-
-    font-family: inherit;
-    font-size: 8px;
-    font-weight: 600;
-    letter-spacing: 1.8px;
-
-    cursor: pointer;
-
-    backdrop-filter: blur(8px);
-
-    box-shadow: 0 0 12px rgba(0, 150, 255, 0.1),
-      inset 0 0 10px rgba(0, 150, 255, 0.04);
-
-    transform: translateX(-50%);
-
-    transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease,
-      box-shadow 0.25s ease;
-  }
-
-  .carousel-control:hover {
-    color: #dff8ff;
-
-    background: rgba(0, 120, 200, 0.2);
-
-    border-color: rgba(0, 195, 255, 0.7);
-
-    box-shadow: 0 0 12px rgba(0, 180, 255, 0.25),
-      inset 0 0 12px rgba(0, 170, 255, 0.06);
-  }
-
-  .carousel-control:active {
-    transform: translateX(-50%) scale(0.95);
-  }
-
-  /* =========================================================
-   PAUSE ICON
-========================================================= */
-
-  .pause-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 10px;
-    height: 12px;
-
-    gap: 3px;
-  }
-
-  .pause-icon i {
-    display: block;
-
-    width: 2px;
-    height: 11px;
-
-    background: #00c8ff;
-
-    box-shadow: 0 0 5px rgba(0, 200, 255, 0.7);
-  }
-
-  /* =========================================================
-   PLAY ICON
-========================================================= */
-
-  .play-icon {
-    display: block;
-
-    width: 0;
-    height: 0;
-
-    border-top: 6px solid transparent;
-    border-bottom: 6px solid transparent;
-    border-left: 9px solid #00c8ff;
-
-    filter: drop-shadow(0 0 4px rgba(0, 200, 255, 0.7));
-  }
-
-  /* =========================================================
-   MOBILE
-========================================================= */
-
-  @media (max-width: 600px) {
-    .carousel-control {
-      left: 50%;
-      bottom: 7px;
-
-      height: 27px;
-      padding: 0 10px;
-
-      gap: 7px;
-
-      font-size: 7px;
-      letter-spacing: 1.3px;
-
-      transform: translateX(-50%);
-    }
-
-    .carousel-control:active {
-      transform: translateX(-50%) scale(0.95);
-    }
-
-    .control-text {
-      display: none;
-    }
-  }
 }
+
 </style>
+```

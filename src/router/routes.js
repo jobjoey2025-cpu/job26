@@ -200,7 +200,15 @@ const routes = [
           group: '病痛',
         },
       },
-
+      {
+        path: 'ED_operation', component: () => import('components/ED_operation.vue'), name: 'ED_operation',
+        meta: {
+          menu: true,
+          label: '手術副作用 ',
+          icon: 'luggage',
+          group: '病痛',
+        },
+      },
 
 
 
