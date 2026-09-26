@@ -1,9 +1,44 @@
 <template>
+  <div class="q-pa-md q-gutter-sm">
+    <q-btn label="Alert" color="primary" @click="alert = true" />
+    <q-btn label="Dummy" color="primary" @click="Dummy = true" />
+
+    <q-dialog v-model="alert">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Alert</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <pre>
+GGB CICD #
+
+            回憶減少重複 開始有效了 with Firedb_Quasar_GPT
+            Firedb_recent \\ roi
+          1. 隨手寫 (難 search)
+          2. GDS (難 search)
+          3. BLG 長期 亂
+          4. NAS 囤積 大型亂
+          5. Quasar Firedb - 難input \ 閱讀品質高 \ 4hrs CICD
+
+          joey達到差一點不可能的 境界(Firedb_Quasar_GPT) \ 估計這邊做熟就 over 60y
+          joey身邊 幾乎 沒有這種技能的朋友 \
+          我需要是有效的系統 not news 碎片 (現在太多了)
+          </pre>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+  </div>
+
   <q-page class="document-page">
     <!-- ================================================= -->
     <!-- MOBILE : Library Header -->
     <!-- ================================================= -->
-    <div v-if="isMobile && !current" class="mobile-header q-pa-md">
+    <!-- <div v-if="isMobile && !current" class="mobile-header q-pa-md">
       <div class="row items-center">
         <div>
           <div class="text-h6">Document Library</div>
@@ -16,7 +51,7 @@
           <q-tooltip>New Document</q-tooltip>
         </q-btn>
       </div>
-    </div>
+    </div> -->
     <!-- ================================================= -->
     <!-- MAIN LAYOUT -->
     <!-- ================================================= -->
@@ -39,10 +74,12 @@
               </div>
               <q-space />
               <!-- Mobile Add -->
+              <!-- <q-btn round flat color="primary" icon="add" @click="addDocument"> -->
+
               <q-btn
                 v-if="isMobile"
                 round
-                flat
+
                 color="primary"
                 icon="add"
                 @click="addDocument"
@@ -289,6 +326,7 @@ import { db } from "boot/firebase_suaoUnit";
 /* --------------------------------
    State
 -------------------------------- */
+const alert = ref(false);
 
 const fileInput = ref(null);
 
