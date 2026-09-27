@@ -245,9 +245,13 @@
                 bordered
                 class="photo-card"
               >
-                <q-img
+                <!-- <q-img
                   :src="photo"
                   fit="cover"
+                > -->
+                <q-img
+                  :src="photo"
+                  fit="contain"
                   class="photo-image"
                   spinner-color="primary"
                   @click="previewPhoto(photo)"
