@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md q-gutter-sm">
     <q-btn label="Alert" color="primary" @click="alert = true" />
-    <q-btn label="Dummy" color="primary" @click="Dummy = true" />
+    <q-btn label="傳照片" color="primary" to="/GAS_picUP" />
 
     <q-dialog v-model="alert">
       <q-card>
