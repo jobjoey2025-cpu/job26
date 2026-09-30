@@ -1,886 +1,909 @@
 <template>
-  <div class="q-pa-md q-gutter-sm">
-    <q-btn label="Alert" color="primary" @click="alert = true" />
-    <q-btn label="Dummy" color="primary" @click="Dummy = true" />
+<!-- 改主圖片 joey -->
+  <!-- 目前 資料會存到 areas \ 希望改成 存到 area_joey1: -->
+  <!-- 總共需要修改 4 個地方（讀取、新增、更新、刪除）。
+// 讀取
+const areasRef = dbRef(db, "area_joey1");
+// 更新
+await update(dbRef(db, "area_joey1/" + editingId.value), payload);
+// 新增
+const createdRef = await push(dbRef(db, "area_joey1"), payload);
+// 刪除
+await remove(dbRef(db, "area_joey1/" + id)); -->
+  <q-page class="q-pa-md">
+    <!-- YT --- YT short 也拒絕連線 \ 要有 embed 才可以 -->
+    <div class="q-pa-md">
+      <div class="q-video">
+        <iframe
+          src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
+          frameborder="0"
+          allowfullscreen
+        />
+      </div>
+    </div>
+    <!-- YT --- -->
 
-    <q-dialog v-model="alert">
-      <q-card>
+    <div class="editor-shell">
+      <div class="text-center q-mb-md">
+        <div class="text-h5 text-weight-medium">Firebase Image Map Editor</div>
+        <div class="text-caption text-grey-7 q-mt-xs">
+          點選熱區可查看資料與照片，也可新增、編輯或刪除熱區。
+        </div>
+      </div>
+
+      <div class="row justify-center q-mb-md">
+        <q-btn
+          :color="waitingCapture ? 'negative' : 'primary'"
+          :icon="waitingCapture ? 'close' : 'add_location_alt'"
+          :label="waitingCapture ? '取消擷取' : '新增熱區'"
+          @click="toggleCapture"
+        />
+      </div>
+
+      <q-banner
+        v-if="waitingCapture"
+        dense
+        rounded
+        class="bg-blue-1 text-primary q-mb-md"
+      >
+        請在圖片上點選新熱區的中心位置。
+      </q-banner>
+
+      <q-linear-progress v-if="loadingAreas" indeterminate color="primary" />
+
+      <div class="map-wrapper q-mt-sm">
+        <div
+          class="image-container"
+          :class="{ 'capture-cursor': waitingCapture }"
+        >
+          <img
+            ref="imageRef"
+            :src="imageUrl"
+            class="map-image"
+            alt="熱區編輯底圖"
+            draggable="false"
+            @load="onImageLoad"
+            @error="onImageError"
+            @click="onImageClick"
+          />
+
+          <button
+            v-for="area in mapData"
+            :key="area.id"
+            type="button"
+            class="hotspot"
+            :class="{ selected: area.id === selectedAreaId }"
+            :style="hotspotStyle(area)"
+            :aria-label="'選取熱區 ' + area.alt"
+            @click.stop="selectArea(area)"
+          >
+            <q-tooltip>
+              <div class="text-weight-bold">{{ area.alt }}</div>
+              <div v-if="area.message">{{ area.message }}</div>
+              <div>
+                座標：{{ area.coords.x }}, {{ area.coords.y }}；半徑：{{
+                  area.coords.radius
+                }}
+              </div>
+            </q-tooltip>
+          </button>
+
+          <div
+            v-if="draftVisible"
+            class="hotspot draft-hotspot"
+            :style="hotspotStyle(editorArea)"
+            aria-hidden="true"
+          />
+        </div>
+      </div>
+
+      <q-banner
+        v-if="!loadingAreas && !mapData.length"
+        rounded
+        class="bg-grey-2 text-grey-8 q-mt-md"
+      >
+        Firebase 中尚無熱區資料，請按「新增熱區」開始建立。
+      </q-banner>
+
+      <q-card v-if="selectedArea" bordered flat class="detail-card q-mt-lg">
         <q-card-section>
-          <div class="text-h6">Alert</div>
+          <div class="row items-start no-wrap">
+            <div class="col">
+              <div class="text-h6">{{ selectedArea.alt }}</div>
+              <div v-if="selectedArea.message" class="text-body2 text-grey-7">
+                {{ selectedArea.message }}
+              </div>
+              <div class="text-caption text-grey-7 q-mt-xs">
+                座標：{{ selectedArea.coords.x }}, {{ selectedArea.coords.y }}；
+                半徑：{{ selectedArea.coords.radius }}
+              </div>
+            </div>
+            <q-btn
+              flat
+              round
+              icon="edit"
+              aria-label="編輯熱區"
+              @click="openEditDialog(selectedArea)"
+            />
+          </div>
         </q-card-section>
 
-        <q-card-section class="q-pt-none">
-          <pre>
-          GGB CICD #
-          </pre>
+        <q-separator />
+
+        <q-card-section>
+          <div class="text-subtitle2 q-mb-sm">照片</div>
+          <div v-if="selectedArea.photos.length" class="photo-grid">
+            <q-img
+              v-for="(photo, index) in selectedArea.photos"
+              :key="[selectedArea.id, index, photo].join('-')"
+              :src="photo"
+              :ratio="4 / 3"
+              class="photo-thumb"
+              loading="lazy"
+              @click="openGallery(selectedArea, index)"
+            >
+              <template #error>
+                <div
+                  class="absolute-full flex flex-center bg-grey-3 text-grey-7"
+                >
+                  圖片載入失敗
+                </div>
+              </template>
+            </q-img>
+          </div>
+          <div v-else class="text-caption text-grey-6">
+            此熱區尚未加入照片。
+          </div>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="OK" color="primary" v-close-popup />
+          <q-btn
+            flat
+            color="negative"
+            icon="delete"
+            label="刪除"
+            @click="requestDelete(selectedArea)"
+          />
+          <q-btn
+            flat
+            color="primary"
+            icon="edit"
+            label="編輯"
+            @click="openEditDialog(selectedArea)"
+          />
         </q-card-actions>
       </q-card>
-    </q-dialog>
-  </div>
+    </div>
 
-  <q-page class="document-page">
-    <!-- ================================================= -->
-    <!-- MAIN LAYOUT -->
-    <!-- ================================================= -->
-    <div class="document-layout">
-      <!-- ================================================= -->
-      <!-- LEFT : DOCUMENT LIBRARY -->
-      <!-- Desktop : 4/12 -->
-      <!-- Mobile : full screen -->
-      <!-- ================================================= -->
-      <div v-if="!isMobile || !current" class="document-sidebar">
-        <q-card flat bordered class="document-card">
-          <!-- Header -->
+    <q-dialog v-model="showEditor" @hide="resetEditor">
+      <q-card class="editor-dialog">
+        <q-form @submit.prevent="saveArea">
           <q-card-section>
-            <div class="row items-center">
-              <div>
-                <div class="text-h6">Document Library</div>
-                <div class="text-caption text-grey">
-                  {{ filteredDocuments.length }} documents
-                </div>
-              </div>
-              <q-space />
-              <!-- Mobile Add -->
-              <!-- <q-btn round flat color="primary" icon="add" @click="addDocument"> -->
+            <div class="text-h6">{{ editorTitle }}</div>
+          </q-card-section>
 
-              <q-btn
-                v-if="isMobile"
-                round
-                color="primary"
-                icon="add"
-                @click="addDocument"
-              />
-            </div>
-            <!-- Search -->
+          <q-card-section class="q-gutter-md">
             <q-input
-              v-model="search"
-              dense
+              v-model="editorArea.alt"
               outlined
-              placeholder="Search documents..."
-              class="q-mt-md"
-              clearable
-            >
-              <template #prepend> <q-icon name="search" /> </template>
-            </q-input>
-            <!-- Desktop New -->
-            <q-btn
-              v-if="!isMobile"
-              color="primary"
-              icon="add"
-              label="New Document"
-              class="full-width q-mt-md"
-              @click="addDocument"
+              autofocus
+              label="名稱 *"
+              maxlength="80"
+              :rules="[
+                (value) => Boolean(String(value || '').trim()) || '請輸入名稱',
+              ]"
             />
-          </q-card-section>
-          <q-separator />
-          <!-- Document List -->
-          <q-list separator>
-            <q-item
-              v-for="doc in filteredDocuments"
-              :key="doc.key"
-              clickable
-              :active="current?.key === doc.key"
-              active-class="bg-blue-1"
-              class="document-item"
-              @click="select(doc)"
-            >
-              <q-item-section avatar>
-                <q-icon
-                  :name="getDocumentIcon(doc.Type)"
-                  color="primary"
-                  size="26px"
-                />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label class="text-weight-medium">
-                  {{ doc.Name || "Untitled" }}
-                </q-item-label>
-                <q-item-label caption> {{ doc.Type }} </q-item-label>
-                <q-item-label
-                  v-if="doc.Tags"
-                  caption
-                  class="text-grey-6 ellipsis"
-                >
-                  {{ doc.Tags }}
-                </q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-icon name="chevron_right" color="grey-5" />
-              </q-item-section>
-            </q-item>
-            <!-- Empty -->
-            <q-item v-if="filteredDocuments.length === 0">
-              <q-item-section class="text-center text-grey q-pa-lg">
-                <q-icon name="search_off" size="40px" />
-                <div class="q-mt-sm">No documents found</div>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-card>
-      </div>
-      <!-- ================================================= -->
-      <!-- RIGHT : DOCUMENT EDITOR -->
-      <!-- Desktop : 8/12 -->
-      <!-- Mobile : full screen -->
-      <!-- ================================================= -->
-      <div v-if="current" class="document-editor">
-        <q-card flat bordered class="document-card">
-          <!-- Editor Header -->
-          <q-card-section>
-            <div class="row items-center">
-              <!-- Mobile Back -->
-              <q-btn
-                v-if="isMobile"
-                flat
-                round
-                icon="arrow_back"
-                class="q-mr-sm"
-                @click="current = null"
-              >
-                <q-tooltip>Documents</q-tooltip>
-              </q-btn>
-              <div class="col">
-                <div class="text-h6 ellipsis">
-                  {{ current.Name || "Document" }}
-                </div>
-                <div class="text-caption text-grey">{{ current.Type }}</div>
-              </div>
-              <!-- Delete -->
-              <q-btn
-                flat
-                round
-                color="negative"
-                icon="delete"
-                @click="deleteDocument"
-              >
-                <q-tooltip> Delete </q-tooltip>
-              </q-btn>
-            </div>
-          </q-card-section>
-          <q-separator />
-          <!-- ================================================= -->
-          <!-- BASIC INFORMATION -->
-          <!-- ================================================= -->
-          <q-card-section>
-            <div class="text-subtitle1 q-mb-md">Document Information</div>
-            <!-- Name -->
-            <q-input
-              v-model="current.Name"
-              label="Document Name"
-              outlined
-              @update:model-value="save"
-            />
-            <!-- Type -->
-            <q-select
-              v-model="current.Type"
-              :options="paraTypes"
-              emit-value
-              map-options
-              label="Type"
-              outlined
-              class="q-mt-md"
-              @update:model-value="save"
-            />
-            <!-- Tags -->
-            <q-input
-              v-model="current.Tags"
-              label="Tags"
-              hint="例如：firebase, vue, project"
-              outlined
-              class="q-mt-md"
-              @update:model-value="save"
-            />
-            <!-- Description -->
-            <q-input
-              v-model="current.Description"
-              type="textarea"
-              label="Description"
+            <!-- <q-input
+              v-model="editorArea.message"
               outlined
               autogrow
-              class="q-mt-md"
-              @update:model-value="save"
+              label="訊息"
+              maxlength="500"
+            /> -->
+            <q-input
+              v-model="editorArea.message"
+              outlined
+              type="textarea"
+              autogrow
+              label="訊息 - autogrow 文字越多時輸入框自動變大。"
+              maxlength="500"
+              counter
+              :input-style="{
+                minHeight: '200px',
+                lineHeight: '1.6',
+                lineHeight: '1.6',
+              }"
             />
-          </q-card-section>
-          <q-separator />
-          <!-- ================================================= -->
-          <!-- CONTENT -->
-          <!-- ================================================= -->
-
-          <!-- ================================================= -->
-          <!-- PHOTOS -->
-          <!-- ================================================= -->
-          <q-card-section>
-            <div class="row items-center q-mb-md">
-              <div class="text-subtitle1">📷 Photos</div>
-
-              <q-space />
-
-              <div class="text-caption text-grey">
-                {{ current.Photos?.length || 0 }} photos
+            <div class="row q-col-gutter-sm">
+              <div class="col-12 col-sm-4">
+                <q-input
+                  v-model.number="editorArea.coords.x"
+                  outlined
+                  type="number"
+                  label="X"
+                  min="0"
+                  :max="imageSize.width"
+                />
+              </div>
+              <div class="col-12 col-sm-4">
+                <q-input
+                  v-model.number="editorArea.coords.y"
+                  outlined
+                  type="number"
+                  label="Y"
+                  min="0"
+                  :max="imageSize.height"
+                />
+              </div>
+              <div class="col-12 col-sm-4">
+                <q-input
+                  v-model.number="editorArea.coords.radius"
+                  outlined
+                  type="number"
+                  label="半徑"
+                  min="1"
+                />
               </div>
             </div>
 
-            <!-- Photo Grid -->
-            <div v-if="current.Photos?.length" class="photo-grid">
-              <q-card
-                v-for="(photo, index) in current.Photos"
-                :key="index"
-                flat
+            <div>
+              <div class="row items-start q-col-gutter-sm">
+                <div class="col">
+                  <q-input
+                    v-model="newPhoto"
+                    outlined
+                    label="照片 URL"
+                    hint="僅接受 http:// 或 https:// 網址"
+                    @keyup.enter.prevent="addPhoto"
+                  />
+                </div>
+                <div class="col-auto">
+                  <q-btn
+                    outline
+                    color="primary"
+                    icon="add_photo_alternate"
+                    label="加入"
+                    class="photo-add-button"
+                    @click="addPhoto"
+                  />
+                </div>
+              </div>
+
+              <q-list
+                v-if="editorArea.photos.length"
                 bordered
-                class="photo-card"
+                separator
+                class="rounded-borders q-mt-md"
               >
-                <q-img
-                  :src="photo"
-                  fit="cover"
-                  class="photo-image"
-                  spinner-color="primary"
-                  @click="previewPhoto(photo)"
+                <q-item
+                  v-for="(photo, index) in editorArea.photos"
+                  :key="[index, photo].join('-')"
                 >
-                  <template #error>
-                    <div class="absolute-full flex flex-center bg-grey-3">
-                      <q-icon name="broken_image" size="40px" color="grey-6" />
-                    </div>
-                  </template>
-                </q-img>
-
-                <q-card-section class="q-pa-xs">
-                  <div class="row items-center">
-                    <div class="col text-caption ellipsis">
-                      {{ photo }}
-                    </div>
-
+                  <q-item-section avatar>
+                    <q-img
+                      :src="photo"
+                      width="48px"
+                      height="36px"
+                      fit="cover"
+                    />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label lines="2">{{ photo }}</q-item-label>
+                  </q-item-section>
+                  <q-item-section side>
                     <q-btn
                       flat
                       round
                       dense
                       color="negative"
                       icon="delete"
+                      aria-label="移除照片"
                       @click="removePhoto(index)"
                     />
-                  </div>
-                </q-card-section>
-              </q-card>
-            </div>
-
-            <!-- No Photo -->
-            <div v-else class="photo-empty">
-              <q-icon name="photo_library" size="48px" color="grey-5" />
-
-              <div class="text-grey q-mt-sm">尚無照片</div>
-            </div>
-
-            <!-- Add Photo URL -->
-            <div class="row q-col-gutter-sm q-mt-md">
-              <div class="col">
-                <q-input
-                  v-model="newPhotoUrl"
-                  outlined
-                  dense
-                  label="Firebase Photo URL"
-                  placeholder="https://..."
-                  @keyup.enter="addPhoto"
-                />
-              </div>
-
-              <div class="col-auto">
-                <q-btn
-                  color="primary"
-                  icon="add"
-                  label="新增"
-                  @click="addPhoto"
-                />
-              </div>
+                  </q-item-section>
+                </q-item>
+              </q-list>
             </div>
           </q-card-section>
 
-          <q-separator />
-
-          <q-card-section>
-            <div class="row items-center q-mb-sm">
-              <div class="text-subtitle1">Content</div>
-              <q-space />
-              <div class="text-caption text-grey">
-                {{ current.Content?.length || 0 }} chars
-              </div>
-            </div>
-            <q-input
-              v-model="current.Content"
-              type="textarea"
-              outlined
-              autogrow
-              :input-style="{
-                minHeight: isMobile ? '300px' : '400px',
-                fontFamily: 'monospace',
-                lineHeight: '1.5',
-              }"
-              @update:model-value="save"
+          <q-card-actions align="right" class="q-pa-md">
+            <q-btn flat label="取消" :disable="savingArea" v-close-popup />
+            <q-btn
+              v-if="editorMode === 'edit'"
+              flat
+              color="negative"
+              label="刪除"
+              :disable="savingArea"
+              @click="requestEditorDelete"
             />
-          </q-card-section>
-          <q-separator />
+            <q-btn
+              color="primary"
+              type="submit"
+              label="儲存"
+              :loading="savingArea"
+            />
+          </q-card-actions>
+        </q-form>
+      </q-card>
+    </q-dialog>
 
-          <!-- ================================================= -->
-          <!-- META -->
-          <!-- ================================================= -->
-          <q-card-section class="text-caption text-grey">
-            <div>
-              <q-icon name="schedule" class="q-mr-xs" /> Created:
-              {{ formatDate(current.CreatedAt) }}
+    <q-dialog v-model="showDeleteConfirm" persistent @hide="clearDeleteRequest">
+      <q-card style="width: 420px; max-width: 92vw">
+        <q-card-section class="row items-center">
+          <q-avatar icon="warning" color="negative" text-color="white" />
+          <div class="col q-ml-md">
+            <div class="text-h6">確認刪除</div>
+            <div class="text-body2">
+              確定要刪除「{{ pendingDeleteName }}」嗎？此動作無法復原。
             </div>
-            <div class="q-mt-xs">
-              <q-icon name="update" class="q-mr-xs" /> Updated:
-              {{ formatDate(current.UpdatedAt) }}
-            </div>
-          </q-card-section>
-        </q-card>
-      </div>
-      <!-- ================================================= -->
-      <!-- NO DOCUMENT -->
-      <!-- ================================================= -->
-      <div v-if="!current && !isMobile" class="document-empty">
-        <div class="text-grey text-center">
-          <q-icon name="description" size="64px" />
-          <div class="text-h6 q-mt-md">No Document Selected</div>
-          <div class="text-caption q-mt-sm">
-            Select a document from the library
           </div>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="取消" :disable="deletingArea" v-close-popup />
           <q-btn
-            color="primary"
-            label="Create Document"
-            icon="add"
-            class="q-mt-md"
-            @click="addDocument"
+            color="negative"
+            label="刪除"
+            :loading="deletingArea"
+            @click="confirmDelete"
           />
-        </div>
-      </div>
-    </div>
-    <!-- ================================================= -->
-    <!-- JSON FILE INPUT -->
-    <!-- ================================================= -->
-    <input
-      ref="fileInput"
-      type="file"
-      accept=".json"
-      style="display: none"
-      @change="onFileSelected"
-    />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="showGallery" maximized>
+      <q-card class="column">
+        <q-card-section class="row items-center">
+          <div class="text-h6">{{ galleryTitle }}</div>
+          <q-space />
+          <q-btn
+            icon="close"
+            flat
+            round
+            dense
+            aria-label="關閉相簿"
+            v-close-popup
+          />
+        </q-card-section>
+        <q-separator />
+        <q-card-section class="col q-pa-none">
+          <q-carousel
+            v-model="currentSlide"
+            animated
+            arrows
+            navigation
+            swipeable
+            infinite
+            class="full-height bg-black"
+          >
+            <q-carousel-slide
+              v-for="(photo, index) in galleryPhotos"
+              :key="[index, photo].join('-')"
+              :name="index"
+              class="flex flex-center q-pa-lg"
+            >
+              <img :src="photo" class="gallery-image" alt="熱區照片" />
+            </q-carousel-slide>
+          </q-carousel>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-page>
-
-  <q-dialog v-model="photoPreview" maximized>
-    <q-card class="bg-black">
-      <q-btn
-        flat
-        round
-        icon="close"
-        color="white"
-        class="absolute-top-right q-ma-md"
-        style="z-index: 10"
-        v-close-popup
-      />
-
-      <q-img
-        :src="previewImage"
-        fit="contain"
-        style="width: 100%; height: 100vh"
-      />
-    </q-card>
-  </q-dialog>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
+import { onValue, push, ref as dbRef, remove, update } from "firebase/database";
+import { useQuasar } from "quasar";
+import { db } from "boot/firebase_imgmap";
 
-import {
-  ref as dbRef,
-  onValue,
-  push,
-  set,
-  update,
-  remove,
-} from "firebase/database";
+const $q = useQuasar();
 
-import { db } from "boot/firebase_suaoUnit";
+// const imageUrl = "https://picsum.photos/seed/firebase-image-map/500/300";
+const imageUrl =
+  "https://lh3.googleusercontent.com/d/18_Qm16kySnEh-wzGJPlKiKo8_V-B9pZ2=w1200";
+// joey modify ---
+const imageRef = ref(null);
+const imageSize = ref({ width: 500, height: 300 });
 
-/* --------------------------------
-   State
--------------------------------- */
-const alert = ref(false);
+const mapData = ref([]);
+const selectedAreaId = ref(null);
+const loadingAreas = ref(true);
+const waitingCapture = ref(false);
 
-const fileInput = ref(null);
+const showEditor = ref(false);
+const editorMode = ref("create");
+const editingId = ref(null);
+const editorArea = ref(createEmptyArea());
+const draftVisible = ref(false);
+const newPhoto = ref("");
+const savingArea = ref(false);
 
-const documents = ref([]);
+const showDeleteConfirm = ref(false);
+const pendingDeleteId = ref(null);
+const pendingDeleteName = ref("");
+const deletingArea = ref(false);
 
-const current = ref(null);
+const showGallery = ref(false);
+const galleryPhotos = ref([]);
+const galleryTitle = ref("");
+const currentSlide = ref(0);
 
-const search = ref("");
+let stopAreasListener = null;
 
-const isMobile = ref(false);
-const checkMobile = () => {
-  isMobile.value = window.innerWidth < 768;
-};
+const selectedArea = computed(() =>
+  mapData.value.find((area) => area.id === selectedAreaId.value)
+);
 
-const newPhotoUrl = ref("");
-onMounted(() => {
-  checkMobile();
-  window.addEventListener("resize", checkMobile);
-});
-onBeforeUnmount(() => {
-  window.removeEventListener("resize", checkMobile);
-});
-
-/* --------------------------------
-   Document Types
--------------------------------- */
-
-const paraTypes = [
-  {
-    value: "Project",
-    label: "Project",
-    description: "具有明確截止日期",
-  },
-  {
-    value: "Area",
-    label: "Area",
-    description: "持續維護的領域",
-  },
-  {
-    value: "Resource",
-    label: "Resource",
-    description: "知識、研究資料",
-  },
-  {
-    value: "Archive",
-    label: "Archive",
-    description: "封存資料",
-  },
-];
-
-/* --------------------------------
-   Firebase
--------------------------------- */
+const editorTitle = computed(() =>
+  editorMode.value === "edit" ? "編輯熱區" : "新增熱區"
+);
 
 onMounted(() => {
-  const documentsRef = dbRef(db, "documents");
-
-  onValue(documentsRef, (snap) => {
-    const obj = snap.val() || {};
-
-    documents.value = Object.keys(obj).map((key) => ({
-      key,
-      ...obj[key],
-    }));
-
-    /*
-     * 如果目前沒有選擇文件，
-     * 自動選第一份
-     */
-    if (!current.value && documents.value.length > 0) {
-      current.value = documents.value[0];
-    }
-
-    /*
-     * 如果目前選擇的文件已被刪除
-     */
-    if (
-      current.value &&
-      !documents.value.find((doc) => doc.key === current.value.key)
-    ) {
-      current.value = documents.value.length > 0 ? documents.value[0] : null;
-    }
-  });
+  listenAreas();
 });
 
-/* --------------------------------
-   Search
--------------------------------- */
-
-const filteredDocuments = computed(() => {
-  const keyword = search.value?.trim().toLowerCase();
-
-  if (!keyword) {
-    return documents.value;
-  }
-
-  return documents.value.filter((doc) => {
-    return (
-      doc.Name?.toLowerCase().includes(keyword) ||
-      doc.Description?.toLowerCase().includes(keyword) ||
-      doc.Tags?.toLowerCase().includes(keyword) ||
-      doc.Content?.toLowerCase().includes(keyword)
-    );
-  });
+onUnmounted(() => {
+  stopAreasListener?.();
 });
 
-/* --------------------------------
-   Select
--------------------------------- */
-
-function select(doc) {
-  current.value = doc;
-}
-
-/* --------------------------------
-   Create
--------------------------------- */
-
-async function addDocument() {
-  const key = push(dbRef(db, "documents")).key;
-
-  const now = Date.now();
-
-  const document = {
-    Name: "New Document",
-    Type: "Resource",
-    Tags: "",
-    Description: "",
-    Content: "",
-
-    // 📷 Photos
-    Photos: [],
-
-    CreatedAt: now,
-    UpdatedAt: now,
-  };
-
-  await set(dbRef(db, "documents/" + key), document);
-
-  /*
-   * 立即選取新文件
-   */
-  current.value = {
-    key,
-    ...document,
+function createEmptyArea(x = 0, y = 0) {
+  return {
+    shape: "circle",
+    alt: "",
+    message: "",
+    photos: [],
+    coords: { x, y, radius: 20 },
   };
 }
 
-/* --------------------------------
-   Save
--------------------------------- */
+function cloneArea(area) {
+  return {
+    shape: "circle",
+    alt: area.alt,
+    message: area.message,
+    photos: [...area.photos],
+    coords: { ...area.coords },
+  };
+}
 
-async function save() {
-  if (!current.value) return;
+function normalizeArea(id, value) {
+  const source = value && typeof value === "object" ? value : {};
+  const coords =
+    source.coords && typeof source.coords === "object" ? source.coords : {};
+  const rawPhotos = Array.isArray(source.photos)
+    ? source.photos
+    : source.photos && typeof source.photos === "object"
+    ? Object.values(source.photos)
+    : [];
 
-  const key = current.value.key;
+  return {
+    id,
+    shape: "circle",
+    alt:
+      typeof source.alt === "string" && source.alt.trim()
+        ? source.alt
+        : "未命名熱區",
+    message: typeof source.message === "string" ? source.message : "",
+    photos: rawPhotos.filter(
+      (photo) => typeof photo === "string" && photo.trim()
+    ),
+    coords: {
+      x: finiteNumber(coords.x, 0),
+      y: finiteNumber(coords.y, 0),
+      radius: Math.max(1, finiteNumber(coords.radius, 20)),
+    },
+  };
+}
 
-  await update(dbRef(db, "documents/" + key), {
-    Name: current.value.Name || "",
-    Type: current.value.Type || "Resource",
-    Tags: current.value.Tags || "",
-    Description: current.value.Description || "",
-    Content: current.value.Content || "",
-    Photos: current.value.Photos || [],
-    UpdatedAt: Date.now(),
+function finiteNumber(value, fallback) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+}
+
+function listenAreas() {
+  // const areasRef = dbRef(db, "area_kyoto");
+  const areasRef = dbRef(db, "area_watch");
+
+  stopAreasListener = onValue(
+    areasRef,
+    (snapshot) => {
+      const data = snapshot.val();
+      const nextAreas =
+        data && typeof data === "object"
+          ? Object.entries(data).map(([id, value]) => normalizeArea(id, value))
+          : [];
+
+      mapData.value = nextAreas;
+      loadingAreas.value = false;
+
+      const selectionStillExists = nextAreas.some(
+        (area) => area.id === selectedAreaId.value
+      );
+
+      if (!selectionStillExists) {
+        selectedAreaId.value = nextAreas[0]?.id ?? null;
+      }
+    },
+    (error) => {
+      loadingAreas.value = false;
+      notifyError(error, "無法載入 Firebase 熱區資料");
+    }
+  );
+}
+
+function onImageLoad() {
+  const width = imageRef.value?.naturalWidth;
+  const height = imageRef.value?.naturalHeight;
+
+  if (width && height) {
+    imageSize.value = { width, height };
+  }
+}
+
+function onImageError() {
+  $q.notify({
+    type: "negative",
+    message: "底圖載入失敗，請檢查網路或更換圖片網址。",
   });
 }
 
-/* --------------------------------
-   Delete
--------------------------------- */
+function hotspotStyle(area) {
+  const width = imageSize.value.width || 500;
+  const height = imageSize.value.height || 300;
+  const x = finiteNumber(area?.coords?.x, 0);
+  const y = finiteNumber(area?.coords?.y, 0);
+  const radius = Math.max(1, finiteNumber(area?.coords?.radius, 20));
 
-async function deleteDocument() {
-  if (!current.value) return;
-
-  const name = current.value.Name || "Untitled";
-
-  if (!confirm(`Delete "${name}" ?`)) {
-    return;
-  }
-
-  const key = current.value.key;
-
-  await remove(dbRef(db, "documents/" + key));
-
-  current.value = null;
+  return {
+    left: clamp((x / width) * 100, 0, 100) + "%",
+    top: clamp((y / height) * 100, 0, 100) + "%",
+    width: clamp(((radius * 2) / width) * 100, 1, 100) + "%",
+  };
 }
 
-/* --------------------------------
-   Document Icon
--------------------------------- */
-
-function getDocumentIcon(type) {
-  switch (type) {
-    case "Project":
-      return "folder";
-
-    case "Area":
-      return "workspaces";
-
-    case "Resource":
-      return "library_books";
-
-    case "Archive":
-      return "inventory_2";
-
-    default:
-      return "description";
-  }
+function clamp(value, minimum, maximum) {
+  return Math.min(Math.max(value, minimum), maximum);
 }
 
-/* --------------------------------
-   Date
--------------------------------- */
+function toggleCapture() {
+  waitingCapture.value = !waitingCapture.value;
 
-function formatDate(timestamp) {
-  if (!timestamp) {
-    return "-";
-  }
-
-  return new Date(timestamp).toLocaleString();
-}
-
-/* --------------------------------
-   Export JSON
--------------------------------- */
-
-function exportJson() {
-  const data = documents.value.map(({ key, ...rest }) => ({
-    key,
-    ...rest,
-  }));
-
-  const blob = new Blob([JSON.stringify(data, null, 2)], {
-    type: "application/json",
+  $q.notify({
+    type: waitingCapture.value ? "info" : "warning",
+    message: waitingCapture.value
+      ? "請點選圖片上的熱區中心。"
+      : "已取消擷取座標。",
   });
-
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-
-  a.href = url;
-
-  a.download = "documents.json";
-
-  a.click();
-
-  URL.revokeObjectURL(url);
 }
 
-/* --------------------------------
-   Import JSON
--------------------------------- */
+function onImageClick(event) {
+  if (!waitingCapture.value || !imageRef.value) return;
 
-function importJson() {
-  fileInput.value.click();
+  const rect = imageRef.value.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+
+  const x = Math.round(
+    ((event.clientX - rect.left) / rect.width) * imageSize.value.width
+  );
+  const y = Math.round(
+    ((event.clientY - rect.top) / rect.height) * imageSize.value.height
+  );
+
+  waitingCapture.value = false;
+  editorMode.value = "create";
+  editingId.value = null;
+  editorArea.value = createEmptyArea(
+    clamp(x, 0, imageSize.value.width),
+    clamp(y, 0, imageSize.value.height)
+  );
+  newPhoto.value = "";
+  draftVisible.value = true;
+  showEditor.value = true;
 }
 
-/* --------------------------------
-   Import File
--------------------------------- */
-
-async function onFileSelected(evt) {
-  const file = evt.target.files[0];
-
-  if (!file) {
-    return;
-  }
-
-  try {
-    const text = await file.text();
-
-    const data = JSON.parse(text);
-
-    if (!Array.isArray(data)) {
-      throw new Error("JSON 必須是 Array");
-    }
-
-    for (const item of data) {
-      const document = {
-        ...item,
-      };
-
-      let key = document.key;
-
-      delete document.key;
-
-      /*
-       * 沒有 key 就建立新的
-       */
-      if (!key) {
-        key = push(dbRef(db, "documents")).key;
-      }
-
-      /*
-       * 如果是舊資料沒有時間，
-       * 自動補上
-       */
-      if (!document.CreatedAt) {
-        document.CreatedAt = Date.now();
-      }
-
-      document.UpdatedAt = Date.now();
-
-      await set(dbRef(db, "documents/" + key), document);
-    }
-
-    evt.target.value = "";
-  } catch (err) {
-    console.error(err);
-
-    alert("JSON 格式錯誤");
-  }
+function selectArea(area) {
+  selectedAreaId.value = area.id;
 }
-async function addPhoto() {
-  if (!current.value) return;
 
-  const url = newPhotoUrl.value.trim();
+function openEditDialog(area) {
+  waitingCapture.value = false;
+  selectedAreaId.value = area.id;
+  editorMode.value = "edit";
+  editingId.value = area.id;
+  editorArea.value = cloneArea(area);
+  newPhoto.value = "";
+  draftVisible.value = true;
+  showEditor.value = true;
+}
 
+function resetEditor() {
+  editorMode.value = "create";
+  editingId.value = null;
+  editorArea.value = createEmptyArea();
+  newPhoto.value = "";
+  draftVisible.value = false;
+  savingArea.value = false;
+}
+
+function addPhoto() {
+  const url = newPhoto.value.trim();
   if (!url) return;
 
-  if (!current.value.Photos) {
-    current.value.Photos = [];
+  if (!isHttpUrl(url)) {
+    $q.notify({
+      type: "warning",
+      message: "請輸入有效的 http:// 或 https:// 照片網址。",
+    });
+    return;
   }
 
-  current.value.Photos.push(url);
+  if (editorArea.value.photos.includes(url)) {
+    $q.notify({ type: "warning", message: "此照片網址已經加入。" });
+    return;
+  }
 
-  await update(dbRef(db, "documents/" + current.value.key), {
-    Photos: current.value.Photos,
-    UpdatedAt: Date.now(),
-  });
-
-  newPhotoUrl.value = "";
+  editorArea.value.photos.push(url);
+  newPhoto.value = "";
 }
-async function removePhoto(index) {
-  if (!current.value?.Photos) return;
 
-  current.value.Photos.splice(index, 1);
+function isHttpUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
 
-  await update(dbRef(db, "documents/" + current.value.key), {
-    Photos: current.value.Photos,
-    UpdatedAt: Date.now(),
+function removePhoto(index) {
+  editorArea.value.photos.splice(index, 1);
+}
+
+function buildPayload() {
+  const alt = editorArea.value.alt.trim();
+  const message = editorArea.value.message.trim();
+  const x = Number(editorArea.value.coords.x);
+  const y = Number(editorArea.value.coords.y);
+  const radius = Number(editorArea.value.coords.radius);
+
+  if (!alt) {
+    $q.notify({ type: "warning", message: "請輸入熱區名稱。" });
+    return null;
+  }
+
+  if (
+    !Number.isFinite(x) ||
+    !Number.isFinite(y) ||
+    x < 0 ||
+    y < 0 ||
+    x > imageSize.value.width ||
+    y > imageSize.value.height
+  ) {
+    $q.notify({ type: "warning", message: "X、Y 座標超出圖片範圍。" });
+    return null;
+  }
+
+  if (!Number.isFinite(radius) || radius <= 0) {
+    $q.notify({ type: "warning", message: "半徑必須大於 0。" });
+    return null;
+  }
+
+  return {
+    shape: "circle",
+    alt,
+    message,
+    photos: [...editorArea.value.photos],
+    coords: {
+      x: Math.round(x),
+      y: Math.round(y),
+      radius: Math.round(radius),
+    },
+  };
+}
+
+async function saveArea() {
+  if (savingArea.value) return;
+
+  const payload = buildPayload();
+  if (!payload) return;
+
+  savingArea.value = true;
+
+  try {
+    if (editorMode.value === "edit") {
+      if (!editingId.value) throw new Error("找不到要更新的熱區 ID。");
+
+      // await update(dbRef(db, "areas/" + editingId.value), payload);
+      await update(dbRef(db, "area_watch/" + editingId.value), payload);
+
+      selectedAreaId.value = editingId.value;
+      $q.notify({ type: "positive", message: "熱區已更新。" });
+    } else {
+      // const createdRef = await push(dbRef(db, "areas"), payload);
+      const createdRef = await push(dbRef(db, "area_watch"), payload);
+
+      selectedAreaId.value = createdRef.key;
+      $q.notify({ type: "positive", message: "熱區已新增。" });
+    }
+
+    showEditor.value = false;
+  } catch (error) {
+    notifyError(error, "無法儲存熱區");
+  } finally {
+    savingArea.value = false;
+  }
+}
+
+function requestEditorDelete() {
+  if (!editingId.value) return;
+
+  requestDelete({
+    id: editingId.value,
+    alt: editorArea.value.alt || "未命名熱區",
   });
 }
-const photoPreview = ref(false);
-const previewImage = ref("");
 
-function previewPhoto(url) {
-  previewImage.value = url;
-  photoPreview.value = true;
+function requestDelete(area) {
+  if (!area?.id) return;
+
+  pendingDeleteId.value = area.id;
+  pendingDeleteName.value = area.alt || "未命名熱區";
+  showDeleteConfirm.value = true;
+}
+
+function clearDeleteRequest() {
+  if (deletingArea.value) return;
+
+  pendingDeleteId.value = null;
+  pendingDeleteName.value = "";
+}
+
+async function confirmDelete() {
+  const id = pendingDeleteId.value;
+  if (!id || deletingArea.value) return;
+
+  deletingArea.value = true;
+  const wasSelected = selectedAreaId.value === id;
+  if (wasSelected) selectedAreaId.value = null;
+
+  try {
+    // await remove(dbRef(db, "areas/" + id));
+    await remove(dbRef(db, "area_watch/" + id));
+
+    if (editingId.value === id) {
+      showEditor.value = false;
+    }
+
+    showDeleteConfirm.value = false;
+    $q.notify({ type: "positive", message: "熱區已刪除。" });
+  } catch (error) {
+    if (wasSelected) selectedAreaId.value = id;
+    notifyError(error, "無法刪除熱區");
+  } finally {
+    deletingArea.value = false;
+  }
+}
+
+function openGallery(area, startIndex = 0) {
+  if (!area.photos.length) {
+    $q.notify({ type: "warning", message: "此熱區沒有照片。" });
+    return;
+  }
+
+  galleryPhotos.value = [...area.photos];
+  galleryTitle.value = area.alt;
+  currentSlide.value = clamp(startIndex, 0, area.photos.length - 1);
+  showGallery.value = true;
+}
+
+function notifyError(error, fallbackMessage) {
+  console.error(error);
+  $q.notify({
+    type: "negative",
+    message: error?.message || fallbackMessage,
+  });
 }
 </script>
+
 <style scoped>
-.document-page {
-  min-height: 100vh;
-  background: #f5f6f8;
-} /* ================================================= */ /* Main Layout */ /* ================================================= */
-.document-layout {
-  display: grid;
-  grid-template-columns: minmax(280px, 4fr) minmax(0, 8fr);
-  gap: 16px;
-  padding: 16px;
-  height: calc(100vh - 32px);
-} /* ================================================= */ /* Sidebar */ /* ================================================= */
-.document-sidebar {
-  min-width: 0;
+.editor-shell {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.map-wrapper {
+  text-align: center;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+  width: 500px;
+  max-width: 100%;
   overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 3px 14px rgb(0 0 0 / 18%);
+  line-height: 0;
 }
-.document-sidebar .document-card {
-  height: 100%;
-  overflow-y: auto;
-} /* ================================================= */ /* Editor */ /* ================================================= */
-.document-editor {
-  min-width: 0;
-  overflow-y: auto;
+
+.map-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
 }
-.document-editor .document-card {
-  min-height: 100%;
-} /* ================================================= */ /* Empty */ /* ================================================= */
-.document-empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} /* ================================================= */ /* Document Item */ /* ================================================= */
-.document-item {
-  min-height: 64px;
-} /* ================================================= */ /* Mobile */ /* ================================================= */
-@media (max-width: 767px) {
-  .document-page {
-    background: #fff;
-  }
-  .document-layout {
-    display: block;
-    padding: 0;
-    height: auto;
-  }
-  .document-sidebar {
-    width: 100%;
-    height: auto;
-  }
-  .document-sidebar .document-card {
-    border: none;
-    border-radius: 0;
-  }
-  .document-editor {
-    width: 100%;
-    overflow: visible;
-  }
-  .document-editor .document-card {
-    border: none;
-    border-radius: 0;
-  }
-  .document-item {
-    min-height: 68px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  .mobile-header {
-    border-bottom: 1px solid #ddd;
-    background: #fff;
-  }
-} /* ================================================= */ /* Small Phone */ /* ================================================= */
-@media (max-width: 400px) {
-  .document-item {
-    min-height: 64px;
-  }
-  .document-item .q-item__section--avatar {
-    min-width: 44px;
-  }
+
+.capture-cursor,
+.capture-cursor .map-image {
+  cursor: crosshair;
 }
-/* ================================================= */
-/* Photos */
-/* ================================================= */
+
+.hotspot {
+  position: absolute;
+  z-index: 2;
+  min-width: 14px;
+  min-height: 14px;
+  padding: 0;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border: 2px solid white;
+  border-radius: 50%;
+  background: rgb(220 38 38 / 50%);
+  box-shadow: 0 0 0 2px rgb(220 38 38 / 85%);
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.hotspot:hover,
+.hotspot:focus-visible,
+.hotspot.selected {
+  z-index: 3;
+  transform: translate(-50%, -50%) scale(1.12);
+  background: rgb(220 38 38 / 75%);
+  outline: none;
+}
+
+.hotspot.selected {
+  box-shadow: 0 0 0 3px white, 0 0 0 5px rgb(25 118 210 / 90%);
+}
+
+.draft-hotspot {
+  z-index: 4;
+  border-style: dashed;
+  background: rgb(25 118 210 / 35%);
+  box-shadow: 0 0 0 2px rgb(25 118 210 / 90%);
+  pointer-events: none;
+}
+
+.detail-card {
+  width: 100%;
+}
 
 .photo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
 }
 
-.photo-card {
+.photo-thumb {
   overflow: hidden;
-  border-radius: 10px;
-}
-
-.photo-image {
-  width: 100%;
-  height: 150px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
-.photo-empty {
-  min-height: 160px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  border: 1px dashed #ccc;
-  border-radius: 10px;
-  background: #fafafa;
+.editor-dialog {
+  width: 560px;
+  max-width: 94vw;
 }
 
-/* Mobile */
+.photo-add-button {
+  margin-top: 8px;
+}
 
-@media (max-width: 767px) {
-  .photo-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
-
-  .photo-image {
-    height: 120px;
-  }
+.gallery-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 </style>
