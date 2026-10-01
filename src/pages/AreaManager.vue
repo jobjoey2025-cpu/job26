@@ -1,5 +1,11 @@
 <template>
   <q-page class="bg-grey-2 q-pa-md">
+    <q-btn
+      label="使用手冊 多檔 GDS2021"
+      color="primary"
+      href="https://docs.google.com/spreadsheets/d/1RD7e6KDTXvP13MRv6vlyc7gt6FwAV7ppwuLMO5bIB-s/edit?gid=498659891#gid=498659891"
+      target="_blank"
+    />
     <!-- Header -->
     <AreaHeader v-model:view-mode="viewMode" />
 

@@ -4,8 +4,8 @@
       class="bg-primary text-white row items-center justify-between"
     >
       <div>
-        <div class="text-h5">🏠 2F 空間 Area 管理</div>
-        <div class="text-caption">Living Lab / Construction MVP</div>
+        <div class="text-h5">🏠 2F +3F 空間 Area 管理</div>
+        <div class="text-caption">收納 over view / Living Lab / Construction MVP</div>
       </div>
       <!-- toggle-color="white" -->
       <q-btn-toggle
