@@ -253,15 +253,29 @@ const {
 } = useAreas();
 
 // =========================
-// Filter
+// Filter + Sort
 // =========================
 
-const filteredAreas = computed(() => {
-  if (selectedCategory.value === "All") {
-    return areas.value;
-  }
+// const filteredAreas = computed(() => {
+//   if (selectedCategory.value === "All") {
+//     return areas.value;
+//   }
 
-  return areas.value.filter((area) => area.tag === selectedCategory.value);
+//   return areas.value.filter((area) => area.tag === selectedCategory.value);
+// });
+const filteredAreas = computed(() => {
+  const result =
+    selectedCategory.value === "All"
+      ? areas.value
+      : areas.value.filter((area) => area.tag === selectedCategory.value);
+  // 依 name 排序
+  // 特別用了 [...result]，避免直接對 areas.value 做 .sort()，這樣不會改動 Firebase 回傳的原始資料順序。
+  return [...result].sort((a, b) =>
+    String(a.name || "").localeCompare(String(b.name || ""), "zh-Hant", {
+      numeric: true,
+      sensitivity: "base",
+    })
+  );
 });
 
 // =========================
