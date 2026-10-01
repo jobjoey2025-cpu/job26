@@ -122,11 +122,7 @@ const routes = [
 
       { path: '3F_color_googleForm', component: () => import('components/3F_color_googleForm.vue'), name: '3F_color_googleForm' },
 
-      { path: 'a3F_color', component: () => import('components/a3F_color.vue'), name: 'a3F_color' },
-      { path: 'a3F_color2', component: () => import('components/a3F_color2.vue'), name: 'a3F_color2' },
-      { path: 'a3F_floorPlan', component: () => import('components/a3F_floorPlan.vue'), name: 'a3F_floorPlan' },
-      { path: 'a3F_structure', component: () => import('components/a3F_structure.vue'), name: 'a3F_structure' },
-      { path: 'a3F_color_desk', component: () => import('components/a3F_color_desk.vue'), name: 'a3F_color_desk' },
+
 
       { path: 'roi', component: () => import('components/roi.vue'), name: 'roi' },
       { path: 'roi_doc', component: () => import('components/roi_doc.vue'), name: 'roi_doc' },
@@ -176,6 +172,16 @@ const routes = [
         meta: {
           menu: true,
           label: 'EDcellPhone',
+          icon: 'map',
+          group: '病痛',
+        },
+      },
+
+      {
+        path: 'Firedb_Body', component: () => import('components/Firedb_Body.vue'), name: 'Firedb_Body',
+        meta: {
+          menu: true,
+          label: 'Firedb_Body',
           icon: 'map',
           group: '病痛',
         },
@@ -370,7 +376,7 @@ const routes = [
           menu: true,
           label: 'Firedb_Todolist',
           icon: 'note',
-          group: 'Doc',
+          group: 'suao-Trip',
         },
       },
 
@@ -475,12 +481,57 @@ const routes = [
       },
 
       {
+        path: 'Firedb_Watch', component: () => import('components/Firedb_Watch.vue'), name: 'Firedb_Watch',
+        meta: {
+          menu: true,
+          label: 'Firedb_Watch',
+          icon: 'map',
+          group: 'Japan',
+        },
+      },
+
+      {
         path: 'GAS_picUP', component: () => import('components/GAS_picUP.vue'), name: 'GAS_picUP',
         meta: {
           menu: true,
           label: '照片上傳',
           icon: 'photo',
           group: 'Japan',
+        },
+      },
+
+
+      { path: 'a3F_color', component: () => import('components/a3F_color.vue'), name: 'a3F_color' },
+      { path: 'a3F_color2', component: () => import('components/a3F_color2.vue'), name: 'a3F_color2' },
+      { path: 'a3F_floorPlan', component: () => import('components/a3F_floorPlan.vue'), name: 'a3F_floorPlan' },
+      // { path: 'a3F_structure', component: () => import('components/a3F_structure.vue'), name: 'a3F_structure' },
+      // { path: 'a3F_color_desk', component: () => import('components/a3F_color_desk.vue'), name: 'a3F_color_desk' },
+
+      {
+        path: 'a3F_color_desk', component: () => import('components/a3F_color_desk.vue'), name: 'a3F_color_desk',
+        meta: {
+          menu: true,
+          label: '書桌整理記錄',
+          icon: 'photo',
+          group: '3F',
+        },
+      },
+      {
+        path: 'a3F_structure', component: () => import('components/a3F_structure.vue'), name: 'a3F_structure',
+        meta: {
+          menu: true,
+          label: '3F_Fn Tree',
+          icon: 'photo',
+          group: '3F',
+        },
+      },
+      {
+        path: 'a3F_floorPlan', component: () => import('components/a3F_floorPlan.vue'), name: 'a3F_floorPlan',
+        meta: {
+          menu: true,
+          label: '3F收納 整合',
+          icon: 'photo',
+          group: '3F',
         },
       },
 

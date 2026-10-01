@@ -400,7 +400,7 @@ const $q = useQuasar();
 
 // const imageUrl = "https://picsum.photos/seed/firebase-image-map/500/300";
 const imageUrl =
-  "https://lh3.googleusercontent.com/d/18_Qm16kySnEh-wzGJPlKiKo8_V-B9pZ2=w1200";
+  "https://lh3.googleusercontent.com/d/1t_4Qi6k_UjLNO1zaxtwGdw58yhWYp46O=w1200";
 // joey modify ---
 const imageRef = ref(null);
 const imageSize = ref({ width: 500, height: 300 });
@@ -502,7 +502,7 @@ function finiteNumber(value, fallback) {
 
 function listenAreas() {
   // const areasRef = dbRef(db, "area_kyoto");
-  const areasRef = dbRef(db, "area_watch");
+  const areasRef = dbRef(db, "area_body");
 
   stopAreasListener = onValue(
     areasRef,
@@ -714,13 +714,13 @@ async function saveArea() {
       if (!editingId.value) throw new Error("找不到要更新的熱區 ID。");
 
       // await update(dbRef(db, "areas/" + editingId.value), payload);
-      await update(dbRef(db, "area_watch/" + editingId.value), payload);
+      await update(dbRef(db, "area_body/" + editingId.value), payload);
 
       selectedAreaId.value = editingId.value;
       $q.notify({ type: "positive", message: "熱區已更新。" });
     } else {
       // const createdRef = await push(dbRef(db, "areas"), payload);
-      const createdRef = await push(dbRef(db, "area_watch"), payload);
+      const createdRef = await push(dbRef(db, "area_body"), payload);
 
       selectedAreaId.value = createdRef.key;
       $q.notify({ type: "positive", message: "熱區已新增。" });
@@ -768,7 +768,7 @@ async function confirmDelete() {
 
   try {
     // await remove(dbRef(db, "areas/" + id));
-    await remove(dbRef(db, "area_watch/" + id));
+    await remove(dbRef(db, "area_body/" + id));
 
     if (editingId.value === id) {
       showEditor.value = false;
