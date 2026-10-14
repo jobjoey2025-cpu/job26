@@ -161,6 +161,10 @@ const categories = [
     icon: "apps",
   },
   {
+    name: "垃圾流",
+    icon: "delete_forever",
+  },
+  {
     name: "3F1st",
     icon: "home",
   },
