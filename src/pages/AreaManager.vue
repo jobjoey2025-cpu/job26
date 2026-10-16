@@ -6,6 +6,24 @@
       href="https://docs.google.com/spreadsheets/d/1RD7e6KDTXvP13MRv6vlyc7gt6FwAV7ppwuLMO5bIB-s/edit?gid=498659891#gid=498659891"
       target="_blank"
     />
+    ☏
+    <q-btn
+      label="Find (Page [all] )"
+      color="primary"
+      target="_blank"
+    />
+    𓅃
+    <q-btn
+      label="Find (Firedb [展開])"
+      color="primary"
+      target="_blank"
+    />
+    _
+    <q-btn
+      label="4種 Search"
+      color="primary"
+      target="_blank"
+    />
     <!-- Header -->
     <AreaHeader v-model:view-mode="viewMode" />
 
