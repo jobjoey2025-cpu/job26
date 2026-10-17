@@ -8,7 +8,7 @@
     />
     ☏
     <q-btn label="Find (Page [all] )" color="primary" target="_blank" />
-    𓅃
+    🐷
     <!-- <q-btn label="Find (Firedb [展開])" color="primary" target="_blank" /> -->
     -
     <!-- <q-btn label="4種 Search" color="primary" target="_blank" /> -->
@@ -135,14 +135,18 @@
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-<pre>
+        <!-- joey -->
+        <pre>
+  car \
+
   共4種 Search
   1 2 用 browser Find 找關鍵字 Page [all] \ Firedb [全部展開]比較深
   3 選擇區域 (auto List)
   4 手動 Btn
 
 
-</pre>
+</pre
+        >
       </q-card-section>
 
       <q-card-actions align="right">
