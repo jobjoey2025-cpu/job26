@@ -7,23 +7,13 @@
       target="_blank"
     />
     ☏
-    <q-btn
-      label="Find (Page [all] )"
-      color="primary"
-      target="_blank"
-    />
+    <q-btn label="Find (Page [all] )" color="primary" target="_blank" />
     𓅃
-    <q-btn
-      label="Find (Firedb [展開])"
-      color="primary"
-      target="_blank"
-    />
-    _
-    <q-btn
-      label="4種 Search"
-      color="primary"
-      target="_blank"
-    />
+    <!-- <q-btn label="Find (Firedb [展開])" color="primary" target="_blank" /> -->
+    -
+    <!-- <q-btn label="4種 Search" color="primary" target="_blank" /> -->
+    -
+    <q-btn label="關鍵字" color="primary" @click="alert = true" />
     <!-- Header -->
     <AreaHeader v-model:view-mode="viewMode" />
 
@@ -137,6 +127,29 @@
       <q-btn fab color="primary" icon="add" @click="addDialog = true" />
     </q-page-sticky>
   </q-page>
+
+  <q-dialog v-model="alert">
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">Alert</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+<pre>
+  共4種 Search
+  1 2 用 browser Find 找關鍵字 Page [all] \ Firedb [全部展開]比較深
+  3 選擇區域 (auto List)
+  4 手動 Btn
+
+
+</pre>
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="OK" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -208,6 +221,7 @@ const categories = [
   },
 ];
 
+const alert = ref(false);
 // =========================
 // Status
 // =========================
