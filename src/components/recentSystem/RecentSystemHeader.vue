@@ -79,8 +79,8 @@ Recent System
           <q-btn
             color="primary"
             unelevated
-            icon="sticky_note_2"
-            label="3☏ FCards"
+            icon="pages"
+            label="☏ Cards ma"
             :to="{ name: 'AreaManager' }"
           />
           <!-- <q-btn
