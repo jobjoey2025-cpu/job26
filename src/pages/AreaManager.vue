@@ -220,6 +220,10 @@ const categories = [
     icon: "no_crash",
   },
   {
+    name: "buy",
+    icon: "shopping_cart",
+  },
+  {
     name: "doc",
     icon: "document_scanner",
   },
