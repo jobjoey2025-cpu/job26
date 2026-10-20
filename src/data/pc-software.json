@@ -1,0 +1,190 @@
+{
+  "pcs": [
+    {
+      "id": "pc-001",
+      "name": "DESIGN-PC-01",
+      "assetTag": "PC-001",
+      "roleId": "role-design",
+      "os": "Windows 11",
+      "owner": "王小美",
+      "location": "設計部",
+      "notes": ""
+    },
+    {
+      "id": "pc-002",
+      "name": "DEV-PC-02",
+      "assetTag": "PC-002",
+      "roleId": "role-dev",
+      "os": "Windows 11",
+      "owner": "陳先生",
+      "location": "資訊部",
+      "notes": ""
+    },
+    {
+      "id": "pc-003",
+      "name": "OFFICE-PC-03",
+      "assetTag": "PC-003",
+      "roleId": "role-office",
+      "os": "Windows 10",
+      "owner": "林小姐",
+      "location": "行政部",
+      "notes": ""
+    }
+  ],
+  "roles": [
+    {
+      "id": "role-office",
+      "name": "行政 / 文書",
+      "description": "一般文書、郵件與會議",
+      "softwareIds": [
+        "sw-office",
+        "sw-browser",
+        "sw-pdf",
+        "sw-zip"
+      ]
+    },
+    {
+      "id": "role-design",
+      "name": "設計 / 美編",
+      "description": "影像、版面與創意製作",
+      "softwareIds": [
+        "sw-office",
+        "sw-browser",
+        "sw-pdf",
+        "sw-design",
+        "sw-zip"
+      ]
+    },
+    {
+      "id": "role-dev",
+      "name": "工程師 / 開發",
+      "description": "程式開發、版本控制與 API 測試",
+      "softwareIds": [
+        "sw-browser",
+        "sw-vscode",
+        "sw-git",
+        "sw-api",
+        "sw-zip"
+      ]
+    }
+  ],
+  "software": [
+    {
+      "id": "sw-office",
+      "name": "Microsoft 365 / Office",
+      "vendor": "Microsoft",
+      "category": "文書",
+      "purpose": "文件、試算表、簡報與郵件",
+      "priority": "必裝",
+      "roleIds": [
+        "role-office",
+        "role-design"
+      ],
+      "url": ""
+    },
+    {
+      "id": "sw-browser",
+      "name": "Chrome / Edge",
+      "vendor": "Google / Microsoft",
+      "category": "瀏覽器",
+      "purpose": "企業網站與雲端服務",
+      "priority": "必裝",
+      "roleIds": [
+        "role-office",
+        "role-design",
+        "role-dev"
+      ],
+      "url": ""
+    },
+    {
+      "id": "sw-pdf",
+      "name": "PDF 閱讀器",
+      "vendor": "Adobe / 其他",
+      "category": "文件",
+      "purpose": "閱讀、註記與列印 PDF",
+      "priority": "建議",
+      "roleIds": [
+        "role-office",
+        "role-design"
+      ],
+      "url": ""
+    },
+    {
+      "id": "sw-zip",
+      "name": "7-Zip",
+      "vendor": "7-Zip",
+      "category": "工具",
+      "purpose": "壓縮與解壓縮檔案",
+      "priority": "建議",
+      "roleIds": [
+        "role-office",
+        "role-design",
+        "role-dev"
+      ],
+      "url": ""
+    },
+    {
+      "id": "sw-design",
+      "name": "影像 / 設計工具",
+      "vendor": "依公司授權",
+      "category": "設計",
+      "purpose": "圖片編輯、版面與素材製作",
+      "priority": "必裝",
+      "roleIds": [
+        "role-design"
+      ],
+      "url": ""
+    },
+    {
+      "id": "sw-vscode",
+      "name": "Visual Studio Code",
+      "vendor": "Microsoft",
+      "category": "開發",
+      "purpose": "程式碼編輯與擴充套件",
+      "priority": "必裝",
+      "roleIds": [
+        "role-dev"
+      ],
+      "url": ""
+    },
+    {
+      "id": "sw-git",
+      "name": "Git",
+      "vendor": "Git Project",
+      "category": "開發",
+      "purpose": "版本控制",
+      "priority": "必裝",
+      "roleIds": [
+        "role-dev"
+      ],
+      "url": ""
+    },
+    {
+      "id": "sw-api",
+      "name": "API 測試工具",
+      "vendor": "依團隊標準",
+      "category": "開發",
+      "purpose": "HTTP API 測試與除錯",
+      "priority": "建議",
+      "roleIds": [
+        "role-dev"
+      ],
+      "url": ""
+    }
+  ],
+  "installedByPc": {
+    "pc-001": [
+      "sw-office",
+      "sw-browser"
+    ],
+    "pc-002": [
+      "sw-browser",
+      "sw-vscode"
+    ],
+    "pc-003": [
+      "sw-office",
+      "sw-browser",
+      "sw-pdf"
+    ]
+  }
+}
