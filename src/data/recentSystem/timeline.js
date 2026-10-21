@@ -2,14 +2,15 @@ export const timelineSections = [
   {
     id: "new temp",
     navTitle: "總是要新增",
-    title: "JSON 範本",
+    title: "JSON 範本 : data/ recentSystem/ timeline.js",
     subtitle: "Add",
     icon: "add_box",
     color: "prime",
     summary:
       "新增放到 頁面大綱，反正都會變。CICD 才是好的 CICD 才能長久",
     details: [
-      "Header 是頭條 \ UI比例 是有限制的 \ 排版圈圈脈絡 規定 慣例。",
+      "Header 是頭條 \\ UI比例 是有限制的 \\ 排版圈圈脈絡 規定 慣例。",
+      "AreaManager 多檔手冊 \\ recent多檔手冊 \\ job2021"
     ],
   },
 
