@@ -25,11 +25,12 @@ export const timelineSections = [
     summary:
       "我有一套 便宜穩定 整理資訊的設備與方法，so 我可以估算 ROI 所需的時間。",
     details: [
-      "*隨手寫 GDS 還是主力，Quasar only view (cellPhone)。",
+      "*隨手寫 *GDS 還是主力，Quasar only view (cellPhone)。",
       "coding 編輯還是要 NB，cuz 要一個流暢度才做得下去。",
       "有空想法就一直改，so 隨手寫 useful。",
       "* 每次重新推，都有新解決方案。變化很多，尤其 with GPT。",
       "時代變了，不是我不會修，是買新的才不會浪費大家的時間。",
+      "差一點 衣服照片就白拍了!",
       "---- 有重複使用的 Page : ----",
       "高 閱讀品質 9000/#/recentSystem (ez 大綱)",
       "影像卡片 9000/#/AreaManager (衣服收納)",
