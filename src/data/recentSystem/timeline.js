@@ -17,8 +17,8 @@ export const timelineSections = [
   {
     id: "inf tool",
     navTitle: "整理資訊的設備與方法",
-    title: "先判斷真正的問題",
-    subtitle: "Tool",
+    title: "資訊工具 卡 閱讀品質(vs理解速度)",
+    subtitle: "Info Tool",
     icon: "filter_alt_off",
     color: "prime",
     // ，避免直接把工具或 AI 當成答案
