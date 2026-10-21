@@ -1,5 +1,43 @@
 export const timelineSections = [
   {
+    id: "new temp",
+    navTitle: "總是要新增",
+    title: "JSON 範本",
+    subtitle: "Add",
+    icon: "add_box",
+    color: "prime",
+    summary:
+      "新增放到 頁面大綱，反正都會變。CICD 才是好的 CICD 才能長久",
+    details: [
+      "Header 是頭條 \ UI比例 是有限制的 \ 排版圈圈脈絡 規定 慣例。",
+    ],
+  },
+
+  {
+    id: "inf tool",
+    navTitle: "整理資訊的設備與方法",
+    title: "先判斷真正的問題",
+    subtitle: "Tool",
+    icon: "filter_alt_off",
+    color: "prime",
+    // ，避免直接把工具或 AI 當成答案
+    summary:
+      "我有一套 便宜穩定 整理資訊的設備與方法，so 我可以估算 ROI 所需的時間。",
+    details: [
+      "*隨手寫 GDS 還是主力，Quasar only view (cellPhone)。",
+      "coding 編輯還是要 NB，cuz 要一個流暢度才做得下去。",
+      "有空想法就一直改，so 隨手寫 useful。",
+      "* 每次重新推，都有新解決方案。變化很多，尤其 with GPT。",
+      "時代變了，不是我不會修，是買新的才不會浪費大家的時間。",
+      "---- 有重複使用的 Page : ----",
+      "高 閱讀品質 9000/#/recentSystem (ez 大綱)",
+      "影像卡片 9000/#/AreaManager (衣服收納)",
+      "img-map 9000/#/firedb_body (一眼健康)",
+      "單檔 影像卡片 9000/#/Firedb_recent"
+    ],
+  },
+
+  {
     id: "problem",
     navTitle: "先確認問題 \ room db NG",
     title: "先判斷真正的問題",
