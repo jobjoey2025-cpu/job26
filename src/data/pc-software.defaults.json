@@ -1,0 +1,695 @@
+{
+  "defaultPcs": [
+    {
+      "id": "pc-001",
+      "name": "OFFICE-PC-01",
+      "assetTag": "PC-001",
+      "roleId": "role-general",
+      "os": "Windows 11",
+      "owner": "",
+      "location": "行政部",
+      "notes": ""
+    },
+    {
+      "id": "pc-002",
+      "name": "DESIGN-PC-01",
+      "assetTag": "PC-002",
+      "roleId": "role-design",
+      "os": "Windows 11",
+      "owner": "",
+      "location": "設計部",
+      "notes": ""
+    },
+    {
+      "id": "pc-003",
+      "name": "DEV-PC-01",
+      "assetTag": "PC-003",
+      "roleId": "role-dev",
+      "os": "Windows 11",
+      "owner": "",
+      "location": "資訊部",
+      "notes": ""
+    },
+    {
+      "id": "pc-004",
+      "name": "CAD-PC-01",
+      "assetTag": "PC-004",
+      "roleId": "role-cad",
+      "os": "Windows 10",
+      "owner": "",
+      "location": "工程部",
+      "notes": ""
+    }
+  ],
+  "defaultRoles": [
+    {
+      "id": "role-general",
+      "name": "一般行政 / 文書",
+      "description": "日常辦公、郵件、文件與雲端檔案",
+      "softwareIds": [
+        "sw-001",
+        "sw-004",
+        "sw-006",
+        "sw-008",
+        "sw-009",
+        "sw-010",
+        "sw-011",
+        "sw-015",
+        "sw-017",
+        "sw-022",
+        "sw-023",
+        "sw-024",
+        "sw-025",
+        "sw-033",
+        "sw-034",
+        "sw-035"
+      ]
+    },
+    {
+      "id": "role-design",
+      "name": "美術 / 設計",
+      "description": "素材管理、影像處理、設計與 3D",
+      "softwareIds": [
+        "sw-005",
+        "sw-007",
+        "sw-013",
+        "sw-030",
+        "sw-031"
+      ]
+    },
+    {
+      "id": "role-dev",
+      "name": "工程師 / Coding",
+      "description": "程式開發、版本控制與資料庫",
+      "softwareIds": [
+        "sw-002",
+        "sw-003",
+        "sw-012",
+        "sw-018",
+        "sw-019",
+        "sw-020",
+        "sw-021",
+        "sw-026"
+      ]
+    },
+    {
+      "id": "role-cad",
+      "name": "3D CAD / 工程",
+      "description": "CAD、建模與工程模擬",
+      "softwareIds": [
+        "sw-016",
+        "sw-027",
+        "sw-028",
+        "sw-029",
+        "sw-032",
+        "sw-036",
+        "sw-037"
+      ]
+    },
+    {
+      "id": "role-video",
+      "name": "影音剪輯",
+      "description": "影片剪輯、播放與影音製作",
+      "softwareIds": [
+        "sw-014",
+        "sw-038"
+      ]
+    }
+  ],
+  "categoryChoices": [
+    "瀏覽器",
+    "開發",
+    "網路 / NAS",
+    "美術 / 素材",
+    "美術 / 照片工具",
+    "通訊",
+    "文書",
+    "影音",
+    "影音 / 剪輯",
+    "開發 / AI",
+    "3D / CAD",
+    "內部連結",
+    "資料庫",
+    "資料分析",
+    "雲端儲存",
+    "遊戲",
+    "遊戲開發",
+    "工程 / 模擬",
+    "雲端 / CAD",
+    "設計 / 協作",
+    "CAD",
+    "硬體 / 驅動",
+    "待確認",
+    "協作 / 筆記",
+    "遊戲平台",
+    "3D / 美術"
+  ],
+  "priorityOptions": [
+    "必裝",
+    "建議",
+    "選配",
+    "待確認",
+    "不建議"
+  ],
+  "osOptions": [
+    "Windows 11",
+    "Windows 10",
+    "Windows Server",
+    "macOS",
+    "Linux"
+  ],
+  "seedSoftware": [
+    {
+      "id": "sw-001",
+      "name": "chrome G1 / job2021 / 2025",
+      "category": "瀏覽器",
+      "purpose": "Chrome 不同版本或設定群組；請確認公司標準版本",
+      "priority": "必裝",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-002",
+      "name": "VSC (Visual Studio Code)",
+      "category": "開發",
+      "purpose": "程式碼編輯器",
+      "priority": "必裝",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "工程師",
+      "roleIds": [
+        "role-dev"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-003",
+      "name": "GitHub Desktop",
+      "category": "開發",
+      "purpose": "Git 圖形化版本控制工具",
+      "priority": "建議",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "工程師",
+      "roleIds": [
+        "role-dev"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-004",
+      "name": "Synology Assistant",
+      "category": "網路 / NAS",
+      "purpose": "尋找及管理 Synology NAS",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-005",
+      "name": "Eagle",
+      "category": "美術 / 素材",
+      "purpose": "圖片與設計素材管理",
+      "priority": "建議",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "設計",
+      "roleIds": [
+        "role-design"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-006",
+      "name": "Discord",
+      "category": "通訊",
+      "purpose": "團隊通訊；依公司政策決定",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-007",
+      "name": "PicPick",
+      "category": "美術 / 照片工具",
+      "purpose": "截圖、取色與影像註記",
+      "priority": "建議",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "設計",
+      "roleIds": [
+        "role-design"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-008",
+      "name": "LibreOffice 7.5",
+      "category": "文書",
+      "purpose": "文書、試算表、簡報",
+      "priority": "建議",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-009",
+      "name": "Notion",
+      "category": "協作 / 筆記",
+      "purpose": "文件、知識庫與專案管理",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-010",
+      "name": "LINE",
+      "category": "通訊",
+      "purpose": "即時通訊；依公司政策決定",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-011",
+      "name": "PotPlayer 64 bit",
+      "category": "影音",
+      "purpose": "影音播放",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-012",
+      "name": "Codex",
+      "category": "開發 / AI",
+      "purpose": "AI 輔助程式開發工具",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "工程師",
+      "roleIds": [
+        "role-dev"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-013",
+      "name": "美術照片工具",
+      "category": "美術 / 照片工具",
+      "purpose": "請填入實際使用的軟體名稱",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "設計",
+      "roleIds": [
+        "role-design"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-014",
+      "name": "Video soft",
+      "category": "影音 / 剪輯",
+      "purpose": "請確認實際剪輯軟體與授權",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "影音",
+      "roleIds": [
+        "role-video"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-015",
+      "name": "green",
+      "category": "待確認",
+      "purpose": "原始清單名稱為 green，待確認用途",
+      "priority": "待確認",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-016",
+      "name": "2 3D CAD 工具",
+      "category": "3D / CAD",
+      "purpose": "請填入實際 3D CAD 工具名稱",
+      "priority": "建議",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "CAD",
+      "roleIds": [
+        "role-cad"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-017",
+      "name": "3 大主題 (LINK)",
+      "category": "內部連結",
+      "purpose": "請補上三大主題的內部文件或網址",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-018",
+      "name": "Coding",
+      "category": "開發",
+      "purpose": "泛指開發工具，請確認具體軟體",
+      "priority": "待確認",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "工程師",
+      "roleIds": [
+        "role-dev"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-019",
+      "name": "DB Browser (SQLite)",
+      "category": "資料庫",
+      "purpose": "SQLite 資料庫檢視與編輯",
+      "priority": "建議",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "工程師",
+      "roleIds": [
+        "role-dev"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-020",
+      "name": "Anaconda Navigator (anaconda3)",
+      "category": "資料分析",
+      "purpose": "Python / Conda 環境管理",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "工程師",
+      "roleIds": [
+        "role-dev"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-021",
+      "name": "GitKraken (2)",
+      "category": "開發",
+      "purpose": "Git 圖形化工具；「2」保留原始備註",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "工程師",
+      "roleIds": [
+        "role-dev"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-022",
+      "name": "Dropbox",
+      "category": "雲端儲存",
+      "purpose": "雲端檔案同步；確認公司政策",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-023",
+      "name": "MS OneDrive",
+      "category": "雲端儲存",
+      "purpose": "Microsoft 雲端檔案同步",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-024",
+      "name": "Bloons TD 6",
+      "category": "遊戲",
+      "purpose": "非工作必要軟體",
+      "priority": "不建議",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-025",
+      "name": "Steam",
+      "category": "遊戲平台",
+      "purpose": "非工作必要軟體",
+      "priority": "不建議",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-026",
+      "name": "Godot v4.3 stable (捷徑)",
+      "category": "遊戲開發",
+      "purpose": "Godot 遊戲引擎；原清單為 exe 捷徑",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "工程師",
+      "roleIds": [
+        "role-dev"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-027",
+      "name": "Ansys 15",
+      "category": "工程 / 模擬",
+      "purpose": "工程分析與模擬；確認版本與授權",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "CAD",
+      "roleIds": [
+        "role-cad"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-028",
+      "name": "Autodesk 360",
+      "category": "雲端 / CAD",
+      "purpose": "原始備註：必不要",
+      "priority": "不建議",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "CAD",
+      "roleIds": [
+        "role-cad"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-029",
+      "name": "AutoCAD 2014",
+      "category": "CAD",
+      "purpose": "2D / 3D CAD；舊版本需確認相容性與授權",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "CAD",
+      "roleIds": [
+        "role-cad"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-030",
+      "name": "Blender",
+      "category": "3D / 美術",
+      "purpose": "3D 建模、動畫與渲染",
+      "priority": "建議",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "設計",
+      "roleIds": [
+        "role-design"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-031",
+      "name": "Figma",
+      "category": "設計 / 協作",
+      "purpose": "原始備註：放棄 after ai；待確認是否停用",
+      "priority": "不建議",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "設計",
+      "roleIds": [
+        "role-design"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-032",
+      "name": "FreeCAD",
+      "category": "CAD",
+      "purpose": "開源 3D CAD 建模工具",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "CAD",
+      "roleIds": [
+        "role-cad"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-033",
+      "name": "HP 印表機工具",
+      "category": "硬體 / 驅動",
+      "purpose": "依實際 HP 印表機型號安裝驅動或管理工具",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-034",
+      "name": "Office 365 / Microsoft 365",
+      "category": "文書",
+      "purpose": "原始清單帶問號；請確認公司授權",
+      "priority": "待確認",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-035",
+      "name": "Office 2003 / 2010",
+      "category": "文書",
+      "purpose": "原始清單帶問號；舊版本有安全與相容性風險",
+      "priority": "不建議",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "一般",
+      "roleIds": [
+        "role-general"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-036",
+      "name": "Creo 6",
+      "category": "CAD",
+      "purpose": "3D CAD / PLM；確認授權與版本",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "CAD",
+      "roleIds": [
+        "role-cad"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-037",
+      "name": "SolidWorks 2019",
+      "category": "CAD",
+      "purpose": "3D CAD；確認授權與版本",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "CAD",
+      "roleIds": [
+        "role-cad"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sw-038",
+      "name": "剪映專業版",
+      "category": "影音 / 剪輯",
+      "purpose": "影片剪輯；確認公司使用政策與授權",
+      "priority": "選配",
+      "vendor": "",
+      "url": "",
+      "roleGroup": "影音",
+      "roleIds": [
+        "role-video"
+      ],
+      "notes": ""
+    }
+  ]
+}

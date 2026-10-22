@@ -1,0 +1,147 @@
+{
+  "recommendColumns": [
+    {
+      "name": "name",
+      "label": "軟體",
+      "field": "name",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "name": "category",
+      "label": "分類",
+      "field": "category",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "name": "purpose",
+      "label": "用途 / 備註",
+      "field": "purpose",
+      "align": "left"
+    },
+    {
+      "name": "priority",
+      "label": "建議狀態",
+      "field": "priority",
+      "align": "center"
+    },
+    {
+      "name": "status",
+      "label": "安裝狀態",
+      "field": "installed",
+      "align": "center"
+    },
+    {
+      "name": "actions",
+      "label": "操作",
+      "field": "id",
+      "align": "center"
+    }
+  ],
+  "pcColumns": [
+    {
+      "name": "name",
+      "label": "電腦名稱",
+      "field": "name",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "name": "assetTag",
+      "label": "資產編號",
+      "field": "assetTag",
+      "align": "left"
+    },
+    {
+      "name": "roleId",
+      "label": "工作職位",
+      "field": "roleId",
+      "align": "left"
+    },
+    {
+      "name": "os",
+      "label": "作業系統",
+      "field": "os",
+      "align": "left"
+    },
+    {
+      "name": "owner",
+      "label": "使用者",
+      "field": "owner",
+      "align": "left"
+    },
+    {
+      "name": "location",
+      "label": "部門 / 位置",
+      "field": "location",
+      "align": "left"
+    },
+    {
+      "name": "actions",
+      "label": "操作",
+      "field": "id",
+      "align": "center"
+    }
+  ],
+  "roleColumns": [
+    {
+      "name": "name",
+      "label": "職位名稱",
+      "field": "name",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "name": "description",
+      "label": "職位說明",
+      "field": "description",
+      "align": "left"
+    },
+    {
+      "name": "softwareIds",
+      "label": "預設軟體",
+      "field": "softwareIds",
+      "align": "center"
+    },
+    {
+      "name": "actions",
+      "label": "操作",
+      "field": "id",
+      "align": "center"
+    }
+  ],
+  "softwareColumns": [
+    {
+      "name": "name",
+      "label": "軟體名稱",
+      "field": "name",
+      "align": "left",
+      "sortable": true
+    },
+    {
+      "name": "category",
+      "label": "分類",
+      "field": "category",
+      "align": "left"
+    },
+    {
+      "name": "purpose",
+      "label": "用途 / 備註",
+      "field": "purpose",
+      "align": "left"
+    },
+    {
+      "name": "priority",
+      "label": "建議狀態",
+      "field": "priority",
+      "align": "center"
+    },
+    {
+      "name": "actions",
+      "label": "操作",
+      "field": "id",
+      "align": "center"
+    }
+  ]
+}

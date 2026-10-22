@@ -5,7 +5,7 @@
         <div class="col">
           <div class="text-h4 text-weight-bold">PC 軟體配置中心</div>
           <div class="text-subtitle2 text-grey-7 q-mt-xs">
-            管理多台 PC、工作職位與軟體安裝建議 · 單一 Vue 檔案
+            管理多台 PC、工作職位與軟體安裝建議 · Firebase 即時同步
           </div>
           <div
             class="text-caption q-mt-xs"
@@ -20,6 +20,7 @@
         </div>
         <div class="col-auto row q-gutter-sm">
           <q-btn
+            :disable="!loaded"
             outline
             color="primary"
             icon="file_download"
@@ -27,6 +28,7 @@
             @click="exportJson"
           />
           <q-btn
+            :disable="!canEdit"
             outline
             color="primary"
             icon="file_upload"
@@ -76,6 +78,7 @@
           <q-tab name="pcs" icon="computer" label="PC 管理" />
           <q-tab name="roles" icon="badge" label="職位管理" />
           <q-tab name="software" icon="apps" label="軟體清單" />
+          <q-tab name="settings" icon="settings" label="設定選項" />
         </q-tabs>
         <q-separator />
         <q-tab-panels v-model="tab" animated>
@@ -150,6 +153,7 @@
               >請先到「PC 管理」新增電腦，或選擇現有 PC。</q-banner
             >
             <q-table
+              :loading="!loaded"
               v-else
               flat
               bordered
@@ -192,6 +196,7 @@
               <template #body-cell-actions="props">
                 <q-td :props="props">
                   <q-btn
+                    :disable="!canEdit"
                     dense
                     flat
                     round
@@ -226,6 +231,7 @@
               <div class="col text-subtitle1 text-weight-bold">PC 清單</div>
               <div class="col-auto">
                 <q-btn
+                  :disable="!canEdit"
                   color="primary"
                   icon="add"
                   label="新增 PC"
@@ -234,6 +240,7 @@
               </div>
             </div>
             <q-table
+              :loading="!loaded"
               flat
               bordered
               :rows="pcs"
@@ -260,12 +267,14 @@
               <template #body-cell-actions="props"
                 ><q-td :props="props" class="q-gutter-xs"
                   ><q-btn
+                    :disable="!canEdit"
                     flat
                     round
                     dense
                     color="primary"
                     icon="edit"
                     @click="openPcDialog(props.row)" /><q-btn
+                    :disable="!canEdit"
                     flat
                     round
                     dense
@@ -283,6 +292,7 @@
               </div>
               <div class="col-auto">
                 <q-btn
+                  :disable="!canEdit"
                   color="primary"
                   icon="add"
                   label="新增職位"
@@ -291,6 +301,7 @@
               </div>
             </div>
             <q-table
+              :loading="!loaded"
               flat
               bordered
               :rows="roles"
@@ -305,12 +316,14 @@
               <template #body-cell-actions="props"
                 ><q-td :props="props" class="q-gutter-xs"
                   ><q-btn
+                    :disable="!canEdit"
                     flat
                     round
                     dense
                     color="primary"
                     icon="edit"
                     @click="openRoleDialog(props.row)" /><q-btn
+                    :disable="!canEdit"
                     flat
                     round
                     dense
@@ -328,12 +341,14 @@
               </div>
               <div class="col-auto row q-gutter-sm">
                 <q-btn
+                  :disable="!canEdit"
                   outline
                   color="primary"
                   icon="restart_alt"
                   label="重設範本"
                   @click="resetSeed"
                 /><q-btn
+                  :disable="!canEdit"
                   color="primary"
                   icon="add"
                   label="新增軟體"
@@ -347,6 +362,7 @@
               確認後再套用到正式電腦。
             </q-banner>
             <q-table
+              :loading="!loaded"
               flat
               bordered
               :rows="software"
@@ -381,12 +397,14 @@
               <template #body-cell-actions="props"
                 ><q-td :props="props" class="q-gutter-xs"
                   ><q-btn
+                    :disable="!canEdit"
                     flat
                     round
                     dense
                     color="primary"
                     icon="edit"
                     @click="openSoftwareDialog(props.row)" /><q-btn
+                    :disable="!canEdit"
                     flat
                     round
                     dense
@@ -395,6 +413,41 @@
                     @click="confirmDelete('software', props.row)" /></q-td
               ></template>
             </q-table>
+          </q-tab-panel>
+          <q-tab-panel name="settings" class="q-pa-md">
+            <div class="row items-center q-mb-md">
+              <div class="col text-subtitle1 text-weight-bold">
+                共用設定選項
+              </div>
+              <q-btn
+                color="primary"
+                icon="edit"
+                label="編輯選項"
+                :disable="!canEdit"
+                @click="openOptionsDialog"
+              />
+            </div>
+            <div class="text-body2 text-grey-7 q-mb-md">
+              作業系統、軟體分類與建議狀態由 Firebase
+              載入。修改後會同步到各表單。
+            </div>
+            <div
+              v-for="editor in optionEditors"
+              :key="editor.key"
+              class="q-mb-lg"
+            >
+              <div class="text-subtitle2 q-mb-sm">{{ editor.label }}</div>
+              <q-chip
+                v-for="option in data.options[editor.key]"
+                :key="option"
+                color="blue-1"
+                text-color="primary"
+                >{{ option }}</q-chip
+              >
+              <span v-if="!data.options[editor.key].length" class="text-grey-7"
+                >尚未設定</span
+              >
+            </div>
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
@@ -406,14 +459,22 @@
           pcForm.id ? "編輯 PC" : "新增 PC"
         }}</q-card-section>
         <q-card-section class="q-gutter-md">
-          <q-input v-model="pcForm.name" outlined dense label="電腦名稱 *" />
           <q-input
+            :disable="saving"
+            v-model="pcForm.name"
+            outlined
+            dense
+            label="電腦名稱 *"
+          />
+          <q-input
+            :disable="saving"
             v-model="pcForm.assetTag"
             outlined
             dense
             label="資產編號 *"
           />
           <q-select
+            :disable="saving"
             v-model="pcForm.roleId"
             :options="roleOptions"
             emit-value
@@ -423,6 +484,7 @@
             label="工作職位 *"
           />
           <q-select
+            :disable="saving"
             v-model="pcForm.os"
             :options="osOptions"
             outlined
@@ -430,21 +492,31 @@
             label="作業系統"
           />
           <q-input
+            :disable="saving"
             v-model="pcForm.owner"
             outlined
             dense
             label="使用者 / 保管人"
           />
           <q-input
+            :disable="saving"
             v-model="pcForm.location"
             outlined
             dense
             label="部門 / 位置"
           />
-          <q-input v-model="pcForm.notes" outlined dense label="備註" />
+          <q-input
+            :disable="saving"
+            v-model="pcForm.notes"
+            outlined
+            dense
+            label="備註"
+          />
         </q-card-section>
         <q-card-actions align="right"
-          ><q-btn flat label="取消" v-close-popup /><q-btn
+          ><q-btn :disable="saving" flat label="取消" v-close-popup /><q-btn
+            :disable="!canEdit"
+            :loading="saving"
             color="primary"
             label="儲存"
             @click="savePc"
@@ -458,14 +530,22 @@
           roleForm.id ? "編輯職位" : "新增職位"
         }}</q-card-section>
         <q-card-section class="q-gutter-md">
-          <q-input v-model="roleForm.name" outlined dense label="職位名稱 *" />
           <q-input
+            :disable="saving"
+            v-model="roleForm.name"
+            outlined
+            dense
+            label="職位名稱 *"
+          />
+          <q-input
+            :disable="saving"
             v-model="roleForm.description"
             outlined
             dense
             label="職位說明"
           />
           <q-select
+            :disable="saving"
             v-model="roleForm.softwareIds"
             :options="softwareOptions"
             emit-value
@@ -477,7 +557,9 @@
           />
         </q-card-section>
         <q-card-actions align="right"
-          ><q-btn flat label="取消" v-close-popup /><q-btn
+          ><q-btn :disable="saving" flat label="取消" v-close-popup /><q-btn
+            :disable="!canEdit"
+            :loading="saving"
             color="primary"
             label="儲存"
             @click="saveRole"
@@ -492,18 +574,21 @@
         }}</q-card-section>
         <q-card-section class="q-gutter-md">
           <q-input
+            :disable="saving"
             v-model="softwareForm.name"
             outlined
             dense
             label="軟體名稱 *"
           />
           <q-input
+            :disable="saving"
             v-model="softwareForm.vendor"
             outlined
             dense
             label="供應商"
           />
           <q-select
+            :disable="saving"
             v-model="softwareForm.category"
             :options="categoryChoices"
             use-input
@@ -513,12 +598,14 @@
             label="分類"
           />
           <q-input
+            :disable="saving"
             v-model="softwareForm.purpose"
             outlined
             dense
             label="用途 / 備註"
           />
           <q-select
+            :disable="saving"
             v-model="softwareForm.priority"
             :options="priorityOptions"
             outlined
@@ -526,6 +613,7 @@
             label="建議狀態"
           />
           <q-select
+            :disable="saving"
             v-model="softwareForm.roleIds"
             :options="roleOptions"
             emit-value
@@ -536,6 +624,7 @@
             label="適用職位（可複選）"
           />
           <q-input
+            :disable="saving"
             v-model="softwareForm.url"
             outlined
             dense
@@ -543,7 +632,9 @@
           />
         </q-card-section>
         <q-card-actions align="right"
-          ><q-btn flat label="取消" v-close-popup /><q-btn
+          ><q-btn :disable="saving" flat label="取消" v-close-popup /><q-btn
+            :disable="!canEdit"
+            :loading="saving"
             color="primary"
             label="儲存"
             @click="saveSoftware"
@@ -551,7 +642,42 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="deleteDialog">
+    <q-dialog v-model="optionsDialog" persistent>
+      <q-card class="dialog-card">
+        <q-card-section class="text-h6">編輯設定選項</q-card-section>
+        <q-card-section class="q-gutter-md">
+          <div class="text-caption text-grey-7">
+            輸入文字後按 Enter
+            新增，點選籤上的叉號刪除。使用中的選項須先調整相關資料才能刪除。
+          </div>
+          <q-select
+            v-for="editor in optionEditors"
+            :key="editor.key"
+            :disable="saving"
+            v-model="optionsForm[editor.key]"
+            :label="editor.label"
+            multiple
+            use-chips
+            use-input
+            hide-dropdown-icon
+            new-value-mode="add-unique"
+            outlined
+          />
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn :disable="saving" flat label="取消" v-close-popup />
+          <q-btn
+            color="primary"
+            label="儲存"
+            :loading="saving"
+            :disable="!canEdit"
+            @click="saveOptions"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="deleteDialog" persistent>
       <q-card>
         <q-card-section class="text-h6">確認刪除</q-card-section>
         <q-card-section
@@ -560,7 +686,9 @@
           }}」嗎？此操作無法復原。</q-card-section
         >
         <q-card-actions align="right"
-          ><q-btn flat label="取消" v-close-popup /><q-btn
+          ><q-btn :disable="saving" flat label="取消" v-close-popup /><q-btn
+            :disable="!canEdit"
+            :loading="saving"
             color="negative"
             label="刪除"
             @click="doDelete"
@@ -571,334 +699,61 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  ref,
-  watch,
-  onMounted,
-  onBeforeUnmount,
-  nextTick,
-} from "vue";
+import { computed, ref, watch } from "vue";
 import { useQuasar } from "quasar";
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref as dbRef, onValue, set } from "firebase/database";
+import columns from "../data/pc-software.columns.json";
+import { cloneJson, freshSeed, normalizeData } from "../models/pcSoftware.js";
+import { usePcSoftware } from "../composables/usePcSoftware.js";
 
 const $q = useQuasar();
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDR_3lgRnfmSIPxX427zqwV0zM6wvlZpTk",
-  authDomain: "software-ffea6.firebaseapp.com",
-  databaseURL: "https://software-ffea6-default-rtdb.asia-southeast1.firebasedatabase.app/",
-  projectId: "software-ffea6",
-  storageBucket: "software-ffea6.firebasestorage.app",
-  messagingSenderId: "265085325193",
-  appId: "1:265085325193:web:bfb6ba230034de0e8e5b58",
-};
-
-const firebaseApp = initializeApp(firebaseConfig);
-const database = getDatabase(firebaseApp);
-const DATA_PATH = "pc-software-config";
-const dataRef = dbRef(database, DATA_PATH);
-const firebaseReady = ref(false);
-const firebaseStatus = ref("正在連線 Firebase...");
-let unsubscribeRealtime = null;
-let applyingRemoteData = false;
-let saveTimer = null;
-const uid = (prefix) =>
-  `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-
-const seedSoftware = [
-  [
-    "chrome G1 / job2021 / 2025",
-    "瀏覽器",
-    "Chrome 不同版本或設定群組；請確認公司標準版本",
-    "必裝",
-    "一般",
-  ],
-  ["VSC (Visual Studio Code)", "開發", "程式碼編輯器", "必裝", "工程師"],
-  ["GitHub Desktop", "開發", "Git 圖形化版本控制工具", "建議", "工程師"],
-  [
-    "Synology Assistant",
-    "網路 / NAS",
-    "尋找及管理 Synology NAS",
-    "選配",
-    "一般",
-  ],
-  ["Eagle", "美術 / 素材", "圖片與設計素材管理", "建議", "設計"],
-  ["Discord", "通訊", "團隊通訊；依公司政策決定", "選配", "一般"],
-  ["PicPick", "美術 / 照片工具", "截圖、取色與影像註記", "建議", "設計"],
-  ["LibreOffice 7.5", "文書", "文書、試算表、簡報", "建議", "一般"],
-  ["Notion", "協作 / 筆記", "文件、知識庫與專案管理", "選配", "一般"],
-  ["LINE", "通訊", "即時通訊；依公司政策決定", "選配", "一般"],
-  ["PotPlayer 64 bit", "影音", "影音播放", "選配", "一般"],
-  ["Codex", "開發 / AI", "AI 輔助程式開發工具", "選配", "工程師"],
-  [
-    "美術照片工具",
-    "美術 / 照片工具",
-    "請填入實際使用的軟體名稱",
-    "選配",
-    "設計",
-  ],
-  ["Video soft", "影音 / 剪輯", "請確認實際剪輯軟體與授權", "選配", "影音"],
-  ["green", "待確認", "原始清單名稱為 green，待確認用途", "待確認", "一般"],
-  ["2 3D CAD 工具", "3D / CAD", "請填入實際 3D CAD 工具名稱", "建議", "CAD"],
-  [
-    "3 大主題 (LINK)",
-    "內部連結",
-    "請補上三大主題的內部文件或網址",
-    "選配",
-    "一般",
-  ],
-  ["Coding", "開發", "泛指開發工具，請確認具體軟體", "待確認", "工程師"],
-  [
-    "DB Browser (SQLite)",
-    "資料庫",
-    "SQLite 資料庫檢視與編輯",
-    "建議",
-    "工程師",
-  ],
-  [
-    "Anaconda Navigator (anaconda3)",
-    "資料分析",
-    "Python / Conda 環境管理",
-    "選配",
-    "工程師",
-  ],
-  [
-    "GitKraken (2)",
-    "開發",
-    "Git 圖形化工具；「2」保留原始備註",
-    "選配",
-    "工程師",
-  ],
-  ["Dropbox", "雲端儲存", "雲端檔案同步；確認公司政策", "選配", "一般"],
-  ["MS OneDrive", "雲端儲存", "Microsoft 雲端檔案同步", "選配", "一般"],
-  ["Bloons TD 6", "遊戲", "非工作必要軟體", "不建議", "一般"],
-  ["Steam", "遊戲平台", "非工作必要軟體", "不建議", "一般"],
-  [
-    "Godot v4.3 stable (捷徑)",
-    "遊戲開發",
-    "Godot 遊戲引擎；原清單為 exe 捷徑",
-    "選配",
-    "工程師",
-  ],
-  ["Ansys 15", "工程 / 模擬", "工程分析與模擬；確認版本與授權", "選配", "CAD"],
-  ["Autodesk 360", "雲端 / CAD", "原始備註：必不要", "不建議", "CAD"],
-  [
-    "AutoCAD 2014",
-    "CAD",
-    "2D / 3D CAD；舊版本需確認相容性與授權",
-    "選配",
-    "CAD",
-  ],
-  ["Blender", "3D / 美術", "3D 建模、動畫與渲染", "建議", "設計"],
-  [
-    "Figma",
-    "設計 / 協作",
-    "原始備註：放棄 after ai；待確認是否停用",
-    "不建議",
-    "設計",
-  ],
-  ["FreeCAD", "CAD", "開源 3D CAD 建模工具", "選配", "CAD"],
-  [
-    "HP 印表機工具",
-    "硬體 / 驅動",
-    "依實際 HP 印表機型號安裝驅動或管理工具",
-    "選配",
-    "一般",
-  ],
-  [
-    "Office 365 / Microsoft 365",
-    "文書",
-    "原始清單帶問號；請確認公司授權",
-    "待確認",
-    "一般",
-  ],
-  [
-    "Office 2003 / 2010",
-    "文書",
-    "原始清單帶問號；舊版本有安全與相容性風險",
-    "不建議",
-    "一般",
-  ],
-  ["Creo 6", "CAD", "3D CAD / PLM；確認授權與版本", "選配", "CAD"],
-  ["SolidWorks 2019", "CAD", "3D CAD；確認授權與版本", "選配", "CAD"],
-  [
-    "剪映專業版",
-    "影音 / 剪輯",
-    "影片剪輯；確認公司使用政策與授權",
-    "選配",
-    "影音",
-  ],
-].map(([name, category, purpose, priority, roleGroup]) => ({
-  id: uid("sw"),
-  name,
-  category,
-  purpose,
-  priority,
-  vendor: "",
-  url: "",
-  roleGroup,
-  roleIds: [],
-  notes: "",
-}));
-
-const defaultRoles = [
-  {
-    id: "role-general",
-    name: "一般行政 / 文書",
-    description: "日常辦公、郵件、文件與雲端檔案",
-    softwareIds: [],
-  },
-  {
-    id: "role-design",
-    name: "美術 / 設計",
-    description: "素材管理、影像處理、設計與 3D",
-    softwareIds: [],
-  },
-  {
-    id: "role-dev",
-    name: "工程師 / Coding",
-    description: "程式開發、版本控制與資料庫",
-    softwareIds: [],
-  },
-  {
-    id: "role-cad",
-    name: "3D CAD / 工程",
-    description: "CAD、建模與工程模擬",
-    softwareIds: [],
-  },
-  {
-    id: "role-video",
-    name: "影音剪輯",
-    description: "影片剪輯、播放與影音製作",
-    softwareIds: [],
-  },
-];
-const defaultPcs = [
-  {
-    id: "pc-001",
-    name: "OFFICE-PC-01",
-    assetTag: "PC-001",
-    roleId: "role-general",
-    os: "Windows 11",
-    owner: "",
-    location: "行政部",
-    notes: "",
-  },
-  {
-    id: "pc-002",
-    name: "DESIGN-PC-01",
-    assetTag: "PC-002",
-    roleId: "role-design",
-    os: "Windows 11",
-    owner: "",
-    location: "設計部",
-    notes: "",
-  },
-  {
-    id: "pc-003",
-    name: "DEV-PC-01",
-    assetTag: "PC-003",
-    roleId: "role-dev",
-    os: "Windows 11",
-    owner: "",
-    location: "資訊部",
-    notes: "",
-  },
-  {
-    id: "pc-004",
-    name: "CAD-PC-01",
-    assetTag: "PC-004",
-    roleId: "role-cad",
-    os: "Windows 10",
-    owner: "",
-    location: "工程部",
-    notes: "",
-  },
-];
-const categoryChoices = [
-  "瀏覽器",
-  "開發",
-  "網路 / NAS",
-  "美術 / 素材",
-  "美術 / 照片工具",
-  "通訊",
-  "文書",
-  "影音",
-  "影音 / 剪輯",
-  "開發 / AI",
-  "3D / CAD",
-  "內部連結",
-  "資料庫",
-  "資料分析",
-  "雲端儲存",
-  "遊戲",
-  "遊戲開發",
-  "工程 / 模擬",
-  "雲端 / CAD",
-  "設計 / 協作",
-  "CAD",
-  "硬體 / 驅動",
-  "待確認",
-];
-const priorityOptions = ["必裝", "建議", "選配", "待確認", "不建議"];
-const osOptions = [
-  "Windows 11",
-  "Windows 10",
-  "Windows Server",
-  "macOS",
-  "Linux",
-];
-function freshSeed() {
-  const roles = structuredClone(defaultRoles);
-  const software = structuredClone(seedSoftware);
-  const roleLookup = {
-    一般: "role-general",
-    設計: "role-design",
-    工程師: "role-dev",
-    CAD: "role-cad",
-    影音: "role-video",
-  };
-  software.forEach((s) => {
-    const rid = roleLookup[s.roleGroup] || "role-general";
-    s.roleIds = [rid];
-    const role = roles.find((r) => r.id === rid);
-    if (role && s.priority !== "不建議" && s.priority !== "待確認")
-      role.softwareIds.push(s.id);
-  });
-  return {
-    pcs: structuredClone(defaultPcs),
-    roles,
-    software,
-    installedByPc: {},
-  };
-}
-// 先載入範本；Firebase 連線後會以雲端資料覆蓋。
-const initial = freshSeed();
-const pcs = ref(initial.pcs || []);
-const roles = ref(initial.roles || []);
-const software = ref(initial.software || []);
-const installedByPc = ref(initial.installedByPc || {});
+const {
+  data,
+  ready: firebaseReady,
+  status: firebaseStatus,
+  saving,
+  canEdit,
+  loaded,
+  execute,
+  createId,
+} = usePcSoftware();
+const pcs = computed(() => data.value.pcs);
+const roles = computed(() => data.value.roles);
+const software = computed(() => data.value.software);
+const installedByPc = computed(() => data.value.installedByPc);
+const osOptions = computed(() => data.value.options.osOptions);
+const categoryChoices = computed(() => data.value.options.categoryChoices);
+const priorityOptions = computed(() => data.value.options.priorityOptions);
+const { recommendColumns, pcColumns, roleColumns, softwareColumns } = columns;
 const tab = ref("recommend");
-const selectedPcId = ref(pcs.value[0]?.id || null);
+const selectedPcId = ref(null);
 const categoryFilter = ref(null);
 const search = ref("");
 const pcSearch = ref("");
 const softwareSearch = ref("");
 const jsonInput = ref(null);
-const pcDialog = ref(false),
-  roleDialog = ref(false),
-  softwareDialog = ref(false),
-  deleteDialog = ref(false);
-const deleteTarget = ref(null),
-  deleteType = ref("");
+const pcDialog = ref(false);
+const roleDialog = ref(false);
+const softwareDialog = ref(false);
+const deleteDialog = ref(false);
+const optionsDialog = ref(false);
+const deleteTarget = ref(null);
+const deleteType = ref("");
+const optionEditors = [
+  { key: "osOptions", label: "作業系統" },
+  { key: "categoryChoices", label: "軟體分類" },
+  { key: "priorityOptions", label: "建議狀態（排列順序即為建議排序）" },
+];
+const optionsForm = ref({
+  osOptions: [],
+  categoryChoices: [],
+  priorityOptions: [],
+});
 const emptyPc = () => ({
   id: "",
   name: "",
   assetTag: "",
   roleId: roles.value[0]?.id || "",
-  os: "Windows 11",
+  os: osOptions.value[0] || "",
   owner: "",
   location: "",
   notes: "",
@@ -912,19 +767,27 @@ const emptyRole = () => ({
 const emptySoftware = () => ({
   id: "",
   name: "",
-  category: "待確認",
+  category: categoryChoices.value.includes("待確認")
+    ? "待確認"
+    : categoryChoices.value[0] || "",
   purpose: "",
-  priority: "選配",
+  priority: priorityOptions.value.includes("選配")
+    ? "選配"
+    : priorityOptions.value[0] || "",
   vendor: "",
   url: "",
   roleIds: [],
   roleGroup: "",
   notes: "",
 });
-const pcForm = ref(emptyPc()),
-  roleForm = ref(emptyRole()),
-  softwareForm = ref(emptySoftware());
+const pcForm = ref(emptyPc());
+const roleForm = ref(emptyRole());
+const softwareForm = ref(emptySoftware());
 
+watch(pcs, (rows) => {
+  if (!rows.some((row) => row.id === selectedPcId.value))
+    selectedPcId.value = rows[0]?.id || null;
+});
 const stats = computed(() => [
   {
     label: "管理中的 PC",
@@ -958,403 +821,174 @@ const softwareOptions = computed(() =>
   software.value.map((s) => ({ label: s.name, value: s.id }))
 );
 const categoryOptions = computed(() =>
-  [...new Set(software.value.map((s) => s.category).filter(Boolean))].sort()
+  [...new Set(software.value.map((s) => s.category))].sort()
 );
 const selectedPc = computed(() =>
   pcs.value.find((p) => p.id === selectedPcId.value)
 );
-const recommendColumns = [
-  { name: "name", label: "軟體", field: "name", align: "left", sortable: true },
-  {
-    name: "category",
-    label: "分類",
-    field: "category",
-    align: "left",
-    sortable: true,
-  },
-  { name: "purpose", label: "用途 / 備註", field: "purpose", align: "left" },
-  { name: "priority", label: "建議狀態", field: "priority", align: "center" },
-  { name: "status", label: "安裝狀態", field: "installed", align: "center" },
-  { name: "actions", label: "操作", field: "id", align: "center" },
-];
-const pcColumns = [
-  {
-    name: "name",
-    label: "電腦名稱",
-    field: "name",
-    align: "left",
-    sortable: true,
-  },
-  { name: "assetTag", label: "資產編號", field: "assetTag", align: "left" },
-  { name: "roleId", label: "工作職位", field: "roleId", align: "left" },
-  { name: "os", label: "作業系統", field: "os", align: "left" },
-  { name: "owner", label: "使用者", field: "owner", align: "left" },
-  { name: "location", label: "部門 / 位置", field: "location", align: "left" },
-  { name: "actions", label: "操作", field: "id", align: "center" },
-];
-const roleColumns = [
-  {
-    name: "name",
-    label: "職位名稱",
-    field: "name",
-    align: "left",
-    sortable: true,
-  },
-  {
-    name: "description",
-    label: "職位說明",
-    field: "description",
-    align: "left",
-  },
-  {
-    name: "softwareIds",
-    label: "預設軟體",
-    field: "softwareIds",
-    align: "center",
-  },
-  { name: "actions", label: "操作", field: "id", align: "center" },
-];
-const softwareColumns = [
-  {
-    name: "name",
-    label: "軟體名稱",
-    field: "name",
-    align: "left",
-    sortable: true,
-  },
-  { name: "category", label: "分類", field: "category", align: "left" },
-  { name: "purpose", label: "用途 / 備註", field: "purpose", align: "left" },
-  { name: "priority", label: "建議狀態", field: "priority", align: "center" },
-  { name: "actions", label: "操作", field: "id", align: "center" },
-];
 const recommendedSoftware = computed(() => {
   if (!selectedPc.value) return [];
   const role = roles.value.find((r) => r.id === selectedPc.value.roleId);
-  const ids = new Set([
-    ...(role?.softwareIds || []),
-    ...software.value
-      .filter((s) => (s.roleIds || []).includes(selectedPc.value.roleId))
-      .map((s) => s.id),
-  ]);
+  const ids = new Set(role?.softwareIds || []);
   const installed = new Set(installedByPc.value[selectedPc.value.id] || []);
-  const q = search.value.trim().toLowerCase();
+  const query = (search.value || "").trim().toLowerCase();
   return software.value
     .filter((s) => ids.has(s.id))
     .filter((s) => !categoryFilter.value || s.category === categoryFilter.value)
     .filter(
       (s) =>
-        !q ||
+        !query ||
         [s.name, s.category, s.purpose, s.vendor].some((v) =>
-          String(v || "")
-            .toLowerCase()
-            .includes(q)
+          v.toLowerCase().includes(query)
         )
     )
     .map((s) => ({ ...s, installed: installed.has(s.id) }))
     .sort(
       (a, b) =>
-        priorityOptions.indexOf(a.priority) -
-        priorityOptions.indexOf(b.priority)
+        priorityOptions.value.indexOf(a.priority) -
+        priorityOptions.value.indexOf(b.priority)
     );
 });
 function roleName(id) {
   return roles.value.find((r) => r.id === id)?.name || "未指定職位";
 }
-function priorityColor(p) {
-  return p === "必裝"
-    ? "negative"
-    : p === "建議"
-    ? "primary"
-    : p === "不建議"
-    ? "grey-4"
-    : p === "待確認"
-    ? "orange"
-    : "grey-5";
-}
-function currentData() {
-  return {
-    version: 1,
-    pcs: pcs.value,
-    roles: roles.value,
-    software: software.value,
-    installedByPc: installedByPc.value,
-  };
-}
-
-function applyRemoteData(data) {
-  applyingRemoteData = true;
-  pcs.value = Array.isArray(data?.pcs) ? data.pcs : [];
-  roles.value = Array.isArray(data?.roles) ? data.roles : [];
-  software.value = Array.isArray(data?.software) ? data.software : [];
-  installedByPc.value =
-    data?.installedByPc && typeof data.installedByPc === "object"
-      ? data.installedByPc
-      : {};
-  if (!pcs.value.some((p) => p.id === selectedPcId.value)) {
-    selectedPcId.value = pcs.value[0]?.id || null;
-  }
-  nextTick(() => {
-    applyingRemoteData = false;
-  });
-}
-
-async function saveToFirebase() {
-  if (!firebaseReady.value || applyingRemoteData) return;
-  try {
-    await set(dataRef, currentData());
-    firebaseStatus.value = "Firebase 已同步";
-  } catch (error) {
-    console.error("Firebase 寫入失敗：", error);
-    firebaseStatus.value = "Firebase 儲存失敗";
-    $q.notify({
-      type: "negative",
-      message: "Firebase 儲存失敗，請檢查網路、資料庫規則與設定",
-    });
-  }
-}
-
-onMounted(() => {
-  unsubscribeRealtime = onValue(
-    dataRef,
-    async (snapshot) => {
-      const data = snapshot.val();
-      if (
-        data &&
-        Array.isArray(data.pcs) &&
-        Array.isArray(data.roles) &&
-        Array.isArray(data.software)
-      ) {
-        applyRemoteData(data);
-        firebaseReady.value = true;
-        firebaseStatus.value = "Firebase 已連線";
-      } else if (!snapshot.exists()) {
-        try {
-          await set(dataRef, currentData());
-          firebaseReady.value = true;
-          firebaseStatus.value = "已建立 Firebase 初始資料";
-        } catch (error) {
-          console.error("Firebase 初始化寫入失敗：", error);
-          firebaseStatus.value = "Firebase 初始化失敗";
-          $q.notify({
-            type: "negative",
-            message: "無法初始化 Firebase，請檢查設定與資料庫規則",
-          });
-        }
-      } else {
-        firebaseStatus.value = "Firebase 資料格式不正確";
-      }
-    },
-    (error) => {
-      console.error("Firebase 讀取失敗：", error);
-      firebaseStatus.value = "Firebase 讀取失敗";
-      $q.notify({
-        type: "negative",
-        message: "Firebase 讀取失敗，請檢查設定與資料庫規則",
-      });
-    }
+function priorityColor(priority) {
+  return (
+    { 必裝: "negative", 建議: "primary", 不建議: "grey-4", 待確認: "orange" }[
+      priority
+    ] || "grey-5"
   );
-});
-
-onBeforeUnmount(() => {
-  if (typeof unsubscribeRealtime === "function") unsubscribeRealtime();
-  if (saveTimer) clearTimeout(saveTimer);
-});
-
-watch(
-  [pcs, roles, software, installedByPc],
-  () => {
-    if (!firebaseReady.value || applyingRemoteData) return;
-    if (saveTimer) clearTimeout(saveTimer);
-    saveTimer = setTimeout(() => {
-      saveToFirebase();
-    }, 350);
-  },
-  { deep: true }
-);
+}
+async function persist(command, message) {
+  try {
+    await execute(command);
+    if (message) $q.notify({ type: "positive", message });
+    return true;
+  } catch (error) {
+    $q.notify({ type: "negative", message: `儲存失敗：${error.message}` });
+    return false;
+  }
+}
 function openPcDialog(row) {
-  pcForm.value = row ? structuredClone(row) : emptyPc();
+  pcForm.value = row ? cloneJson(row) : emptyPc();
   pcDialog.value = true;
 }
-function savePc() {
-  if (
-    !pcForm.value.name.trim() ||
-    !pcForm.value.assetTag.trim() ||
-    !pcForm.value.roleId
-  )
-    return $q.notify({
-      type: "warning",
-      message: "請填寫電腦名稱、資產編號與工作職位",
-    });
-  if (
-    pcs.value.some(
-      (p) => p.assetTag === pcForm.value.assetTag && p.id !== pcForm.value.id
-    )
-  )
-    return $q.notify({ type: "warning", message: "資產編號不可重複" });
-  const row = structuredClone(pcForm.value);
-  if (row.id) pcs.value = pcs.value.map((p) => (p.id === row.id ? row : p));
-  else {
-    row.id = uid("pc");
-    pcs.value.push(row);
-    selectedPcId.value = row.id;
-  }
-  pcDialog.value = false;
-  $q.notify({ type: "positive", message: "PC 已儲存" });
-}
 function openRoleDialog(row) {
-  roleForm.value = row ? structuredClone(row) : emptyRole();
+  roleForm.value = row ? cloneJson(row) : emptyRole();
   roleDialog.value = true;
 }
-function saveRole() {
-  if (!roleForm.value.name.trim())
-    return $q.notify({ type: "warning", message: "請填寫職位名稱" });
-  const row = structuredClone(roleForm.value);
-  if (row.id) roles.value = roles.value.map((r) => (r.id === row.id ? row : r));
-  else {
-    row.id = uid("role");
-    roles.value.push(row);
-  }
-  roleDialog.value = false;
-  $q.notify({ type: "positive", message: "職位已儲存" });
-}
 function openSoftwareDialog(row) {
-  softwareForm.value = row ? structuredClone(row) : emptySoftware();
+  softwareForm.value = row ? cloneJson(row) : emptySoftware();
   softwareDialog.value = true;
 }
-function saveSoftware() {
-  if (!softwareForm.value.name.trim())
-    return $q.notify({ type: "warning", message: "請填寫軟體名稱" });
-  const row = structuredClone(softwareForm.value);
-  if (row.id)
-    software.value = software.value.map((s) => (s.id === row.id ? row : s));
-  else {
-    row.id = uid("sw");
-    software.value.push(row);
+async function saveRecord(collection, form, dialog, label) {
+  const row = cloneJson(form.value);
+  const create = !row.id;
+  if (create) row.id = createId();
+  if (
+    await persist(
+      { type: "save", collection, row, create },
+      `${label}已儲存至 Firebase`
+    )
+  ) {
+    dialog.value = false;
+    if (collection === "pcs" && create) selectedPcId.value = row.id;
   }
-  softwareDialog.value = false;
-  $q.notify({ type: "positive", message: "軟體已儲存" });
 }
+const savePc = () => saveRecord("pcs", pcForm, pcDialog, "PC ");
+const saveRole = () => saveRecord("roles", roleForm, roleDialog, "職位");
+const saveSoftware = () =>
+  saveRecord("software", softwareForm, softwareDialog, "軟體");
 function confirmDelete(type, row) {
   deleteType.value = type;
-  deleteTarget.value = structuredClone(row);
+  deleteTarget.value = cloneJson(row);
   deleteDialog.value = true;
 }
-function doDelete() {
-  const row = deleteTarget.value;
-  if (!row) return;
-  if (deleteType.value === "pc") {
-    pcs.value = pcs.value.filter((p) => p.id !== row.id);
-    delete installedByPc.value[row.id];
-    if (selectedPcId.value === row.id)
-      selectedPcId.value = pcs.value[0]?.id || null;
-  } else if (deleteType.value === "role") {
-    if (pcs.value.some((p) => p.roleId === row.id))
-      return $q.notify({
-        type: "warning",
-        message: "仍有 PC 使用此職位，請先調整 PC 職位",
-      });
-    roles.value = roles.value.filter((r) => r.id !== row.id);
-    software.value = software.value.map((s) => ({
-      ...s,
-      roleIds: (s.roleIds || []).filter((id) => id !== row.id),
-    }));
-  } else {
-    software.value = software.value.filter((s) => s.id !== row.id);
-    roles.value = roles.value.map((r) => ({
-      ...r,
-      softwareIds: (r.softwareIds || []).filter((id) => id !== row.id),
-    }));
-    Object.keys(installedByPc.value).forEach((id) => {
-      installedByPc.value[id] = (installedByPc.value[id] || []).filter(
-        (swId) => swId !== row.id
-      );
-    });
-  }
-  deleteDialog.value = false;
-  $q.notify({ type: "positive", message: "資料已刪除" });
+async function doDelete() {
+  if (!deleteTarget.value) return;
+  const collection = { pc: "pcs", role: "roles", software: "software" }[
+    deleteType.value
+  ];
+  if (
+    await persist(
+      { type: "delete", collection, id: deleteTarget.value.id },
+      "資料已從 Firebase 刪除"
+    )
+  )
+    deleteDialog.value = false;
 }
-function toggleInstalled(swId) {
+async function toggleInstalled(softwareId) {
   const pcId = selectedPc.value?.id;
   if (!pcId) return;
-  const ids = new Set(installedByPc.value[pcId] || []);
-  ids.has(swId) ? ids.delete(swId) : ids.add(swId);
-  installedByPc.value[pcId] = [...ids];
+  await persist({
+    type: "installed",
+    pcId,
+    softwareId,
+    installed: !(installedByPc.value[pcId] || []).includes(softwareId),
+  });
+}
+function openOptionsDialog() {
+  optionsForm.value = cloneJson(data.value.options);
+  optionsDialog.value = true;
+}
+async function saveOptions() {
+  if (
+    await persist(
+      { type: "options", options: cloneJson(optionsForm.value) },
+      "設定已儲存至 Firebase"
+    )
+  )
+    optionsDialog.value = false;
 }
 function exportJson() {
   const blob = new Blob(
     [
       JSON.stringify(
-        {
-          version: 1,
-          exportedAt: new Date().toISOString(),
-          pcs: pcs.value,
-          roles: roles.value,
-          software: software.value,
-          installedByPc: installedByPc.value,
-        },
+        { ...cloneJson(data.value), exportedAt: new Date().toISOString() },
         null,
         2
       ),
     ],
     { type: "application/json;charset=utf-8" }
   );
-  const url = URL.createObjectURL(blob),
-    a = document.createElement("a");
-  a.href = url;
-  a.download = "pc-software-config.json";
-  a.click();
-  URL.revokeObjectURL(url);
-  $q.notify({ type: "positive", message: "JSON 已匯出" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = "pc-software-config.json";
+  anchor.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  $q.notify({ type: "positive", message: "JSON 已匯出（含設定選項）" });
 }
-function importJson(event) {
+async function importJson(event) {
   const file = event.target.files?.[0];
   if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    try {
-      const data = JSON.parse(String(reader.result));
-      if (
-        !Array.isArray(data.pcs) ||
-        !Array.isArray(data.roles) ||
-        !Array.isArray(data.software)
-      )
-        throw new Error("JSON 必須包含 pcs、roles、software 陣列");
-      $q.dialog({
-        title: "匯入 JSON",
-        message: "匯入會覆蓋目前資料，建議先匯出備份。確定繼續？",
-        cancel: true,
-        persistent: true,
-      }).onOk(() => {
-        pcs.value = data.pcs;
-        roles.value = data.roles;
-        software.value = data.software;
-        installedByPc.value = data.installedByPc || {};
-        selectedPcId.value = pcs.value[0]?.id || null;
-        $q.notify({ type: "positive", message: "JSON 匯入成功" });
-      });
-    } catch (e) {
-      $q.notify({ type: "negative", message: `匯入失敗：${e.message}` });
-    }
+  try {
+    const imported = normalizeData(JSON.parse(await file.text()));
+    $q.dialog({
+      title: "匯入 JSON",
+      message:
+        "匯入會覆蓋 Firebase 的 PC、職位、軟體、安裝紀錄與設定選項。建議先匯出備份。確定繼續？",
+      cancel: true,
+      persistent: true,
+    }).onOk(() =>
+      persist({ type: "replace", data: imported }, "JSON 已匯入 Firebase")
+    );
+  } catch (error) {
+    $q.notify({ type: "negative", message: `匯入失敗：${error.message}` });
+  } finally {
     event.target.value = "";
-  };
-  reader.readAsText(file);
+  }
 }
 function resetSeed() {
   $q.dialog({
-    title: "重設軟體範本",
+    title: "重設範本",
     message:
-      "這會用預設範例覆蓋目前 PC、職位、軟體與安裝狀態。請先匯出備份。確定重設？",
+      "這會用 JSON 範本覆蓋 Firebase 的 PC、職位、軟體、安裝紀錄與設定選項。請先匯出備份。確定重設？",
     cancel: true,
     persistent: true,
-  }).onOk(() => {
-    const data = freshSeed();
-    pcs.value = data.pcs;
-    roles.value = data.roles;
-    software.value = data.software;
-    installedByPc.value = data.installedByPc;
-    selectedPcId.value = pcs.value[0]?.id || null;
-    $q.notify({ type: "positive", message: "範本已重設" });
-  });
+  }).onOk(() =>
+    persist({ type: "replace", data: freshSeed() }, "Firebase 範本已重設")
+  );
 }
 function openUrl(url) {
   try {
