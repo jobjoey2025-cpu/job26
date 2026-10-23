@@ -284,6 +284,7 @@ import { ref as dbRef, onValue, get, set, remove } from "firebase/database";
 import { useQuasar } from "quasar";
 
 const $q = useQuasar();
+// joey modify ----------
 // Firebase Realtime Database 路徑：pc-software-config/software
 const FIREBASE_PATH = "pc-software-config/software";
 

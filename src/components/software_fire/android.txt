@@ -1,0 +1,12 @@
+Google Play App 管理（Firebase）		
+	編輯後 會另存 \ 初始 import 的 item 不能從 Quasar 改	
+	must 從 fireB 刪除 \ with Find	
+		跟我想的不一樣 但有 Fn
+// Firebase Realtime Database 路徑：pc-software-config/software		
+const FIREBASE_PATH = "pc-software-config/software";		
+	** 這 句 讓 import json 我不用再建 Firedb	
+		
+600 項太多了 刪不完 \ 只能 mark "*" 我有用到的		
+網路一斷 \ 工作就浪費了 \ 還好有 cellPhone 5G		
+		
+先洗澡了 \ 為了 少痛 要忍		
