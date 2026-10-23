@@ -154,9 +154,25 @@ const routes = [
       { path: 'Firedb_Building', component: () => import('components/Firedb_Building.vue'), name: 'Firedb_Building' },
       { path: 'Firedb_Building_Onlyview', component: () => import('components/Firedb_Building_Onlyview.vue'), name: 'Firedb_Building_Onlyview' },
       { path: 'GPS', component: () => import('components/GPS.vue'), name: 'GPS' },
+      // { path: 'software_nb_firedb', component: () => import('components/software_nb_firedb.vue'), name: 'software_nb_firedb' },
+
+
+
+      // ------ speed zone -------
 
       // { path: 'ED', component: () => import('components/ED.vue'), name: 'ED' },
       // { path: 'EDcellPhone', component: () => import('components/EDcellPhone.vue'), name: 'EDcellPhone' },
+
+
+      {
+        path: 'software_nb_firedb', component: () => import('components/software_nb_firedb.vue'), name: 'software_nb_firedb',
+        meta: {
+          menu: true,
+          label: 'software_nb_firedb',
+          icon: 'map',
+          group: '病痛',
+        },
+      },
 
       {
         path: 'ED', component: () => import('components/ED.vue'), name: 'ED',

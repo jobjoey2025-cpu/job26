@@ -37,3 +37,15 @@ pc-software-config
    ├─ osOptions: [...]
    ├─ categoryChoices: [...]
    └─ priorityOptions: [...]
+
+----- ----- ----- ----- ----- 
+安裝建議 如何修改 ?	
+尋找關聯的段子,	找到了 : 	
+他是先分類 軟體 \ Then
+roles \ role-dev \ softwareIds	
+安裝建議 PC 再抓 roleId :"role-dev"	
+
+跟我想的不一樣 (PC 包含 美工 程式 ...) \ 但是可以先試看看 \ 反正都有縮小 範圍	
+Then is Android 要怎麼 放進去 ?	
+也是會有很多台 android & iPad ex 美術 andr \ Bank andr ....	
+** 先試看看 \ 反正都有縮小 範圍
