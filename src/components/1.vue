@@ -286,7 +286,7 @@ import { useQuasar } from "quasar";
 const $q = useQuasar();
 // joey modify ----------
 // Firebase Realtime Database 路徑：pc-software-config/software
-const FIREBASE_PATH = "pc-software-config/software";
+const FIREBASE_PATH = "pc-software-config/iPad";
 
 const apps = ref([]);
 const loading = ref(false);
