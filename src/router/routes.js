@@ -156,6 +156,8 @@ const routes = [
       { path: 'GPS', component: () => import('components/GPS.vue'), name: 'GPS' },
       // { path: 'software_nb_firedb', component: () => import('components/software_nb_firedb.vue'), name: 'software_nb_firedb' },
 
+      { path: 'iPad', component: () => import('components/iPad.vue'), name: 'iPad' },
+      { path: 'android', component: () => import('components/android.vue'), name: 'android' },
 
 
       // ------ speed zone -------
