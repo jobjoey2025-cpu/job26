@@ -6,7 +6,6 @@ const routes = [
     // component: () => import('layouts/MainLayout.vue'),
     component: () => import('layouts/0903.vue'),
 
-
     // component: () => import('layouts/mechanism.vue'),
 
     children: [
@@ -344,7 +343,7 @@ const routes = [
         },
       },
 
-// joey
+      // joey
       {
         path: 'Firedb_recent', component: () => import('components/Firedb_recent.vue'), name: 'Firedb_recent',
         meta: {
