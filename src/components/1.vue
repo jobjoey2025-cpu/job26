@@ -288,7 +288,11 @@ async function runCommand() {
     // ---- ---- ---- ---- -------- ---- ---- ---
 
     // 唸出 Google 指令 ----------
-  } else if (command.includes("唸出指令") || command.includes("谷歌指令")) {
+  } else if (
+    command.includes("唸出指令") ||
+    command.includes("Google指令") ||
+    command.includes("谷歌指令")
+  ) {
     if (!("speechSynthesis" in window)) {
       status.value = "此瀏覽器不支援語音合成";
       return;
