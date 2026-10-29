@@ -200,6 +200,10 @@ const categories = [
     icon: "delete_forever",
   },
   {
+    name: "衣服",
+    icon: "checkroom",
+  },
+  {
     name: "3F1st",
     icon: "home",
   },
