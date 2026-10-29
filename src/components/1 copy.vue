@@ -1,276 +1,95 @@
 <template>
-  <q-page class="q-pa-md">
-    <div class="row items-center q-col-gutter-md q-mb-md">
-      <div class="col-12 col-sm">
-        <div class="text-h5 text-weight-bold">
-          Google Play App 管理（Firebase）
-        </div>
-        <div class="text-caption text-grey-7">
-          資料來源：Firebase Realtime Database / pc-software-config/software
-        </div>
-      </div>
-      <div class="col-12 col-sm-auto row q-gutter-sm">
-        <q-btn
-          color="primary"
-          icon="upload_file"
-          label="匯入 JSON"
-          @click="openImport"
-        />
-        <q-btn
-          outline
-          color="primary"
-          icon="download"
-          label="匯出 JSON"
-          :disable="!apps.length"
-          @click="exportJson"
-        />
-        <q-btn
-          outline
-          color="secondary"
-          icon="refresh"
-          label="重新讀取"
-          @click="loadApps"
-        />
-        <input
-          ref="fileInput"
-          type="file"
-          accept="application/json,.json"
-          class="hidden"
-          @change="importJson"
-        />
+  <q-page padding>
+    <div class="text-h5 q-mb-md">Quasar 語音控制</div>
+
+    <!-- 開始語音輸入 -->
+    <q-btn
+      size="48px"
+      color="primary"
+      icon="mic"
+      label="開始語音輸入"
+      @click="startVoice"
+      class="q-mb-md"
+    />
+
+    <!-- 語音辨識結果 -->
+    <!-- <q-input
+      v-model="text"
+      label="語音辨識結果"
+      type="textarea"
+      outlined
+      class="q-mb-md"
+      input-style="font-size: 28px;"
+    /> -->
+    <div>
+      <q-input
+        v-model="text"
+        type="textarea"
+        outlined
+        class="q-mb-none"
+        input-style="font-size: 28px;"
+      />
+
+      <div class="text-right text-grey-7 text-caption q-mt-xs">
+        語音辨識結果
       </div>
     </div>
+    <!-- 語音合成 -->
+    <q-btn
+      size="48px"
+      color="secondary"
+      icon="volume_up"
+      label="唸出文字🐷"
+      @click="speak"
+      class="q-mr-sm"
+    />
+    <hr />
+    <!-- 執行指令 -->
+    <q-btn
+      size="48px"
+      color="positive"
+      icon="play_arrow"
+      label="執行指令🐷"
+      @click="runCommand"
+      class="q-mr-sm"
+    />
 
-    <div class="row q-col-gutter-sm q-mb-md">
-      <div class="col-6 col-md-3">
-        <q-card flat bordered
-          ><q-card-section>
-            <div class="text-caption text-grey-7">資料筆數</div>
-            <div class="text-h5">{{ apps.length }}</div>
-          </q-card-section></q-card
-        >
-      </div>
-      <div class="col-6 col-md-3">
-        <q-card flat bordered
-          ><q-card-section>
-            <div class="text-caption text-grey-7">篩選結果</div>
-            <div class="text-h5">{{ filteredApps.length }}</div>
-          </q-card-section></q-card
-        >
-      </div>
-      <div class="col-6 col-md-3">
-        <q-card flat bordered
-          ><q-card-section>
-            <div class="text-caption text-grey-7">分類數</div>
-            <div class="text-h5">{{ categories.length }}</div>
-          </q-card-section></q-card
-        >
-      </div>
-      <div class="col-6 col-md-3">
-        <q-card flat bordered
-          ><q-card-section>
-            <div class="text-caption text-grey-7">必裝項目</div>
-            <div class="text-h5">
-              {{ apps.filter((a) => a.priority === "必裝").length }}
-            </div>
-          </q-card-section></q-card
-        >
-      </div>
+    <!-- 執行狀態 -->
+    <div class="q-mt-md text-body1">
+      <q-icon name="info" class="q-mr-sm" />
+      {{ status }}
     </div>
 
-    <q-card flat bordered class="q-mb-md">
-      <q-card-section class="row q-col-gutter-sm items-center">
-        <div class="col-12 col-md-5">
-          <q-input
-            v-model="search"
-            dense
-            outlined
-            clearable
-            debounce="200"
-            placeholder="搜尋 App、開發商、用途、備註..."
-          >
-            <template #prepend><q-icon name="search" /></template>
-          </q-input>
-        </div>
-        <div class="col-6 col-md-3">
-          <q-select
-            v-model="categoryFilter"
-            dense
-            outlined
-            clearable
-            emit-value
-            map-options
-            :options="categoryOptions"
-            label="分類"
-          />
-        </div>
-        <div class="col-6 col-md-2">
-          <q-select
-            v-model="priorityFilter"
-            dense
-            outlined
-            clearable
-            :options="priorityOptions"
-            label="安裝優先級"
-          />
-        </div>
-        <div class="col-12 col-md-2">
-          <q-btn
-            class="full-width"
-            outline
-            icon="add"
-            label="新增 App"
-            @click="newApp"
-          />
-        </div>
-      </q-card-section>
-    </q-card>
+    <br />
+    <q-btn
+      size="48px"
+      label="Alert 參考指令"
+      color="primary"
+      @click="alert = true"
+      class="q-mr-sm"
+    />
+    <hr />
 
-    <q-banner
-      v-if="!apps.length"
-      rounded
-      class="bg-blue-1 text-blue-10 q-mb-md"
-    >
-      Firebase 尚無 App 資料。請按「匯入 JSON」將 google_play_apps.json 匯入
-      Firebase。
-    </q-banner>
+    <!-- 語音合成 -->
+    <q-btn
+      size="48px"
+      color="secondary"
+      icon="volume_up"
+      label="唸出參考指令"
+      @click="speak2"
+      class="q-mr-sm"
+    />
 
-    <q-table
-      flat
-      bordered
-      :rows="filteredApps"
-      :columns="columns"
-      row-key="id"
-      :loading="loading"
-      :pagination="pagination"
-      :rows-per-page-options="[10, 20, 50, 100]"
-      no-data-label="沒有符合條件的 App"
-      class="app-table"
-    >
-      <template #body-cell-name="props">
-        <q-td :props="props">
-          <div class="text-weight-medium">
-            {{ props.row.name || "(未命名 App)" }}
-          </div>
-          <div class="text-caption text-grey-7">{{ props.row.id }}</div>
-        </q-td>
-      </template>
-      <template #body-cell-priority="props">
-        <q-td :props="props">
-          <q-badge
-            :color="priorityColor(props.row.priority)"
-            :label="props.row.priority || '未設定'"
-          />
-        </q-td>
-      </template>
-      <template #body-cell-purpose="props">
-        <q-td :props="props"
-          ><div class="purpose-cell">{{ props.row.purpose || "—" }}</div></q-td
-        >
-      </template>
-      <template #body-cell-actions="props">
-        <q-td :props="props" class="text-right">
-          <q-btn
-            flat
-            round
-            dense
-            icon="edit"
-            color="primary"
-            @click="editApp(props.row)"
-          >
-            <q-tooltip>編輯</q-tooltip>
-          </q-btn>
-          <q-btn
-            flat
-            round
-            dense
-            icon="delete"
-            color="negative"
-            @click="confirmDelete(props.row)"
-          >
-            <q-tooltip>刪除</q-tooltip>
-          </q-btn>
-        </q-td>
-      </template>
-    </q-table>
-
-    <q-dialog v-model="editorOpen" persistent>
-      <q-card style="width: 680px; max-width: 95vw">
-        <q-card-section class="row items-center">
-          <div class="text-h6">{{ isEditing ? "編輯 App" : "新增 App" }}</div>
-          <q-space /><q-btn icon="close" flat round dense v-close-popup />
+    <q-dialog v-model="alert">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Alert</div>
         </q-card-section>
-        <q-separator />
-        <q-card-section class="q-gutter-md">
-          <div class="row q-col-gutter-sm">
-            <div class="col-12 col-sm-6">
-              <q-input v-model="form.name" outlined dense label="App 名稱 *" />
-            </div>
-            <div class="col-12 col-sm-6">
-              <q-input v-model="form.vendor" outlined dense label="開發商" />
-            </div>
-            <div class="col-12 col-sm-6">
-              <q-input v-model="form.category" outlined dense label="分類" />
-            </div>
-            <div class="col-12 col-sm-6">
-              <q-select
-                v-model="form.priority"
-                outlined
-                dense
-                label="安裝優先級"
-                :options="priorityOptions"
-              />
-            </div>
-            <div class="col-12">
-              <q-input
-                v-model="form.purpose"
-                outlined
-                dense
-                type="textarea"
-                autogrow
-                label="用途"
-              />
-            </div>
-            <div class="col-12">
-              <q-input
-                v-model="form.notes"
-                outlined
-                dense
-                type="textarea"
-                autogrow
-                label="備註"
-              />
-            </div>
-            <div class="col-12">
-              <q-input v-model="form.url" outlined dense label="網址" />
-            </div>
-            <div class="col-12 col-sm-6">
-              <q-input
-                v-model="form.roleGroup"
-                outlined
-                dense
-                label="角色群組"
-              />
-            </div>
-            <div class="col-12 col-sm-6">
-              <q-input
-                v-model="roleIdsText"
-                outlined
-                dense
-                label="角色 ID（以逗號分隔）"
-              />
-            </div>
-          </div>
-        </q-card-section>
-        <q-separator />
+
+        <q-card-section class="q-pt-none"> {{ alertMessage }}</q-card-section>
+
         <q-card-actions align="right">
-          <q-btn flat label="取消" v-close-popup />
-          <q-btn
-            color="primary"
-            label="儲存到 Firebase"
-            :disable="!form.name.trim()"
-            @click="saveApp"
-          />
+          <q-btn flat label="OK" color="primary" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -278,302 +97,301 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from "vue";
-import { db } from "boot/firebase_android";
-import { ref as dbRef, onValue, get, set, remove } from "firebase/database";
-import { useQuasar } from "quasar";
+import { ref, onBeforeUnmount } from "vue";
+import { useRouter } from "vue-router";
+import { Notify } from "quasar";
 
-const $q = useQuasar();
-// joey modify ----------
-// joey modify ----------
-// Firebase Realtime Database 路徑：pc-software-config/software
-const FIREBASE_PATH = "pc-software-config/iPad";
+const text = ref("");
+const status = ref("準備就緒");
 
-const apps = ref([]);
-const loading = ref(false);
-const search = ref("");
-const categoryFilter = ref(null);
-const priorityFilter = ref(null);
-const fileInput = ref(null);
-const editorOpen = ref(false);
-const isEditing = ref(false);
-const editingId = ref(null);
-const roleIdsText = ref("role-general");
-const pagination = ref({
-  page: 1,
-  rowsPerPage: 20,
-  sortBy: "name",
-  descending: false,
-});
+const alert = ref(false);
+const alertTitle = ref("語音參考");
+// ------ joey modify
+const alertMessage = ref(`開啟谷歌，複製部落格，打開gpt，
+谷歌指令，最近排程`);
 
-const blankApp = () => ({
-  category: "一般工具",
-  id: "",
-  name: "",
-  notes: "",
-  priority: "選裝",
-  purpose: "",
-  roleGroup: "一般",
-  roleIds: ["role-general"],
-  url: "",
-  vendor: "",
-});
-const form = ref(blankApp());
-const priorityOptions = ["必裝", "選裝", "待確認", "淘汰／停用"];
-const columns = [
-  {
-    name: "name",
-    label: "App 名稱",
-    field: "name",
-    align: "left",
-    sortable: true,
-  },
-  {
-    name: "category",
-    label: "分類",
-    field: "category",
-    align: "left",
-    sortable: true,
-  },
-  {
-    name: "priority",
-    label: "優先級",
-    field: "priority",
-    align: "left",
-    sortable: true,
-  },
-  {
-    name: "vendor",
-    label: "開發商",
-    field: "vendor",
-    align: "left",
-    sortable: true,
-  },
-  { name: "purpose", label: "用途", field: "purpose", align: "left" },
-  { name: "actions", label: "操作", field: "actions", align: "right" },
-];
+const alertMessage2 = ref(`谷歌指令參考，今天天氣，明天天氣，現在幾點，
+台股指數，道瓊指數`);
 
-function normalizeApp(raw, index = 0) {
-  const item = raw && typeof raw === "object" ? raw : {};
-  return {
-    category: String(item.category || "一般工具"),
-    id: String(item.id || `sw-local-${Date.now()}-${index}`),
-    name: String(item.name || ""),
-    notes: String(item.notes || ""),
-    priority: String(item.priority || "待確認"),
-    purpose: String(item.purpose || ""),
-    roleGroup: String(item.roleGroup || "一般"),
-    roleIds: Array.isArray(item.roleIds)
-      ? item.roleIds.map(String)
-      : ["role-general"],
-    url: String(item.url || ""),
-    vendor: String(item.vendor || ""),
+const alertMessage3 = ref("衣服整理，垃圾整理，Eating on time，");
+
+let recognition = null;
+
+// 開始語音辨識
+function startVoice() {
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    status.value = "此瀏覽器不支援語音辨識";
+    return;
+  }
+
+  // 避免重複啟動辨識
+  if (recognition) {
+    recognition.abort();
+    recognition = null;
+  }
+
+  recognition = new SpeechRecognition();
+  recognition.lang = "zh-TW";
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  recognition.onstart = () => {
+    status.value = "正在聆聽...";
   };
+
+  recognition.onresult = (event) => {
+    const result = event.results?.[0]?.[0]?.transcript;
+
+    if (result) {
+      text.value = result;
+      status.value = "辨識完成";
+    } else {
+      status.value = "沒有辨識到語音內容";
+    }
+  };
+
+  // 修正：使用反引號包住模板字串
+  recognition.onerror = (event) => {
+    status.value = `語音錯誤：${event.error}`;
+  };
+
+  recognition.onend = () => {
+    if (status.value === "正在聆聽...") {
+      status.value = "聆聽結束";
+    }
+  };
+
+  try {
+    recognition.start();
+  } catch (error) {
+    status.value = `無法啟動語音辨識：${error.message}`;
+  }
 }
 
-let unsubscribeApps = null;
-function loadApps() {
-  loading.value = true;
-  if (unsubscribeApps) unsubscribeApps();
-  unsubscribeApps = onValue(
-    dbRef(db, FIREBASE_PATH),
-    (snapshot) => {
-      const data = snapshot.val() || {};
-      apps.value = Object.entries(data)
-        .map(([key, value]) =>
-          normalizeApp({ ...(value || {}), id: value?.id || key })
-        )
-        .sort((a, b) => a.name.localeCompare(b.name, "zh-Hant"));
-      loading.value = false;
-    },
-    (error) => {
-      console.error(error);
-      loading.value = false;
-      $q.notify({
+// 將文字轉換成語音
+function speak() {
+  if (!("speechSynthesis" in window)) {
+    status.value = "此環境不支援語音合成";
+    return;
+  }
+
+  const content = text.value.trim();
+
+  if (!content) {
+    status.value = "請先輸入或辨識文字";
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(content);
+
+  utterance.lang = "zh-TW";
+
+  utterance.onstart = () => {
+    status.value = "正在唸出文字...";
+  };
+
+  utterance.onend = () => {
+    status.value = "語音播放完成";
+  };
+
+  utterance.onerror = () => {
+    status.value = "語音播放發生錯誤";
+  };
+
+  window.speechSynthesis.speak(utterance);
+}
+
+// 將文字轉換成語音
+function speak2() {
+  if (!("speechSynthesis" in window)) {
+    return;
+  }
+
+  // 讀取 Alert Dialog 的標題與內容
+  const content = `${alertTitle.value}，${alertMessage.value}`;
+
+  window.speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(content);
+  utterance.lang = "zh-TW";
+  utterance.rate = 1;
+
+  window.speechSynthesis.speak(utterance);
+}
+
+// function runCommand() {
+async function runCommand() {
+  const command = text.value.trim().toLowerCase();
+
+  if (!command) {
+    status.value = "請先輸入語音指令";
+    return;
+  }
+  // 開啟 GPT / ChatGPT   ---- ---- ---- ----
+  if (
+    command.includes("打開 gpt") ||
+    command.includes("開啟 gpt") ||
+    command.includes("打開gpt") ||
+    command.includes("開啟gpt") ||
+    command.includes("打開 chatgpt") ||
+    command.includes("開啟 chatgpt") ||
+    command.includes("開啟聊天機器人")
+  ) {
+    status.value = "正在開啟 ChatGPT...";
+    window.open("https://chatgpt.com/", "_blank");
+    status.value = "已送出開啟 ChatGPT 的要求";
+
+    // 開啟 Google    ----------
+  } else if (
+    command.includes("開啟google") ||
+    command.includes("開啟谷歌") ||
+    // command.includes("唸出Google指令") ||
+    command.includes("打開google")
+  ) {
+    status.value = "正在開啟 Google...";
+    window.open("https://www.google.com", "_blank");
+    status.value = "已送出開啟 Google 的要求";
+
+    // 複製部落格網址
+  } else if (
+    command.includes("複製部落格網址") ||
+    command.includes("複製部落格")
+  ) {
+    const blogUrl =
+      // "https://joey20090710.blogspot.com/2026/10/diary-repair-shop-future.html";
+      "https://joey20090710.blogspot.com/2026/10/voiceblg.html";
+
+    try {
+      await navigator.clipboard.writeText(blogUrl);
+
+      status.value = "部落格網址已複製！";
+
+      Notify.create({
+        type: "positive",
+        message: "部落格網址已複製！",
+        position: "top",
+      });
+    } catch (error) {
+      status.value = "複製失敗，請檢查瀏覽器權限";
+
+      Notify.create({
         type: "negative",
-        message: `讀取 Firebase 失敗：${error.message}`,
+        message: "複製失敗，請確認網站使用 HTTPS",
+        position: "top",
       });
     }
-  );
-}
 
-function openImport() {
-  fileInput.value?.click();
-}
-async function importJson(event) {
-  const file = event.target.files?.[0];
-  if (!file) return;
-  try {
-    const parsed = JSON.parse(await file.text());
-    const records = Array.isArray(parsed)
-      ? parsed
-      : Array.isArray(parsed.apps)
-      ? parsed.apps
-      : null;
-    if (!records) throw new Error("JSON 最外層必須是陣列，或包含 apps 陣列。");
-    const clean = records.map((item, index) => normalizeApp(item, index));
-    const ids = new Set();
-    for (const item of clean) {
-      if (ids.has(item.id)) throw new Error(`發現重複 ID：${item.id}`);
-      ids.add(item.id);
+    // ---- ---- ---- ---- -------- ---- ---- ---
+
+    // 唸出 Google 指令 ----------
+  } else if (
+    command.includes("唸出指令") ||
+    command.includes("Google指令") ||
+    command.includes("谷歌指令")
+  ) {
+    if (!("speechSynthesis" in window)) {
+      status.value = "此瀏覽器不支援語音合成";
+      return;
     }
-    $q.dialog({
-      title: "匯入 Firebase",
-      message: `檔案有 ${clean.length} 筆資料。合併會保留既有資料並以相同 ID 更新；取代會覆蓋 ${FIREBASE_PATH} 底下全部資料。`,
-      cancel: true,
-      persistent: true,
-      options: {
-        type: "radio",
-        model: "merge",
-        items: [
-          { label: "合併／更新（建議）", value: "merge" },
-          { label: "取代全部資料", value: "replace" },
-        ],
-      },
-      ok: { label: "確認匯入", color: "primary" },
-    }).onOk(async (value) => {
-      try {
-        const baseRef = dbRef(db, FIREBASE_PATH);
-        let payload = {};
-        if (value !== "replace") {
-          const snapshot = await get(baseRef);
-          payload = snapshot.val() || {};
-        }
-        for (const item of clean) payload[item.id] = item;
-        await set(baseRef, payload);
-        $q.notify({
-          type: "positive",
-          message: `已匯入 Firebase：${clean.length} 筆 App。`,
-        });
-      } catch (error) {
-        console.error(error);
-        $q.notify({
-          type: "negative",
-          message: `匯入 Firebase 失敗：${error.message}`,
-        });
-      }
-    });
-  } catch (error) {
-    $q.notify({ type: "negative", message: "JSON 讀取失敗：" + error.message });
-  } finally {
-    event.target.value = "";
+
+    // 要唸出的文字
+    const content = `${alertTitle.value}，${alertMessage2.value}`;
+
+    if (!content.trim()) {
+      status.value = "沒有可唸出的文字";
+      return;
+    }
+
+    // 停止先前的語音
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(content);
+    utterance.lang = "zh-TW";
+    utterance.rate = 1;
+
+    utterance.onstart = () => {
+      status.value = "正在唸出 Google 指令...";
+    };
+
+    utterance.onend = () => {
+      status.value = "Google 指令唸出完成";
+    };
+
+    utterance.onerror = (event) => {
+      status.value = `語音合成錯誤：${event.error}`;
+    };
+
+    window.speechSynthesis.speak(utterance);
+
+    // -------
+
+    // 唸出 排程 ----------
+  } else if (command.includes("唸出排程") || command.includes("最近排程")) {
+    if (!("speechSynthesis" in window)) {
+      status.value = "此瀏覽器不支援語音合成";
+      return;
+    }
+
+    // 要唸出的文字
+    const content = `${alertTitle.value}，${alertMessage3.value}`;
+
+    if (!content.trim()) {
+      status.value = "沒有可唸出的文字";
+      return;
+    }
+
+    // 停止先前的語音
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(content);
+    utterance.lang = "zh-TW";
+    utterance.rate = 1;
+
+    utterance.onstart = () => {
+      status.value = "正在唸出 Google 指令...";
+    };
+
+    utterance.onend = () => {
+      status.value = "Google 指令唸出完成";
+    };
+
+    utterance.onerror = (event) => {
+      status.value = `語音合成錯誤：${event.error}`;
+    };
+
+    window.speechSynthesis.speak(utterance);
+
+    // 開啟巡檢
+  } else if (command.includes("打開巡檢")) {
+    status.value = "執行：開啟巡檢頁面";
+
+    // router.push('/inspection')
+
+    // 停止指令
+  } else if (command.includes("停止")) {
+    status.value = "收到停止指令";
+  } else {
+    status.value = `尚未定義此指令：${text.value.trim()}`;
   }
 }
 
-const categories = computed(() =>
-  [...new Set(apps.value.map((a) => a.category).filter(Boolean))].sort((a, b) =>
-    a.localeCompare(b, "zh-Hant")
-  )
-);
-const categoryOptions = computed(() =>
-  categories.value.map((value) => ({ label: value, value }))
-);
-const filteredApps = computed(() => {
-  const term = search.value.trim().toLocaleLowerCase();
-  return apps.value.filter((app) => {
-    const matchesSearch =
-      !term ||
-      [app.name, app.vendor, app.category, app.purpose, app.notes, app.id].some(
-        (value) =>
-          String(value || "")
-            .toLocaleLowerCase()
-            .includes(term)
-      );
-    return (
-      matchesSearch &&
-      (!categoryFilter.value || app.category === categoryFilter.value) &&
-      (!priorityFilter.value || app.priority === priorityFilter.value)
-    );
-  });
-});
-
-function priorityColor(priority) {
-  if (priority === "必裝") return "positive";
-  if (priority === "淘汰／停用") return "negative";
-  if (priority === "待確認") return "warning";
-  return "grey-7";
-}
-function newApp() {
-  isEditing.value = false;
-  editingId.value = null;
-  form.value = blankApp();
-  roleIdsText.value = "role-general";
-  editorOpen.value = true;
-}
-function editApp(app) {
-  isEditing.value = true;
-  editingId.value = app.id;
-  form.value = { ...normalizeApp(app), roleIds: [...(app.roleIds || [])] };
-  roleIdsText.value = form.value.roleIds.join(", ");
-  editorOpen.value = true;
-}
-async function saveApp() {
-  const item = normalizeApp({
-    ...form.value,
-    id: editingId.value || `sw-local-${Date.now()}`,
-    roleIds: roleIdsText.value
-      .split(",")
-      .map((v) => v.trim())
-      .filter(Boolean),
-  });
-  try {
-    await set(dbRef(db, `${FIREBASE_PATH}/${item.id}`), item);
-    editorOpen.value = false;
-    $q.notify({ type: "positive", message: "已儲存到 Firebase。" });
-  } catch (error) {
-    $q.notify({ type: "negative", message: "儲存失敗：" + error.message });
+// 元件卸載時停止語音功能
+onBeforeUnmount(() => {
+  if (recognition) {
+    recognition.onresult = null;
+    recognition.onerror = null;
+    recognition.onend = null;
+    recognition.abort();
+    recognition = null;
   }
-}
-function confirmDelete(app) {
-  $q.dialog({
-    title: "刪除 App",
-    message: `確定刪除「${app.name}」？此操作會刪除 Firebase 資料。`,
-    cancel: true,
-    persistent: true,
-  }).onOk(async () => {
-    try {
-      await remove(dbRef(db, `${FIREBASE_PATH}/${app.id}`));
-      $q.notify({ type: "positive", message: "已從 Firebase 刪除。" });
-    } catch (error) {
-      $q.notify({ type: "negative", message: "刪除失敗：" + error.message });
-    }
-  });
-}
-function exportJson() {
-  const blob = new Blob([JSON.stringify(apps.value, null, 2)], {
-    type: "application/json;charset=utf-8",
-  });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "google_play_apps_firebase.json";
-  link.click();
-  URL.revokeObjectURL(url);
-}
 
-onMounted(loadApps);
-onUnmounted(() => {
-  if (unsubscribeApps) unsubscribeApps();
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+  }
 });
 </script>
-
-<style scoped>
-.app-table {
-  width: 100%;
-}
-.purpose-cell {
-  min-width: 180px;
-  max-width: 360px;
-  white-space: normal;
-  overflow-wrap: anywhere;
-}
-@media (max-width: 600px) {
-  .app-table :deep(th),
-  .app-table :deep(td) {
-    padding: 6px 8px;
-  }
-  .purpose-cell {
-    min-width: 140px;
-  }
-}
-</style>
