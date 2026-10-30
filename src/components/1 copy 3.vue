@@ -1,892 +1,1005 @@
 <template>
-  <q-page class="q-pa-md voice-page">
-    <div class="page-shell">
-      <div class="row items-center justify-between q-col-gutter-md q-mb-lg">
-        <div class="col">
-          <div class="text-h5 text-weight-bold">語音指令管理</div>
-          <div class="text-body2 text-grey-7 q-mt-xs">
-            管理指令分類、語音別名與辨識測試
-          </div>
-        </div>
-        <div class="col-auto row q-gutter-sm">
+  <q-page class="q-pa-md">
+    <div class="text-h5 q-mb-md">YouTube 連續播放管理</div>
+
+    <!-- Firebase 雲端同步 -->
+    <q-card flat bordered class="q-pa-md q-mb-md">
+      <div class="text-subtitle1 q-mb-sm">
+        <q-icon name="cloud_sync" class="q-mr-sm" />
+        Firebase 雲端同步
+      </div>
+
+      <div class="text-caption text-grey-7 q-mb-md">
+        資料路徑：pc-software-config/youtube
+      </div>
+
+      <div class="row q-gutter-sm">
+        <q-btn
+          outline
+          color="primary"
+          icon="cloud_download"
+          label="讀取 Firebase"
+          :loading="firebaseLoading"
+          :disable="firebaseSaving"
+          @click="loadFirebaseData"
+        />
+
+        <q-btn
+          color="positive"
+          icon="cloud_upload"
+          label="儲存 Firebase"
+          :loading="firebaseSaving"
+          :disable="firebaseLoading"
+          @click="saveFirebaseData"
+        />
+      </div>
+
+      <q-banner
+        v-if="firebaseMessage"
+        rounded
+        class="q-mt-md"
+        :class="
+          firebaseError ? 'bg-red-1 text-negative' : 'bg-blue-1 text-primary'
+        "
+      >
+        <template #avatar>
+          <q-icon :name="firebaseError ? 'error' : 'cloud_done'" />
+        </template>
+
+        {{ firebaseMessage }}
+      </q-banner>
+    </q-card>
+
+    <!-- JSON 播放清單匯入 / 匯出 -->
+    <q-card flat bordered class="q-pa-md q-mb-md">
+      <div class="text-subtitle1 q-mb-sm">播放清單匯入 / 匯出</div>
+
+      <div class="row items-center q-col-gutter-sm">
+        <div class="col-12 col-sm-auto">
           <q-btn
+            color="primary"
             outline
-            color="primary"
-            icon="upload_file"
-            label="匯入 JSON"
-            @click="triggerImport"
-          />
-          <q-btn
-            color="primary"
             icon="download"
             label="匯出 JSON"
-            @click="exportJson"
+            :disable="videos.length === 0"
+            @click="exportPlaylist"
           />
-          <input
-            ref="fileInput"
-            type="file"
+        </div>
+
+        <div class="col-12 col-sm">
+          <q-file
+            v-model="jsonFile"
+            outlined
+            dense
+            clearable
             accept=".json,application/json"
-            class="hidden"
-            @change="importJson"
+            label="選擇 JSON 播放清單"
+          />
+        </div>
+
+        <div class="col-12 col-sm-auto">
+          <q-select
+            v-model="importMode"
+            outlined
+            dense
+            emit-value
+            map-options
+            :options="[
+              { label: '取代目前清單', value: 'replace' },
+              { label: '合併播放清單', value: 'merge' },
+            ]"
+            label="匯入方式"
+            style="min-width: 160px"
+          />
+        </div>
+
+        <div class="col-12 col-sm-auto">
+          <q-btn
+            color="positive"
+            icon="upload"
+            label="匯入 JSON"
+            :disable="!jsonFile"
+            :loading="importing"
+            @click="importPlaylist"
           />
         </div>
       </div>
 
-      <div class="row q-col-gutter-md q-mb-lg">
-        <div class="col-12 col-sm-4">
-          <q-card flat bordered class="stat-card">
-            <q-card-section class="row items-center no-wrap">
-              <q-avatar
-                color="blue-1"
-                text-color="primary"
-                icon="record_voice_over"
-                size="48px"
-              />
-              <div class="q-ml-md">
-                <div class="text-caption text-grey-7">指令總數</div>
-                <div class="text-h5 text-weight-bold">
-                  {{ commands.length }}
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="col-12 col-sm-4">
-          <q-card flat bordered class="stat-card">
-            <q-card-section class="row items-center no-wrap">
-              <q-avatar
-                color="green-1"
-                text-color="positive"
-                icon="category"
-                size="48px"
-              />
-              <div class="q-ml-md">
-                <div class="text-caption text-grey-7">分類數</div>
-                <div class="text-h5 text-weight-bold">
-                  {{ categories.length }}
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="col-12 col-sm-4">
-          <q-card flat bordered class="stat-card">
-            <q-card-section class="row items-center no-wrap">
-              <q-avatar
-                color="orange-1"
-                text-color="orange-9"
-                icon="verified"
-                size="48px"
-              />
-              <div class="q-ml-md">
-                <div class="text-caption text-grey-7">已驗證指令</div>
-                <div class="text-h5 text-weight-bold">
-                  {{ commands.filter((c) => c.verified).length }}
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
+      <div class="text-caption text-grey q-mt-sm">
+        支援本程式匯出的 JSON 格式。合併時會自動略過重複影片。
+      </div>
+    </q-card>
+
+    <!-- 新增影片 -->
+    <div class="row q-col-gutter-sm">
+      <div class="col">
+        <q-input
+          v-model="videoUrl"
+          outlined
+          dense
+          clearable
+          label="YouTube 影片網址或 ID"
+          @keyup.enter="addVideo"
+        />
       </div>
 
-      <q-card flat bordered class="q-mb-lg">
-        <q-card-section class="row items-center q-col-gutter-md">
-          <div class="col-12 col-md-5">
-            <q-input
-              v-model="search"
-              dense
-              outlined
-              clearable
-              label="搜尋指令"
-              placeholder="名稱、中文指令、英文指令、用途"
-            >
-              <template #prepend><q-icon name="search" /></template>
-            </q-input>
-          </div>
-          <div class="col-12 col-md-4">
-            <q-select
-              v-model="categoryFilter"
-              dense
-              outlined
-              emit-value
-              map-options
-              clearable
-              label="依分類篩選"
-              :options="categoryOptions"
-            />
-          </div>
-          <div class="col-12 col-md-3">
-            <q-btn
-              class="full-width"
-              color="primary"
-              icon="add"
-              label="新增指令"
-              @click="openCreate"
-            />
-          </div>
-        </q-card-section>
-      </q-card>
-
-      <div class="row q-col-gutter-lg">
-        <div class="col-12 col-lg-7">
-          <div class="text-subtitle1 text-weight-bold q-mb-sm">指令清單</div>
-          <q-card v-if="filteredCommands.length === 0" flat bordered>
-            <q-card-section class="text-grey-7 text-center q-pa-xl"
-              >找不到符合條件的指令</q-card-section
-            >
-          </q-card>
-          <q-card
-            v-for="command in filteredCommands"
-            :key="command.id"
-            flat
-            bordered
-            class="command-card q-mb-sm"
-          >
-            <q-card-section>
-              <div class="row items-start no-wrap">
-                <q-avatar
-                  :icon="
-                    categoryById(command.categoryId)?.icon ||
-                    'record_voice_over'
-                  "
-                  color="grey-2"
-                  text-color="primary"
-                  size="42px"
-                />
-                <div class="col q-ml-md">
-                  <div class="row items-center q-gutter-sm">
-                    <div class="text-subtitle1 text-weight-bold">
-                      {{ command.name }}
-                    </div>
-                    <q-badge
-                      :color="command.verified ? 'positive' : 'grey'"
-                      :label="command.verified ? '已驗證' : '未驗證'"
-                    />
-                  </div>
-                  <div class="text-caption text-grey-7">
-                    {{ categoryById(command.categoryId)?.name || "未分類" }} ·
-                    {{ command.id }}
-                  </div>
-                  <div class="q-mt-sm">
-                    <span class="text-grey-7">中文：</span
-                    >{{ command.commandZh || "—" }}
-                  </div>
-                  <div class="text-body2">
-                    <span class="text-grey-7">English：</span
-                    >{{ command.commandEn || "—" }}
-                  </div>
-                  <div class="text-body2 text-grey-8 q-mt-xs">
-                    {{ command.purpose || "尚未填寫用途" }}
-                  </div>
-                </div>
-                <q-btn flat round dense icon="more_vert" aria-label="指令操作">
-                  <q-menu>
-                    <q-list dense style="min-width: 150px">
-                      <q-item
-                        clickable
-                        v-close-popup
-                        @click="selectForAliases(command)"
-                        ><q-item-section avatar
-                          ><q-icon name="record_voice_over" /></q-item-section
-                        ><q-item-section>管理語音別名</q-item-section></q-item
-                      >
-                      <q-item clickable v-close-popup @click="openEdit(command)"
-                        ><q-item-section avatar
-                          ><q-icon name="edit" /></q-item-section
-                        ><q-item-section>編輯指令</q-item-section></q-item
-                      >
-                      <q-item
-                        clickable
-                        v-close-popup
-                        @click="toggleVerified(command)"
-                        ><q-item-section avatar
-                          ><q-icon name="verified" /></q-item-section
-                        ><q-item-section>{{
-                          command.verified ? "標記未驗證" : "標記已驗證"
-                        }}</q-item-section></q-item
-                      >
-                      <q-separator />
-                      <q-item
-                        clickable
-                        v-close-popup
-                        class="text-negative"
-                        @click="confirmDelete(command)"
-                        ><q-item-section avatar
-                          ><q-icon name="delete" /></q-item-section
-                        ><q-item-section>刪除指令</q-item-section></q-item
-                      >
-                    </q-list>
-                  </q-menu>
-                </q-btn>
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-
-        <div class="col-12 col-lg-5">
-          <q-card flat bordered class="q-mb-md">
-            <q-card-section>
-              <div class="row items-center justify-between">
-                <div class="text-subtitle1 text-weight-bold">語音別名管理</div>
-                <q-chip
-                  v-if="identifyTarget"
-                  color="blue-1"
-                  text-color="primary"
-                  dense
-                  >{{ identifyTarget.name }}</q-chip
-                >
-              </div>
-              <div class="text-caption text-grey-7 q-mt-xs">
-                每個指令可設定多種口語說法；匯出時寫入 voice.identify。
-              </div>
-              <q-select
-                v-model="identifyId"
-                class="q-mt-md"
-                outlined
-                dense
-                label="選擇要辨識的指令"
-                :options="commandOptions"
-                emit-value
-                map-options
-                @update:model-value="loadAliases"
-              />
-              <div class="row q-gutter-sm q-mt-sm">
-                <q-input
-                  v-model="aliasInput"
-                  class="col"
-                  outlined
-                  dense
-                  label="新增別名"
-                  placeholder="例如：打開聊天機器人"
-                  @keyup.enter="addAlias"
-                />
-                <q-btn color="primary" icon="add" round @click="addAlias" />
-              </div>
-              <div class="q-mt-md">
-                <q-chip
-                  v-for="(alias, index) in aliases"
-                  :key="`${alias}-${index}`"
-                  removable
-                  color="grey-2"
-                  text-color="dark"
-                  @remove="removeAlias(index)"
-                  class="q-mr-xs q-mb-xs"
-                  >{{ alias }}</q-chip
-                >
-                <div
-                  v-if="aliases.length === 0"
-                  class="text-caption text-grey-6"
-                >
-                  尚未設定別名
-                </div>
-              </div>
-              <q-btn
-                class="full-width q-mt-md"
-                outline
-                color="primary"
-                icon="save"
-                label="儲存別名設定"
-                @click="saveAliases"
-              />
-            </q-card-section>
-          </q-card>
-
-          <q-card flat bordered>
-            <q-card-section>
-              <div class="text-subtitle1 text-weight-bold">語音辨識測試</div>
-              <div class="text-caption text-grey-7 q-mt-xs">
-                使用瀏覽器 Web Speech API。部分瀏覽器需要 HTTPS 或麥克風權限。
-              </div>
-              <div class="row items-center q-gutter-sm q-mt-md">
-                <q-btn
-                  :color="listening ? 'negative' : 'primary'"
-                  :icon="listening ? 'stop' : 'mic'"
-                  :label="listening ? '停止辨識' : '開始說話'"
-                  :loading="recognitionStarting"
-                  @click="toggleRecognition"
-                />
-                <q-btn
-                  flat
-                  color="grey-8"
-                  icon="volume_up"
-                  label="朗讀測試文字"
-                  @click="speakTest"
-                />
-              </div>
-              <q-input
-                v-model="recognizedText"
-                class="q-mt-md"
-                outlined
-                type="textarea"
-                autogrow
-                label="辨識結果"
-                readonly
-              />
-              <q-banner
-                v-if="matchResult"
-                rounded
-                class="bg-green-1 text-green-10 q-mt-sm"
-              >
-                <template #avatar><q-icon name="check_circle" /></template>
-                可能符合：{{ matchResult.name }}（{{ matchResult.commandZh }}）
-              </q-banner>
-              <q-banner
-                v-else-if="recognizedText"
-                rounded
-                class="bg-orange-1 text-orange-10 q-mt-sm"
-              >
-                尚未找到完全相符的指令或別名。可在右側新增別名。
-              </q-banner>
-              <div
-                v-if="speechError"
-                class="text-negative text-caption q-mt-sm"
-              >
-                {{ speechError }}
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
+      <div class="col-auto">
+        <q-btn
+          color="primary"
+          label="新增"
+          :loading="adding"
+          @click="addVideo"
+        />
       </div>
-
-      <q-dialog v-model="editorOpen" persistent>
-        <q-card style="width: 620px; max-width: 95vw">
-          <q-card-section class="row items-center">
-            <div class="text-h6">{{ editingId ? "編輯指令" : "新增指令" }}</div>
-            <q-space /><q-btn flat round dense icon="close" v-close-popup />
-          </q-card-section>
-          <q-separator />
-          <q-card-section class="q-gutter-md">
-            <q-input v-model="form.name" outlined dense label="指令名稱 *" />
-            <q-select
-              v-model="form.categoryId"
-              outlined
-              dense
-              label="分類 *"
-              :options="categoryOptions"
-              emit-value
-              map-options
-            />
-            <q-input
-              v-model="form.commandZh"
-              outlined
-              dense
-              label="中文語音指令"
-            />
-            <q-input
-              v-model="form.commandEn"
-              outlined
-              dense
-              label="英文語音指令"
-            />
-            <q-input
-              v-model="form.purpose"
-              outlined
-              type="textarea"
-              autogrow
-              label="用途說明"
-            />
-            <q-toggle v-model="form.verified" label="已驗證" color="positive" />
-          </q-card-section>
-          <q-card-actions align="right" class="q-pa-md">
-            <q-btn flat label="取消" v-close-popup />
-            <q-btn color="primary" label="儲存" @click="saveCommand" />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
     </div>
+
+    <!-- 播放設定 -->
+    <div class="row items-center q-gutter-sm q-my-md">
+      <q-toggle v-model="loop" label="循環播放" @update:model-value="setLoop" />
+
+      <q-btn
+        color="positive"
+        label="開始播放"
+        :disable="videos.length === 0 || !apiReady"
+        @click="playAll"
+      />
+    </div>
+
+    <!-- YouTube 播放器 -->
+    <q-card flat bordered class="q-mb-md player-card">
+      <div class="player-container">
+        <div id="youtube-player"></div>
+      </div>
+    </q-card>
+
+    <div class="text-caption q-mb-md">
+      {{ playerStatus }}
+    </div>
+
+    <!-- 播放控制 -->
+    <div class="row q-gutter-sm q-mb-md">
+      <q-btn
+        outline
+        label="上一部"
+        :disable="!apiReady || videos.length === 0"
+        @click="previousVideo"
+      />
+
+      <q-btn outline label="暫停" :disable="!apiReady" @click="pauseVideo" />
+
+      <q-btn outline label="繼續" :disable="!apiReady" @click="resumeVideo" />
+
+      <q-btn
+        outline
+        label="下一部"
+        :disable="!apiReady || videos.length === 0"
+        @click="nextVideo"
+      />
+    </div>
+
+    <!-- 播放清單 -->
+    <q-list bordered separator>
+      <q-item
+        v-for="(video, index) in videos"
+        :key="video.id"
+        clickable
+        :active="index === currentIndex"
+        active-class="bg-blue-1"
+        @click="playVideoAt(index)"
+      >
+        <q-item-section avatar>
+          {{ index + 1 }}
+        </q-item-section>
+
+        <q-item-section>
+          <q-item-label>
+            {{ video.title }}
+          </q-item-label>
+
+          <q-item-label caption>
+            {{ video.id }}
+          </q-item-label>
+        </q-item-section>
+
+        <q-item-section side>
+          <q-btn
+            flat
+            round
+            dense
+            color="negative"
+            icon="delete"
+            aria-label="刪除影片"
+            @click.stop="removeVideo(index)"
+          />
+        </q-item-section>
+      </q-item>
+
+      <q-item v-if="videos.length === 0">
+        <q-item-section class="text-grey text-center">
+          尚無影片，請先新增 YouTube 影片
+        </q-item-section>
+      </q-item>
+    </q-list>
   </q-page>
 </template>
 
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useQuasar } from "quasar";
 
-import { ref as dbRef, get, set } from 'firebase/database'
-// import { db } from 'boot/firebase'
-import { db } from "boot/firebase_android";
 
+import { ref as dbRef, get, set } from 'firebase/database'
+import { db } from 'boot/firebase_android'
 
 // Firebase Realtime Database 路徑
-const FIREBASE_PATH = 'pc-software-config/voice'
+const FIREBASE_PATH = 'pc-software-config/youtube'
 
+const firebaseLoading = ref(false)
+const firebaseSaving = ref(false)
+const firebaseMessage = ref('')
+const firebaseError = ref(false)
+
+
+
+const jsonFile = ref(null);
+const importMode = ref("replace");
+const importing = ref(false);
 
 const $q = useQuasar();
-const fileInput = ref(null);
-const search = ref("");
-const categoryFilter = ref(null);
-const editorOpen = ref(false);
-const editingId = ref(null);
-const identifyId = ref("cmd-0001");
-const aliases = ref([]);
-const aliasInput = ref("");
-const recognizedText = ref("");
-const listening = ref(false);
-const recognitionStarting = ref(false);
-const speechError = ref("");
-const matchResult = ref(null);
-let recognition = null;
 
-// 初始資料依照上傳的 1622.json；可直接替換為 fetch/API 或 Firebase 載入。
-// const data = ref({
-//   voice: {
-//     category: [
-//       { id: "vc-web", name: "網站與搜尋", icon: "language", priority: "中" },
-//       {
-//         id: "vc-clipboard",
-//         name: "剪貼簿操作",
-//         icon: "content_copy",
-//         priority: "中",
-//       },
-//       {
-//         id: "vc-speech",
-//         name: "語音播報",
-//         icon: "record_voice_over",
-//         priority: "高",
-//       },
-//     ],
-//     commands: [
-//       {
-//         id: "cmd-0001",
-//         categoryId: "vc-web",
-//         name: "開啟 ChatGPT",
-//         commandEn: "Open ChatGPT",
-//         commandZh: "打開 GPT",
-//         purpose: "在新分頁開啟 ChatGPT 網站",
-//         models: [],
-//         verified: true,
-//       },
-//       {
-//         id: "cmd-0002",
-//         categoryId: "vc-web",
-//         name: "開啟 Google",
-//         commandEn: "Open Google",
-//         commandZh: "開啟 Google",
-//         purpose: "在新分頁開啟 Google 搜尋網站",
-//         models: [],
-//         verified: true,
-//       },
-//       {
-//         id: "cmd-0003",
-//         categoryId: "vc-clipboard",
-//         name: "複製部落格網址",
-//         commandEn: "Copy blog URL",
-//         commandZh: "複製部落格網址",
-//         purpose: "將指定的部落格網址複製到剪貼簿",
-//         models: [],
-//         verified: true,
-//       },
-//       {
-//         id: "cmd-0004",
-//         categoryId: "vc-speech",
-//         name: "唸出 Google 指令",
-//         commandEn: "Read Google commands aloud",
-//         commandZh: "唸出指令",
-//         purpose: "使用繁體中文語音合成唸出 alertTitle 與 alertMessage2 的內容",
-//         models: [],
-//         verified: true,
-//       },
-//       {
-//         id: "cmd-0005",
-//         categoryId: "vc-speech",
-//         name: "唸出最近排程",
-//         commandEn: "Read recent schedules aloud",
-//         commandZh: "唸出排程",
-//         purpose: "使用繁體中文語音合成唸出 alertTitle 與 alertMessage3 的內容",
-//         models: [],
-//         verified: true,
-//       },
-//     ],
-//     identify: {
-//       id: "cmd-0001",
-//       categoryId: "vc-web",
-//       name: "開啟 ChatGPT",
-//       commandEn: "Open ChatGPT",
-//       commandZh: "打開 GPT",
-//       aliases: [
-//         "打開 gpt",
-//         "開啟 gpt",
-//         "打開gpt",
-//         "開啟gpt",
-//         "打開 chatgpt",
-//         "開啟 chatgpt",
-//         "開啟聊天機器人",
-//       ],
-//       purpose: "在新分頁開啟 ChatGPT 網站",
-//       models: [],
-//       verified: true,
-//     },
-//   },
-//   version: 2,
-// });
+const STORAGE_KEY = "yt-playlist";
+const YOUTUBE_API_URL = "https://www.youtube.com/iframe_api";
 
-async function loadFirebaseData () {
+const videoUrl = ref("");
+const loop = ref(true);
+const videos = ref(loadSavedVideos());
+const apiReady = ref(false);
+const adding = ref(false);
+const currentIndex = ref(-1);
+const playerStatus = ref("正在初始化 YouTube 播放器...");
+
+let player = null;
+let disposed = false;
+let apiLoadHandler = null;
+let pendingIndex = null;
+
+// 讀取儲存的播放清單
+function loadSavedVideos() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+    if (!Array.isArray(saved)) {
+      return [];
+    }
+
+    return saved
+      .filter(
+        (video) =>
+          video && typeof video.id === "string" && /^[\w-]{11}$/.test(video.id)
+      )
+      .map((video, index) => ({
+        id: video.id,
+        title:
+          typeof video.title === "string" && video.title
+            ? video.title
+            : `YouTube 影片 ${index + 1}`,
+      }));
+  } catch {
+    return [];
+  }
+}
+
+// 儲存播放清單
+function saveVideos() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(videos.value));
+  } catch {
+    $q.notify({
+      type: "warning",
+      message: "無法儲存播放清單，請檢查瀏覽器儲存空間",
+    });
+  }
+}
+
+// joey -------
+
+function normalizeFirebasePlaylist(raw) {
+  if (
+    !raw ||
+    typeof raw !== 'object' ||
+    Array.isArray(raw) ||
+    !Array.isArray(raw.videos)
+  ) {
+    throw new Error('Firebase 播放清單格式錯誤')
+  }
+
+  const result = []
+  const seen = new Set()
+
+  for (const video of raw.videos) {
+    if (!video || typeof video.id !== 'string') {
+      continue
+    }
+
+    const id = video.id.trim()
+
+    if (!/^[\w-]{11}$/.test(id) || seen.has(id)) {
+      continue
+    }
+
+    seen.add(id)
+
+    result.push({
+      id,
+      title:
+        typeof video.title === 'string' && video.title.trim()
+          ? video.title.trim()
+          : `YouTube 影片 ${result.length + 1}`
+    })
+  }
+
+  return result
+}
+
+// 從 Firebase 讀取播放清單
+async function loadFirebaseData() {
+  if (firebaseLoading.value || firebaseSaving.value) return
+
   firebaseLoading.value = true
+  firebaseError.value = false
+  firebaseMessage.value = ''
 
   try {
     const snapshot = await get(dbRef(db, FIREBASE_PATH))
 
     if (!snapshot.exists()) {
-      throw new Error(`找不到資料：${FIREBASE_PATH}`)
+      throw new Error(
+        `找不到雲端資料：${FIREBASE_PATH}，請先儲存播放清單`
+      )
     }
 
-    data.value = normalizeFirebaseData(snapshot.val())
+    const cloudVideos = normalizeFirebasePlaylist(snapshot.val())
 
-    identifyId.value =
-      data.value.voice.identify?.id ||
-      data.value.voice.commands[0]?.id ||
-      null
+    // 以 Firebase 資料取代本機清單
+    videos.value = cloudVideos
+    currentIndex.value = cloudVideos.length > 0 ? 0 : -1
 
-    loadAliases()
-    firebaseMessage.value = `已從 Firebase 讀取：${FIREBASE_PATH}`
+    saveVideos()
+
+    if (apiReady.value && player) {
+      if (cloudVideos.length > 0) {
+        // 載入雲端清單，但不自動開始播放
+        syncPlaylist(false)
+      } else {
+        player.stopVideo()
+        player.clearVideo()
+        playerStatus.value = '雲端播放清單是空的'
+      }
+    }
+
+    firebaseMessage.value =
+      `Firebase 讀取成功，共 ${cloudVideos.length} 部影片`
   } catch (error) {
     firebaseError.value = true
     firebaseMessage.value =
       `Firebase 讀取失敗：${error.message || error}`
+
+    $q.notify({
+      type: 'negative',
+      message: firebaseMessage.value,
+      timeout: 6000
+    })
   } finally {
     firebaseLoading.value = false
   }
 }
 
+// 將本機播放清單儲存至 Firebase
+async function saveFirebaseData() {
+  if (firebaseLoading.value || firebaseSaving.value) return
 
-await set(dbRef(db, FIREBASE_PATH), output)
+  firebaseSaving.value = true
+  firebaseError.value = false
+  firebaseMessage.value = ''
 
-const categories = computed(() => data.value.voice.category);
-const commands = computed(() => data.value.voice.commands);
-const categoryOptions = computed(() =>
-  categories.value.map((c) => ({ label: c.name, value: c.id }))
-);
-const commandOptions = computed(() =>
-  commands.value.map((c) => ({
-    label: `${c.name}（${c.commandZh || "未設定中文指令"}）`,
-    value: c.id,
-  }))
-);
-const filteredCommands = computed(() => {
-  const keyword = search.value.trim().toLowerCase();
-  return commands.value.filter((c) => {
-    const categoryOK =
-      !categoryFilter.value || c.categoryId === categoryFilter.value;
-    const text = [c.name, c.commandZh, c.commandEn, c.purpose, c.id]
-      .join(" ")
-      .toLowerCase();
-    return categoryOK && (!keyword || text.includes(keyword));
-  });
-});
-const identifyTarget = computed(() =>
-  commands.value.find((c) => c.id === identifyId.value)
-);
-const form = ref(emptyForm());
-
-function emptyForm() {
-  return {
-    name: "",
-    categoryId: "vc-web",
-    commandZh: "",
-    commandEn: "",
-    purpose: "",
-    verified: false,
-  };
-}
-function categoryById(id) {
-  return categories.value.find((c) => c.id === id);
-}
-function nextCommandId() {
-  const max = commands.value.reduce((max, c) => {
-    const n = Number((c.id || "").match(/(\d+)$/)?.[1] || 0);
-    return Math.max(max, n);
-  }, 0);
-  return `cmd-${String(max + 1).padStart(4, "0")}`;
-}
-function openCreate() {
-  editingId.value = null;
-  form.value = emptyForm();
-  editorOpen.value = true;
-}
-function openEdit(command) {
-  editingId.value = command.id;
-  form.value = {
-    name: command.name || "",
-    categoryId: command.categoryId || "vc-web",
-    commandZh: command.commandZh || "",
-    commandEn: command.commandEn || "",
-    purpose: command.purpose || "",
-    verified: Boolean(command.verified),
-  };
-  editorOpen.value = true;
-}
-function saveCommand() {
-  if (!form.value.name.trim()) {
-    $q.notify({ type: "warning", message: "請輸入指令名稱" });
-    return;
-  }
-  if (!form.value.categoryId) {
-    $q.notify({ type: "warning", message: "請選擇分類" });
-    return;
-  }
-  const payload = {
-    ...form.value,
-    name: form.value.name.trim(),
-    commandZh: form.value.commandZh.trim(),
-    commandEn: form.value.commandEn.trim(),
-    purpose: form.value.purpose.trim(),
-    models: [],
-  };
-  if (editingId.value) {
-    const index = commands.value.findIndex((c) => c.id === editingId.value);
-    if (index >= 0) Object.assign(commands.value[index], payload);
-  } else {
-    const item = { id: nextCommandId(), ...payload };
-    commands.value.push(item);
-  }
-  editorOpen.value = false;
-  $q.notify({ type: "positive", message: "指令已儲存；請匯出 JSON 保存變更" });
-}
-function toggleVerified(command) {
-  command.verified = !command.verified;
-  $q.notify({
-    message: command.verified ? "已標記為已驗證" : "已標記為未驗證",
-  });
-}
-function confirmDelete(command) {
-  $q.dialog({
-    title: "刪除指令",
-    message: `確定刪除「${command.name}」？`,
-    cancel: true,
-    persistent: true,
-  }).onOk(() => {
-    data.value.voice.commands = commands.value.filter(
-      (c) => c.id !== command.id
-    );
-    if (identifyId.value === command.id) {
-      identifyId.value = commands.value[0]?.id || null;
-      loadAliases();
+  try {
+    const output = {
+      version: 1,
+      updatedAt: new Date().toISOString(),
+      videos: videos.value.map(video => ({
+        id: video.id,
+        title: video.title
+      }))
     }
+
+    await set(dbRef(db, FIREBASE_PATH), output)
+
+    firebaseMessage.value =
+      `Firebase 儲存成功，共 ${output.videos.length} 部影片`
+
     $q.notify({
-      type: "positive",
-      message: "指令已刪除；請匯出 JSON 保存變更",
+      type: 'positive',
+      message: '播放清單已同步至 Firebase'
+    })
+  } catch (error) {
+    firebaseError.value = true
+    firebaseMessage.value =
+      `Firebase 儲存失敗：${error.message || error}`
+
+    $q.notify({
+      type: 'negative',
+      message: firebaseMessage.value,
+      timeout: 6000
+    })
+  } finally {
+    firebaseSaving.value = false
+  }
+}
+
+
+
+
+function exportPlaylist() {
+  if (videos.value.length === 0) {
+    $q.notify({
+      type: "warning",
+      message: "播放清單是空的，無法匯出",
     });
-  });
-}
-function selectForAliases(command) {
-  identifyId.value = command.id;
-  loadAliases();
-}
-function loadAliases() {
-  const identify = data.value.voice.identify;
-  aliases.value =
-    identify?.id === identifyId.value ? [...(identify.aliases || [])] : [];
-  aliasInput.value = "";
-}
-function addAlias() {
-  const value = aliasInput.value.trim();
-  if (!value) return;
-  if (aliases.value.some((a) => a.toLowerCase() === value.toLowerCase())) {
-    $q.notify({ type: "warning", message: "這個別名已存在" });
     return;
   }
-  aliases.value.push(value);
-  aliasInput.value = "";
-}
-function removeAlias(index) {
-  aliases.value.splice(index, 1);
-}
-function saveAliases() {
-  const command = identifyTarget.value;
-  if (!command) {
-    $q.notify({ type: "warning", message: "請先選擇指令" });
-    return;
-  }
-  data.value.voice.identify = {
-    ...command,
-    aliases: [...aliases.value],
+
+  const data = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    videos: videos.value.map((video) => ({
+      id: video.id,
+      title: video.title,
+    })),
   };
-  $q.notify({
-    type: "positive",
-    message: "語音別名已儲存；請匯出 JSON 保存變更",
-  });
-}
-function triggerImport() {
-  fileInput.value?.click();
-}
-function importJson(event) {
-  const file = event.target.files?.[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    try {
-      const parsed = JSON.parse(String(reader.result));
-      if (
-        !parsed?.voice ||
-        !Array.isArray(parsed.voice.category) ||
-        !Array.isArray(parsed.voice.commands)
-      ) {
-        throw new Error(
-          "JSON 結構不符合預期，需包含 voice.category 與 voice.commands"
-        );
-      }
-      data.value = parsed;
-      identifyId.value =
-        parsed.voice.identify?.id || parsed.voice.commands[0]?.id || null;
-      loadAliases();
-      $q.notify({ type: "positive", message: "JSON 匯入成功" });
-    } catch (error) {
-      $q.notify({
-        type: "negative",
-        message: `匯入失敗：${error.message || "JSON 格式錯誤"}`,
-        timeout: 5000,
-      });
-    }
-    event.target.value = "";
-  };
-  reader.readAsText(file, "UTF-8");
-}
-function exportJson() {
-  const output = JSON.parse(JSON.stringify(data.value));
-  const target = output.voice.commands.find((c) => c.id === identifyId.value);
-  if (target) {
-    output.voice.identify = {
-      ...target,
-      aliases: [...aliases.value],
-    };
-  }
-  const blob = new Blob([JSON.stringify(output, null, 2)], {
+
+  const blob = new Blob([JSON.stringify(data, null, 2)], {
     type: "application/json;charset=utf-8",
   });
+
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
+
+  const date = new Date().toISOString().slice(0, 10);
+
   link.href = url;
-  link.download = "voice-commands.json";
+  link.download = `youtube-playlist-${date}.json`;
+
+  document.body.appendChild(link);
   link.click();
-  URL.revokeObjectURL(url);
+  link.remove();
+
+  // 延後釋放下載網址
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+  $q.notify({
+    type: "positive",
+    message: `已匯出 ${videos.value.length} 部影片`,
+  });
 }
-function normalize(text) {
-  return String(text || "")
-    .toLowerCase()
-    .replace(/\s+/g, "")
-    .trim();
-}
-function findMatch(text) {
-  const target = normalize(text);
-  if (!target) return null;
-  const identify = data.value.voice.identify;
-  const candidates = commands.value.map((c) => ({
-    ...c,
-    aliases: identify?.id === c.id ? identify.aliases || [] : [],
-  }));
-  return (
-    candidates.find((c) =>
-      [c.name, c.commandZh, c.commandEn, ...(c.aliases || [])].some(
-        (s) => normalize(s) === target
-      )
-    ) || null
-  );
-}
-function toggleRecognition() {
-  if (listening.value) {
-    recognition?.stop();
-    listening.value = false;
-    return;
+
+// 解析 YouTube 影片 ID
+function extractVideoId(input) {
+  const value = String(input || "").trim();
+
+  // 直接輸入 11 碼影片 ID
+  if (/^[\w-]{11}$/.test(value)) {
+    return value;
   }
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    speechError.value =
-      "此瀏覽器不支援 Web Speech API。請使用支援語音辨識的瀏覽器，或手動輸入測試文字。";
-    return;
-  }
-  speechError.value = "";
-  recognizedText.value = "";
-  matchResult.value = null;
-  recognitionStarting.value = true;
-  recognition = new SpeechRecognition();
-  recognition.lang = "zh-TW";
-  recognition.interimResults = true;
-  recognition.continuous = false;
-  recognition.onstart = () => {
-    listening.value = true;
-    recognitionStarting.value = false;
-  };
-  recognition.onresult = (event) => {
-    let text = "";
-    for (let i = event.resultIndex; i < event.results.length; i++)
-      text += event.results[i][0].transcript;
-    recognizedText.value = text;
-    matchResult.value = findMatch(text);
-  };
-  recognition.onerror = (event) => {
-    speechError.value =
-      event.error === "not-allowed"
-        ? "麥克風權限被拒絕，請在瀏覽器設定中允許使用麥克風。"
-        : `語音辨識錯誤：${event.error}`;
-    listening.value = false;
-    recognitionStarting.value = false;
-  };
-  recognition.onend = () => {
-    listening.value = false;
-    recognitionStarting.value = false;
-  };
+
   try {
-    recognition.start();
-  } catch (error) {
-    speechError.value = error.message || "無法啟動語音辨識";
-    listening.value = false;
-    recognitionStarting.value = false;
+    // 允許使用者輸入沒有 https:// 的網址
+    const url = new URL(
+      /^[a-zA-Z][a-zA-Z\d+.-]*:/.test(value) ? value : `https://${value}`
+    );
+
+    const host = url.hostname.toLowerCase();
+
+    const isYouTube =
+      host === "youtube.com" ||
+      host.endsWith(".youtube.com") ||
+      host === "youtube-nocookie.com" ||
+      host.endsWith(".youtube-nocookie.com");
+
+    if (host === "youtu.be" || host.endsWith(".youtu.be")) {
+      const id = url.pathname.split("/").filter(Boolean)[0];
+      return /^[\w-]{11}$/.test(id || "") ? id : "";
+    }
+
+    if (!isYouTube) {
+      return "";
+    }
+
+    // 標準網址：youtube.com/watch?v=...
+    const watchId = url.searchParams.get("v");
+
+    if (watchId) {
+      return /^[\w-]{11}$/.test(watchId) ? watchId : "";
+    }
+
+    // Shorts、Embed、Live 網址
+    const parts = url.pathname.split("/").filter(Boolean);
+
+    if (["embed", "shorts", "live", "v"].includes(parts[0])) {
+      const id = parts[1] || "";
+      return /^[\w-]{11}$/.test(id) ? id : "";
+    }
+  } catch {
+    return "";
   }
+
+  return "";
 }
-function speakTest() {
-  if (!("speechSynthesis" in window)) {
-    $q.notify({ type: "warning", message: "此瀏覽器不支援語音合成" });
+
+// 新增影片
+function addVideo() {
+  if (adding.value) return;
+
+  const id = extractVideoId(videoUrl.value);
+
+  if (!id) {
+    $q.notify({
+      type: "warning",
+      message: "請輸入有效的 YouTube 影片網址或 11 碼 ID",
+    });
     return;
   }
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(
-    "語音指令管理測試，請確認語音播報功能正常。"
-  );
-  utterance.lang = "zh-TW";
-  window.speechSynthesis.speak(utterance);
+
+  if (videos.value.some((video) => video.id === id)) {
+    $q.notify({
+      type: "info",
+      message: "這部影片已經在播放清單中",
+    });
+    return;
+  }
+
+  const wasEmpty = videos.value.length === 0;
+
+  videos.value.push({
+    id,
+    title: `YouTube 影片 ${videos.value.length + 1}`,
+  });
+
+  saveVideos();
+  videoUrl.value = "";
+
+  $q.notify({
+    type: "positive",
+    message: "影片已新增至播放清單",
+  });
+
+  if (apiReady.value && player) {
+    if (wasEmpty) {
+      syncPlaylist(true);
+    } else {
+      syncPlaylist(false);
+    }
+  }
 }
-watch(identifyId, () => {
-  loadAliases();
-  matchResult.value = findMatch(recognizedText.value);
+
+// 刪除影片
+function removeVideo(index) {
+  if (index < 0 || index >= videos.value.length) {
+    return;
+  }
+
+  const removedCurrent = index === currentIndex.value;
+  const oldIndex = currentIndex.value;
+
+  videos.value.splice(index, 1);
+  saveVideos();
+
+  if (videos.value.length === 0) {
+    currentIndex.value = -1;
+    pendingIndex = null;
+
+    if (apiReady.value && player) {
+      player.stopVideo();
+      player.clearVideo();
+    }
+
+    playerStatus.value = "播放清單是空的";
+    return;
+  }
+
+  if (removedCurrent) {
+    currentIndex.value = Math.min(oldIndex, videos.value.length - 1);
+
+    pendingIndex = currentIndex.value;
+    syncPlaylist(true);
+  } else {
+    if (index < oldIndex) {
+      currentIndex.value = oldIndex - 1;
+    }
+
+    syncPlaylist(false);
+  }
+}
+
+// 同步播放清單
+function syncPlaylist(startPlayback = false) {
+  if (!apiReady.value || !player) return;
+
+  if (videos.value.length === 0) {
+    player.stopVideo();
+    player.clearVideo();
+    currentIndex.value = -1;
+    return;
+  }
+
+  const ids = videos.value.map((video) => video.id);
+
+  const index = Math.max(0, Math.min(currentIndex.value, ids.length - 1));
+
+  currentIndex.value = index;
+  pendingIndex = index;
+
+  if (startPlayback) {
+    player.loadPlaylist(ids, index, 0);
+  } else {
+    player.cuePlaylist(ids, index, 0);
+  }
+
+  player.setLoop(loop.value);
+}
+
+// 開始播放整份清單
+function playAll() {
+  if (!apiReady.value || !player || !videos.value.length) {
+    return;
+  }
+
+  currentIndex.value = 0;
+  pendingIndex = 0;
+
+  player.loadPlaylist(
+    videos.value.map((video) => video.id),
+    0,
+    0
+  );
+
+  player.setLoop(loop.value);
+}
+
+// 播放指定影片
+function playVideoAt(index) {
+  if (!apiReady.value || !player || index < 0 || index >= videos.value.length) {
+    return;
+  }
+
+  currentIndex.value = index;
+  pendingIndex = index;
+
+  player.playVideoAt(index);
+}
+
+// 下一部
+function nextVideo() {
+  if (!apiReady.value || !player || !videos.value.length) {
+    return;
+  }
+
+  if (videos.value.length === 1) {
+    player.playVideoAt(0);
+    return;
+  }
+
+  player.nextVideo();
+}
+
+// 上一部
+function previousVideo() {
+  if (!apiReady.value || !player || !videos.value.length) {
+    return;
+  }
+
+  if (videos.value.length === 1) {
+    player.playVideoAt(0);
+    return;
+  }
+
+  player.previousVideo();
+}
+
+// 暫停
+function pauseVideo() {
+  player?.pauseVideo();
+}
+
+// 繼續
+function resumeVideo() {
+  player?.playVideo();
+}
+
+// 設定循環播放
+function setLoop(value) {
+  loop.value = value;
+
+  if (apiReady.value && player) {
+    player.setLoop(value);
+  }
+}
+
+// 取得 YouTube 播放器狀態
+function updatePlayerState(event) {
+  if (disposed) return;
+
+  const YT = window.YT;
+
+  if (!YT) return;
+
+  switch (event.data) {
+    case YT.PlayerState.PLAYING: {
+      const index = player.getPlaylistIndex();
+
+      if (typeof index === "number" && index >= 0) {
+        currentIndex.value = index;
+      }
+
+      playerStatus.value = "正在播放";
+      break;
+    }
+
+    case YT.PlayerState.PAUSED:
+      playerStatus.value = "已暫停";
+      break;
+
+    case YT.PlayerState.BUFFERING:
+      playerStatus.value = "影片載入中...";
+      break;
+
+    case YT.PlayerState.ENDED:
+      playerStatus.value = "影片播放結束";
+      break;
+
+    case YT.PlayerState.CUED:
+      playerStatus.value = "影片已準備就緒";
+      break;
+
+    default:
+      break;
+  }
+}
+
+// 初始化 YouTube 播放器
+function initPlayer() {
+  if (disposed || !window.YT?.Player || player) {
+    return;
+  }
+
+  player = new window.YT.Player("youtube-player", {
+    width: "100%",
+    height: "100%",
+
+    playerVars: {
+      playsinline: 1,
+      autoplay: 0,
+      controls: 1,
+      origin: window.location.origin,
+    },
+
+    events: {
+      onReady(event) {
+        if (disposed) {
+          event.target.destroy();
+          return;
+        }
+
+        apiReady.value = true;
+        event.target.setLoop(loop.value);
+
+        if (videos.value.length > 0) {
+          event.target.cuePlaylist(
+            videos.value.map((video) => video.id),
+            0,
+            0
+          );
+
+          currentIndex.value = 0;
+          playerStatus.value = "播放清單已載入";
+        } else {
+          playerStatus.value = "請新增 YouTube 影片";
+        }
+      },
+
+      onStateChange: updatePlayerState,
+
+      onError(event) {
+        const messages = {
+          2: "影片 ID 無效",
+          5: "影片無法以 HTML5 播放器播放",
+          100: "影片不存在或已被移除",
+          101: "影片擁有者不允許嵌入播放",
+          150: "影片擁有者不允許嵌入播放",
+          153: "缺少 HTTP Referer 或等效的用戶端識別資訊",
+        };
+
+        $q.notify({
+          type: "warning",
+          message:
+            messages[event.data] || "影片無法播放，請檢查影片網址或嵌入權限",
+        });
+      },
+
+      onAutoplayBlocked() {
+        $q.notify({
+          type: "info",
+          message: "瀏覽器限制自動播放，請按下播放鍵",
+        });
+      },
+    },
+  });
+}
+
+// 載入 YouTube IFrame API
+onMounted(() => {
+  disposed = false;
+
+  if (window.YT?.Player) {
+    initPlayer();
+    return;
+  }
+
+  // 保留原本的 API 就緒回呼
+  const previousHandler = window.onYouTubeIframeAPIReady;
+
+  apiLoadHandler = () => {
+    if (typeof previousHandler === "function") {
+      previousHandler();
+    }
+
+    initPlayer();
+  };
+
+  window.onYouTubeIframeAPIReady = apiLoadHandler;
+
+  let script = document.querySelector(`script[src="${YOUTUBE_API_URL}"]`);
+
+  if (!script) {
+    script = document.createElement("script");
+    script.src = YOUTUBE_API_URL;
+    script.async = true;
+    document.head.appendChild(script);
+  }
 });
-onMounted(loadAliases);
+
+// 清除播放器
 onBeforeUnmount(() => {
-  recognition?.stop();
-  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  disposed = true;
+  apiReady.value = false;
+
+  if (apiLoadHandler && window.onYouTubeIframeAPIReady === apiLoadHandler) {
+    window.onYouTubeIframeAPIReady = null;
+  }
+
+  if (player) {
+    player.destroy();
+    player = null;
+  }
 });
+
+async function importPlaylist() {
+  if (!jsonFile.value || importing.value) return;
+
+  importing.value = true;
+
+  try {
+    const text = await jsonFile.value.text();
+    const data = JSON.parse(text);
+
+    // 支援 { version: 1, videos: [...] } 或直接使用 [...]
+    const sourceVideos = Array.isArray(data) ? data : data?.videos;
+
+    if (!Array.isArray(sourceVideos)) {
+      throw new Error("JSON 格式錯誤，找不到 videos 陣列");
+    }
+
+    const importedVideos = [];
+    const seen = new Set();
+
+    for (const item of sourceVideos) {
+      if (!item || typeof item !== "object") continue;
+
+      const id = typeof item.id === "string" ? item.id.trim() : "";
+
+      // 僅接受合法的 11 碼 YouTube 影片 ID
+      if (!/^[\w-]{11}$/.test(id)) continue;
+
+      if (seen.has(id)) continue;
+
+      seen.add(id);
+
+      importedVideos.push({
+        id,
+        title:
+          typeof item.title === "string" && item.title.trim()
+            ? item.title.trim()
+            : `YouTube 影片 ${importedVideos.length + 1}`,
+      });
+    }
+
+    if (importedVideos.length === 0) {
+      throw new Error("找不到有效的 YouTube 影片");
+    }
+
+    let result;
+
+    if (importMode.value === "replace") {
+      // 取代目前播放清單
+      result = importedVideos;
+    } else {
+      // 合併：保留原有影片並排除重複 ID
+      const merged = [...videos.value];
+      const existingIds = new Set(merged.map((video) => video.id));
+
+      for (const video of importedVideos) {
+        if (existingIds.has(video.id)) continue;
+
+        existingIds.add(video.id);
+        merged.push(video);
+      }
+
+      result = merged;
+    }
+
+    // 更新清單與 localStorage
+    videos.value = result;
+    currentIndex.value = videos.value.length > 0 ? 0 : -1;
+    saveVideos();
+
+    // 同步播放器，但不主動開始播放
+    if (apiReady.value && player) {
+      syncPlaylist(false);
+    }
+
+    $q.notify({
+      type: "positive",
+      message:
+        `匯入完成：讀取 ${importedVideos.length} 部影片，` +
+        `目前清單共 ${videos.value.length} 部`,
+    });
+
+    jsonFile.value = null;
+  } catch (error) {
+    $q.notify({
+      type: "negative",
+      message:
+        error instanceof SyntaxError
+          ? "JSON 格式錯誤，請檢查檔案內容"
+          : error.message || "匯入失敗",
+    });
+  } finally {
+    importing.value = false;
+  }
+}
 </script>
 
 <style scoped>
-.voice-page {
-  background: #f7f8fa;
-  min-height: 100%;
+.player-card {
+  overflow: hidden;
 }
-.page-shell {
-  max-width: 1440px;
-  margin: 0 auto;
+
+.player-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
 }
-.stat-card,
-.command-card {
-  border-radius: 12px;
+
+#youtube-player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
-.command-card {
-  transition: box-shadow 0.15s ease;
-}
-.command-card:hover {
-  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.06);
-}
-@media (max-width: 599px) {
-  .voice-page {
-    padding: 12px;
-  }
-  .page-shell > .row:first-child {
-    align-items: flex-start;
-  }
-  .page-shell > .row:first-child .col-auto {
-    width: 100%;
-  }
-  .page-shell > .row:first-child .col-auto .q-btn {
-    flex: 1;
-  }
+
+#youtube-player :deep(iframe) {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 </style>

@@ -1,397 +1,604 @@
 <template>
-  <q-page padding>
-    <div class="text-h5 q-mb-md">Quasar 語音控制</div>
+  <q-page class="q-pa-md">
+    <div class="text-h5 q-mb-md">YouTube 連續播放管理</div>
 
-    <!-- 開始語音輸入 -->
-    <q-btn
-      size="48px"
-      color="primary"
-      icon="mic"
-      label="開始語音輸入"
-      @click="startVoice"
-      class="q-mb-md"
-    />
+    <!-- 新增影片 -->
+    <div class="row q-col-gutter-sm">
+      <div class="col">
+        <q-input
+          v-model="videoUrl"
+          outlined
+          dense
+          clearable
+          label="YouTube 影片網址或 ID"
+          @keyup.enter="addVideo"
+        />
+      </div>
 
-    <!-- 語音辨識結果 -->
-    <!-- <q-input
-      v-model="text"
-      label="語音辨識結果"
-      type="textarea"
-      outlined
-      class="q-mb-md"
-      input-style="font-size: 28px;"
-    /> -->
-    <div>
-      <q-input
-        v-model="text"
-        type="textarea"
-        outlined
-        class="q-mb-none"
-        input-style="font-size: 28px;"
-      />
-
-      <div class="text-right text-grey-7 text-caption q-mt-xs">
-        語音辨識結果
+      <div class="col-auto">
+        <q-btn
+          color="primary"
+          label="新增"
+          :loading="adding"
+          @click="addVideo"
+        />
       </div>
     </div>
-    <!-- 語音合成 -->
-    <q-btn
-      size="48px"
-      color="secondary"
-      icon="volume_up"
-      label="唸出文字🐷"
-      @click="speak"
-      class="q-mr-sm"
-    />
-    <hr />
-    <!-- 執行指令 -->
-    <q-btn
-      size="48px"
-      color="positive"
-      icon="play_arrow"
-      label="執行指令🐷"
-      @click="runCommand"
-      class="q-mr-sm"
-    />
 
-    <!-- 執行狀態 -->
-    <div class="q-mt-md text-body1">
-      <q-icon name="info" class="q-mr-sm" />
-      {{ status }}
+    <!-- 播放設定 -->
+    <div class="row items-center q-gutter-sm q-my-md">
+      <q-toggle v-model="loop" label="循環播放" @update:model-value="setLoop" />
+
+      <q-btn
+        color="positive"
+        label="開始播放"
+        :disable="videos.length === 0 || !apiReady"
+        @click="playAll"
+      />
     </div>
 
-    <br />
-    <q-btn
-      size="48px"
-      label="Alert 參考指令"
-      color="primary"
-      @click="alert = true"
-      class="q-mr-sm"
-    />
-    <hr />
+    <!-- YouTube 播放器 -->
+    <q-card flat bordered class="q-mb-md player-card">
+      <div class="player-container">
+        <div id="youtube-player"></div>
+      </div>
+    </q-card>
 
-    <!-- 語音合成 -->
-    <q-btn
-      size="48px"
-      color="secondary"
-      icon="volume_up"
-      label="唸出參考指令"
-      @click="speak2"
-      class="q-mr-sm"
-    />
+    <div class="text-caption q-mb-md">
+      {{ playerStatus }}
+    </div>
 
-    <q-dialog v-model="alert">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Alert</div>
-        </q-card-section>
+    <!-- 播放控制 -->
+    <div class="row q-gutter-sm q-mb-md">
+      <q-btn
+        outline
+        label="上一部"
+        :disable="!apiReady || videos.length === 0"
+        @click="previousVideo"
+      />
 
-        <q-card-section class="q-pt-none"> {{ alertMessage }}</q-card-section>
+      <q-btn outline label="暫停" :disable="!apiReady" @click="pauseVideo" />
 
-        <q-card-actions align="right">
-          <q-btn flat label="OK" color="primary" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+      <q-btn outline label="繼續" :disable="!apiReady" @click="resumeVideo" />
+
+      <q-btn
+        outline
+        label="下一部"
+        :disable="!apiReady || videos.length === 0"
+        @click="nextVideo"
+      />
+    </div>
+
+    <!-- 播放清單 -->
+    <q-list bordered separator>
+      <q-item
+        v-for="(video, index) in videos"
+        :key="video.id"
+        clickable
+        :active="index === currentIndex"
+        active-class="bg-blue-1"
+        @click="playVideoAt(index)"
+      >
+        <q-item-section avatar>
+          {{ index + 1 }}
+        </q-item-section>
+
+        <q-item-section>
+          <q-item-label>
+            {{ video.title }}
+          </q-item-label>
+
+          <q-item-label caption>
+            {{ video.id }}
+          </q-item-label>
+        </q-item-section>
+
+        <q-item-section side>
+          <q-btn
+            flat
+            round
+            dense
+            color="negative"
+            icon="delete"
+            aria-label="刪除影片"
+            @click.stop="removeVideo(index)"
+          />
+        </q-item-section>
+      </q-item>
+
+      <q-item v-if="videos.length === 0">
+        <q-item-section class="text-grey text-center">
+          尚無影片，請先新增 YouTube 影片
+        </q-item-section>
+      </q-item>
+    </q-list>
   </q-page>
 </template>
 
 <script setup>
-import { ref, onBeforeUnmount } from "vue";
-import { useRouter } from "vue-router";
-import { Notify } from "quasar";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 
-const text = ref("");
-const status = ref("準備就緒");
+import { useQuasar } from "quasar";
 
-const alert = ref(false);
-const alertTitle = ref("語音參考");
-// ------ joey modify
-const alertMessage = ref(`開啟谷歌，複製部落格，打開gpt，
-谷歌指令，最近排程`);
+const $q = useQuasar();
 
-const alertMessage2 = ref(`谷歌指令參考，今天天氣，明天天氣，現在幾點，
-台股指數，道瓊指數`);
+const STORAGE_KEY = "yt-playlist";
+const YOUTUBE_API_URL = "https://www.youtube.com/iframe_api";
 
-const alertMessage3 = ref("衣服整理，垃圾整理，Eating on time，");
+const videoUrl = ref("");
+const loop = ref(true);
+const videos = ref(loadSavedVideos());
+const apiReady = ref(false);
+const adding = ref(false);
+const currentIndex = ref(-1);
+const playerStatus = ref("正在初始化 YouTube 播放器...");
 
-let recognition = null;
+let player = null;
+let disposed = false;
+let apiLoadHandler = null;
+let pendingIndex = null;
 
-// 開始語音辨識
-function startVoice() {
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
+// 讀取儲存的播放清單
+function loadSavedVideos() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 
-  if (!SpeechRecognition) {
-    status.value = "此瀏覽器不支援語音辨識";
-    return;
-  }
-
-  // 避免重複啟動辨識
-  if (recognition) {
-    recognition.abort();
-    recognition = null;
-  }
-
-  recognition = new SpeechRecognition();
-  recognition.lang = "zh-TW";
-  recognition.continuous = false;
-  recognition.interimResults = false;
-
-  recognition.onstart = () => {
-    status.value = "正在聆聽...";
-  };
-
-  recognition.onresult = (event) => {
-    const result = event.results?.[0]?.[0]?.transcript;
-
-    if (result) {
-      text.value = result;
-      status.value = "辨識完成";
-    } else {
-      status.value = "沒有辨識到語音內容";
+    if (!Array.isArray(saved)) {
+      return [];
     }
-  };
 
-  // 修正：使用反引號包住模板字串
-  recognition.onerror = (event) => {
-    status.value = `語音錯誤：${event.error}`;
-  };
+    return saved
+      .filter(
+        (video) =>
+          video && typeof video.id === "string" && /^[\w-]{11}$/.test(video.id)
+      )
+      .map((video, index) => ({
+        id: video.id,
+        title:
+          typeof video.title === "string" && video.title
+            ? video.title
+            : `YouTube 影片 ${index + 1}`,
+      }));
+  } catch {
+    return [];
+  }
+}
 
-  recognition.onend = () => {
-    if (status.value === "正在聆聽...") {
-      status.value = "聆聽結束";
-    }
-  };
+// 儲存播放清單
+function saveVideos() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(videos.value));
+  } catch {
+    $q.notify({
+      type: "warning",
+      message: "無法儲存播放清單，請檢查瀏覽器儲存空間",
+    });
+  }
+}
+
+// 解析 YouTube 影片 ID
+function extractVideoId(input) {
+  const value = String(input || "").trim();
+
+  // 直接輸入 11 碼影片 ID
+  if (/^[\w-]{11}$/.test(value)) {
+    return value;
+  }
 
   try {
-    recognition.start();
-  } catch (error) {
-    status.value = `無法啟動語音辨識：${error.message}`;
+    // 允許使用者輸入沒有 https:// 的網址
+    const url = new URL(
+      /^[a-zA-Z][a-zA-Z\d+.-]*:/.test(value) ? value : `https://${value}`
+    );
+
+    const host = url.hostname.toLowerCase();
+
+    const isYouTube =
+      host === "youtube.com" ||
+      host.endsWith(".youtube.com") ||
+      host === "youtube-nocookie.com" ||
+      host.endsWith(".youtube-nocookie.com");
+
+    if (host === "youtu.be" || host.endsWith(".youtu.be")) {
+      const id = url.pathname.split("/").filter(Boolean)[0];
+      return /^[\w-]{11}$/.test(id || "") ? id : "";
+    }
+
+    if (!isYouTube) {
+      return "";
+    }
+
+    // 標準網址：youtube.com/watch?v=...
+    const watchId = url.searchParams.get("v");
+
+    if (watchId) {
+      return /^[\w-]{11}$/.test(watchId) ? watchId : "";
+    }
+
+    // Shorts、Embed、Live 網址
+    const parts = url.pathname.split("/").filter(Boolean);
+
+    if (["embed", "shorts", "live", "v"].includes(parts[0])) {
+      const id = parts[1] || "";
+      return /^[\w-]{11}$/.test(id) ? id : "";
+    }
+  } catch {
+    return "";
+  }
+
+  return "";
+}
+
+// 新增影片
+function addVideo() {
+  if (adding.value) return;
+
+  const id = extractVideoId(videoUrl.value);
+
+  if (!id) {
+    $q.notify({
+      type: "warning",
+      message: "請輸入有效的 YouTube 影片網址或 11 碼 ID",
+    });
+    return;
+  }
+
+  if (videos.value.some((video) => video.id === id)) {
+    $q.notify({
+      type: "info",
+      message: "這部影片已經在播放清單中",
+    });
+    return;
+  }
+
+  const wasEmpty = videos.value.length === 0;
+
+  videos.value.push({
+    id,
+    title: `YouTube 影片 ${videos.value.length + 1}`,
+  });
+
+  saveVideos();
+  videoUrl.value = "";
+
+  $q.notify({
+    type: "positive",
+    message: "影片已新增至播放清單",
+  });
+
+  if (apiReady.value && player) {
+    if (wasEmpty) {
+      syncPlaylist(true);
+    } else {
+      syncPlaylist(false);
+    }
   }
 }
 
-// 將文字轉換成語音
-function speak() {
-  if (!("speechSynthesis" in window)) {
-    status.value = "此環境不支援語音合成";
+// 刪除影片
+function removeVideo(index) {
+  if (index < 0 || index >= videos.value.length) {
     return;
   }
 
-  const content = text.value.trim();
+  const removedCurrent = index === currentIndex.value;
+  const oldIndex = currentIndex.value;
 
-  if (!content) {
-    status.value = "請先輸入或辨識文字";
+  videos.value.splice(index, 1);
+  saveVideos();
+
+  if (videos.value.length === 0) {
+    currentIndex.value = -1;
+    pendingIndex = null;
+
+    if (apiReady.value && player) {
+      player.stopVideo();
+      player.clearVideo();
+    }
+
+    playerStatus.value = "播放清單是空的";
     return;
   }
 
-  window.speechSynthesis.cancel();
+  if (removedCurrent) {
+    currentIndex.value = Math.min(oldIndex, videos.value.length - 1);
 
-  const utterance = new SpeechSynthesisUtterance(content);
-
-  utterance.lang = "zh-TW";
-
-  utterance.onstart = () => {
-    status.value = "正在唸出文字...";
-  };
-
-  utterance.onend = () => {
-    status.value = "語音播放完成";
-  };
-
-  utterance.onerror = () => {
-    status.value = "語音播放發生錯誤";
-  };
-
-  window.speechSynthesis.speak(utterance);
-}
-
-// 將文字轉換成語音
-function speak2() {
-  if (!("speechSynthesis" in window)) {
-    return;
-  }
-
-  // 讀取 Alert Dialog 的標題與內容
-  const content = `${alertTitle.value}，${alertMessage.value}`;
-
-  window.speechSynthesis.cancel();
-
-  const utterance = new SpeechSynthesisUtterance(content);
-  utterance.lang = "zh-TW";
-  utterance.rate = 1;
-
-  window.speechSynthesis.speak(utterance);
-}
-
-// function runCommand() {
-async function runCommand() {
-  const command = text.value.trim().toLowerCase();
-
-  if (!command) {
-    status.value = "請先輸入語音指令";
-    return;
-  }
-  // 開啟 GPT / ChatGPT   ---- ---- ---- ----
-  if (
-    command.includes("打開 gpt") ||
-    command.includes("開啟 gpt") ||
-    command.includes("打開gpt") ||
-    command.includes("開啟gpt") ||
-    command.includes("打開 chatgpt") ||
-    command.includes("開啟 chatgpt") ||
-    command.includes("開啟聊天機器人")
-  ) {
-    status.value = "正在開啟 ChatGPT...";
-    window.open("https://chatgpt.com/", "_blank");
-    status.value = "已送出開啟 ChatGPT 的要求";
-
-    // 開啟 Google    ----------
-  } else if (
-    command.includes("開啟google") ||
-    command.includes("開啟谷歌") ||
-    // command.includes("唸出Google指令") ||
-    command.includes("打開google")
-  ) {
-    status.value = "正在開啟 Google...";
-    window.open("https://www.google.com", "_blank");
-    status.value = "已送出開啟 Google 的要求";
-
-    // 複製部落格網址
-  } else if (
-    command.includes("複製部落格網址") ||
-    command.includes("複製部落格")
-  ) {
-    const blogUrl =
-      // "https://joey20090710.blogspot.com/2026/10/diary-repair-shop-future.html";
-      "https://joey20090710.blogspot.com/2026/10/voiceblg.html";
-
-    try {
-      await navigator.clipboard.writeText(blogUrl);
-
-      status.value = "部落格網址已複製！";
-
-      Notify.create({
-        type: "positive",
-        message: "部落格網址已複製！",
-        position: "top",
-      });
-    } catch (error) {
-      status.value = "複製失敗，請檢查瀏覽器權限";
-
-      Notify.create({
-        type: "negative",
-        message: "複製失敗，請確認網站使用 HTTPS",
-        position: "top",
-      });
-    }
-
-    // ---- ---- ---- ---- -------- ---- ---- ---
-
-    // 唸出 Google 指令 ----------
-  } else if (
-    command.includes("唸出指令") ||
-    command.includes("Google指令") ||
-    command.includes("谷歌指令")
-  ) {
-    if (!("speechSynthesis" in window)) {
-      status.value = "此瀏覽器不支援語音合成";
-      return;
-    }
-
-    // 要唸出的文字
-    const content = `${alertTitle.value}，${alertMessage2.value}`;
-
-    if (!content.trim()) {
-      status.value = "沒有可唸出的文字";
-      return;
-    }
-
-    // 停止先前的語音
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(content);
-    utterance.lang = "zh-TW";
-    utterance.rate = 1;
-
-    utterance.onstart = () => {
-      status.value = "正在唸出 Google 指令...";
-    };
-
-    utterance.onend = () => {
-      status.value = "Google 指令唸出完成";
-    };
-
-    utterance.onerror = (event) => {
-      status.value = `語音合成錯誤：${event.error}`;
-    };
-
-    window.speechSynthesis.speak(utterance);
-
-    // -------
-
-    // 唸出 排程 ----------
-  } else if (command.includes("唸出排程") || command.includes("最近排程")) {
-    if (!("speechSynthesis" in window)) {
-      status.value = "此瀏覽器不支援語音合成";
-      return;
-    }
-
-    // 要唸出的文字
-    const content = `${alertTitle.value}，${alertMessage3.value}`;
-
-    if (!content.trim()) {
-      status.value = "沒有可唸出的文字";
-      return;
-    }
-
-    // 停止先前的語音
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(content);
-    utterance.lang = "zh-TW";
-    utterance.rate = 1;
-
-    utterance.onstart = () => {
-      status.value = "正在唸出 Google 指令...";
-    };
-
-    utterance.onend = () => {
-      status.value = "Google 指令唸出完成";
-    };
-
-    utterance.onerror = (event) => {
-      status.value = `語音合成錯誤：${event.error}`;
-    };
-
-    window.speechSynthesis.speak(utterance);
-
-    // 開啟巡檢
-  } else if (command.includes("打開巡檢")) {
-    status.value = "執行：開啟巡檢頁面";
-
-    // router.push('/inspection')
-
-    // 停止指令
-  } else if (command.includes("停止")) {
-    status.value = "收到停止指令";
+    pendingIndex = currentIndex.value;
+    syncPlaylist(true);
   } else {
-    status.value = `尚未定義此指令：${text.value.trim()}`;
+    if (index < oldIndex) {
+      currentIndex.value = oldIndex - 1;
+    }
+
+    syncPlaylist(false);
   }
 }
 
-// 元件卸載時停止語音功能
-onBeforeUnmount(() => {
-  if (recognition) {
-    recognition.onresult = null;
-    recognition.onerror = null;
-    recognition.onend = null;
-    recognition.abort();
-    recognition = null;
+// 同步播放清單
+function syncPlaylist(startPlayback = false) {
+  if (!apiReady.value || !player) return;
+
+  if (videos.value.length === 0) {
+    player.stopVideo();
+    player.clearVideo();
+    currentIndex.value = -1;
+    return;
   }
 
-  if ("speechSynthesis" in window) {
-    window.speechSynthesis.cancel();
+  const ids = videos.value.map((video) => video.id);
+
+  const index = Math.max(0, Math.min(currentIndex.value, ids.length - 1));
+
+  currentIndex.value = index;
+  pendingIndex = index;
+
+  if (startPlayback) {
+    player.loadPlaylist(ids, index, 0);
+  } else {
+    player.cuePlaylist(ids, index, 0);
+  }
+
+  player.setLoop(loop.value);
+}
+
+// 開始播放整份清單
+function playAll() {
+  if (!apiReady.value || !player || !videos.value.length) {
+    return;
+  }
+
+  currentIndex.value = 0;
+  pendingIndex = 0;
+
+  player.loadPlaylist(
+    videos.value.map((video) => video.id),
+    0,
+    0
+  );
+
+  player.setLoop(loop.value);
+}
+
+// 播放指定影片
+function playVideoAt(index) {
+  if (!apiReady.value || !player || index < 0 || index >= videos.value.length) {
+    return;
+  }
+
+  currentIndex.value = index;
+  pendingIndex = index;
+
+  player.playVideoAt(index);
+}
+
+// 下一部
+function nextVideo() {
+  if (!apiReady.value || !player || !videos.value.length) {
+    return;
+  }
+
+  if (videos.value.length === 1) {
+    player.playVideoAt(0);
+    return;
+  }
+
+  player.nextVideo();
+}
+
+// 上一部
+function previousVideo() {
+  if (!apiReady.value || !player || !videos.value.length) {
+    return;
+  }
+
+  if (videos.value.length === 1) {
+    player.playVideoAt(0);
+    return;
+  }
+
+  player.previousVideo();
+}
+
+// 暫停
+function pauseVideo() {
+  player?.pauseVideo();
+}
+
+// 繼續
+function resumeVideo() {
+  player?.playVideo();
+}
+
+// 設定循環播放
+function setLoop(value) {
+  loop.value = value;
+
+  if (apiReady.value && player) {
+    player.setLoop(value);
+  }
+}
+
+// 取得 YouTube 播放器狀態
+function updatePlayerState(event) {
+  if (disposed) return;
+
+  const YT = window.YT;
+
+  if (!YT) return;
+
+  switch (event.data) {
+    case YT.PlayerState.PLAYING: {
+      const index = player.getPlaylistIndex();
+
+      if (typeof index === "number" && index >= 0) {
+        currentIndex.value = index;
+      }
+
+      playerStatus.value = "正在播放";
+      break;
+    }
+
+    case YT.PlayerState.PAUSED:
+      playerStatus.value = "已暫停";
+      break;
+
+    case YT.PlayerState.BUFFERING:
+      playerStatus.value = "影片載入中...";
+      break;
+
+    case YT.PlayerState.ENDED:
+      playerStatus.value = "影片播放結束";
+      break;
+
+    case YT.PlayerState.CUED:
+      playerStatus.value = "影片已準備就緒";
+      break;
+
+    default:
+      break;
+  }
+}
+
+// 初始化 YouTube 播放器
+function initPlayer() {
+  if (disposed || !window.YT?.Player || player) {
+    return;
+  }
+
+  player = new window.YT.Player("youtube-player", {
+    width: "100%",
+    height: "100%",
+
+    playerVars: {
+      playsinline: 1,
+      autoplay: 0,
+      controls: 1,
+      origin: window.location.origin,
+    },
+
+    events: {
+      onReady(event) {
+        if (disposed) {
+          event.target.destroy();
+          return;
+        }
+
+        apiReady.value = true;
+        event.target.setLoop(loop.value);
+
+        if (videos.value.length > 0) {
+          event.target.cuePlaylist(
+            videos.value.map((video) => video.id),
+            0,
+            0
+          );
+
+          currentIndex.value = 0;
+          playerStatus.value = "播放清單已載入";
+        } else {
+          playerStatus.value = "請新增 YouTube 影片";
+        }
+      },
+
+      onStateChange: updatePlayerState,
+
+      onError(event) {
+        const messages = {
+          2: "影片 ID 無效",
+          5: "影片無法以 HTML5 播放器播放",
+          100: "影片不存在或已被移除",
+          101: "影片擁有者不允許嵌入播放",
+          150: "影片擁有者不允許嵌入播放",
+          153: "缺少 HTTP Referer 或等效的用戶端識別資訊",
+        };
+
+        $q.notify({
+          type: "warning",
+          message:
+            messages[event.data] || "影片無法播放，請檢查影片網址或嵌入權限",
+        });
+      },
+
+      onAutoplayBlocked() {
+        $q.notify({
+          type: "info",
+          message: "瀏覽器限制自動播放，請按下播放鍵",
+        });
+      },
+    },
+  });
+}
+
+// 載入 YouTube IFrame API
+onMounted(() => {
+  disposed = false;
+
+  if (window.YT?.Player) {
+    initPlayer();
+    return;
+  }
+
+  // 保留原本的 API 就緒回呼
+  const previousHandler = window.onYouTubeIframeAPIReady;
+
+  apiLoadHandler = () => {
+    if (typeof previousHandler === "function") {
+      previousHandler();
+    }
+
+    initPlayer();
+  };
+
+  window.onYouTubeIframeAPIReady = apiLoadHandler;
+
+  let script = document.querySelector(`script[src="${YOUTUBE_API_URL}"]`);
+
+  if (!script) {
+    script = document.createElement("script");
+    script.src = YOUTUBE_API_URL;
+    script.async = true;
+    document.head.appendChild(script);
+  }
+});
+
+// 清除播放器
+onBeforeUnmount(() => {
+  disposed = true;
+  apiReady.value = false;
+
+  if (apiLoadHandler && window.onYouTubeIframeAPIReady === apiLoadHandler) {
+    window.onYouTubeIframeAPIReady = null;
+  }
+
+  if (player) {
+    player.destroy();
+    player = null;
   }
 });
 </script>
+
+<style scoped>
+.player-card {
+  overflow: hidden;
+}
+
+.player-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+#youtube-player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#youtube-player :deep(iframe) {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+</style>
