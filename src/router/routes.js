@@ -159,6 +159,7 @@ const routes = [
       { path: 'android', component: () => import('components/android.vue'), name: 'android' },
       { path: 'voice', component: () => import('components/voice.vue'), name: 'voice' },
       { path: 'voice_manual', component: () => import('components/voice_manual.vue'), name: 'voice_manual' },
+      { path: 'YTcontinue', component: () => import('components/YTcontinue.vue'), name: 'YTcontinue' },
 
 
       // ------ speed zone -------
