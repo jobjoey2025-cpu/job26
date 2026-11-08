@@ -160,7 +160,9 @@ const routes = [
       { path: 'voice', component: () => import('components/voice.vue'), name: 'voice' },
       { path: 'voice_manual', component: () => import('components/voice_manual.vue'), name: 'voice_manual' },
       { path: 'YTcontinue', component: () => import('components/YTcontinue.vue'), name: 'YTcontinue' },
+      { path: 'laundry', component: () => import('components/laundry.vue'), name: 'laundry' },
 
+      // joey 快速管道 ------
 
       // ------ speed zone -------
 
@@ -346,7 +348,7 @@ const routes = [
         },
       },
 
-      // joey
+      // joey 手工目錄
       {
         path: 'Firedb_recent', component: () => import('components/Firedb_recent.vue'), name: 'Firedb_recent',
         meta: {

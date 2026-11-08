@@ -63,6 +63,15 @@
           :disable="loading || saving || !items.length"
           @click="setAll(false)"
         />
+        <q-btn
+          label="新增項目"
+          icon="add"
+          color="primary"
+          unelevated
+          size="sm"
+          :disable="loading || saving"
+          @click="openAddDialog"
+        />
         <q-space />
         <q-btn
           label="重新讀取"
@@ -120,8 +129,39 @@
                 {{ item.name }}
               </q-item-label>
             </q-item-section>
-            <q-item-section side v-if="item.done">
-              <q-icon name="check_circle" color="positive" />
+            <q-item-section side>
+              <div class="row items-center no-wrap">
+                <q-icon
+                  v-if="item.done"
+                  name="check_circle"
+                  color="positive"
+                  class="q-mr-xs"
+                />
+                <q-btn
+                  flat
+                  round
+                  dense
+                  size="sm"
+                  icon="edit"
+                  color="primary"
+                  :disable="saving"
+                  @click.stop="openEditDialog(item)"
+                >
+                  <q-tooltip>編輯</q-tooltip>
+                </q-btn>
+                <q-btn
+                  flat
+                  round
+                  dense
+                  size="sm"
+                  icon="delete"
+                  color="negative"
+                  :disable="saving"
+                  @click.stop="deleteItem(item)"
+                >
+                  <q-tooltip>刪除</q-tooltip>
+                </q-btn>
+              </div>
             </q-item-section>
           </q-item>
         </q-list>
@@ -164,12 +204,84 @@
                 {{ item.name }}
               </q-item-label>
             </q-item-section>
-            <q-item-section side v-if="item.done">
-              <q-icon name="check_circle" color="positive" />
+            <q-item-section side>
+              <div class="row items-center no-wrap">
+                <q-icon
+                  v-if="item.done"
+                  name="check_circle"
+                  color="positive"
+                  class="q-mr-xs"
+                />
+                <q-btn
+                  flat
+                  round
+                  dense
+                  size="sm"
+                  icon="edit"
+                  color="primary"
+                  :disable="saving"
+                  @click.stop="openEditDialog(item)"
+                >
+                  <q-tooltip>編輯</q-tooltip>
+                </q-btn>
+                <q-btn
+                  flat
+                  round
+                  dense
+                  size="sm"
+                  icon="delete"
+                  color="negative"
+                  :disable="saving"
+                  @click.stop="deleteItem(item)"
+                >
+                  <q-tooltip>刪除</q-tooltip>
+                </q-btn>
+              </div>
             </q-item-section>
           </q-item>
         </q-list>
       </q-card>
+
+      <!-- Add / Edit Dialog -->
+      <q-dialog v-model="itemDialog">
+        <q-card style="width: 100%; max-width: 420px">
+          <q-card-section>
+            <div class="text-h6">
+              {{ editingItem ? "編輯項目" : "新增項目" }}
+            </div>
+          </q-card-section>
+          <q-card-section class="q-gutter-md">
+            <q-input
+              v-model.trim="form.name"
+              label="項目名稱"
+              outlined
+              autofocus
+              maxlength="100"
+              counter
+              @keyup.enter="saveItem"
+            />
+            <q-select
+              v-model="form.category"
+              label="清單分類"
+              outlined
+              emit-value
+              map-options
+              :options="categoryOptions"
+            />
+          </q-card-section>
+          <q-card-actions align="right">
+            <q-btn flat label="取消" color="grey-7" v-close-popup />
+            <q-btn
+              unelevated
+              label="儲存"
+              color="primary"
+              :loading="saving"
+              :disable="!form.name"
+              @click="saveItem"
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
 
       <q-banner
         v-if="completedCount === items.length && items.length"
@@ -186,7 +298,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import { db } from "boot/firebase_android";
-import { ref as dbRef, onValue, set, update } from "firebase/database";
+import { ref as dbRef, onValue, set, update, remove } from "firebase/database";
 import { useQuasar } from "quasar";
 
 const $q = useQuasar();
@@ -250,6 +362,14 @@ const items = ref([]);
 const loading = ref(false);
 const saving = ref(false);
 const connected = ref(false);
+
+const itemDialog = ref(false);
+const editingItem = ref(null);
+const form = ref({ name: "", category: "洗衣蒐集" });
+const categoryOptions = [
+  { label: "洗衣蒐集", value: "洗衣蒐集" },
+  { label: "其他物品", value: "" },
+];
 
 const laundryItems = computed(() =>
   items.value.filter((item) => item.category === "洗衣蒐集")
@@ -329,6 +449,94 @@ function loadItems() {
       });
     }
   );
+}
+
+function openAddDialog() {
+  editingItem.value = null;
+  form.value = { name: "", category: "洗衣蒐集" };
+  itemDialog.value = true;
+}
+
+function openEditDialog(item) {
+  editingItem.value = item;
+  form.value = {
+    name: item.name,
+    category: item.category,
+  };
+  itemDialog.value = true;
+}
+
+async function saveItem() {
+  const name = form.value.name.trim();
+  if (!name || saving.value) return;
+
+  const isEditing = Boolean(editingItem.value);
+  const id = isEditing
+    ? editingItem.value.id
+    : `item-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+  saving.value = true;
+  try {
+    const itemData = {
+      id,
+      name,
+      category: form.value.category,
+      done: isEditing ? editingItem.value.done : false,
+    };
+
+    await set(dbRef(db, `${FIREBASE_PATH}/${id}`), itemData);
+    itemDialog.value = false;
+    $q.notify({
+      type: "positive",
+      message: isEditing
+        ? "項目已更新並同步 Firebase。"
+        : "項目已新增並同步 Firebase。",
+    });
+  } catch (error) {
+    console.error(error);
+    $q.notify({
+      type: "negative",
+      message: `儲存項目失敗：${error.message}`,
+    });
+  } finally {
+    saving.value = false;
+  }
+}
+
+function deleteItem(item) {
+  $q.dialog({
+    title: "確認刪除",
+    message: `確定要刪除「${item.name}」嗎？此操作無法復原。`,
+    cancel: {
+      label: "取消",
+      flat: true,
+    },
+    ok: {
+      label: "刪除",
+      color: "negative",
+      unelevated: true,
+    },
+    persistent: true,
+  }).onOk(async () => {
+    if (saving.value) return;
+
+    saving.value = true;
+    try {
+      await remove(dbRef(db, `${FIREBASE_PATH}/${item.id}`));
+      $q.notify({
+        type: "positive",
+        message: `已刪除「${item.name}」並同步 Firebase。`,
+      });
+    } catch (error) {
+      console.error(error);
+      $q.notify({
+        type: "negative",
+        message: `刪除項目失敗：${error.message}`,
+      });
+    } finally {
+      saving.value = false;
+    }
+  });
 }
 
 async function toggleItem(item) {
