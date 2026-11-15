@@ -161,6 +161,9 @@ const routes = [
       { path: 'voice_manual', component: () => import('components/voice_manual.vue'), name: 'voice_manual' },
       { path: 'YTcontinue', component: () => import('components/YTcontinue.vue'), name: 'YTcontinue' },
       { path: 'laundry', component: () => import('components/laundry.vue'), name: 'laundry' },
+      { path: 'voice_equip', component: () => import('components/voice_equip.vue'), name: 'voice_equip' },
+
+
 
       // joey 快速管道 ------
 

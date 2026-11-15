@@ -5,8 +5,8 @@
       <div class="row items-center justify-between q-mb-md">
         <div>
           <div class="text-h5 text-weight-bold">
-            <q-icon name="headphones" color="primary" class="q-mr-sm" />
-            耳機設備管理
+            <q-icon name="event_note" color="primary" class="q-mr-sm" />
+            每日工作紀錄
           </div>
           <div class="text-caption text-grey-7 q-mt-xs">
             Firebase Realtime Database：{{ FIREBASE_PATH }}
@@ -20,7 +20,7 @@
           >
             {{ loading ? "讀取中" : connected ? "Firebase 已連線" : "尚未連線" }}
           </q-badge>
-          <q-icon name="settings_voice" size="34px" color="primary" />
+          <q-icon name="work_history" size="34px" color="primary" />
         </div>
       </div>
 
@@ -29,9 +29,9 @@
         <div class="col-6 col-sm-3">
           <q-card flat bordered>
             <q-card-section class="q-pa-sm">
-              <div class="text-caption text-grey-7">設備總數</div>
+              <div class="text-caption text-grey-7">今日紀錄</div>
               <div class="text-h5 text-weight-bold text-primary">
-                {{ items.length }}
+                {{ todayCount }}
               </div>
             </q-card-section>
           </q-card>
@@ -39,9 +39,17 @@
         <div class="col-6 col-sm-3">
           <q-card flat bordered>
             <q-card-section class="q-pa-sm">
-              <div class="text-caption text-grey-7">內容軟體</div>
-              <div class="text-h5 text-weight-bold">
-                {{ countByCategory("1內容軟體") }}
+              <div class="text-caption text-grey-7">工作總數</div>
+              <div class="text-h5 text-weight-bold">{{ items.length }}</div>
+            </q-card-section>
+          </q-card>
+        </div>
+        <div class="col-6 col-sm-3">
+          <q-card flat bordered>
+            <q-card-section class="q-pa-sm">
+              <div class="text-caption text-grey-7">進行中</div>
+              <div class="text-h5 text-weight-bold text-orange">
+                {{ countByStatus("進行中") }}
               </div>
             </q-card-section>
           </q-card>
@@ -49,36 +57,26 @@
         <div class="col-6 col-sm-3">
           <q-card flat bordered>
             <q-card-section class="q-pa-sm">
-              <div class="text-caption text-grey-7">主力手機</div>
-              <div class="text-h5 text-weight-bold">
-                {{ countByCategory("2主力手機") }}
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="col-6 col-sm-3">
-          <q-card flat bordered>
-            <q-card-section class="q-pa-sm">
-              <div class="text-caption text-grey-7">未來急買</div>
-              <div class="text-h5 text-weight-bold">
-                {{ countByCategory("5未來急買") }}
+              <div class="text-caption text-grey-7">已完成</div>
+              <div class="text-h5 text-weight-bold text-positive">
+                {{ countByStatus("已完成") }}
               </div>
             </q-card-section>
           </q-card>
         </div>
       </div>
 
-      <!-- Actions -->
+      <!-- Search and actions -->
       <q-card flat bordered class="q-mb-md">
         <q-card-section class="q-pa-sm">
           <div class="row items-center q-col-gutter-sm">
-            <div class="col-12 col-sm">
+            <div class="col-12 col-md">
               <q-input
                 v-model="keyword"
                 dense
                 outlined
                 clearable
-                placeholder="搜尋設備名稱、描述或分類..."
+                placeholder="搜尋工作標題、內容或專案..."
               >
                 <template #prepend>
                   <q-icon name="search" />
@@ -86,10 +84,29 @@
               </q-input>
             </div>
 
-            <div class="col-12 col-sm-auto">
+            <div class="col-12 col-sm-6 col-md-3">
+              <q-input
+                v-model="selectedDate"
+                dense
+                outlined
+                clearable
+                type="date"
+                label="指定日期"
+                stack-label
+              />
+            </div>
+
+            <div class="col-12 col-md-auto">
               <div class="row items-center q-gutter-xs">
                 <q-btn
-                  label="新增設備"
+                  label="今天"
+                  icon="today"
+                  color="primary"
+                  outline
+                  @click="selectedDate = today"
+                />
+                <q-btn
+                  label="新增紀錄"
                   icon="add"
                   color="primary"
                   unelevated
@@ -111,7 +128,7 @@
                   outlined
                   clearable
                   label="匯入 JSON"
-                  style="width: 150px"
+                  style="width: 145px"
                   :disable="loading || saving"
                   @update:model-value="handleImportFile"
                 >
@@ -137,7 +154,7 @@
 
         <q-separator />
 
-        <!-- Category Filter -->
+        <!-- Category filter -->
         <q-tabs
           v-model="selectedCategory"
           align="left"
@@ -149,7 +166,7 @@
           indicator-color="primary"
           class="text-grey-8"
         >
-          <q-tab name="all" label="全部設備" />
+          <q-tab name="all" label="全部分類" />
           <q-tab
             v-for="category in categories"
             :key="category"
@@ -159,9 +176,10 @@
         </q-tabs>
       </q-card>
 
+      <!-- List heading -->
       <div class="row items-center justify-between q-mb-sm">
         <div class="text-subtitle2 text-weight-medium">
-          {{ selectedCategory === "all" ? "所有設備" : selectedCategory }}
+          {{ selectedDate ? `${selectedDate} 工作紀錄` : selectedCategory === "all" ? "所有工作紀錄" : selectedCategory }}
         </div>
         <div class="text-caption text-grey-7">
           顯示 {{ filteredItems.length }} / {{ items.length }} 筆
@@ -173,7 +191,7 @@
         rounded
         class="bg-blue-1 text-blue-10 q-mb-md"
       >
-        Firebase 目前沒有設備資料。系統會在首次連線時自動初始化 voice.json 的 17 筆資料。
+        Firebase 目前沒有工作紀錄，請按「新增紀錄」建立第一筆資料。
       </q-banner>
 
       <q-banner
@@ -181,10 +199,10 @@
         rounded
         class="bg-grey-3 text-grey-8 q-mb-md"
       >
-        找不到符合條件的設備，請更換搜尋文字或分類。
+        找不到符合條件的工作紀錄，請調整搜尋文字、日期或分類。
       </q-banner>
 
-      <!-- Equipment Cards -->
+      <!-- Daily work record cards -->
       <div class="row q-col-gutter-md">
         <div
           v-for="item in filteredItems"
@@ -195,15 +213,21 @@
             <q-card-section class="q-pb-sm">
               <div class="row items-start no-wrap">
                 <div class="col">
-                  <div class="text-subtitle1 text-weight-bold">
-                    {{ item.name }}
+                  <div class="text-caption text-grey-7">
+                    <q-icon name="calendar_today" class="q-mr-xs" />
+                    {{ item.date || "未設定日期" }}
                   </div>
-                  <q-badge
-                    :color="categoryColor(item.category)"
-                    class="q-mt-xs"
-                  >
-                    {{ item.category || "未分類" }}
-                  </q-badge>
+                  <div class="text-subtitle1 text-weight-bold q-mt-xs">
+                    {{ item.title }}
+                  </div>
+                  <div class="row q-gutter-xs q-mt-sm">
+                    <q-badge :color="categoryColor(item.category)">
+                      {{ item.category || "未分類" }}
+                    </q-badge>
+                    <q-badge :color="statusColor(item.status)">
+                      {{ item.status || "未設定狀態" }}
+                    </q-badge>
+                  </div>
                 </div>
 
                 <div class="row no-wrap">
@@ -217,7 +241,7 @@
                     :disable="saving"
                     @click="openEditDialog(item)"
                   >
-                    <q-tooltip>編輯設備</q-tooltip>
+                    <q-tooltip>編輯紀錄</q-tooltip>
                   </q-btn>
                   <q-btn
                     flat
@@ -229,76 +253,58 @@
                     :disable="saving"
                     @click="deleteItem(item)"
                   >
-                    <q-tooltip>刪除設備</q-tooltip>
+                    <q-tooltip>刪除紀錄</q-tooltip>
                   </q-btn>
                 </div>
               </div>
             </q-card-section>
 
             <q-card-section class="q-pt-none col">
-              <div
-                v-if="item.description"
-                class="text-body2 text-grey-8"
-                style="white-space: pre-wrap"
-              >
-                {{ item.description }}
+              <div v-if="item.project" class="text-caption text-grey-7 q-mb-sm">
+                <q-icon name="folder_open" class="q-mr-xs" />
+                {{ item.project }}
               </div>
-              <div v-else class="text-caption text-grey-5">尚無描述</div>
 
               <div
-                v-if="item.photoLink1 || item.photoLink2"
-                class="row q-col-gutter-sm q-mt-sm"
+                v-if="item.content"
+                class="text-body2 text-grey-9"
+                style="white-space: pre-wrap; overflow-wrap: anywhere"
               >
-                <div v-if="item.photoLink1" class="col-6">
-                  <q-img
-                    :src="item.photoLink1"
-                    :ratio="4 / 3"
-                    fit="contain"
-                    class="rounded-borders bg-grey-2 cursor-pointer"
-                    @click="openPhoto(item.photoLink1)"
-                  >
-                    <div class="absolute-bottom text-caption text-center q-pa-xs">
-                      圖片 1
-                    </div>
-                  </q-img>
+                {{ item.content }}
+              </div>
+              <div v-else class="text-caption text-grey-5">尚無工作內容</div>
+
+              <div v-if="item.note" class="bg-grey-2 rounded-borders q-pa-sm q-mt-md">
+                <div class="text-caption text-grey-7 q-mb-xs">
+                  <q-icon name="sticky_note_2" class="q-mr-xs" />
+                  備註
                 </div>
-                <div v-if="item.photoLink2" class="col-6">
-                  <q-img
-                    :src="item.photoLink2"
-                    :ratio="4 / 3"
-                    fit="contain"
-                    class="rounded-borders bg-grey-2 cursor-pointer"
-                    @click="openPhoto(item.photoLink2)"
-                  >
-                    <div class="absolute-bottom text-caption text-center q-pa-xs">
-                      圖片 2
-                    </div>
-                  </q-img>
+                <div class="text-body2" style="white-space: pre-wrap">
+                  {{ item.note }}
                 </div>
               </div>
             </q-card-section>
 
             <q-separator />
-            <q-card-actions align="between" class="text-caption text-grey-6">
-              <span>{{ item.id }}</span>
-              <span v-if="item.photoLink1 || item.photoLink2">
-                <q-icon name="image" class="q-mr-xs" />
-                {{ Number(Boolean(item.photoLink1)) + Number(Boolean(item.photoLink2)) }} 張圖片
+            <q-card-actions align="between" class="text-caption text-grey-7">
+              <span>
+                <q-icon name="schedule" class="q-mr-xs" />
+                {{ formatHours(item.hours) }}
               </span>
-              <span v-else>無圖片</span>
+              <span>{{ item.id }}</span>
             </q-card-actions>
           </q-card>
         </div>
       </div>
 
-      <!-- Add / Edit Dialog -->
-      <q-dialog v-model="itemDialog">
-        <q-card style="width: 100%; max-width: 620px">
+      <!-- Add / Edit dialog -->
+      <q-dialog v-model="recordDialog">
+        <q-card style="width: 100%; max-width: 640px">
           <q-card-section>
             <div class="text-h6">
-              {{ editingItem ? "編輯設備" : "新增設備" }}
+              {{ editingItem ? "編輯工作紀錄" : "新增工作紀錄" }}
             </div>
-            <div class="text-caption text-grey-7">
+            <div class="text-caption text-grey-7 q-mt-xs">
               儲存後會立即同步至 Firebase。
             </div>
           </q-card-section>
@@ -307,70 +313,91 @@
 
           <q-card-section class="q-gutter-md">
             <q-input
-              v-model.trim="form.name"
-              label="設備名稱"
+              v-model.trim="form.title"
+              label="工作標題"
               outlined
               autofocus
               maxlength="120"
               counter
-              :rules="[(value) => !!value || '請輸入設備名稱']"
+              :rules="[(value) => !!value || '請輸入工作標題']"
             />
 
-            <q-select
-              v-model="form.category"
-              label="設備分類"
+            <div class="row q-col-gutter-sm">
+              <div class="col-12 col-sm-6">
+                <q-input
+                  v-model="form.date"
+                  label="工作日期"
+                  type="date"
+                  outlined
+                  stack-label
+                />
+              </div>
+              <div class="col-12 col-sm-6">
+                <q-input
+                  v-model.number="form.hours"
+                  label="花費工時（小時）"
+                  type="number"
+                  min="0"
+                  step="0.5"
+                  outlined
+                />
+              </div>
+            </div>
+
+            <div class="row q-col-gutter-sm">
+              <div class="col-12 col-sm-6">
+                <q-select
+                  v-model="form.category"
+                  label="工作分類"
+                  outlined
+                  emit-value
+                  map-options
+                  :options="categoryOptions"
+                />
+              </div>
+              <div class="col-12 col-sm-6">
+                <q-select
+                  v-model="form.status"
+                  label="工作狀態"
+                  outlined
+                  emit-value
+                  map-options
+                  :options="statusOptions"
+                />
+              </div>
+            </div>
+
+            <q-input
+              v-model.trim="form.project"
+              label="專案名稱（選填）"
               outlined
-              emit-value
-              map-options
-              :options="categoryOptions"
+              maxlength="120"
+              clearable
+            >
+              <template #prepend>
+                <q-icon name="folder_open" />
+              </template>
+            </q-input>
+
+            <q-input
+              v-model="form.content"
+              label="工作內容"
+              type="textarea"
+              autogrow
+              outlined
+              maxlength="3000"
+              counter
+              placeholder="記錄今天完成的事項、處理過程、技術細節或遇到的問題..."
             />
 
             <q-input
-              v-model="form.description"
-              label="描述 / 備註"
+              v-model="form.note"
+              label="備註 / 待辦事項"
               type="textarea"
               autogrow
               outlined
               maxlength="1000"
               counter
-            />
-
-            <q-input
-              v-model.trim="form.photoLink1"
-              label="圖片連結 1"
-              type="url"
-              outlined
-              clearable
-            >
-              <template #prepend><q-icon name="image" /></template>
-            </q-input>
-
-            <q-img
-              v-if="isValidHttpUrl(form.photoLink1)"
-              :src="form.photoLink1"
-              :ratio="16 / 9"
-              fit="contain"
-              class="rounded-borders bg-grey-2"
-              style="max-height: 150px"
-            />
-
-            <q-input
-              v-model.trim="form.photoLink2"
-              label="圖片連結 2"
-              type="url"
-              outlined
-              clearable
-            >
-              <template #prepend><q-icon name="image" /></template>
-            </q-input>
-
-            <q-img
-              v-if="isValidHttpUrl(form.photoLink2)"
-              :src="form.photoLink2"
-              :ratio="16 / 9"
-              fit="contain"
-              class="rounded-borders bg-grey-2"
-              style="max-height: 150px"
             />
           </q-card-section>
 
@@ -383,7 +410,7 @@
               label="儲存並同步"
               color="primary"
               :loading="saving"
-              :disable="!form.name.trim() || saving"
+              :disable="!form.title.trim() || saving"
               @click="saveItem"
             />
           </q-card-actions>
@@ -395,12 +422,11 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
-import { db } from "boot/firebase_android";
+import { db } from "boot/firebase_job2026";
 import {
   ref as dbRef,
   onValue,
   set,
-  update,
   remove,
 } from "firebase/database";
 import { useQuasar } from "quasar";
@@ -408,160 +434,20 @@ import { useQuasar } from "quasar";
 const $q = useQuasar();
 
 // Firebase Realtime Database 路徑
-const FIREBASE_PATH = "pc-software-config/voice_equipment";
+// 請確認此路徑符合你的 Firebase 資料庫規劃。
+const FIREBASE_PATH = "pc-software-config/daily_work_records";
 
-// voice.json 原始 17 筆資料。
-// Firebase 使用以 id 為 key 的物件結構，避免直接使用陣列造成索引問題。
-const defaultVoiceItems = [
-  {
-    id: "voice-001",
-    name: "YT Continue，English Ad",
-    category: "1內容軟體",
-    description: "joey 英文童書看不下去，Ad Tiffany可以聽，",
-    photoLink1: "https://lh3.googleusercontent.com/d/1-0yFCwYzAjtcQtGxfYMd7I84uBkENih6=w1200",
-    photoLink2: "https://lh3.googleusercontent.com/d/19K9tZQnq0pf1U9n-1VLdPQLppkJzTsx9=w1200",
-  },
-  {
-    id: "voice-002",
-    name: "Podcast 猿，Spotify",
-    category: "1內容軟體",
-    description: "",
-    photoLink1: "",
-    photoLink2: "",
-  },
-  {
-    id: "voice-003",
-    name: "TV everyday + 強中音",
-    category: "1內容軟體",
-    description: "",
-    photoLink1: "",
-    photoLink2: "",
-  },
-  {
-    id: "voice-004",
-    name: "HTC 2 支 + 3.5 2 type C",
-    category: "2主力手機",
-    description: "",
-    photoLink1: "",
-    photoLink2: "",
-  },
-  {
-    id: "voice-005",
-    name: "@ 藍牙 adapter 耳機",
-    category: "2主力手機",
-    description: "NB 藍牙 Link - 靠 Table 逐筆想 才找到的",
-    photoLink1: "https://lh3.googleusercontent.com/d/1l7KSOPzOJmdvM8szslA5I6IL0hd24W2N=w1200",
-    photoLink2: "https://lh3.googleusercontent.com/d/1FkZpHrcEPEXw13oVl5AZD8byY36QKtEt=w1200",
-  },
-  {
-    id: "voice-006",
-    name: "Sony 藍牙全罩 好看",
-    category: "2主力手機",
-    description: "",
-    photoLink1: "",
-    photoLink2: "",
-  },
-  {
-    id: "voice-007",
-    name: "鐵三 抗噪 不見了",
-    category: "2主力手機",
-    description: "",
-    photoLink1: "",
-    photoLink2: "",
-  },
-  {
-    id: "voice-008",
-    name: "小愛同學 藍牙",
-    category: "3眼痛大字體",
-    description: "add iPad YT continue&",
-    photoLink1: "",
-    photoLink2: "",
-  },
-  {
-    id: "voice-009",
-    name: "iPad 也換大字體",
-    category: "3眼痛大字體",
-    description: "",
-    photoLink1: "",
-    photoLink2: "",
-  },
-  {
-    id: "voice-010",
-    name: "Google 喇叭 - 發音不好",
-    category: "3眼痛大字體",
-    description: "",
-    photoLink1: "",
-    photoLink2: "",
-  },
-  {
-    id: "voice-011",
-    name: "Brother 藍牙拉叭 - BK 幾乎不用",
-    category: "4備用廢料",
-    description: "",
-    photoLink1: "",
-    photoLink2: "",
-  },
-  {
-    id: "voice-012",
-    name: "擴大機 ×3 少用",
-    category: "4備用廢料",
-    description: "留著拆零件",
-    photoLink1: "",
-    photoLink2: "",
-  },
-  {
-    id: "voice-013",
-    name: "頸掛藍牙 $1k 抗噪",
-    category: "5未來急買",
-    description: "",
-    photoLink1: "",
-    photoLink2: "",
-  },
-  {
-    id: "voice-014",
-    name: "藍牙 錄音，音訊轉字的成功率",
-    category: "5未來急買",
-    description: "",
-    photoLink1: "",
-    photoLink2: "",
-  },
-  {
-    id: "voice-015",
-    name: "藍牙抗噪 $3k 小米",
-    category: "5未來急買",
-    description: "",
-    photoLink1: "",
-    photoLink2: "",
-  },
-  {
-    id: "voice-016",
-    name: "AR 眼鏡 $20k - 近遠視 issue",
-    category: "5未來急買",
-    description: "",
-    photoLink1: "",
-    photoLink2: "",
-  },
-  {
-    id: "voice-017",
-    name: "急買 小北 24hrs",
-    category: "5未來急買",
-    description: "nova \\ 蝦皮 小米 \\ 有些管道 臨時想不起來",
-    photoLink1: "",
-    photoLink2: "",
-  },
-];
+const categories = ["開發", "會議", "維護", "研究", "其他"];
+const statuses = ["待處理", "進行中", "已完成", "暫停"];
 
-const categories = [
-  "1內容軟體",
-  "2主力手機",
-  "3眼痛大字體",
-  "4備用廢料",
-  "5未來急買",
-];
+const categoryOptions = categories.map((value) => ({
+  label: value,
+  value,
+}));
 
-const categoryOptions = categories.map((category) => ({
-  label: category,
-  value: category,
+const statusOptions = statuses.map((value) => ({
+  label: value,
+  value,
 }));
 
 const items = ref([]);
@@ -571,96 +457,119 @@ const connected = ref(false);
 
 const keyword = ref("");
 const selectedCategory = ref("all");
-const itemDialog = ref(false);
+const selectedDate = ref("");
+const recordDialog = ref(false);
 const editingItem = ref(null);
 const importFile = ref(null);
 
+function getLocalDateString(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+const today = getLocalDateString();
+
 const emptyForm = () => ({
-  name: "",
+  title: "",
+  date: getLocalDateString(),
   category: categories[0],
-  description: "",
-  photoLink1: "",
-  photoLink2: "",
+  status: "進行中",
+  project: "",
+  content: "",
+  note: "",
+  hours: 0,
 });
+
 const form = ref(emptyForm());
+
+const todayCount = computed(() =>
+  items.value.filter((item) => item.date === today).length
+);
 
 const filteredItems = computed(() => {
   const search = keyword.value.trim().toLocaleLowerCase();
 
-  return items.value.filter((item) => {
-    const categoryMatched =
-      selectedCategory.value === "all" ||
-      item.category === selectedCategory.value;
+  return items.value
+    .filter((item) => {
+      const categoryMatched =
+        selectedCategory.value === "all" ||
+        item.category === selectedCategory.value;
 
-    const searchMatched =
-      !search ||
-      [item.name, item.category, item.description]
-        .join(" ")
-        .toLocaleLowerCase()
-        .includes(search);
+      const dateMatched =
+        !selectedDate.value || item.date === selectedDate.value;
 
-    return categoryMatched && searchMatched;
-  });
+      const searchMatched =
+        !search ||
+        [
+          item.title,
+          item.project,
+          item.category,
+          item.status,
+          item.content,
+          item.note,
+        ]
+          .join(" ")
+          .toLocaleLowerCase()
+          .includes(search);
+
+      return categoryMatched && dateMatched && searchMatched;
+    })
+    .sort((a, b) => {
+      const dateCompare = String(b.date || "").localeCompare(String(a.date || ""));
+      if (dateCompare !== 0) return dateCompare;
+      return Number(b.updatedAt || b.createdAt || 0) -
+        Number(a.updatedAt || a.createdAt || 0);
+    });
 });
 
 let unsubscribeItems = null;
 
-function voiceId(index) {
-  return `voice-${String(index + 1).padStart(3, "0")}`;
-}
-
-function normalizeItem(raw, key, index = 0) {
-  const fallbackId = /^\d+$/.test(String(key))
-    ? voiceId(Number(key))
-    : String(key || voiceId(index));
-
+function normalizeItem(raw, key) {
   return {
-    id: String(raw?.id || fallbackId),
-    name: String(raw?.name ?? ""),
+    id: String(raw?.id || key || ""),
+    title: String(raw?.title ?? ""),
+    date: String(raw?.date ?? ""),
     category: String(raw?.category ?? ""),
-    description: String(raw?.description ?? ""),
-    photoLink1: String(raw?.photoLink1 ?? ""),
-    photoLink2: String(raw?.photoLink2 ?? ""),
+    status: String(raw?.status ?? "待處理"),
+    project: String(raw?.project ?? ""),
+    content: String(raw?.content ?? ""),
+    note: String(raw?.note ?? ""),
+    hours: Math.max(0, Number(raw?.hours) || 0),
+    createdAt: Number(raw?.createdAt) || 0,
+    updatedAt: Number(raw?.updatedAt) || 0,
   };
 }
 
 function categoryColor(category) {
   const colors = {
-    "1內容軟體": "indigo",
-    "2主力手機": "blue",
-    "3眼痛大字體": "teal",
-    "4備用廢料": "grey-7",
-    "5未來急買": "deep-orange",
+    開發: "indigo",
+    會議: "blue",
+    維護: "teal",
+    研究: "deep-purple",
+    其他: "grey-7",
   };
   return colors[category] || "grey";
 }
 
-function countByCategory(category) {
-  return items.value.filter((item) => item.category === category).length;
+function statusColor(status) {
+  const colors = {
+    待處理: "grey-7",
+    進行中: "orange",
+    已完成: "positive",
+    暫停: "deep-orange",
+  };
+  return colors[status] || "grey";
 }
 
-function isValidHttpUrl(value) {
-  if (!value) return false;
-  try {
-    const url = new URL(value);
-    return url.protocol === "http:" || url.protocol === "https:";
-  } catch {
-    return false;
-  }
+function countByStatus(status) {
+  return items.value.filter((item) => item.status === status).length;
 }
 
-function openPhoto(url) {
-  if (isValidHttpUrl(url)) {
-    window.open(url, "_blank", "noopener,noreferrer");
-  }
-}
-
-async function initializeDefaultItems() {
-  const payload = {};
-  defaultVoiceItems.forEach((item) => {
-    payload[item.id] = item;
-  });
-  await set(dbRef(db, FIREBASE_PATH), payload);
+function formatHours(hours) {
+  const value = Number(hours) || 0;
+  return `${value} 小時`;
 }
 
 function loadItems() {
@@ -674,24 +583,22 @@ function loadItems() {
 
   unsubscribeItems = onValue(
     dbRef(db, FIREBASE_PATH),
-    async (snapshot) => {
+    (snapshot) => {
       try {
         const data = snapshot.val();
 
-        // Firebase 路徑第一次為空時，自動匯入 voice.json 的預設資料。
         if (!data) {
-          await initializeDefaultItems();
-          return;
+          items.value = [];
+        } else {
+          const entries = Array.isArray(data)
+            ? data.map((value, index) => [String(index), value])
+            : Object.entries(data);
+
+          items.value = entries
+            .map(([key, value]) => normalizeItem(value, key))
+            .filter((item) => item.title)
+            .sort((a, b) => String(b.date).localeCompare(String(a.date)));
         }
-
-        const entries = Array.isArray(data)
-          ? data.map((value, index) => [String(index), value])
-          : Object.entries(data);
-
-        items.value = entries
-          .map(([key, value], index) => normalizeItem(value, key, index))
-          .filter((item) => item.name)
-          .sort((a, b) => a.id.localeCompare(b.id));
 
         connected.value = true;
         loading.value = false;
@@ -701,7 +608,7 @@ function loadItems() {
         connected.value = false;
         $q.notify({
           type: "negative",
-          message: `初始化設備資料失敗：${error.message}`,
+          message: `讀取工作紀錄失敗：${error.message}`,
         });
       }
     },
@@ -711,7 +618,7 @@ function loadItems() {
       connected.value = false;
       $q.notify({
         type: "negative",
-        message: `讀取 Firebase 失敗：${error.message}`,
+        message: `Firebase 連線失敗：${error.message}`,
       });
     }
   );
@@ -720,54 +627,65 @@ function loadItems() {
 function openAddDialog() {
   editingItem.value = null;
   form.value = emptyForm();
-  itemDialog.value = true;
+  recordDialog.value = true;
 }
 
 function openEditDialog(item) {
   editingItem.value = item;
   form.value = {
-    name: item.name,
+    title: item.title,
+    date: item.date || getLocalDateString(),
     category: item.category || categories[0],
-    description: item.description,
-    photoLink1: item.photoLink1,
-    photoLink2: item.photoLink2,
+    status: item.status || "待處理",
+    project: item.project,
+    content: item.content,
+    note: item.note,
+    hours: item.hours,
   };
-  itemDialog.value = true;
+  recordDialog.value = true;
 }
 
 async function saveItem() {
-  const name = form.value.name.trim();
-  if (!name || saving.value) return;
+  const title = form.value.title.trim();
+  if (!title || saving.value) return;
 
   const isEditing = Boolean(editingItem.value);
   const id = isEditing
     ? editingItem.value.id
-    : `voice-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    : `work-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
+  const now = Date.now();
   const itemData = {
     id,
-    name,
-    category: form.value.category || "",
-    description: form.value.description.trim(),
-    photoLink1: form.value.photoLink1.trim(),
-    photoLink2: form.value.photoLink2.trim(),
+    title,
+    date: form.value.date || getLocalDateString(),
+    category: form.value.category || "其他",
+    status: form.value.status || "待處理",
+    project: form.value.project.trim(),
+    content: form.value.content.trim(),
+    note: form.value.note.trim(),
+    hours: Math.max(0, Number(form.value.hours) || 0),
+    createdAt: isEditing
+      ? Number(editingItem.value.createdAt) || now
+      : now,
+    updatedAt: now,
   };
 
   saving.value = true;
   try {
     await set(dbRef(db, `${FIREBASE_PATH}/${id}`), itemData);
-    itemDialog.value = false;
+    recordDialog.value = false;
     $q.notify({
       type: "positive",
       message: isEditing
-        ? "設備已更新並同步 Firebase。"
-        : "設備已新增並同步 Firebase。",
+        ? "工作紀錄已更新並同步 Firebase。"
+        : "工作紀錄已新增並同步 Firebase。",
     });
   } catch (error) {
     console.error(error);
     $q.notify({
       type: "negative",
-      message: `儲存設備失敗：${error.message}`,
+      message: `儲存工作紀錄失敗：${error.message}`,
     });
   } finally {
     saving.value = false;
@@ -776,8 +694,8 @@ async function saveItem() {
 
 function deleteItem(item) {
   $q.dialog({
-    title: "確認刪除設備",
-    message: `確定要刪除「${item.name}」嗎？此操作會同步刪除 Firebase 資料。`,
+    title: "確認刪除工作紀錄",
+    message: `確定要刪除「${item.title}」嗎？此操作會同步刪除 Firebase 資料。`,
     cancel: {
       label: "取消",
       flat: true,
@@ -796,13 +714,13 @@ function deleteItem(item) {
       await remove(dbRef(db, `${FIREBASE_PATH}/${item.id}`));
       $q.notify({
         type: "positive",
-        message: `已刪除「${item.name}」並同步 Firebase。`,
+        message: `已刪除「${item.title}」並同步 Firebase。`,
       });
     } catch (error) {
       console.error(error);
       $q.notify({
         type: "negative",
-        message: `刪除設備失敗：${error.message}`,
+        message: `刪除工作紀錄失敗：${error.message}`,
       });
     } finally {
       saving.value = false;
@@ -821,21 +739,29 @@ async function handleImportFile(file) {
 
     const payload = {};
     parsed.forEach((raw, index) => {
-      const item = normalizeItem(raw, voiceId(index), index);
-      if (!item.name) return;
-      // 避免匯入檔中的重複 id 覆蓋彼此。
-      let id = item.id;
+      const item = normalizeItem(raw, `work-import-${index + 1}`);
+      if (!item.title) return;
+
+      let id = item.id || `work-import-${index + 1}`;
       if (payload[id]) id = `${id}-${index + 1}`;
-      payload[id] = { ...item, id };
+
+      payload[id] = {
+        ...item,
+        id,
+        date: item.date || getLocalDateString(),
+        category: item.category || "其他",
+        status: item.status || "待處理",
+        updatedAt: Date.now(),
+      };
     });
 
     if (!Object.keys(payload).length) {
-      throw new Error("JSON 中沒有可匯入的設備資料。");
+      throw new Error("JSON 中沒有可匯入的工作紀錄。");
     }
 
     $q.dialog({
       title: "確認匯入 JSON",
-      message: `即將匯入 ${Object.keys(payload).length} 筆設備資料，並完整覆蓋 Firebase 路徑「${FIREBASE_PATH}」目前的內容。建議先匯出備份。`,
+      message: `即將匯入 ${Object.keys(payload).length} 筆工作紀錄，並完整覆蓋 Firebase 路徑「${FIREBASE_PATH}」目前的內容。建議先匯出備份。`,
       cancel: {
         label: "取消",
         flat: true,
@@ -846,29 +772,31 @@ async function handleImportFile(file) {
         unelevated: true,
       },
       persistent: true,
-    }).onOk(async () => {
-      if (saving.value) return;
+    })
+      .onOk(async () => {
+        if (saving.value) return;
 
-      saving.value = true;
-      try {
-        await set(dbRef(db, FIREBASE_PATH), payload);
-        $q.notify({
-          type: "positive",
-          message: `已匯入 ${Object.keys(payload).length} 筆設備並同步 Firebase。`,
-        });
-      } catch (error) {
-        console.error(error);
-        $q.notify({
-          type: "negative",
-          message: `匯入 Firebase 失敗：${error.message}`,
-        });
-      } finally {
-        saving.value = false;
+        saving.value = true;
+        try {
+          await set(dbRef(db, FIREBASE_PATH), payload);
+          $q.notify({
+            type: "positive",
+            message: `已匯入 ${Object.keys(payload).length} 筆工作紀錄並同步 Firebase。`,
+          });
+        } catch (error) {
+          console.error(error);
+          $q.notify({
+            type: "negative",
+            message: `匯入 Firebase 失敗：${error.message}`,
+          });
+        } finally {
+          saving.value = false;
+          importFile.value = null;
+        }
+      })
+      .onCancel(() => {
         importFile.value = null;
-      }
-    }).onCancel(() => {
-      importFile.value = null;
-    });
+      });
   } catch (error) {
     console.error(error);
     importFile.value = null;
@@ -882,11 +810,16 @@ async function handleImportFile(file) {
 function exportJson() {
   const exportData = items.value.map((item) => ({
     id: item.id,
-    name: item.name,
+    title: item.title,
+    date: item.date,
     category: item.category,
-    description: item.description,
-    photoLink1: item.photoLink1,
-    photoLink2: item.photoLink2,
+    status: item.status,
+    project: item.project,
+    content: item.content,
+    note: item.note,
+    hours: item.hours,
+    createdAt: item.createdAt,
+    updatedAt: item.updatedAt,
   }));
 
   const blob = new Blob(
@@ -896,7 +829,7 @@ function exportJson() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "voice.json";
+  link.download = "daily-work-records.json";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -904,7 +837,7 @@ function exportJson() {
 
   $q.notify({
     type: "positive",
-    message: `已匯出 ${exportData.length} 筆設備資料。`,
+    message: `已匯出 ${exportData.length} 筆工作紀錄。`,
   });
 }
 
