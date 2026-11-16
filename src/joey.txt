@@ -1,4 +1,7 @@
 
+cd job26
+quasar dev
+-------
 cd VTOL
 quasar dev
 
