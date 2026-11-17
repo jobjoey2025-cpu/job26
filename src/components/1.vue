@@ -426,19 +426,54 @@
               placeholder="記錄今天完成的事項、處理過程、技術細節或遇到的問題..."
             />
 
-            <q-input
-              v-model="form.photosText"
-              label="工作照片連結（多張）"
-              type="textarea"
-              autogrow
-              outlined
-              hint="每行輸入一個圖片網址，支援 http / https 圖片連結。"
-              placeholder="https://example.com/photo-1.jpg&#10;https://example.com/photo-2.jpg"
-            >
-              <template #prepend>
-                <q-icon name="photo_library" />
-              </template>
-            </q-input>
+            <!-- 每張照片各自一個網址輸入框 -->
+            <div>
+              <div class="row items-center justify-between q-mb-sm">
+                <div class="text-subtitle2">
+                  <q-icon name="photo_library" class="q-mr-xs" />
+                  工作照片網址
+                </div>
+                <q-btn
+                  dense
+                  outline
+                  color="primary"
+                  icon="add"
+                  label="新增照片"
+                  @click="addPhotoInput"
+                />
+              </div>
+
+              <div
+                v-for="(photo, index) in form.photos"
+                :key="`photo-input-${index}`"
+                class="row items-center q-col-gutter-sm q-mb-sm"
+              >
+                <div class="col">
+                  <q-input
+                    v-model.trim="form.photos[index]"
+                    dense
+                    outlined
+                    clearable
+                    :label="`照片 ${index + 1} 網址`"
+                    placeholder="https://example.com/photo.jpg"
+                    :hint="index === 0 ? '每張照片輸入一個 http / https 網址' : undefined"
+                  />
+                </div>
+                <div class="col-auto">
+                  <q-btn
+                    flat
+                    round
+                    dense
+                    color="negative"
+                    icon="delete"
+                    :disable="form.photos.length === 1"
+                    @click="removePhotoInput(index)"
+                  >
+                    <q-tooltip>移除此照片欄位</q-tooltip>
+                  </q-btn>
+                </div>
+              </div>
+            </div>
 
             <div v-if="photoLinksPreview.length" class="row q-col-gutter-sm">
               <div
@@ -538,7 +573,7 @@ const emptyForm = () => ({
   status: "進行中",
   project: "",
   content: "",
-  photosText: "",
+  photos: [""],
   note: "",
   hours: 0,
 });
@@ -562,7 +597,17 @@ function parsePhotoLinks(value) {
   )];
 }
 
-const photoLinksPreview = computed(() => parsePhotoLinks(form.value.photosText));
+const photoLinksPreview = computed(() => parsePhotoLinks(form.value.photos));
+
+function addPhotoInput() {
+  form.value.photos.push("");
+}
+
+function removePhotoInput(index) {
+  if (form.value.photos.length > 1) {
+    form.value.photos.splice(index, 1);
+  }
+}
 
 const todayCount = computed(() =>
   items.value.filter((item) => item.date === today).length
@@ -720,7 +765,7 @@ function openEditDialog(item) {
     status: item.status || "待處理",
     project: item.project,
     content: item.content,
-    photosText: (item.photos || []).join("\\n"),
+    photos: item.photos?.length ? [...item.photos] : [""],
     note: item.note,
     hours: item.hours,
   };
@@ -745,7 +790,7 @@ async function saveItem() {
     status: form.value.status || "待處理",
     project: form.value.project.trim(),
     content: form.value.content.trim(),
-    photos: parsePhotoLinks(form.value.photosText),
+    photos: parsePhotoLinks(form.value.photos),
     note: form.value.note.trim(),
     hours: Math.max(0, Number(form.value.hours) || 0),
     createdAt: isEditing
