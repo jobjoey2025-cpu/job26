@@ -274,6 +274,42 @@
               </div>
               <div v-else class="text-caption text-grey-5">尚無工作內容</div>
 
+              <!-- 多張工作照片 -->
+              <div v-if="item.photos?.length" class="q-mt-md">
+                <div class="text-caption text-grey-7 q-mb-sm">
+                  <q-icon name="photo_library" class="q-mr-xs" />
+                  工作照片（{{ item.photos.length }}）
+                </div>
+                <div class="row q-col-gutter-sm">
+                  <div
+                    v-for="(photo, index) in item.photos"
+                    :key="`${item.id}-photo-${index}`"
+                    class="col-4 col-sm-4"
+                  >
+                    <a
+                      :href="photo"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      :aria-label="`開啟工作照片 ${index + 1}`"
+                      class="block"
+                    >
+                      <q-img
+                        :src="photo"
+                        :ratio="1"
+                        fit="cover"
+                        class="rounded-borders cursor-pointer"
+                      >
+                        <template #error>
+                          <div class="absolute-full flex flex-center bg-grey-3 text-grey-7">
+                            <q-icon name="broken_image" size="28px" />
+                          </div>
+                        </template>
+                      </q-img>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
               <div v-if="item.note" class="bg-grey-2 rounded-borders q-pa-sm q-mt-md">
                 <div class="text-caption text-grey-7 q-mb-xs">
                   <q-icon name="sticky_note_2" class="q-mr-xs" />
@@ -390,6 +426,65 @@
               placeholder="記錄今天完成的事項、處理過程、技術細節或遇到的問題..."
             />
 
+            <!-- 每張照片各自一個網址輸入框 -->
+            <div>
+              <div class="row items-center justify-between q-mb-sm">
+                <div class="text-subtitle2">
+                  <q-icon name="photo_library" class="q-mr-xs" />
+                  工作照片網址
+                </div>
+                <q-btn
+                  dense
+                  outline
+                  color="primary"
+                  icon="add"
+                  label="新增照片"
+                  @click="addPhotoInput"
+                />
+              </div>
+
+              <div
+                v-for="(photo, index) in form.photos"
+                :key="`photo-input-${index}`"
+                class="row items-center q-col-gutter-sm q-mb-sm"
+              >
+                <div class="col">
+                  <q-input
+                    v-model.trim="form.photos[index]"
+                    dense
+                    outlined
+                    clearable
+                    :label="`照片 ${index + 1} 網址`"
+                    placeholder="https://example.com/photo.jpg"
+                    :hint="index === 0 ? '每張照片輸入一個 http / https 網址' : undefined"
+                  />
+                </div>
+                <div class="col-auto">
+                  <q-btn
+                    flat
+                    round
+                    dense
+                    color="negative"
+                    icon="delete"
+                    :disable="form.photos.length === 1"
+                    @click="removePhotoInput(index)"
+                  >
+                    <q-tooltip>移除此照片欄位</q-tooltip>
+                  </q-btn>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="photoLinksPreview.length" class="row q-col-gutter-sm">
+              <div
+                v-for="(photo, index) in photoLinksPreview"
+                :key="`preview-${index}`"
+                class="col-4"
+              >
+                <q-img :src="photo" :ratio="1" fit="cover" class="rounded-borders" />
+              </div>
+            </div>
+
             <q-input
               v-model="form.note"
               label="備註 / 待辦事項"
@@ -478,11 +573,41 @@ const emptyForm = () => ({
   status: "進行中",
   project: "",
   content: "",
+  photos: [""],
   note: "",
   hours: 0,
 });
 
 const form = ref(emptyForm());
+
+function parsePhotoLinks(value) {
+  const lines = Array.isArray(value)
+    ? value
+    : String(value || "").split(/[\\n,;]+/);
+
+  return [...new Set(
+    lines.map((url) => String(url).trim()).filter((url) => {
+      try {
+        const parsed = new URL(url);
+        return parsed.protocol === "https:" || parsed.protocol === "http:";
+      } catch {
+        return false;
+      }
+    })
+  )];
+}
+
+const photoLinksPreview = computed(() => parsePhotoLinks(form.value.photos));
+
+function addPhotoInput() {
+  form.value.photos.push("");
+}
+
+function removePhotoInput(index) {
+  if (form.value.photos.length > 1) {
+    form.value.photos.splice(index, 1);
+  }
+}
 
 const todayCount = computed(() =>
   items.value.filter((item) => item.date === today).length
@@ -535,6 +660,7 @@ function normalizeItem(raw, key) {
     status: String(raw?.status ?? "待處理"),
     project: String(raw?.project ?? ""),
     content: String(raw?.content ?? ""),
+    photos: parsePhotoLinks(raw?.photos ?? raw?.photoUrls ?? raw?.photoLinks ?? []),
     note: String(raw?.note ?? ""),
     hours: Math.max(0, Number(raw?.hours) || 0),
     createdAt: Number(raw?.createdAt) || 0,
@@ -639,6 +765,7 @@ function openEditDialog(item) {
     status: item.status || "待處理",
     project: item.project,
     content: item.content,
+    photos: item.photos?.length ? [...item.photos] : [""],
     note: item.note,
     hours: item.hours,
   };
@@ -663,6 +790,7 @@ async function saveItem() {
     status: form.value.status || "待處理",
     project: form.value.project.trim(),
     content: form.value.content.trim(),
+    photos: parsePhotoLinks(form.value.photos),
     note: form.value.note.trim(),
     hours: Math.max(0, Number(form.value.hours) || 0),
     createdAt: isEditing
@@ -816,6 +944,7 @@ function exportJson() {
     status: item.status,
     project: item.project,
     content: item.content,
+    photos: item.photos || [],
     note: item.note,
     hours: item.hours,
     createdAt: item.createdAt,
